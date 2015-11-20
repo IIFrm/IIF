@@ -159,7 +159,9 @@ int Equation::imply(const Equation& e2) {
 
 bool Equation::imply(const Equation& e2) {
 #ifdef linux
+#ifdef __PRT_QUERY
 	std::cout << "-------------Imply solving-------------\n";
+#endif
 	Equation& e1 = *this;
 	z3::config cfg;
 	cfg.set("auto_config", true);
@@ -204,17 +206,23 @@ bool Equation::imply(const Equation& e2) {
 	
 	//z3::expr final_expr = z3::implies((z3::expr)expr1, (z3::expr)expr2);
 	z3::expr query = implies(hypo, conc);
+#ifdef __PRT_QUERY
 	std::cout << "Query : " << query << std::endl; 
 	std::cout << "Answer: ";
+#endif
 	
 	z3::solver s(c);
 	s.add(!query);
 	z3::check_result ret = s.check();
 	if (ret == unsat) {
+#ifdef __PRT_QUERY
 		std::cout << "True" << std::endl;
+#endif
 		return true;
 	} else {
+#ifdef __PRT_QUERY
 		std::cout << "False" << std::endl;
+#endif
 		return false;
 	}
 #endif
@@ -222,11 +230,24 @@ bool Equation::imply(const Equation& e2) {
 }
 
 
-int Equation::is_similar(const Equation& e, int precision) {
-	if (&e == NULL) return -1;
-	if ((theta0 == 0) && (e.theta0 == 0))
-		return -1;
-	double ratio = theta0 / e.theta0;
+int Equation::is_similar(const Equation& e2, int precision) {
+	Equation& e1 = *this;
+	if (&e2 == NULL) return -1;
+	double ratio = 0;
+	if ((e1.theta0 != 0) && (e2.theta0 != 0)) {
+		ratio = e1.theta0 / e2.theta0;
+	} else {
+		int i;
+		for(i = 0; i < VARS; i++) {
+			if ((e1.theta[i] != 0) && (e2.theta[i] != 0)) {
+				ratio = e1.theta[i] / e2.theta[i];
+				break;
+			}
+		}
+		if (i >= VARS)
+			return -1;
+	}
+	//std::cout << "[ratio=" << ratio <<"]";
 	double down, up;
 	if (ratio >= 0) {
 		down = ratio * (1 - pow(0.1, precision));
@@ -236,10 +257,15 @@ int Equation::is_similar(const Equation& e, int precision) {
 		up = ratio * (1 - pow(0.1, precision));
 		down = ratio * (1 + pow(0.1, precision));
 	}
-	//std::cout << "[" << down << ", " << ratio << ", " << up << "]" << std::endl;
+	//std::cout << "[" << down << ", " << ratio << ", " << up << "]";
 	for (int i = 0; i < VARS; i++) {
-		if ((theta[i] < e.theta[i] * down) || (theta[i] > e.theta[i] * up))
-			return -1;
+		if (e2.theta[i] >= 0) {
+			if ((e1.theta[i] < e2.theta[i] * down) || (e1.theta[i] > e2.theta[i] * up))
+				return -1;
+		}else {
+			if ((e1.theta[i] < e2.theta[i] * up) || (e1.theta[i] > e2.theta[i] * down))
+				return -1;
+		}
 	}
 	return 0;
 }
@@ -258,6 +284,7 @@ int Equation::roundoff(Equation& e) {
 
 	if ((std::abs(theta0) < min) && (100 * std::abs(theta0) >= min))	
 		// 100 * theta0 is to keep {0.999999x1 + 0.9999999x2 >= 1.32E-9} from converting to  {BIGNUM x1 + BIGNUM x1  >= 1}
+	//if ((std::abs(theta0) < min) && (std::abs(theta0) > 1.0E-4))	
 		min = std::abs(theta0);
 
 

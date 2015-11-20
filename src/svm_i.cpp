@@ -101,40 +101,33 @@ int SVM_I::train()
 		if ((ret == 0) && (misidx == -1)) {	// can divide all the negative points correctly
 
 #ifdef __PRT
+			set_console_color(std::cout, GREEN);
 			std::cout << "finish classified..." << std::endl;
+			unset_console_color(std::cout);
 #endif				
+#ifdef __PRT_SVM_I
 			std::cout << *this << "\n check implication...\n";
-			std::vector<bool> vv(equ_num, true);
+#endif				
 
+			/*
 			for (int i = 1; i < equ_num; i++) {
 				for (int j = 0; j < i; j++) {
-					//std::cout << "(" << i << " => " << j <<  ") @@@ ";
 					if (equations[i].imply(equations[j]) == true) {
-						//vv[j] = false;
 						for (int k = j; k < equ_num - 1; k++)
 							equations[k] = equations[k+1];
-						equ_num--;
-						i--;
-						j--;
+						equ_num--; i--; j--;
 					}
 				}
 			}
 			set_console_color(std::cout, RED);
-			/*
-			std::cout << "REMOVE INDEX [";
-			for (int i = 0; i < equ_num; i++) 
-				if (vv[i] == false) 
-					std::cout << i << ",";
-			std::cout << "]\n";
-			vv.clear();
-			*/
-			std::cout << *this << "\n";
+			//std::cout << *this << "\n";
 			unset_console_color(std::cout);
+			*/
 
 			return 0;
 		}
 
-#ifdef __PRT
+#ifdef __PRT_SVM_I
 		std::cout << "." << equ_num << ">"; // << std::endl;
 #endif
 		// there is some point which is misclassified by current dividers.
@@ -145,7 +138,7 @@ int SVM_I::train()
 		training_set[length] = negatives->values[misidx];
 		problem.l++;
 
-#ifdef __PRT
+#ifdef __PRT_SVM_I
 		std::cout << " NEW TRAINING SET:";
 		for (int i = 0; i < problem.l; i++) {
 			std::cout << "(" << problem.x[i][0].value;
@@ -162,37 +155,26 @@ int SVM_I::train()
 		model = svm_train(&problem, &param);
 		svm_model_visualization(model, &equations[equ_num]);
 
-#ifdef __PRT
+#ifdef __PRT_SVM_I
 		std::cout << equations[equ_num];
 #endif
-
-
-		//if (equ_num > 0) {
-		//std::cout << *this << std::endl;
-		/*std::cout << "check implication...\n";
-		  for (int i = 0; i < equ_num; i++) {
-		  if (equations[equ_num].imply(equations[i]) == true) {
-		// we can remove equations[i]
-		set_console_color(std::cout, RED);
-		std::cout << "We can remove equation " << i << ": " << equations[i] << std::endl;
-		unset_console_color(std::cout);
-		for (int j = i; j < equ_num; j++) 
-		equations[j] = equations[j+1];
-		equ_num--;
-		i--;
-		break;
+		for (int j = 0; j < equ_num; j++) {
+			if (equations[equ_num].imply(equations[j]) == true) {
+				for (int k = j; k < equ_num; k++)
+					equations[k] = equations[k+1];
+				equ_num--; j--;
+			}
 		}
-		}
-		*/
-		//std::cout << *this << std::endl;
-		//}
 
+
+#ifdef __PRT_SVM_I
 		double precision = check_postives_and_one_negative();
+#endif
 		svm_free_and_destroy_model(&model);
 		problem.l--;
 
 		//if (precision == 1) break;
-#ifdef __PRT
+#ifdef __PRT_SVM_I
 		std::cout << " precision=[" << precision * 100 << "%]." << std::endl;
 		//if (precision < 1) std::cout << "CAN NOT DIVIDE THE PICKED NEGATIVE FROM POSITIVES..." << std::endl;
 		//std::cout << "\n On whole set precision: " << predictOnProblem() * 100 << "%" << std::endl;
@@ -258,20 +240,41 @@ int SVM_I::check_question_set(States& qset) {
 }
 
 
-int SVM_I::get_converged(Equation* last_equations, int equation_num) {
-	if (equation_num != equ_num) return -1;
-	std::vector<bool> similar_vector(equation_num, false);
-	for (int i = 0; i < equation_num; i++) {	// for all the equations in current state
-		for (int j = 0; j < equation_num; j++) {	// check all the equations in last state
-			if ((similar_vector[j] == false) && (equations[i].is_similar(last_equations[j]) == 0))  {	
+int SVM_I::get_converged(Equation* previous_equations, int previous_equation_num) {
+	//std::cout << "\n\tPrevious\t\t\t Current\n";
+	//std::cout << "\t" << previous_equation_num << "\t\t\t\t\t" << equ_num << "\n";
+
+	if (previous_equation_num != equ_num) return -1;
+	/*for (int i = 0; i < previous_equation_num; i++) {	// for all the equations in current state
+		std::cout << previous_equations[i] << "\t\t" << equations[i] << "\n";
+	} */
+
+
+	std::vector<bool> similar_vector(previous_equation_num, false);
+	for (int i = 0; i < previous_equation_num; i++) {	// for all the equations in current state
+		for (int j = 0; j < previous_equation_num; j++) {	// check all the equations in last state
+			if ((similar_vector[j] == false) && (equations[i].is_similar(previous_equations[j]) == 0))  {	
 				// the equation in last has not been set
 				// and it is similar to the current equation 
+				set_console_color(std::cout, GREEN);
+				std::cout << "<" << i << "-" << j << "> ";
 				similar_vector[j] = true;
+				unset_console_color(std::cout);
 				break;
+			} else {
+				set_console_color(std::cout, RED);
+				std::cout << "<" << i << "-" << j << "> ";
+				unset_console_color(std::cout);
 			}
-			if (j == equation_num - 1) return -1;
 		}
 	}
+	for (int i = 0; i < previous_equation_num; i++) {
+		if (similar_vector[i] == false) {
+			similar_vector.clear();
+			return -1;
+		}
+	}
+	similar_vector.clear();
 	return 0;
 }
 
@@ -331,7 +334,7 @@ int SVM_I::predict(double* v, int label)
 		}
 	}
 
-#ifdef __PRT
+#ifdef __PRT_SVM_I
 	if (label == 0) {
 		return (res >= 0) ? 1 : -1;
 	}
@@ -353,13 +356,13 @@ double SVM_I::check_postives_and_one_negative()
 {
 	int total = problem.l;
 	int pass = 0;
-#ifdef __PRT
+#ifdef __PRT_SVM_I
 	std::cout << "\t";
 #endif
 	for (int i = 0; i < problem.l; i++) {
 		pass += (predict((double*)(problem.x[i])) * problem.y[i] >= 0) ? 1 : 0;
 	}
-#ifdef __PRT
+#ifdef __PRT_SVM_I
 	std::cout << std::endl << "Check on training set result: " << pass << "/" << total << "..";
 #endif
 	return (double)pass / total;
@@ -381,7 +384,7 @@ int SVM_I::get_misclassified(int& idx) // negative points may be misclassified.
 	int negatives_size = negatives->size();
 	for (int i = 0; i < negatives_size; i++) {
 		if (predict(negatives->values[i], -1) >= 0) {
-#ifdef __PRT
+#ifdef __PRT_SVM_I
 			std::cout << "\n [FAIL] @" << i << ": (" << negatives->values[i][0];
 			for (int j = 1; j < VARS; j++)
 				std::cout << "," << negatives->values[i][j];
@@ -393,7 +396,7 @@ int SVM_I::get_misclassified(int& idx) // negative points may be misclassified.
 	}
 
 	// there should be no negatives misclassified.
-#ifdef __PRT
+#ifdef __PRT_SVM_I
 	std::cout << "\n [PASS] @all";
 #endif
 	idx = -1;

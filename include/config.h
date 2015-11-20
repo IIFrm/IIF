@@ -22,7 +22,7 @@ const int q_items = 1000;
 const int init_exes = 4 * VARS;
 const int after_exes = 2 * VARS;
 const int final_exes_times = 10; /* 10 times of current exes*/
-const int random_exes = 1;
+const int random_exes = 2;
 const int max_iter = 32;
 
 #endif

@@ -426,7 +426,7 @@ svm_i_step2:
 		int ret = svm_i->train();
 		if (ret == -1)
 			return -1;
-		std::cout << svm_i->equ_num;
+		//std::cout << svm_i->equ_num;
 		std::cout << "|-->> ";
 		set_console_color(std::cout);
 		std::cout << *svm_i << std::endl;
@@ -518,7 +518,7 @@ svm_i_step2:
 	std::cout << "Hypothesis Invairant: ";
 	std::cout << " \n\t ------------------------------------------------------";
 	std::cout << " \n\t |     " << equs[0];
-	for (int i = 0; i < equation_num; i++) {
+	for (int i = 1; i < equation_num; i++) {
 		std::cout << " \n\t |  /\\ " << equs[i];
 	}
 	std::cout << " \n\t ------------------------------------------------------";

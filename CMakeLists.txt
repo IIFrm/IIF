@@ -31,6 +31,9 @@ OPTION(PRINT_ALL "Print All Message" ON)
 
 ## add new macro definition
 ADD_DEFINITIONS (-D__PRT)
+ADD_DEFINITIONS (-D__PRT_SVM_I)
+#ADD_DEFINITIONS (-D__PRT_QUERY)
+
 
 #SET(CMAKE_BUILD_TYPE "Debug")  
 #SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")  
