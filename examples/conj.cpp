@@ -27,5 +27,3 @@ int conj(int* a)
 	iif_assert((x > 0) && (x < 50));
 	return 0;
 }
-
-//int(*target_program)(int*) = conj;

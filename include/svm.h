@@ -27,6 +27,8 @@ class SVM : public ML_Algo
 
 		virtual int check_question_set(States& qset);
 
+		virtual int get_converged(Equation*, int);
+
 		friend std::ostream& operator << (std::ostream& out, const SVM& svm);
 
 		virtual std::ostream& _print(std::ostream& out) const;

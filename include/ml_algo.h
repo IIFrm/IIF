@@ -17,6 +17,8 @@ class ML_Algo
 
 		virtual int check_question_set(States&) = 0;
 
+		virtual int get_converged(Equation*, int) = 0;
+
 		friend std::ostream& operator << (std::ostream& out, const ML_Algo& mla) { return mla._print(out); }
 
 		virtual std::ostream& _print(std::ostream& out) const {

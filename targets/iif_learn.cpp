@@ -65,7 +65,7 @@ int main(int argc, char** argv)
 	bool b_similar_last_time = false;
 	bool b_converged = false;
 	bool b_svm_i = false;
-	Equation* p = NULL;
+	Equation* previous_equations;
 	int pre_positive_size = 0, pre_negative_size = 0; // , pre_question_size = 0;
 	int cur_positive_size = 0, cur_negative_size = 0; // , cur_question_size = 0;
 	int pre_question_index = 0;
@@ -74,6 +74,8 @@ int main(int argc, char** argv)
 	//Init SVM
 	SVM* svm = new SVM(print_null);
 	svm->main_equation = NULL;
+	previous_equations = new Equation[1];
+
 
 	for (rnd = 1; rnd <= max_iter; rnd++) {
 
@@ -87,7 +89,7 @@ init_svm:
 			 */
 			std::cout << "\t(1) execute programs... [" << init_exes + random_exes << "] {Random";
 			for (int i = 0; i < init_exes + random_exes; i++) {
-				Equation::linearSolver(NULL, inputs);
+				Equation::linear_solver(NULL, inputs);
 				std::cout << inputs;
 				if (i < init_exes + random_exes - 1) std::cout << "|";
 				run_target(inputs);
@@ -109,14 +111,14 @@ check_in_svm_step1:
 			else 
 				std::cout << "\t(1) execute programs...[" << times * (after_exes + random_exes) << "] {Random";
 			for (int i = 0; i < times * random_exes; i++) {
-				Equation::linearSolver(NULL, inputs);
+				Equation::linear_solver(NULL, inputs);
 				std::cout << inputs;
 				std::cout << "|";
 				run_target(inputs);
 			}
 			std::cout << "Solve";
 			for (int i = 0; i < times * after_exes; i++) {
-				Equation::linearSolver(p, inputs);
+				Equation::linear_solver(&previous_equations[0], inputs);
 				std::cout << "|" << inputs;
 				run_target(inputs);
 			}
@@ -215,12 +217,12 @@ svm_step2:
 
 		if (passRat < 1) {
 			std::cout << " [FAIL] \n The problem is not linear separable.. Trying to solve is by SVM-I algo" << std::endl;
-			if (p != NULL) {
-				Equation* tmp = svm->main_equation;
-				svm->main_equation = p;
-				double passRat = svm->predict_on_training_set();
-				std::cout << " last divide: " << *p << " accuracy[" << passRat * 100 << "%]\n";
-				svm->main_equation = tmp;
+			if (previous_equations != NULL) {
+				//Equation* tmp = svm->main_equation;
+				//svm->main_equation = previous_equations;
+				//double passRat = svm->predict_on_training_set();
+				//std::cout << " last divide: " << *p << " accuracy[" << passRat * 100 << "%]\n";
+				//svm->main_equation = tmp;
 			}
 			std::cerr << "*******************************USING SVM_I NOW******************************" << std::endl;
 			b_svm_i = true;
@@ -254,7 +256,8 @@ svm_step2:
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
 		std::cout << "\t(6) check convergence:        ";
-		if (svm->main_equation->is_similar(p) == 0) {
+		//if (svm->main_equation->is_similar(*p) == 0) {
+		if (svm->get_converged(previous_equations, 1) == 0) {
 			if (b_similar_last_time == true) {
 				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
 				b_converged = true;
@@ -269,17 +272,18 @@ svm_step2:
 		}
 		std::cout << "  [FAIL] neXt round " << std::endl;
 
-		if (p != NULL) {
-			delete p;
-		}
-		p = svm->main_equation; 
+		//if (p[0] != NULL) {
+		//	delete []p;
+		//}
+		previous_equations[0] = *(svm->main_equation);
+		delete svm->main_equation;
 	} // end of SVM training procedure
 
 
 
 	if ((b_converged) || (rnd >= max_iter)) {
 		std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
-		std::cout << "finish running svm for " << rnd << " times." << std::endl;
+		std::cout << "Finish running svm for " << rnd << " times." << std::endl;
 		int equation_num = -1;
 		Equation* equs = svm->roundoff(equation_num);
 		assert(equation_num == 1);
@@ -292,7 +296,7 @@ svm_step2:
 		std::cout << "  }" << std::endl;
 		unset_console_color(std::cout);
 		delete[]equs;
-		delete p;
+		delete previous_equations;
 		//delete svm->main_equation;
 		delete svm;
 		return 0;
@@ -302,19 +306,19 @@ svm_step2:
 		p = svm->main_equation;
 	}*/
 	delete svm;
-
-
+	delete previous_equations;
+	
 
 
 
 
 	b_similar_last_time = false;
-	int pre_equation_num = 1;
+	int pre_equation_num = 0;
+	previous_equations = NULL;
 	//start SVM_I training
 	assert(b_svm_i == true);
 	SVM_I* svm_i = new SVM_I(print_null);
-	if (p == NULL) 
-		svm_i->main_equation = new Equation();
+	
 
 	int svm_i_start = rnd;
 	for (; rnd <= max_iter; rnd++) {
@@ -325,32 +329,27 @@ svm_step2:
 
 check_in_svm_i_step1:
 			int exes_each_equation = (after_exes + pre_equation_num - 1) / pre_equation_num;
-			if (times != 1)
+			/*if (times != 1)
 				std::cout << "\t    Re-execute programs...[" << times * (exes_each_equation * pre_equation_num + random_exes) << "] {Random";
-			else
-				std::cout << "\t(1) execute programs...[" << times * (exes_each_equation * pre_equation_num + random_exes) << "] {Random";
+			else*/
+			std::cout << "\t(1) execute programs...[" << times * (exes_each_equation * pre_equation_num + random_exes) << "] {Random";
 
 			for (int i = 0; i < times * random_exes; i++) {
-				Equation::linearSolver(NULL, inputs);
+				Equation::linear_solver(NULL, inputs);
 				std::cout << inputs << "|";
 				run_target(inputs);
 			}
-			p = NULL; //svm_i->main_equation;
-			for (int j = 0; j < times * exes_each_equation; j++) {
-				Equation::linearSolver(p, inputs);
-				std::cout << "|" << inputs;
-				run_target(inputs);
-			}
+			
 			for (int i = 0; i < svm_i->equ_num; i++) {
-				p = &(svm_i->equations[i]);
 				for (int j = 0; j < exes_each_equation; j++) {
-					Equation::linearSolver(p, inputs);
+					Equation::linear_solver(&previous_equations[i], inputs);
 					std::cout << " | " << inputs;
 					run_target(inputs);
 				}
 			}
 			std::cout << "}" << std::endl;
 
+			/*
 			// test these new examples against the old classifier
 			std::cout << "\t    check against last classifier: ";
 			cur_positive_size = gsets[POSITIVE].size();
@@ -358,7 +357,7 @@ check_in_svm_i_step1:
 			//cur_question_size = gsets[QUESTION].size();
 			//bool pass_check_against_old_classifier = false;
 			for (int i = pre_positive_size; i < cur_positive_size; i++) {
-				if (svm_i->predict(gsets[POSITIVE].values[i]/*, 1*/) < 0) {
+				if (svm_i->predict(gsets[POSITIVE].values[i]) < 0) {
 					set_console_color(std::cout, RED);
 					std::cout << "[Fail Positive]" << std::endl;
 					unset_console_color(std::cout);
@@ -370,7 +369,7 @@ check_in_svm_i_step1:
 			unset_console_color(std::cout);
 
 			for (int i = pre_negative_size; i < cur_negative_size; i++) {
-				if (svm_i->predict(gsets[NEGATIVE].values[i]/*, 1*/) >= 0) {
+				if (svm_i->predict(gsets[NEGATIVE].values[i] >= 0) {
 					set_console_color(std::cout, RED);
 					std::cout << "[Fail Negative]" << std::endl;
 					unset_console_color(std::cout);
@@ -411,6 +410,7 @@ check_in_svm_i_step1:
 				b_converged = true;
 				break;
 			}
+			*/
 		}
 		else {
 			pre_positive_size = 0;
@@ -478,23 +478,30 @@ svm_i_step2:
 		 *	We only admit convergence if the three consecutive round are converged.
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
-		/*std::cout << "\t(6) check convergence:        ";
-		  if (pre_equation_num == svm_i->equ_num + 1) {
-		  if (b_similar_last_time == true) {
-		  std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
-		  b_converged = true;
-		  break;
-		  }
-		  std::cout << "[FT]";
-		  b_similar_last_time = true;
-		  }
-		  else {
-		  std::cout << ((b_similar_last_time == true) ? "[T" : "[F") << "F] ";
-		  b_similar_last_time = false;
-		  }
-		  std::cout << "  [FAIL] neXt round " << std::endl;
-		  */
-		pre_equation_num = svm_i->equ_num + 1;
+		std::cout << "\t(6) check convergence:        ";
+		//if (svm->main_equation->is_similar(*p) == 0) {
+		if (svm_i->get_converged(previous_equations, pre_equation_num) == 0) {
+			if (b_similar_last_time == true) {
+				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
+				b_converged = true;
+				break;
+			}
+			std::cout << "[FT]";
+			b_similar_last_time = true;
+		}
+		else {
+			std::cout << ((b_similar_last_time == true) ? "[T" : "[F") << "F] ";
+			b_similar_last_time = false;
+		}
+		std::cout << "  [FAIL] neXt round " << std::endl;
+
+
+		pre_equation_num = svm_i->equ_num;
+		delete[]previous_equations;
+		previous_equations = new Equation[pre_equation_num];
+		for (int i = 0; i < svm_i->equ_num; i++) {
+			previous_equations[i] = svm_i->equations[i];
+		}
 
 		std::cout << std::endl;
 	} // end of SVM-I training procedure
@@ -511,16 +518,15 @@ svm_i_step2:
 	std::cout << "Hypothesis Invairant: ";
 	std::cout << " \n\t ------------------------------------------------------";
 	std::cout << " \n\t |     " << equs[0];
-	for (int i = 1; i < equation_num; i++) {
+	for (int i = 0; i < equation_num; i++) {
 		std::cout << " \n\t |  /\\ " << equs[i];
 	}
 	std::cout << " \n\t ------------------------------------------------------";
+	unset_console_color(std::cout);
 	std::cout << "\n";
 
-	unset_console_color(std::cout);
 
-
-	//delete[]equs;
+	delete[]previous_equations;
 	//delete svm_i->main_equation;
 	delete svm_i;
 	return 0;

@@ -222,11 +222,11 @@ bool Equation::imply(const Equation& e2) {
 }
 
 
-int Equation::is_similar(const Equation* e, int precision) {
-	if (e == NULL) return -1;
-	if ((theta0 == 0) && (e->theta0 == 0))
+int Equation::is_similar(const Equation& e, int precision) {
+	if (&e == NULL) return -1;
+	if ((theta0 == 0) && (e.theta0 == 0))
 		return -1;
-	double ratio = theta0 / e->theta0;
+	double ratio = theta0 / e.theta0;
 	double down, up;
 	if (ratio >= 0) {
 		down = ratio * (1 - pow(0.1, precision));
@@ -238,7 +238,7 @@ int Equation::is_similar(const Equation* e, int precision) {
 	}
 	//std::cout << "[" << down << ", " << ratio << ", " << up << "]" << std::endl;
 	for (int i = 0; i < VARS; i++) {
-		if ((theta[i] < e->theta[i] * down) || (theta[i] > e->theta[i] * up))
+		if ((theta[i] < e.theta[i] * down) || (theta[i] > e.theta[i] * up))
 			return -1;
 	}
 	return 0;

@@ -65,7 +65,7 @@ double Perceptron::predict_on_training_set() {
 	if (length <= 0) return 0;
 	int pass = 0;
 	for (int i = 0; i < length; i++) {
-		pass += (Equation::calc(main_equation, (double*)training_set[i]) * training_label[i] > 0) ? 1 : 0;
+		pass += (Equation::calc(*main_equation, (double*)training_set[i]) * training_label[i] > 0) ? 1 : 0;
 	}
 	return static_cast<double>(pass) / length;
 }
@@ -80,7 +80,7 @@ int Perceptron::check_question_set(States& qset) {
 		//std::cout << "\t\t" << i << ">";
 		//gsets[QUESTION].print_trace(i);
 		for (int j = qset.index[i]; j < qset.index[i + 1]; j++) {
-			cur = Equation::calc(main_equation, qset.values[j]);
+			cur = Equation::calc(*main_equation, qset.values[j]);
 			//std::cout << ((cur >= 0) ? "+" : "-");
 			if ((pre >= 0) && (cur < 0)) {
 				// deal with wrong question trace.
@@ -88,7 +88,7 @@ int Perceptron::check_question_set(States& qset) {
 				std::cerr << "\t\t[FAIL]\n \t  Predict wrongly on Question traces." << std::endl;
 				qset.print_trace(i);
 				for (int j = qset.index[i]; j < qset.index[i + 1]; j++) {
-					cur = Equation::calc(main_equation, qset.values[j]);
+					cur = Equation::calc(*main_equation, qset.values[j]);
 					std::cout << ((cur >= 0) ? "+" : "-");
 				}
 				std::cout << std::endl;
@@ -127,7 +127,7 @@ Equation* Perceptron::roundoff(int& num)
 int Perceptron::predict(double* v, int label) {
 	if (main_equation == NULL) return -2;
 	if (v == NULL) return -2;
-	double res = Equation::calc(main_equation, v);
+	double res = Equation::calc(*main_equation, v);
 	
 	// This is for debug info, should be removed by release time.
 	if (label == 1) { 
@@ -158,7 +158,7 @@ Equation* Perceptron::perceptron_train()
 		std::cout << "*";
 		int start = rand() % length;
 		for (int i = start; i < length; i++) {
-			double predict_label = Equation::calc(&equs[0], training_set[i]);
+			double predict_label = Equation::calc(equs[0], training_set[i]);
 			if (predict_label == 0) predict_label = 1;
 			
 			//std::cout << i << ")";
@@ -176,7 +176,7 @@ Equation* Perceptron::perceptron_train()
 			}
 		}
 		for (int i = 0; i < start; i++) {
-			double predict_label = Equation::calc(&equs[0], training_set[i]);
+			double predict_label = Equation::calc(equs[0], training_set[i]);
 			if (predict_label == 0) predict_label = 1;
 			
 			//std::cout << i << ")";

@@ -9,11 +9,6 @@
 
 //#define __PRT
 #define VARS (1)
-//#define m conj
-//#define f1 m
-
-//#define conj m
-//#define ex1 m
 
 extern int (*target_program) (int*);
 

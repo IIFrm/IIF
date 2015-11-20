@@ -118,7 +118,7 @@ double SVM::predict_on_training_set() {
 	if (problem.l <= 0) return 0;
 	int pass = 0;
 	for (int i = 0; i < problem.l; i++) {
-		pass += (Equation::calc(main_equation, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
+		pass += (Equation::calc(*main_equation, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
 	}
 	return static_cast<double>(pass) / problem.l;
 }
@@ -133,7 +133,7 @@ int SVM::check_question_set(States& qset) {
 		//std::cout << "\t\t" << i << ">";
 		//gsets[QUESTION].print_trace(i);
 		for (int j = qset.index[i]; j < qset.index[i + 1]; j++) {
-			cur = Equation::calc(main_equation, qset.values[j]);
+			cur = Equation::calc(*main_equation, qset.values[j]);
 			//std::cout << ((cur >= 0) ? "+" : "-");
 			if ((pre >= 0) && (cur < 0)) {
 				// deal with wrong question trace.
@@ -141,7 +141,7 @@ int SVM::check_question_set(States& qset) {
 				std::cerr << "\t\t[FAIL]\n \t  Predict wrongly on Question traces." << std::endl;
 				qset.print_trace(i);
 				for (int j = qset.index[i]; j < qset.index[i + 1]; j++) {
-					cur = Equation::calc(main_equation, qset.values[j]);
+					cur = Equation::calc(*main_equation, qset.values[j]);
 					std::cout << ((cur >= 0) ? "+" : "-");
 				}
 				std::cout << std::endl;
@@ -153,6 +153,15 @@ int SVM::check_question_set(States& qset) {
 	}
 	std::cout << " [PASS]";
 	return 0;
+}
+
+
+int SVM::get_converged(Equation* last_equation, int equation_num) {
+	if (equation_num != 1) {
+		std::cout << "SVM::get_converged: Unexpected equation number parameter.\n";
+		return -2;
+	}
+	return main_equation->is_similar(*last_equation);
 }
 
 
@@ -180,7 +189,7 @@ Equation* SVM::roundoff(int& num)
 int SVM::predict(double* v, int label) {
 	if (main_equation == NULL) return -2;
 	if (v == NULL) return -2;
-	double res = Equation::calc(main_equation, v);
+	double res = Equation::calc(*main_equation, v);
 	
 	// This is for debug info, should be removed by release time.
 	if (label == 1) { 

@@ -46,7 +46,11 @@ class Equation{
 
 		bool imply(const Equation& e2);
 
-		static int linearSolver(const Equation* equ, Solution& sol) {
+		int linear_solver(Solution& sol) {
+			return linear_solver(this, sol);
+		}
+
+		static int linear_solver(const Equation* equ, Solution& sol) {
 			if (equ == NULL) {
 				for (int i = 0; i < VARS; i++)
 					sol.x[i] = rand() % (maxv - minv + 1) + minv;
@@ -90,17 +94,17 @@ solve:
 			return 0;
 		}
 
-		static double calc(const Equation* equ, double* sol) {
+		static double calc(Equation& equ, double* sol) {
 			if (sol == NULL) return -1;
-			if (equ == NULL) return -1;
-			double res = equ->theta0;
+			if (&equ == NULL) return -1;
+			double res = equ.theta0;
 			for (int i = 0; i < VARS; i++) {
-				res += equ->theta[i] * sol[i];
+				res += equ.theta[i] * sol[i];
 			}
 			return res;
 		}
 
-		int is_similar(const Equation* e, int precision = 4);
+		int is_similar(const Equation& e, int precision = 4);
 
 		int roundoff(Equation& e);
 

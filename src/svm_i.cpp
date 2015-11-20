@@ -258,6 +258,24 @@ int SVM_I::check_question_set(States& qset) {
 }
 
 
+int SVM_I::get_converged(Equation* last_equations, int equation_num) {
+	if (equation_num != equ_num) return -1;
+	std::vector<bool> similar_vector(equation_num, false);
+	for (int i = 0; i < equation_num; i++) {	// for all the equations in current state
+		for (int j = 0; j < equation_num; j++) {	// check all the equations in last state
+			if ((similar_vector[j] == false) && (equations[i].is_similar(last_equations[j]) == 0))  {	
+				// the equation in last has not been set
+				// and it is similar to the current equation 
+				similar_vector[j] = true;
+				break;
+			}
+			if (j == equation_num - 1) return -1;
+		}
+	}
+	return 0;
+}
+
+
 std::ostream& operator << (std::ostream& out, const SVM_I& svm_i) {
 	return svm_i._print(out);
 }
@@ -307,7 +325,7 @@ int SVM_I::predict(double* v, int label)
 	double res = 0;
 	if (res >= 0) {
 		for (int i = 0; i < equ_num; i++) {
-			res = Equation::calc(&equations[i], v);
+			res = Equation::calc(equations[i], v);
 			if (res < 0)
 				break;
 		}
