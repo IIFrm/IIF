@@ -1,5 +1,6 @@
 #include "svm.h"
 #include "svm_core.h"
+#include "string.h"
 
 SVM::SVM(void (*f) (const char*)) {
 	problem.l = 0;

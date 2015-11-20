@@ -1,4 +1,5 @@
 #include "perceptron.h"
+#include "string.h"
 
 Perceptron::Perceptron(void (*f) (const char*)) {
 	length = 0;

@@ -5,6 +5,7 @@
 #include "instrumentation.h"
 #include "iif_assert.h"
 #include <iostream>
+#include <cstdlib>
 
 int nondet() {
 	return rand() % 4;
