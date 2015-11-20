@@ -6,6 +6,9 @@
  ************************************************************************/
 //#include "header.h"
 //#define VARS (1)
+//#define conj m
+
+
 #include "config.h"
 #include "ml_algo.h"
 #include "svm.h"
@@ -18,6 +21,8 @@
 #include <string.h>
 #include <assert.h>
 
+
+
 int minv = -100, maxv = 100;
 void print_null(const char *s) {}
 
@@ -29,6 +34,7 @@ void run_target(Solution inp)
 {
 	//	std::cout << "inputs" << sol <<  std::endl;
 	before_loop();
+	//target_program
 	m_double(inp.x);
 	after_loop();
 	if (gsets[COUNT_EXAMPLE].traces_num() > 0) {
@@ -521,8 +527,8 @@ svm_i_step2:
 	unset_console_color(std::cout);
 
 
-	delete[]equs;
-	delete svm_i->main_equation;
+	//delete[]equs;
+	//delete svm_i->main_equation;
 	delete svm_i;
 	return 0;
 }

@@ -75,21 +75,22 @@ FILE(GLOB HEADERS "include/*.h")
 SOURCE_GROUP("Header Files" FILES ${HEADERS}) 
 #add_executable(${MODULE_NAME} ${SOURCES} ${CURRENT_HEADERS})
 
-
+FILE(GLOB EXAMPLES "examples/*.cpp")
+SOURCE_GROUP("Examples" FILES ${EXAMPLES}) 
+AUX_SOURCE_DIRECTORY(examples DIR_EXPS)
 
 
 #include_directories(include/program)
 #aux_source_directory(include DIR_SRCS)
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
-AUX_SOURCE_DIRECTORY(examples DIR_SRCS)
 
-ADD_EXECUTABLE(IIF_learn targets/iif_learn.cpp ${DIR_SRCS} ${HEADERS})
+ADD_EXECUTABLE(IIF_learn targets/iif_learn.cpp ${DIR_SRCS} ${DIR_EXPS} ${HEADERS})
 IF(UNIX)
 target_link_libraries(IIF_learn ${Z3_LIBRARY})
 ENDIF(UNIX)
 
 IF(UNIX)
-ADD_EXECUTABLE(z3_driver targets/z3_driver.cpp ${DIR_SRCS} ${HEADERS})
+	ADD_EXECUTABLE(z3_driver targets/z3_driver.cpp ${DIR_SRCS} ${DIR_EXPS} ${HEADERS})
 target_link_libraries(z3_driver ${Z3_LIBRARY})
 ENDIF(UNIX)
 #ADD_EXECUTABLE(svm_learn target/main.cpp ${DIR_SRCS} ${HEADERS})

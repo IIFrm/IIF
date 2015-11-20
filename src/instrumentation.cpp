@@ -96,7 +96,4 @@ int m_double(double* p)
 	return m_int(a);
 }
 
-int m_int(int* p)
-{
-	return m(p);
-}
+int m_int(int* p) { return target_program(p); }

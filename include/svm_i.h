@@ -32,6 +32,8 @@ public:
 
 	friend std::ostream& operator << (std::ostream& out, const SVM_I& svm_i);
 
+	virtual std::ostream& _print(std::ostream& out) const;
+
 	int size();
 
 	virtual Equation* roundoff(int& num);

@@ -1,14 +1,16 @@
 #include "equation.h"
-//#include <stp/c_interface.h>
+
 //#include <cstdio>
 #include <cstdlib>
 #include <vector>
-#ifdef linux
-#include "z3++.h"
-#endif
 //#include <cstring>
 #include <iostream>
+
+#ifdef linux
+//#include <stp/c_interface.h>
+#include "z3++.h"
 using namespace z3;
+#endif
 
 const double UPBOUND = pow(0.1, 3);
 inline double _roundoff(double x)
@@ -21,7 +23,12 @@ inline double _roundoff(double x)
 }
 
 
-Solution::Solution() {}
+Solution::Solution() {
+	x[0] = 0;
+	for (int i = 1; i < VARS; i++) {
+		x[i] = 0;
+	}
+}
 
 Solution::Solution(double a0, ...) {
 	va_list ap;
@@ -41,7 +48,6 @@ std::ostream& operator << (std::ostream& out, const Solution& sol) {
 	out << ")";
 	return out;
 }
-
 
 Equation::Equation() {
 	theta0 = 0;

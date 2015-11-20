@@ -27,6 +27,8 @@ class SVM : public ML_Algo
 
 		friend std::ostream& operator << (std::ostream& out, const SVM& svm);
 
+		virtual std::ostream& _print(std::ostream& out) const;
+
 		virtual int size();
 
 		virtual Equation* roundoff(int& num);

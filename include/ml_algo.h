@@ -17,7 +17,12 @@ class ML_Algo
 
 		virtual int check_question_set(States&) = 0;
 
-		friend std::ostream& operator << (std::ostream& out, const ML_Algo& mla) {return out;}
+		friend std::ostream& operator << (std::ostream& out, const ML_Algo& mla) { return mla._print(out); }
+
+		virtual std::ostream& _print(std::ostream& out) const {
+			out << "ML-Algo: NULL";
+			return out;
+		};
 
 		virtual int size() = 0;
 

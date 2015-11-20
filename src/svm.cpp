@@ -142,16 +142,16 @@ int SVM::check_question_set(States& qset) {
 
 
 std::ostream& operator << (std::ostream& out, const SVM& svm) {
+	return svm._print(out);
+}
+
+std::ostream& SVM::_print(std::ostream& out) const {
 	out << "SVM: ";
-	out << *svm.main_equation; // << std::endl;
+	out << *main_equation; // << std::endl;
 	return out;
 }
 
-
-int SVM::size()
-{
-	return problem.l;
-}
+int SVM::size() { return problem.l; }
 
 
 Equation* SVM::roundoff(int& num)

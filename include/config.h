@@ -9,9 +9,16 @@
 
 //#define __PRT
 
+//#include "iif.h"
+
 #define VARS (1)
-#define conj m
+//#define m conj
 //#define f1 m
+
+//#define conj m
+//#define ex1 m
+
+extern int (*target_program) (int*);
 
 #ifndef VARS 
 #define VARS (2)
@@ -21,7 +28,7 @@ const int max_items = 100000;
 const int q_items = 1000;
 
 const int init_exes = 4 * VARS;
-const int after_exes = 4 * VARS;
+const int after_exes = 2 * VARS;
 const int final_exes_times = 10; /* 10 times of current exes*/
 const int random_exes = 1;
 const int max_iter = 32;

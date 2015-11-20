@@ -36,7 +36,6 @@ int add_state_double(double first, ...);
 
 // function lists
 
-int m(int*);
 int m_int(int*);
 int m_double(double*);
 

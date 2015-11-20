@@ -206,15 +206,18 @@ int SVM_I::check_question_set(States& qset) {
 }
 
 
-
 std::ostream& operator << (std::ostream& out, const SVM_I& svm_i) {
+	return svm_i._print(out);
+}
+
+std::ostream& SVM_I::_print(std::ostream& out) const {
 	out << "SVM-I: ";
 	out << std::setprecision(16);
 	out << "{"; //" \n\t    " << *svm_i.main_equation;
-	for (int i = 0; i < svm_i.equ_num; i++) {
-		out << " \n\t  /\\ " << svm_i.equations[i];
+	for (int i = 0; i < equ_num; i++) {
+		out << " \n\t  /\\ " << equations[i];
 	}
-	out << "}\n";
+	out << "}";
 	return out;
 }
 
