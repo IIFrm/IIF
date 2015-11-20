@@ -40,6 +40,7 @@ PROJECT(InvariantInferenceFramework)
 #MESSAGE(STATUS "This is BINARY dir " ${PROJECT_BINARY_DIR})
 #MESSAGE(STATUS "This is SOURCE dir " ${PROJECT_SOURCE_DIR})
 
+IF(UNIX)
 set(Z3_ROOT "/usr" CACHE PATH "Root of Z3 distribution.")
 find_path(Z3_INCLUDE_DIR NAMES z3.h z3++.h PATHS ${Z3_ROOT}/include NO_DEFAULT_PATH)
 find_library(Z3_LIBRARY NAMES z3 PATHS ${Z3_ROOT}/lib NO_DEFAULT_PATH)
@@ -66,6 +67,7 @@ find_package_handle_standard_args(Z3
 	REQUIRED_VARS Z3_LIBRARY Z3_INCLUDE_DIR Z3_EXECUTABLE
 	VERSION_VAR Z3_VERSION_STRING)
 include_directories(${Z3_INCLUDE_DIR})
+ENDIF(UNIX)
 
 
 INCLUDE_DIRECTORIES(include)
@@ -82,9 +84,13 @@ AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 AUX_SOURCE_DIRECTORY(examples DIR_SRCS)
 
 ADD_EXECUTABLE(IIF_learn targets/iif_learn.cpp ${DIR_SRCS} ${HEADERS})
+IF(UNIX)
 target_link_libraries(IIF_learn ${Z3_LIBRARY})
+ENDIF(UNIX)
 
+IF(UNIX)
 ADD_EXECUTABLE(z3_driver targets/z3_driver.cpp ${DIR_SRCS} ${HEADERS})
 target_link_libraries(z3_driver ${Z3_LIBRARY})
+ENDIF(UNIX)
 #ADD_EXECUTABLE(svm_learn target/main.cpp ${DIR_SRCS} ${HEADERS})
 #ADD_EXECUTABLE(perceptron_learn target/main_perceptron.cpp ${DIR_SRCS} ${HEADERS})

@@ -3,7 +3,9 @@
 //#include <cstdio>
 #include <cstdlib>
 #include <vector>
+#ifdef linux
 #include "z3++.h"
+#endif
 //#include <cstring>
 #include <iostream>
 using namespace z3;
@@ -140,6 +142,7 @@ int Equation::imply(const Equation& e2) {
 
 
 bool Equation::imply(const Equation& e2) {
+#ifdef linux
 	std::cout << "-------------Imply solving-------------\n";
 	Equation& e1 = *this;
 	z3::config cfg;
@@ -191,6 +194,8 @@ bool Equation::imply(const Equation& e2) {
 		std::cout << "False" << std::endl;
 		return false;
 	}
+#endif
+	return false;
 }
 
 
