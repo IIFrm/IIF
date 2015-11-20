@@ -39,6 +39,8 @@ class Equation{
 		Equation(double a0, ...);
 
 		Equation(const Equation& equ);
+		
+		Equation& operator = (const Equation& rhs);
 
 		friend std::ostream& operator << (std::ostream& out, const Equation& equ);
 

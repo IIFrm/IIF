@@ -74,6 +74,16 @@ Equation::Equation(const Equation& equ) {
 		theta[i] = equ.theta[i];
 }
 
+
+Equation& Equation::operator=(const Equation& rhs) {
+	if (this == &rhs) { return *this; }
+	theta0 = rhs.theta0;
+	for (int i = 0; i < VARS; i++)
+		theta[i] = rhs.theta[i];
+	return *this;
+}
+
+
 std::ostream& operator << (std::ostream& out, const Equation& equ) {
 	out << std::setprecision(16) << equ.theta[0] << "{0}";
 	for (int j = 1; j < VARS; j++)
@@ -159,19 +169,26 @@ bool Equation::imply(const Equation& e2) {
 	std::vector<z3::expr> theta1;
 	std::vector<z3::expr> theta2;
 	char name[8];
+	char real[65];
 	for (int i = 0; i < VARS; i++) {
 		//sprintf(name, "%c", 'a' + i);
 		sprintf(name, "x%d", i);
-		z3::expr temp = c.real_const(name);
-		x.push_back(temp);
-		temp = c.real_val((__int64)e1.theta[i]);
-		theta1.push_back(temp);
-		temp = c.real_val((__int64)e2.theta[i]);
-		theta2.push_back(temp);
+		z3::expr tmp = c.real_const(name);
+		x.push_back(tmp);
+		
+		snprintf(real, 64, "%2.8f", e1.theta[i]);
+		tmp = c.real_val(real);
+		theta1.push_back(tmp);
+
+		snprintf(real, 64, "%2.8f", e2.theta[i]);
+		tmp = c.real_val(real);
+		theta2.push_back(tmp);
 	}
 
-	z3::expr expr1 = c.real_val((__int64)e1.theta0);
-	z3::expr expr2 = c.real_val((__int64)e2.theta0);
+	snprintf(real, 64, "%2.8f", e1.theta0);
+	z3::expr expr1 = c.real_val(real);
+	snprintf(real, 64, "%2.8f", e2.theta0);
+	z3::expr expr2 = c.real_val(real);
 	//std::cout << "expr1: " << expr1 << std::endl;
 	//std::cout << "expr2: " << expr2 << std::endl;
 
@@ -187,7 +204,7 @@ bool Equation::imply(const Equation& e2) {
 	
 	//z3::expr final_expr = z3::implies((z3::expr)expr1, (z3::expr)expr2);
 	z3::expr query = implies(hypo, conc);
-	std::cout << "Query: " << query << std::endl; 
+	std::cout << "Query : " << query << std::endl; 
 	std::cout << "Answer: ";
 	
 	z3::solver s(c);

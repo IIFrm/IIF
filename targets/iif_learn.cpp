@@ -511,10 +511,11 @@ svm_i_step2:
 	std::cout << "Hypothesis Invairant: ";
 	std::cout << " \n\t ------------------------------------------------------";
 	std::cout << " \n\t |     " << equs[0];
-	for (int i = 0; i < equation_num; i++) {
+	for (int i = 1; i < equation_num; i++) {
 		std::cout << " \n\t |  /\\ " << equs[i];
 	}
 	std::cout << " \n\t ------------------------------------------------------";
+	std::cout << "\n";
 
 	unset_console_color(std::cout);
 

@@ -5,7 +5,6 @@
   > Created Time: Wed Oct 28 01:47:17 2015
  ************************************************************************/
 //#include "header.h"
-#define VARS (2)
 #include "config.h"
 #include "ml_algo.h"
 #include "svm.h"
@@ -30,8 +29,10 @@ States* gsets = &global_states_sets[1];
 int main(int argc, char** argv)
 {
 	//char RET_TRANS[20][5] = {"False", "True", "Could Not Answer", "Timeout", "Unhandled Error"};
-	Equation e1(3.0, 1.0, 1.0);
-	Equation e2(2.0, 1.0, 1.0);
+	Equation e1(-3.4, 1.44524345);
+	Equation e2(-2.0, 1.5626422);
+	std::cout << "e1: " << e1 << std::endl;
+	std::cout << "e2: " << e2 << std::endl;
 	int ret = e1.imply(e2);
 	/*
 	std::cout << "[" << e1 << "]\t==>\t[" << e2 << "]? ";

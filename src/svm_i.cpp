@@ -1,4 +1,6 @@
 #include "svm_i.h"
+#include "string.h"
+#include <vector>
 
 SVM_I::SVM_I(void(*f) (const char*), int size, int equ) : SVM(f, size), max_equ(equ) {
 	negatives = NULL;
@@ -7,7 +9,7 @@ SVM_I::SVM_I(void(*f) (const char*), int size, int equ) : SVM(f, size), max_equ(
 	equations = new Equation[max_equ];
 	model = NULL;
 
-	
+
 	param.svm_type = C_SVC;
 	param.kernel_type = LINEAR;
 	param.degree = 3;
@@ -27,7 +29,7 @@ SVM_I::SVM_I(void(*f) (const char*), int size, int equ) : SVM(f, size), max_equ(
 	param.weight = NULL;
 	if (f != NULL)
 		svm_set_print_string_function(f);
-	
+
 
 	//for (int i = 0; i < max_size; i++)
 	//	training_label[i] = -1;
@@ -101,6 +103,34 @@ int SVM_I::train()
 #ifdef __PRT
 			std::cout << "finish classified..." << std::endl;
 #endif				
+			std::cout << *this << "\n check implication...\n";
+			std::vector<bool> vv(equ_num, true);
+
+			for (int i = 1; i < equ_num; i++) {
+				for (int j = 0; j < i; j++) {
+					//std::cout << "(" << i << " => " << j <<  ") @@@ ";
+					if (equations[i].imply(equations[j]) == true) {
+						//vv[j] = false;
+						for (int k = j; k < equ_num - 1; k++)
+							equations[k] = equations[k+1];
+						equ_num--;
+						i--;
+						j--;
+					}
+				}
+			}
+			set_console_color(std::cout, RED);
+			/*
+			std::cout << "REMOVE INDEX [";
+			for (int i = 0; i < equ_num; i++) 
+				if (vv[i] == false) 
+					std::cout << i << ",";
+			std::cout << "]\n";
+			vv.clear();
+			*/
+			std::cout << *this << "\n";
+			unset_console_color(std::cout);
+
 			return 0;
 		}
 
@@ -135,19 +165,27 @@ int SVM_I::train()
 #ifdef __PRT
 		std::cout << equations[equ_num];
 #endif
-		
-		/*
-		std::cout << "check implication...\n";
-		for (int i = 0; i < equ_num; i++) {
-			if (equations[equ_num].imply(equations[i]) == true) {
-			// we can remove equations[i]
-				std::cout << "We can remove equation " << i << ": " << equations[i] << std::endl;
-				for (int j = i; j < equ_num; j++) 
-					equations[j] = equations[j+1];
-				equ_num--;
-			}
+
+
+		//if (equ_num > 0) {
+		//std::cout << *this << std::endl;
+		/*std::cout << "check implication...\n";
+		  for (int i = 0; i < equ_num; i++) {
+		  if (equations[equ_num].imply(equations[i]) == true) {
+		// we can remove equations[i]
+		set_console_color(std::cout, RED);
+		std::cout << "We can remove equation " << i << ": " << equations[i] << std::endl;
+		unset_console_color(std::cout);
+		for (int j = i; j < equ_num; j++) 
+		equations[j] = equations[j+1];
+		equ_num--;
+		i--;
+		break;
+		}
 		}
 		*/
+		//std::cout << *this << std::endl;
+		//}
 
 		double precision = check_postives_and_one_negative();
 		svm_free_and_destroy_model(&model);
@@ -229,7 +267,7 @@ std::ostream& SVM_I::_print(std::ostream& out) const {
 	out << std::setprecision(16);
 	out << " \n\t ------------------------------------------------------";
 	out << " \n\t |     " << equations[0];
-	for (int i = 0; i < equ_num; i++) {
+	for (int i = 1; i < equ_num; i++) {
 		out << " \n\t |  /\\ " << equations[i];
 	}
 	out << " \n\t ------------------------------------------------------";
@@ -342,4 +380,4 @@ int SVM_I::get_misclassified(int& idx) // negative points may be misclassified.
 #endif
 	idx = -1;
 	return 0;	
-}
+	}
