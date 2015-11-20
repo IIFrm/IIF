@@ -6,10 +6,12 @@
 #include "iif_assert.h"
 #include <iostream>
 
-int nondet() {
-	return rand() % 4;
-	return rand() % 20;
-}
+//#define conj target_program
 
+int f1(int*);
+int f2(int*);
+int f3(int*);
+int ex1(int*);
 int conj(int*);
+
 #endif

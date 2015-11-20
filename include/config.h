@@ -8,9 +8,6 @@
 #define _CONFIG_H_
 
 //#define __PRT
-
-//#include "iif.h"
-
 #define VARS (1)
 //#define m conj
 //#define f1 m

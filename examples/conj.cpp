@@ -1,5 +1,10 @@
 #include "iif.h"
 
+static int nondet() {
+	return rand() % 4;
+	return rand() % 20;
+}
+
 int conj(int* a)
 {
 	int x;
@@ -23,4 +28,4 @@ int conj(int* a)
 	return 0;
 }
 
-int(*target_program)(int*) = conj;
+//int(*target_program)(int*) = conj;

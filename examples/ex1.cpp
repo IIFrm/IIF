@@ -1,5 +1,10 @@
 #include "iif.h"
 
+static int nondet() {
+	return rand() % 4;
+	return rand() % 20;
+}
+
 int ex1(int* a) {
 	int x;
 	int y;
