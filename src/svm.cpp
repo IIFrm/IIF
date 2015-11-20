@@ -2,8 +2,10 @@
 #include "svm_core.h"
 #include "string.h"
 
-SVM::SVM(void (*f) (const char*)) {
+SVM::SVM(void (*f) (const char*), int size): max_size(size) {
 	problem.l = 0;
+	training_set = new double*[max_size];
+	training_label = new double[max_size];
 
 	main_equation = NULL;
 	model = NULL;
@@ -28,7 +30,7 @@ SVM::SVM(void (*f) (const char*)) {
 	if (f != NULL)
 		svm_set_print_string_function(f);
 
-	for (int i = 0; i < 2 * max_items; i++)
+	for (int i = 0; i < max_size; i++)
 		training_label[i] = -1;
 	problem.x = (svm_node**)(training_set);
 	problem.y = training_label;
@@ -47,6 +49,18 @@ SVM::~SVM() {
 int SVM::prepare_training_data(States* gsets, int& pre_positive_size, int& pre_negative_size) {
 	int cur_positive_size = gsets[POSITIVE].size();
 	int cur_negative_size = gsets[NEGATIVE].size();
+	if (cur_positive_size + cur_negative_size >= max_size) {
+		int previous_max_size = max_size;
+		while (cur_positive_size + cur_negative_size >= max_size)
+			max_size *= 2;
+		double** previous_training_set = training_set;
+		training_set = new double*[max_size];
+		memmove(training_set, previous_training_set, previous_max_size * sizeof(double**));
+
+		double* previous_training_label = training_label;
+		training_label = new double[max_size];
+		memmove(training_label, previous_training_label, previous_max_size * sizeof(double*));
+	}
 
 	std::cout << "+[";
 	std::cout << cur_positive_size - pre_positive_size << "|";
@@ -65,12 +79,12 @@ int SVM::prepare_training_data(States* gsets, int& pre_positive_size, int& pre_n
 	// move the negative states from old OFFSET: [pre_positive_size] to new OFFSET: [cur_positive_size]
 	memmove(training_set + cur_positive_size, training_set + pre_positive_size, pre_negative_size * sizeof(double*));
 	// add new positive states at OFFSET: [pre_positive_size]
-	for (int i = pre_positive_size; i < cur_positive_size; i++) {
+	for (int i = 0 /*pre_positive_size*/; i < cur_positive_size; i++) {
 		training_set[i] = gsets[POSITIVE].values[i];
 		training_label[i] = 1;
 	}
 	// add new negative states at OFFSET: [cur_positive_size + pre_negative_size]
-	for (int i = pre_negative_size; i < cur_negative_size; i++) {
+	for (int i = 0 /*pre_negative_size*/; i < cur_negative_size; i++) {
 		training_set[cur_positive_size + i] = gsets[NEGATIVE].values[i];
 	}
 	problem.l = cur_positive_size + cur_negative_size;

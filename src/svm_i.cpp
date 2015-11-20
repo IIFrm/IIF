@@ -1,13 +1,13 @@
 #include "svm_i.h"
 
-SVM_I::SVM_I(void(*f) (const char*), Equation* eq, int equ) : SVM(f), max_equ(equ) {
+SVM_I::SVM_I(void(*f) (const char*), int size, int equ) : SVM(f, size), max_equ(equ) {
 	negatives = NULL;
-	main_equation = eq;
+	//main_equation = eq;
 	equ_num = 0;
 	equations = new Equation[max_equ];
 	model = NULL;
 
-
+	
 	param.svm_type = C_SVC;
 	param.kernel_type = LINEAR;
 	param.degree = 3;
@@ -27,9 +27,10 @@ SVM_I::SVM_I(void(*f) (const char*), Equation* eq, int equ) : SVM(f), max_equ(eq
 	param.weight = NULL;
 	if (f != NULL)
 		svm_set_print_string_function(f);
+	
 
-	for (int i = 0; i < 2 * max_items; i++)
-		training_label[i] = -1;
+	//for (int i = 0; i < max_size; i++)
+	//	training_label[i] = -1;
 	problem.x = (svm_node**)(training_set);
 	problem.y = training_label;
 
@@ -49,6 +50,19 @@ int SVM_I::prepare_training_data(States* gsets, int& pre_positive_size, int& pre
 	int cur_positive_size = gsets[POSITIVE].size();
 	int cur_negative_size = gsets[NEGATIVE].size();
 
+	if (cur_positive_size + 1 >= max_size) {
+		int previous_max_size = max_size;
+		while (cur_positive_size + 1 >= max_size)
+			max_size *= 2;
+		double** previous_training_set = training_set;
+		training_set = new double*[max_size];
+		memmove(training_set, previous_training_set, previous_max_size * sizeof(double**));
+
+		double* previous_training_label = training_label;
+		training_label = new double[max_size];
+		memmove(training_label, previous_training_label, previous_max_size * sizeof(double*));
+	}
+
 	std::cout << "+[";
 	std::cout << cur_positive_size - pre_positive_size << "|";
 	std::cout << cur_negative_size - pre_negative_size << "";
@@ -62,7 +76,7 @@ int SVM_I::prepare_training_data(States* gsets, int& pre_positive_size, int& pre
 	// training set & label layout:
 	// data :  0 | positive states ...
 	// add new positive states at OFFSET: [pre_positive_size]
-	for (int i = pre_positive_size; i < cur_positive_size; i++) {
+	for (int i = 0/*pre_positive_size*/; i < cur_positive_size; i++) {
 		training_set[i] = gsets[POSITIVE].values[i];
 		training_label[i] = 1;
 	}
@@ -76,14 +90,14 @@ int SVM_I::prepare_training_data(States* gsets, int& pre_positive_size, int& pre
 
 int SVM_I::train()
 {
-	if (problem.y == NULL || problem.x == NULL || negatives == NULL)
-		return -1;
+	if (problem.y == NULL || problem.x == NULL || negatives == NULL) return -1;
 
 	for (equ_num = 0; equ_num < max_equ; equ_num++) {
 		int misidx = -1;
 		int ret = get_misclassified(misidx);
 		if (ret == -1) return -1;  // something wrong in misclassified.
 		if ((ret == 0) && (misidx == -1)) {	// can divide all the negative points correctly
+
 #ifdef __PRT
 			std::cout << "finish classified..." << std::endl;
 #endif				
@@ -213,11 +227,12 @@ std::ostream& operator << (std::ostream& out, const SVM_I& svm_i) {
 std::ostream& SVM_I::_print(std::ostream& out) const {
 	out << "SVM-I: ";
 	out << std::setprecision(16);
-	out << "{"; //" \n\t    " << *svm_i.main_equation;
+	out << " \n\t ------------------------------------------------------";
+	out << " \n\t |     " << equations[0];
 	for (int i = 0; i < equ_num; i++) {
-		out << " \n\t  /\\ " << equations[i];
+		out << " \n\t |  /\\ " << equations[i];
 	}
-	out << "}";
+	out << " \n\t ------------------------------------------------------";
 	return out;
 }
 
@@ -236,7 +251,7 @@ Equation* SVM_I::roundoff(int& num)
 	Equation* equs = new Equation[equ_num]; // + 1];
 	//main_equation->roundoff(equs[0]);
 	for (int i = 0; i < equ_num; i++)
-		equations[i].roundoff(equs[i + 1]);
+		equations[i].roundoff(equs[i]);
 	return equs;
 }
 

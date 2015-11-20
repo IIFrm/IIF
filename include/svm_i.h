@@ -8,8 +8,8 @@
 
 class SVM_I : public SVM
 {
-private:
-	const int max_equ;
+protected:
+	int max_equ;
 
 public:
 	svm_model* model;
@@ -18,7 +18,7 @@ public:
 	svm_parameter param;
 	States* negatives; 
 
-	SVM_I(void(*f) (const char*) = NULL, Equation* eq = NULL, int equ = 16);
+	SVM_I(void(*f) (const char*) = NULL, int size = 10000, int equ = 16);
 
 	~SVM_I();
 

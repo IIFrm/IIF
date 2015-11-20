@@ -10,10 +10,12 @@ class SVM : public ML_Algo
 		Equation* main_equation;
 		svm_parameter param;
 		svm_problem problem;
-		double training_label[max_items * 2];
-		double* training_set[max_items * 2];
+		//double training_label[max_items * 2];
+		//double* training_set[max_items * 2];
+		double* training_label; // [max_items * 2];
+		double** training_set; // [max_items * 2];
 
-		SVM(void (*f) (const char*) = NULL);
+		SVM(void (*f) (const char*) = NULL, int size = 10000);
 
 		virtual ~SVM(); 
 
@@ -35,7 +37,8 @@ class SVM : public ML_Algo
 
 		virtual int predict(double* v, int label = 0);
 
-	private:
+	protected:
+		int max_size;
 		
 };
 

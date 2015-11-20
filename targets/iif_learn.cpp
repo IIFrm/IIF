@@ -1,14 +1,3 @@
-/*************************************************************************
-  > File Name: main.cpp
-  > Author: Li Jiaying
-  > Mail: lijiaying1989@gmail.com 
-  > Created Time: Wed Oct 28 01:47:17 2015
- ************************************************************************/
-//#include "header.h"
-//#define VARS (1)
-//#define conj m
-
-
 #include "config.h"
 #include "ml_algo.h"
 #include "svm.h"
@@ -323,7 +312,7 @@ svm_step2:
 	int pre_equation_num = 1;
 	//start SVM_I training
 	assert(b_svm_i == true);
-	SVM_I* svm_i = new SVM_I(print_null, p);
+	SVM_I* svm_i = new SVM_I(print_null);
 	if (p == NULL) 
 		svm_i->main_equation = new Equation();
 
@@ -515,15 +504,18 @@ svm_i_step2:
 
 
 	std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
-	std::cout << "finish running svm-I for " << rnd - svm_i_start << " times." << std::endl;
+	std::cout << "Finish running svm-I for " << rnd - svm_i_start << " times." << std::endl;
 	int equation_num = -1;
 	Equation* equs = svm_i->roundoff(equation_num);
 	set_console_color(std::cout);
-	std::cout << "Hypothesis Invairant: {\n";
-	std::cout << "\t     " << equs[0] << std::endl;
-	for (int i = 1; i < equation_num; i++)
-		std::cout << "\t  /\\ " << equs[i] << std::endl;
-	std::cout << "}" << std::endl;
+	std::cout << "Hypothesis Invairant: ";
+	std::cout << " \n\t ------------------------------------------------------";
+	std::cout << " \n\t |     " << equs[0];
+	for (int i = 0; i < equation_num; i++) {
+		std::cout << " \n\t |  /\\ " << equs[i];
+	}
+	std::cout << " \n\t ------------------------------------------------------";
+
 	unset_console_color(std::cout);
 
 

@@ -38,7 +38,8 @@ int States::add_states(double st[][VARS], int len) {
 	if (index[p_index] + len >= max_size) {
 		//std::cerr << "exceed maximium program states." << std::endl;
 		int previous_max_size = max_size;
-		max_size *= 2;
+		while (index[p_index] + len >= max_size)
+			max_size *= 2;
 		double(*previous_values)[VARS] = values;
 		if ((values = new double[max_size][VARS]) == NULL)
 			return -1;
