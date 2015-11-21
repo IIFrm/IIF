@@ -17,3 +17,6 @@ int f3(int* a) {
 	iif_assert(x + y >= 0);
 	return 0;
 }
+
+int main()
+{return 0;}

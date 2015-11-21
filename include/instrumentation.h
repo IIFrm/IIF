@@ -6,7 +6,7 @@
 
 #include <stdarg.h>
 
-extern States* gsets;
+//extern States* gsets;
 
 enum { NEGATIVE = -1, QUESTION, POSITIVE, COUNT_EXAMPLE };	/* trace_type */
 
@@ -41,6 +41,6 @@ int m_double(double*);
 
 
 int before_loop();
-int after_loop();
+int after_loop(States *);
 
 #endif

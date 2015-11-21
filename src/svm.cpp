@@ -62,6 +62,7 @@ int SVM::prepare_training_data(States* gsets, int& pre_positive_size, int& pre_n
 		memmove(training_label, previous_training_label, previous_max_size * sizeof(double*));
 	}
 
+#ifdef __PRT
 	std::cout << "+[";
 	std::cout << cur_positive_size - pre_positive_size << "|";
 	std::cout << cur_negative_size - pre_negative_size << "";
@@ -69,6 +70,7 @@ int SVM::prepare_training_data(States* gsets, int& pre_positive_size, int& pre_n
 	std::cout << cur_positive_size << "+|";
 	std::cout << cur_negative_size << "-";
 	std::cout << "]";
+#endif
 
 	//double** training_set = (double**)(problem.x);
 	//double* training_label = (double*)(problem.y);
@@ -100,7 +102,7 @@ int SVM::train() {
 	const char* error_msg = svm_check_parameter(&problem, &param);
 	if (error_msg) {
 		std::cout << "ERROR: " << error_msg << std::endl;
-		exit(-1);
+		return -1;
 	}
 	model = svm_train(&problem, &param);
 	/*for (int i = 0; i < 100000; i++)
@@ -126,10 +128,14 @@ double SVM::predict_on_training_set() {
 
 int SVM::check_question_set(States& qset) {
 	if (main_equation == NULL) return -1;
+#ifdef __PRT
 	std::cout << " [" << qset.traces_num() << "]";
+#endif
 	for (int i = 0; i < qset.p_index; i++) {
 		int pre = -1, cur = 0;
+#ifdef __PRT
 		std::cout << ".";
+#endif
 		//std::cout << "\t\t" << i << ">";
 		//gsets[QUESTION].print_trace(i);
 		for (int j = qset.index[i]; j < qset.index[i + 1]; j++) {
@@ -142,16 +148,22 @@ int SVM::check_question_set(States& qset) {
 				qset.print_trace(i);
 				for (int j = qset.index[i]; j < qset.index[i + 1]; j++) {
 					cur = Equation::calc(*main_equation, qset.values[j]);
+#ifdef __PRT
 					std::cout << ((cur >= 0) ? "+" : "-");
+#endif
 				}
+#ifdef __PRT
 				std::cout << std::endl;
+#endif
 				return -1;
 			}
 			pre = cur;
 		}
 		//std::cout << "END" << std::endl;
 	}
+#ifdef __PRT
 	std::cout << " [PASS]";
+#endif
 	return 0;
 }
 

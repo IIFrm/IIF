@@ -23,25 +23,18 @@ IF(UNIX)
 ENDIF(UNIX)
 
 
+PROJECT(InvariantInferenceFramework)
 
-OPTION(PRINT_ALL "Print All Message" ON)
+#OPTION(PRINT_ALL "Print All Message" ON)
 #IF(PRINT_ALL)
 #	ADD_DEFINITIONS (-D__PRT)
 #ENDIF(PRINT_ALL)
-
 ## add new macro definition
-ADD_DEFINITIONS (-D__PRT)
-ADD_DEFINITIONS (-D__PRT_SVM_I)
+#ADD_DEFINITIONS (-D__PRT)
+#ADD_DEFINITIONS (-D__PRT_SVM_I)
 #ADD_DEFINITIONS (-D__PRT_QUERY)
+ADD_DEFINITIONS (-DVARS=1)
 
-
-#SET(CMAKE_BUILD_TYPE "Debug")  
-#SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")  
-#SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
-PROJECT(InvariantInferenceFramework)
-
-#MESSAGE(STATUS "This is BINARY dir " ${PROJECT_BINARY_DIR})
-#MESSAGE(STATUS "This is SOURCE dir " ${PROJECT_SOURCE_DIR})
 
 IF(UNIX)
 set(Z3_ROOT "/usr" CACHE PATH "Root of Z3 distribution.")
@@ -73,28 +66,39 @@ include_directories(${Z3_INCLUDE_DIR})
 ENDIF(UNIX)
 
 
+
+
+
+
+
+
 INCLUDE_DIRECTORIES(include)
-FILE(GLOB HEADERS "include/*.h")
+FILE(GLOB HEADER "include/*.h")
 SOURCE_GROUP("Header Files" FILES ${HEADERS}) 
 #add_executable(${MODULE_NAME} ${SOURCES} ${CURRENT_HEADERS})
 
-FILE(GLOB EXAMPLES "examples/*.cpp")
-SOURCE_GROUP("Examples" FILES ${EXAMPLES}) 
-AUX_SOURCE_DIRECTORY(examples DIR_EXPS)
+FILE(GLOB TESTS "test/*.cpp")
+SOURCE_GROUP("Tests" FILES ${TESTS}) 
+AUX_SOURCE_DIRECTORY(test DIR_TEST)
 
-
-#include_directories(include/program)
-#aux_source_directory(include DIR_SRCS)
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 
-ADD_EXECUTABLE(IIF_learn targets/iif_learn.cpp ${DIR_SRCS} ${DIR_EXPS} ${HEADERS})
-IF(UNIX)
-target_link_libraries(IIF_learn ${Z3_LIBRARY})
-ENDIF(UNIX)
+FOREACH(test_src ${TESTS})
+	#MESSAGE(STATUS "Processing file ${test_src}")
+	#string(REGEX REPLACE ".*/(.*)/.cpp" "/1" test_obj ${test_src})
+	string(REGEX REPLACE ".cpp" "" tmp_obj ${test_src})
+	string(REGEX REPLACE ".*/" "" test_obj ${tmp_obj})
+	ADD_EXECUTABLE(${test_obj} ${test_src} ${DIR_SRCS} ${HEADER})
+	#MESSAGE(${test_obj})
+	target_link_libraries(${test_obj} ${Z3_LIBRARY})
+ENDFOREACH(test_src)
 
-IF(UNIX)
-	ADD_EXECUTABLE(z3_driver targets/z3_driver.cpp ${DIR_SRCS} ${DIR_EXPS} ${HEADERS})
-target_link_libraries(z3_driver ${Z3_LIBRARY})
-ENDIF(UNIX)
-#ADD_EXECUTABLE(svm_learn target/main.cpp ${DIR_SRCS} ${HEADERS})
-#ADD_EXECUTABLE(perceptron_learn target/main_perceptron.cpp ${DIR_SRCS} ${HEADERS})
+#ADD_EXECUTABLE(IIF_learn targets/iif_learn.cpp ${DIR_SRCS} ${DIR_TESTS} ${HEADER})
+#IF(UNIX)
+#target_link_libraries(IIF_learn ${Z3_LIBRARY})
+#ENDIF(UNIX)
+
+#IF(UNIX)
+#	ADD_EXECUTABLE(z3_test targets/z3_test.cpp ${DIR_SRCS} ${DIR_TESTS} ${HEADER})
+#target_link_libraries(z3_test ${Z3_LIBRARY})
+#ENDIF(UNIX)

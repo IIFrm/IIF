@@ -1,18 +1,15 @@
-/*************************************************************************
-  > File Name: iif.cpp
-  > Author: Li Jiaying
-  > Mail: lijiaying1989@gmail.com 
-  > Created Time: Wed Oct 28 01:47:17 2015
- ************************************************************************/
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
 #include <time.h>
 //#include "header.h"
 #include "instrumentation.h"
+#include <assert.h>
 
 bool _passP = false;
 bool _passQ = false;
+int assume_times = 0;
+int assert_times = 0;
 char lt[4][10] =  { "Negative", "Question", "Positive", "Bugtrace"};
 char(*LabelTable)[10] = &lt[1];
 
@@ -53,14 +50,18 @@ int before_loop()
 	temp_index = 0;
 	_passP = false;
 	_passQ = false;
+	assume_times = 0;
+	assert_times = 0;
 	//std::cout << "[done]";
 	return 0;
 }
 
 
-int after_loop()
+int after_loop(States* gsets)
 {
 	int label = 0;
+	assert(assume_times == 1);
+	assert(assert_times == 1);
 	if (_passP && _passQ) {
 		label = 1;
 	} else if (!_passP && !_passQ) {

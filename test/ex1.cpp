@@ -28,3 +28,6 @@ int ex1(int* a) {
 	iif_assert(xa + 2 * ya >= 0);
 	return 0;
 }
+
+int main()
+{return 0;}

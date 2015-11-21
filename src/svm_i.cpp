@@ -65,6 +65,7 @@ int SVM_I::prepare_training_data(States* gsets, int& pre_positive_size, int& pre
 		memmove(training_label, previous_training_label, previous_max_size * sizeof(double*));
 	}
 
+#ifdef __PRT
 	std::cout << "+[";
 	std::cout << cur_positive_size - pre_positive_size << "|";
 	std::cout << cur_negative_size - pre_negative_size << "";
@@ -72,6 +73,7 @@ int SVM_I::prepare_training_data(States* gsets, int& pre_positive_size, int& pre
 	std::cout << cur_positive_size << "+|";
 	std::cout << cur_negative_size << "-";
 	std::cout << "]";
+#endif				
 
 
 	// prepare new training data set
@@ -205,13 +207,17 @@ double SVM_I::predict_on_training_set()
 
 int SVM_I::check_question_set(States& qset) {
 	//if (main_equation == NULL) return -1;
+#ifdef __PRT
 	std::cout << " [" << qset.traces_num() << "]";
+#endif 
 	for (int i = 0; i < qset.p_index; i++) {
 		int pre = -1, cur = 0;
+#ifdef __PRT
 		set_console_color(std::cout, GREEN);
 		std::cout << ".";
 		//std::cout << "\t\t" << i << ">";
 		//gsets[QUESTION].print_trace(i);
+#endif 
 
 		for (int j = qset.index[i]; j < qset.index[i + 1]; j++) {
 			cur = predict(qset.values[j]);
@@ -220,22 +226,30 @@ int SVM_I::check_question_set(States& qset) {
 				// deal with wrong question trace.
 				// Trace back to print out the whole trace and the predicted labels.
 				set_console_color(std::cout, RED);
+#ifdef __PRT
 				std::cerr << "\t\t[FAIL]\n \t  Predict wrongly on Question trace";
+#endif 
 				qset.print_trace(i);
 				for (int j = qset.index[i]; j < qset.index[i + 1]; j++) {
 					cur = predict(qset.values[j]);
+#ifdef __PRT
 					std::cout << ((cur >= 0) ? "+" : "-");
+#endif 
 				}
+#ifdef __PRT
 				std::cout << std::endl;
 				unset_console_color(std::cout);
+#endif 
 				return -1;
 			}
 			pre = cur;
 		}
 		//std::cout << "END" << std::endl;
 	}
+#ifdef __PRT
 	std::cout << " [PASS]";
 	unset_console_color(std::cout);
+#endif 
 	return 0;
 }
 
@@ -256,16 +270,21 @@ int SVM_I::get_converged(Equation* previous_equations, int previous_equation_num
 			if ((similar_vector[j] == false) && (equations[i].is_similar(previous_equations[j]) == 0))  {	
 				// the equation in last has not been set
 				// and it is similar to the current equation 
+#ifdef __PRT
 				set_console_color(std::cout, GREEN);
 				std::cout << "<" << i << "-" << j << "> ";
-				similar_vector[j] = true;
 				unset_console_color(std::cout);
+#endif 
+				similar_vector[j] = true;
 				break;
-			} else {
+			} 
+#ifdef __PRT
+			else {
 				set_console_color(std::cout, RED);
 				std::cout << "<" << i << "-" << j << "> ";
 				unset_console_color(std::cout);
 			}
+#endif 
 		}
 	}
 	for (int i = 0; i < previous_equation_num; i++) {

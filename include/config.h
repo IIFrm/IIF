@@ -8,9 +8,10 @@
 #define _CONFIG_H_
 
 //#define __PRT
-#define VARS (1)
+//#define VARS (1)
 
 extern int (*target_program) (int*);
+bool register_program(int (*func)(int*), char* func_name = 0);
 
 #ifndef VARS 
 #define VARS (2)

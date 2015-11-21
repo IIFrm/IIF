@@ -14,3 +14,6 @@ int f2(int* a) {
 	iif_assume((x + y >= 0) && (x - y >= 0));
 	return 0;
 }
+
+int main()
+{return 0;}

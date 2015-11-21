@@ -36,7 +36,7 @@ class IIF_learn{
 			//target_program
 			func(a);
 
-			after_loop();
+			after_loop(gsets);
 			if (gsets[COUNT_EXAMPLE].traces_num() > 0) {
 				set_console_color(std::cout, RED);
 				std::cout << "}\nProgram BUG! Program have encountered a Counter-Example trace." << std::endl;
