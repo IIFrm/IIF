@@ -31,13 +31,19 @@ if(UNIX)
 	set(CMAKE_NM      "/usr/bin/llvm-nm")
 	set(CMAKE_OBJDUMP "/usr/bin/llvm-objdump")
 	set(CMAKE_RANLIB  "/usr/bin/llvm-ranlib")
-
+endif(UNIX)
 
 	# config for Z3 solver...
+if(UNIX)
 	set(Z3_ROOT "/usr" CACHE PATH "Root of Z3 distribution.")
-	find_path(Z3_INCLUDE_DIR NAMES z3.h z3++.h PATHS ${Z3_ROOT}/include NO_DEFAULT_PATH)
 	find_library(Z3_LIBRARY NAMES z3 PATHS ${Z3_ROOT}/lib NO_DEFAULT_PATH)
+endif(UNIX)
+if(WIN32)
+	set(Z3_ROOT "C:/Program Files/z3" CACHE PATH "Root of Z3 distribution.")
+	find_library(Z3_LIBRARY NAMES libz3.lib PATHS ${Z3_ROOT}/bin NO_DEFAULT_PATH)
+endif(WIN32)
 
+	find_path(Z3_INCLUDE_DIR NAMES z3.h z3++.h PATHS ${Z3_ROOT}/include NO_DEFAULT_PATH)
 	mark_as_advanced(Z3_EXECUTABLE Z3_INCLUDE_DIR Z3_LIBRARY)
 	find_program (Z3_EXECUTABLE
 		NAMES z3 PATHS ${Z3_ROOT} PATH_SUFFIXES bin 
@@ -60,7 +66,7 @@ if(UNIX)
 		REQUIRED_VARS Z3_LIBRARY Z3_INCLUDE_DIR Z3_EXECUTABLE
 		VERSION_VAR Z3_VERSION_STRING)
 	include_directories(${Z3_INCLUDE_DIR})
-endif(UNIX)
+	#endif(UNIX)
 
 
 
@@ -76,9 +82,9 @@ file(GLOB TEST "test/*.cpp")
 source_group("Test" FILES ${TEST}) 
 
 # add include dir and source dir into project
-configure_file(config.h.in config.h)
+configure_file(config.h.in ../include/config.h)
 include_directories (include)
-include_directories(.)
+#include_directories(.)
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 AUX_SOURCE_DIRECTORY(test DIR_TEST)
 
@@ -92,8 +98,8 @@ foreach(test_src ${TEST})
 	#message(${tmp_obj} "\t" ${test_obj} "\t" ${Vars})
 	if (Vars EQUAL VARS)
 		add_executable(${test_obj} ${test_src} ${DIR_SRCS} ${HEADER})
-		if(UNIX)
+		#if(UNIX)
 			target_link_libraries(${test_obj} ${Z3_LIBRARY})
-		endif(UNIX)
+			#endif(UNIX)
 	endif(Vars EQUAL VARS)
 endforeach(test_src)
