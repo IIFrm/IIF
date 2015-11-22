@@ -25,17 +25,16 @@ mkdir build
 cd build
 cmake .. -G [your platform]  // just use cmake .. if you are not sure
 make
-./IIF_learn
 ```
 
 ## Add your tests to this framework
 #####As InvariantInferenceFramework is integrated with your examples, you need to do some modification on source code level before you can test your examples.
-* READ one example file in test folder before you write your own test.
-* rewrite your loop code in a function with the name you like, my\_loop\_example for instance
-* modify the function and function name as parameter for register\_target which is called by main function
+* READ carefully one example file in test folder before you write your own test.
+* rewrite your loop code in a function with the name you like, my\_loop\_example for instance.
+* modify function and function name as parameter for register\_target which is called by main function.
 * rename your test file with the number of parameters and a "\_" as prefix. 
 * modify the second line in CMakeLists.txt in the project folder as the numbers of parameter you need in your program.
-* After the above step, you can make your project and then run the executable file
+* After the above step, you can make your project and then run the executable file.
 
 
 <!--#Optional dependencies:

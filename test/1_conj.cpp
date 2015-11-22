@@ -32,31 +32,25 @@ int conj(int* a)
 
 int main(int argc, char** argv)
 {
-	if (argc >= 3) {
-		minv = atoi(argv[1]);
-		maxv = atoi(argv[2]);
-	}
-
 	States global_states_sets[4];
 	States* gsets = &global_states_sets[1];
 
-	if (register_program(conj, "conj") == false) {
+	if (register_program(conj, "conj") == false){ 
 		return -1;
-	}
+	} 
 
+	std::cout << "TRY SVM method ...\n";
 	IIF_svm_learn isl(gsets, target_program);
-	if (isl.learn() == 0) {
-		std::cout << "END.\n";
+	if (isl.learn() == 0) {  
 		return 0;
 	}
 
-	std::cout << "TRY SVM-I method again...\n";
+	std::cout << "TRY SVM-I method ...\n";
 	IIF_svm_i_learn isil(gsets, target_program);
-	if (isil.learn() == 0) {
-		std::cout << "END.\n";
+	if (isil.learn() == 0) {	
 		return 0;
 	}
 
-	std::cout << "TRY other method again...\n";
+	//std::cout << "TRY other method again...\n";
 	return 0;
 }

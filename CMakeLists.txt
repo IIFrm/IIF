@@ -1,6 +1,15 @@
 cmake_minimum_required (VERSION 2.8)
 set(VARS 3)
 
+project(InvariantInferenceFramework)
+set(PRECISION 3)
+#add_definitions (-D__PRT)
+option(PRINT_ALL "Print All Message" OFF)
+if(PRINT_ALL)
+	add_definitions (-D__PRT_SVM_I)
+	add_definitions (-D__PRT_QUERY)
+endif(PRINT_ALL)
+
 
 if(UNIX)
 	set(CMAKE_C_COMPILER             "clang")
@@ -55,15 +64,6 @@ endif(UNIX)
 
 
 
-project(InvariantInferenceFramework)
-
-set(PRECISION 3)
-#add_definitions (-D__PRT)
-option(PRINT_ALL "Print All Message" OFF)
-if(PRINT_ALL)
-	add_definitions (-D__PRT_SVM_I)
-	add_definitions (-D__PRT_QUERY)
-endif(PRINT_ALL)
 
 
 
@@ -86,8 +86,9 @@ AUX_SOURCE_DIRECTORY(test DIR_TEST)
 foreach(test_src ${TEST})
 	#string(REGEX REPLACE ".*/(.*).cpp" "/1" test_obj ${test_src})
 	string(REGEX REPLACE ".cpp" "" tmp_obj ${test_src})
-	string(REGEX REPLACE ".*/" "" test_obj ${tmp_obj})
-	string(REGEX REPLACE "_.*" "" Vars ${test_obj})
+	string(REGEX REPLACE ".*/" "" tmp2_obj ${tmp_obj})
+	string(REGEX REPLACE "[0-9]+_" "" test_obj ${tmp2_obj})
+	string(REGEX REPLACE "_.*" "" Vars ${tmp2_obj})
 	#message(${tmp_obj} "\t" ${test_obj} "\t" ${Vars})
 	if (Vars EQUAL VARS)
 		add_executable(${test_obj} ${test_src} ${DIR_SRCS} ${HEADER})

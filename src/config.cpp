@@ -5,8 +5,6 @@
 
 extern int assume_times, assert_times;
 int(*target_program)(int*) = NULL;
-//= conj;
-//int(*target_program)(int*) = f1;
 
 
 int minv = -100, maxv = 100;

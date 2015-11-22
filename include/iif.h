@@ -8,6 +8,7 @@
 #include "svm_i.h"
 #include "color.h"
 #include "equation.h"
+#include "states.h"
 #include "iif_learn.h"
 #include "iif_svm_learn.h"
 #include "iif_svm_i_learn.h"
@@ -23,10 +24,15 @@
 //#define conj target_program
 extern int minv, maxv;
 
-//int f1(int*);
-//int f2(int*);
-//int f3(int*);
-//int ex1(int*);
-//int conj(int*);
+/*#define create_state_sets(gsets) do{\
+	States global_states_sets[4];\
+	gsets = &global_states_sets[1];\
+} while(0);
+
+#define delete_state_sets(gsets) do {\
+	States* p = &gsets[-1];\
+	delete []p;\
+} while(0);
+*/
 
 #endif
