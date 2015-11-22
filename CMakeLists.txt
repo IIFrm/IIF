@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.8)
-set(VARS 3)
+set(VARS 2)
 
 project(InvariantInferenceFramework)
 set(PRECISION 3)
