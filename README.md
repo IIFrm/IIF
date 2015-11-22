@@ -12,6 +12,7 @@ there is not much dependencies you need to satisfy before build the whole projec
 ###Dependencies, for Windows/Linux/MacOSX Users:
 * [cmake](https://cmake.org/) version 2.8 or later.
 * [libsvm](https://www.csie.ntu.edu.tw/~cjlin/libsvm/) remember to put {libsvm}/bin folder into $PATH.
+* [z3](https://github.com/Z3Prover/z3)
 * [klee](https://klee.github.io/) This is optional currently.
 * [Build tools](), such as make, Visual Studio 2015, or Xcode.
 
