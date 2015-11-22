@@ -30,10 +30,12 @@ make
 
 ## Add your tests to this framework
 #####As InvariantInferenceFramework is integrated with your examples, you need to do some modification on source code level before you can test your examples.
-* rewrite your loop code in a function with the name you like, my_loop_example for instance
-* put the function in {examples/examples.cpp} or create a new file contains the function and remember to include "../include/header.h"
-* edit file {include/config.h}, add "define my_loop_example m", and "#define VARS (the number of parameters in your loop)"
-* make your project and then run the executable file
+* READ one example file in test folder before you write your own test.
+* rewrite your loop code in a function with the name you like, my\_loop\_example for instance
+* modify the function and function name as parameter for register\_target which is called by main function
+* rename your test file with the number of parameters and a "\_" as prefix. 
+* modify the second line in CMakeLists.txt in the project folder as the numbers of parameter you need in your program.
+* After the above step, you can make your project and then run the executable file
 
 
 <!--#Optional dependencies:
