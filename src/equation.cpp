@@ -12,7 +12,7 @@
 using namespace z3;
 #endif
 
-const double UPBOUND = pow(0.1, 3);
+const double UPBOUND = pow(0.1, PRECISION);
 inline double _roundoff(double x)
 {
 	int inx = nearbyint(x);

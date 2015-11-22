@@ -84,7 +84,7 @@ solve:
 				if (i != pick)
 					reminder -= sol.x[i] * equ->theta[i];
 			}
-			sol.x[pick] = nearbyint(reminder / equ->theta[pick]) + rand() % 3 - 1;
+			sol.x[pick] = int(reminder / equ->theta[pick]) + rand() % 2;
 			if (sol.x[pick] > maxv || sol.x[pick] < minv) {
 				if (++times > 10) // sometimes we can not get solution between given scope
 					// we try 10 times, if still no suitable solution, we pick the last one...
@@ -104,7 +104,7 @@ solve:
 			return res;
 		}
 
-		int is_similar(const Equation& e, int precision = 4);
+		int is_similar(const Equation& e, int precision = PRECISION);
 
 		int roundoff(Equation& e);
 

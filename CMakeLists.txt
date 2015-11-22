@@ -1,40 +1,30 @@
-CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
-IF(UNIX)
-	SET (CMAKE_C_COMPILER             "clang")
-	SET (CMAKE_C_FLAGS                "-Wall -std=c99")
-	SET (CMAKE_C_FLAGS_DEBUG          "-g")
-	SET (CMAKE_C_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
-	SET (CMAKE_C_FLAGS_RELEASE        "-O4 -DNDEBUG")
-	SET (CMAKE_C_FLAGS_RELWITHDEBINFO "-O2 -g")
-
-	SET (CMAKE_CXX_COMPILER             "clang++")
-	SET (CMAKE_CXX_FLAGS                "-Wall -g")
-	SET (CMAKE_CXX_FLAGS_DEBUG          "-g")
-	SET (CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
-	SET (CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG")
-	SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
-
-
-	SET (CMAKE_AR      "/usr/bin/llvm-ar")
-	SET (CMAKE_LINKER  "/usr/bin/llvm-ld")
-	SET (CMAKE_NM      "/usr/bin/llvm-nm")
-	SET (CMAKE_OBJDUMP "/usr/bin/llvm-objdump")
-	SET (CMAKE_RANLIB  "/usr/bin/llvm-ranlib")
-ENDIF(UNIX)
-
-
-project(InvariantInferenceFramework)
-add_definitions (-DVARS=2)
-add_definitions (-D__PRT)
-
-option(PRINT_ALL "Print All Message" OFF)
-if(PRINT_ALL)
-	add_definitions (-D__PRT_SVM_I)
-	add_definitions (-D__PRT_QUERY)
-endif(PRINT_ALL)
+cmake_minimum_required (VERSION 2.8)
+set(VARS 3)
 
 
 if(UNIX)
+	set(CMAKE_C_COMPILER             "clang")
+	set(CMAKE_C_FLAGS                "-Wall -std=c99")
+	set(CMAKE_C_FLAGS_DEBUG          "-g")
+	set(CMAKE_C_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
+	set(CMAKE_C_FLAGS_RELEASE        "-O4 -DNDEBUG")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O2 -g")
+
+	set(CMAKE_CXX_COMPILER             "clang++")
+	set(CMAKE_CXX_FLAGS                "-Wall -g")
+	set(CMAKE_CXX_FLAGS_DEBUG          "-g")
+	set(CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
+	set(CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG")
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+
+	set(CMAKE_AR      "/usr/bin/llvm-ar")
+	set(CMAKE_LINKER  "/usr/bin/llvm-ld")
+	set(CMAKE_NM      "/usr/bin/llvm-nm")
+	set(CMAKE_OBJDUMP "/usr/bin/llvm-objdump")
+	set(CMAKE_RANLIB  "/usr/bin/llvm-ranlib")
+
+
+	# config for Z3 solver...
 	set(Z3_ROOT "/usr" CACHE PATH "Root of Z3 distribution.")
 	find_path(Z3_INCLUDE_DIR NAMES z3.h z3++.h PATHS ${Z3_ROOT}/include NO_DEFAULT_PATH)
 	find_library(Z3_LIBRARY NAMES z3 PATHS ${Z3_ROOT}/lib NO_DEFAULT_PATH)
@@ -65,6 +55,15 @@ endif(UNIX)
 
 
 
+project(InvariantInferenceFramework)
+
+set(PRECISION 3)
+#add_definitions (-D__PRT)
+option(PRINT_ALL "Print All Message" OFF)
+if(PRINT_ALL)
+	add_definitions (-D__PRT_SVM_I)
+	add_definitions (-D__PRT_QUERY)
+endif(PRINT_ALL)
 
 
 
@@ -77,21 +76,23 @@ file(GLOB TEST "test/*.cpp")
 source_group("Test" FILES ${TEST}) 
 
 # add include dir and source dir into project
+configure_file(config.h.in config.h)
 include_directories (include)
+include_directories(.)
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 AUX_SOURCE_DIRECTORY(test DIR_TEST)
 
 # genearte executable for each test...
 foreach(test_src ${TEST})
-	#MESSAGE(STATUS "Processing file ${test_src}")
 	#string(REGEX REPLACE ".*/(.*).cpp" "/1" test_obj ${test_src})
 	string(REGEX REPLACE ".cpp" "" tmp_obj ${test_src})
 	string(REGEX REPLACE ".*/" "" test_obj ${tmp_obj})
-	string(REGEX REPLACE "([0-9]*)_.*/" "/1" Vars ${test_obj})
-	message(${tmp_obj} "\t" ${test_obj} "\t" ${Vars})
-	ADD_EXECUTABLE(${test_obj} ${test_src} ${DIR_SRCS} ${HEADER})
-	#MESSAGE(${test_obj}
-	if(UNIX)
-		target_link_libraries(${test_obj} ${Z3_LIBRARY})
-	endif(UNIX)
+	string(REGEX REPLACE "_.*" "" Vars ${test_obj})
+	#message(${tmp_obj} "\t" ${test_obj} "\t" ${Vars})
+	if (Vars EQUAL VARS)
+		add_executable(${test_obj} ${test_src} ${DIR_SRCS} ${HEADER})
+		if(UNIX)
+			target_link_libraries(${test_obj} ${Z3_LIBRARY})
+		endif(UNIX)
+	endif(Vars EQUAL VARS)
 endforeach(test_src)
