@@ -13,12 +13,14 @@
 
 static void print_null(const char *s) {}
 
-IIF_svm_i_learn::IIF_svm_i_learn(States* gsets, int (*func)(int*)) : IIF_learn(gsets, func) { 
+IIF_svm_i_learn::IIF_svm_i_learn(States* gsets, int (*func)(int*), int max_iteration) : IIF_learn(gsets, func) { 
 	svm_i = new SVM_I(print_null);
+	this->max_iteration = max_iteration;
 }
 
 IIF_svm_i_learn::IIF_svm_i_learn() : IIF_learn() { 
 	svm_i = new SVM_I(print_null);
+	this->max_iteration = max_iter;
 }
 
 
@@ -38,7 +40,7 @@ int IIF_svm_i_learn::learn()
 	double pass_rate = 1;
 
 
-	for (rnd = 1; ((rnd <= max_iter) && (pass_rate >= 1)); rnd++) {
+	for (rnd = 1; ((rnd <= max_iteration) && (pass_rate >= 1)); rnd++) {
 		//	init_svm_i:
 		std::cout << "[" << rnd << "]";
 #ifdef __PRT
@@ -76,12 +78,11 @@ int IIF_svm_i_learn::learn()
 
 #ifdef __PRT
 		std::cout << "\t(2) prepare training data... ";
-		std::cout << std::endl;
 #endif
 		svm_i->prepare_training_data(gsets, pre_positive_size, pre_negative_size);
 
 #ifdef __PRT
-		std::cout << "\t(3) start training... ";
+		std::cout << "\n\t(3) start training... ";
 #endif
 		int ret = svm_i->train();
 		if (ret == -1)
@@ -192,7 +193,7 @@ int IIF_svm_i_learn::learn()
 	std::cout << "Finish running svm_i for " << rnd << " times." << std::endl;
 
 	int ret = 0;
-	if ((b_converged) && (rnd <= max_iter)) {
+	if ((b_converged) && (rnd <= max_iteration)) {
 		int equation_num = -1;
 		Equation* equs = svm_i->roundoff(equation_num);
 		set_console_color(std::cout, YELLOW);
@@ -207,7 +208,7 @@ int IIF_svm_i_learn::learn()
 		delete[]equs;
 	}
 
-	if ((pass_rate < 1) || (rnd >= max_iter)) {
+	if ((pass_rate < 1) || (rnd >= max_iteration)) {
 		set_console_color(std::cout, RED);
 		std::cout << "  Cannot divide by SVM_I perfectly.\n";
 		unset_console_color(std::cout);

@@ -1,20 +1,31 @@
-//#include "header.h"
 #include "iif.h"
 
-int f3(int* a) {
-	int x = a[0];
-	int y = a[1];
-	int z = a[2];
-	iif_assume(x + y + z >= 0);
-	while (z> 0) {
-		recordi(x, y, z);
-		x++;
-		y++;
-		z -= 2;
-	}
+static int nondet() {
+	return rand() % 4;
+	return rand() % 20;
+}
 
-	recordi(x, y, z);
-	iif_assert(x + y >= 0);
+int ex1(int* a) {
+	int x;
+	int y;
+	int xa = a[0];
+	int ya = a[1];
+
+	iif_assume(xa + 2 * ya >= 0);
+	while (nondet()) {
+		recordi(xa, ya);
+		x = xa + 2 * ya;
+		y = -2 * xa + ya;
+
+		x++;
+		if (nondet()) y = y + x;
+		else y = y - x;
+
+		xa = x - 2 * y;
+		ya = 2 * x + y;
+	}
+	recordi(xa, ya);
+	iif_assert(xa + 2 * ya >= 0);
 	return 0;
 }
 
@@ -28,7 +39,7 @@ int main(int argc, char** argv)
 	States global_states_sets[4];
 	States* gsets = &global_states_sets[1];
 
-	if (register_program(conj, "conj") == false) {
+	if (register_program(ex1, "ex1") == false) {
 		return -1;
 	}
 

@@ -25,7 +25,7 @@ bool check_target_program(int (*func)(int*))
 }
 
 
-bool register_program(int (*func)(int*), char* func_name) 
+bool register_program(int (*func)(int*), const char* func_name) 
 {
 	if (check_target_program(func) == false) {
 		if (func_name == NULL) {

@@ -225,11 +225,11 @@ int SVM_I::check_question_set(States& qset) {
 			if ((pre > 0) && (cur < 0)) {
 				// deal with wrong question trace.
 				// Trace back to print out the whole trace and the predicted labels.
-				set_console_color(std::cout, RED);
 #ifdef __PRT
-				std::cerr << "\t\t[FAIL]\n \t  Predict wrongly on Question trace";
-#endif 
+				set_console_color(std::cout, RED);
+				std::cerr << "\t[FAIL]\n \t  Predict wrongly on Question trace";
 				qset.print_trace(i);
+#endif 
 				for (int j = qset.index[i]; j < qset.index[i + 1]; j++) {
 					cur = predict(qset.values[j]);
 #ifdef __PRT

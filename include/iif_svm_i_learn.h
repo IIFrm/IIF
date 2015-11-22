@@ -14,7 +14,7 @@
 
 class IIF_svm_i_learn: public IIF_learn {
 	public:
-		IIF_svm_i_learn(States* gsets, int (*func)(int*));
+		IIF_svm_i_learn(States* gsets, int (*func)(int*), int max_iteration = max_iter);
 
 		IIF_svm_i_learn();
 
@@ -22,6 +22,7 @@ class IIF_svm_i_learn: public IIF_learn {
 
 	protected:
 		SVM_I* svm_i;
+		int max_iteration;
 };
 
 #endif

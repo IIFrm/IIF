@@ -1,9 +1,11 @@
+//#include "header.h"
 #include "iif.h"
 
-int f2(int* a) {
+
+int f1(int* a){
 	int x = a[0];
 	int y = a[1];
-	iif_assume((x + y >= 0) && (x - y >= 0));
+	iif_assume (x + y > 0);
 	while (y > 0) {
 		recordi(x, y);
 		x++;
@@ -11,7 +13,7 @@ int f2(int* a) {
 	}
 
 	recordi(x, y);
-	iif_assume((x + y >= 0) && (x - y >= 0));
+	iif_assert (x > 0);
 	return 0;
 }
 
@@ -25,7 +27,7 @@ int main(int argc, char** argv)
 	States global_states_sets[4];
 	States* gsets = &global_states_sets[1];
 
-	if (register_program(conj, "conj") == false) {
+	if (register_program(f1, "f1") == false) {
 		return -1;
 	}
 
