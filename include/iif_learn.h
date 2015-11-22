@@ -59,7 +59,5 @@ class IIF_learn{
 		int (*func)(int*);
 };
 
-//void print_null(const char *s) {}
-
 
 #endif

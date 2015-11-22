@@ -15,7 +15,6 @@
 extern int maxv;
 extern int minv;
 
-//const double UPBOUND = pow(0.1, 3);
 
 inline double _roundoff(double x);
 
@@ -57,12 +56,12 @@ class Equation{
 				return 0;
 			}
 
-			int j; // justify whether all the coefficients are zeros...
+			int j; /// justify whether all the coefficients are zeros...
 			for (j = 0; j < VARS; j++) {
 				if (equ->theta[j] != 0) break;
 			}
-			// If all the coefficients are zeros....
-			// We just randomly pickup solutions to return
+			/// If all the coefficients are zeros....
+			/// We just randomly pickup solutions to return
 			if (j == VARS) {
 				for (int i = 0; i < VARS; i++) {
 					sol.x[i] = rand() % (maxv - minv + 1) + minv;
@@ -86,8 +85,10 @@ solve:
 			}
 			sol.x[pick] = int(reminder / equ->theta[pick]) + rand() % 2;
 			if (sol.x[pick] > maxv || sol.x[pick] < minv) {
-				if (++times > 10) // sometimes we can not get solution between given scope
-					// we try 10 times, if still no suitable solution, we pick the last one...
+				if (++times > 10) 
+					/** sometimes we can not get solution between given scope
+					*	 we try 10 times, if still no suitable solution, we pick the last one...
+					*/
 					goto solve;
 			}
 			//std::cout << "solved the equation to get one solution";

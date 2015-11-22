@@ -85,16 +85,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <ul>
 <li><a href="https://cmake.org/">cmake</a> version 2.8 or later.</li>
 <li><a href="https://www.csie.ntu.edu.tw/~cjlin/libsvm/">libsvm</a> remember to put {libsvm}/bin folder into $PATH.</li>
+<li><a href="https://github.com/Z3Prover/z3">z3</a></li>
 <li><a href="https://klee.github.io/">klee</a> This is optional currently.</li>
 <li>[Build tools](), such as make, Visual Studio 2015, or Xcode.</li>
 </ul>
-<p>###Build InvariantInferenceFramework </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;git clone git@github.com:lijiaying/InvariantInferenceFramework.git</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;cd InvariantInferenceFramework</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;cd test</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;mkdir build</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;cd build</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;cmake .. -G [your platform]  // just use cmake .. if you are not sure</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;make</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;./IIF_learn</div></div><!-- fragment --><h2>Add your tests to this framework</h2>
+<p>###Build InvariantInferenceFramework </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;git clone git@github.com:lijiaying/InvariantInferenceFramework.git</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;cd InvariantInferenceFramework</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;cd test</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;mkdir build</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;cd build</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;cmake .. -G [your platform]  // just use cmake .. if you are not sure</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;make</div></div><!-- fragment --><h2>Add your tests to this framework</h2>
 <h5>As InvariantInferenceFramework is integrated with your examples, you need to do some modification on source code level before you can test your examples.</h5>
 <ul>
-<li>rewrite your loop code in a function with the name you like, my_loop_example for instance</li>
-<li>put the function in {examples/examples.cpp} or create a new file contains the function and remember to include "../include/header.h"</li>
-<li>edit file {include/config.h}, add "define my_loop_example m", and "#define VARS (the number of parameters in your loop)"</li>
-<li>make your project and then run the executable file</li>
+<li>READ carefully one example file in test folder before you write your own test.</li>
+<li>rewrite your loop code in a function with the name you like, my_loop_example for instance.</li>
+<li>modify function and function name as parameter for register_target which is called by main function.</li>
+<li>rename your test file with the number of parameters and a "\_" as prefix.</li>
+<li>modify the second line in <a class="el" href="CMakeLists_8txt.html">CMakeLists.txt</a> in the project folder as the numbers of parameter you need in your program.</li>
+<li>After the above step, you can make your project and then run the executable file.</li>
 </ul>
 <h2>Experiments results:</h2>
 <ul>

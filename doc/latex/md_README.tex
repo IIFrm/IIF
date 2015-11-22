@@ -12,6 +12,7 @@ To build the framework currently is very easy, there is not much dependencies yo
 \begin{DoxyItemize}
 \item \href{https://cmake.org/}{\tt cmake} version 2.\+8 or later.
 \item \href{https://www.csie.ntu.edu.tw/~cjlin/libsvm/}{\tt libsvm} remember to put \{libsvm\}/bin folder into \$\+P\+A\+TH.
+\item \href{https://github.com/Z3Prover/z3}{\tt z3}
 \item \href{https://klee.github.io/}{\tt klee} This is optional currently.
 \item \mbox{[}Build tools\mbox{]}(), such as make, Visual Studio 2015, or Xcode.
 \end{DoxyItemize}
@@ -25,7 +26,6 @@ To build the framework currently is very easy, there is not much dependencies yo
 5 cd build
 6 cmake .. -G [your platform]  // just use cmake .. if you are not sure
 7 make
-8 ./IIF\_learn
 \end{DoxyCode}
 
 
@@ -35,10 +35,12 @@ To build the framework currently is very easy, there is not much dependencies yo
 
 
 \begin{DoxyItemize}
-\item rewrite your loop code in a function with the name you like, my\+\_\+loop\+\_\+example for instance
-\item put the function in \{examples/examples.\+cpp\} or create a new file contains the function and remember to include \char`\"{}../include/header.\+h\char`\"{}
-\item edit file \{include/config.\+h\}, add \char`\"{}define my\+\_\+loop\+\_\+example m\char`\"{}, and \char`\"{}\#define V\+A\+R\+S (the number of parameters in your loop)\char`\"{}
-\item make your project and then run the executable file
+\item R\+E\+AD carefully one example file in test folder before you write your own test.
+\item rewrite your loop code in a function with the name you like, my\+\_\+loop\+\_\+example for instance.
+\item modify function and function name as parameter for register\+\_\+target which is called by main function.
+\item rename your test file with the number of parameters and a \char`\"{}\textbackslash{}\+\_\+\char`\"{} as prefix.
+\item modify the second line in \hyperlink{CMakeLists_8txt}{C\+Make\+Lists.\+txt} in the project folder as the numbers of parameter you need in your program.
+\item After the above step, you can make your project and then run the executable file.
 \end{DoxyItemize}
 
 \subsection*{Experiments results\+:}
