@@ -1,3 +1,10 @@
+/** @file equation.h
+ *  @brief Defines the linear equation format and its solution format.
+ *
+ *  @author Li Jiaying
+ *  @bug No known bugs. 
+ */
+
 #ifndef _EQUATION_H_
 #define _EQUATION_H_
 
@@ -19,6 +26,11 @@ extern int minv;
 //inline double _roundoff(double x);
 
 
+/** \class Solution
+ *  @brief This class defines the format of a valid solution to an equation.
+ *
+ *  It contains values to each variants in an equation
+ */
 class Solution{
 	public:
 		/** @brief Default constructor.
@@ -46,11 +58,10 @@ class Solution{
 
 
 /** \class Equation
- *  @brief This class defines an equation by storeing all its coefficiencies.
+ *  @brief This class defines an equation by storing all its coefficiencies.
  *		   An equation is regarded a hyperplane in math.
  * 
- * $$\theta0 + \theta[0] * x_0 + \theta[1] * x_1 + ... + \theta[VARS] * x_{VARS} >= 0$$
- *
+ *  theta0 + theta[0] * x_0 + theta[1] * x_1 + ... + theta[VARS] * x_{VARS} >= 0
  */
 class Equation{
 	public:
@@ -135,6 +146,7 @@ class Equation{
 			for (j = 0; j < VARS; j++) {
 				if (equ->theta[j] != 0) break;
 			}
+			
 			/// If all the coefficients are zeros....
 			/// We just randomly pickup solutions to return
 			if (j == VARS) {
@@ -175,7 +187,7 @@ solve:
 
 		/** @brief This method is used to get the position info for the given point against given equation
 		 * 
-		 *	It just substitute variants with the given point.
+		 *	It just substitutes variants with the given point.
 		 *	
 		 *	@param equ is the given equation, should not be NULL
 		 *	@param sol is the tested solution, should not be NULL
@@ -191,23 +203,28 @@ solve:
 			return res;
 		}
 
-		/**
-		 * This method is used to check whether *this equation is similar to given equation e or not
-		 * *this ~= e ???
+		/** @brief This method is used to check whether *this equation is similar to given equation e or not.    
+		 *		   *this ~= e ???      
+		 * 
 		 * @param precision defines how much variance we can bare.
-		 * The default is 4, which means we can bare 0.0001 difference.
-		 * In this case 1 ~=1.00001, but 1!~=1.000011
+		 *		  The default is 4, which means we can bare 0.0001 difference.
+		 *		  In this case 1 ~=1.00001, but 1!~=1.000011
 		 */
 		int is_similar(const Equation& e, int precision = PRECISION);
 
-		/**
-		 * sometimes the equation has ugly coefficiencies
-		 * we want to make it elegent, which is the purpose of involing this method
-		 * Currently we have not done much work on this
-		 * We have not even use gcd function to adjust the coefficients.
-		 * For example.
+		/** @brief Do roundoff job for an equation
+		 *
+		 *	Sometimes the equation has ugly coefficiencies
+		 *	we want to make it elegent, which is the purpose of involing this method
+		 *	Currently we have not done much work on this
+		 *	We have not even use gcd function to adjust the coefficients.
+		 *	
+		 *	For example.
 		 *	1.2345 x1 >= 2.4690    ==>		x1 >= 2
 		 *	2 x1 >= 5.000001	   ==>		x1 >= 2.5	
+		 *
+		 *	@param e Contains the equation that has already rounded off
+		 *	@return int 0 if no error.
 		 */
 		int roundoff(Equation& e);
 
