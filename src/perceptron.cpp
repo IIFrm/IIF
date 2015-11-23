@@ -1,6 +1,6 @@
 #include "perceptron.h"
 #include "string.h"
-Perceptron::Perceptron(void (*f) (const char*), int max_size): max_size(max_size) {
+Perceptron::Perceptron(void (*f) (const char*), int max_size) /*: max_size(max_size)*/ {
 	length = 0;
 	main_equation = NULL;
 	for (int i = 0; i < 2 * max_items; i++)

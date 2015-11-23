@@ -9,7 +9,7 @@
 class Perceptron : public ML_Algo
 {
 	private:
-		const int max_size;
+		//const int max_size;
 	public:
 		Equation* main_equation;
 		double training_label[max_items * 2];
