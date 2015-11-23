@@ -28,6 +28,9 @@
 #include <assert.h>
 #include <iostream>
 #include <cstdlib>
+#include <signal.h>
+#include <sys/time.h>
+#include <unistd.h>
 
 //#define conj target_program
 extern int minv, maxv;

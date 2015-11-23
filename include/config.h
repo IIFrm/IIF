@@ -28,6 +28,7 @@
  */
 extern int (*target_program) (int*);
 
+
 /** @brief This function register the test program to the framework.
  *
  *	@param func The function to be tested
@@ -37,6 +38,10 @@ extern int (*target_program) (int*);
  */
 bool register_program(int (*func)(int*), const char* func_name = 0);
 
+
+/** @brief defines the timeout signal handler 
+ */
+void sig_alrm(int signo);
 
 /** @brief defines the initial max number items contains by states set. 
  *		   Better to be a number larger than 1000 

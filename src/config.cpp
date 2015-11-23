@@ -2,6 +2,8 @@
 #include "iif.h"
 #include "instrumentation.h"
 #include <iostream>
+#include <unistd.h>
+#include <stdlib.h>
 
 extern int assume_times, assert_times;
 int(*target_program)(int*) = NULL;
@@ -37,3 +39,7 @@ bool register_program(int (*func)(int*), const char* func_name)
 	return true;
 }
 
+void sig_alrm(int signo) {
+	std::cout << "\nTIMES UP!\n";
+	exit(-1);
+}

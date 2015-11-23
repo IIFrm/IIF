@@ -3,7 +3,7 @@ set(VARS 2)
 
 project(InvariantInferenceFramework)
 set(PRECISION 3)
-#add_definitions (-D__PRT)
+add_definitions (-D__PRT)
 option(PRINT_ALL "Print All Message" OFF)
 if(PRINT_ALL)
 	add_definitions (-D__PRT_SVM_I)
@@ -33,7 +33,7 @@ if(UNIX)
 	set(CMAKE_RANLIB  "/usr/bin/llvm-ranlib")
 endif(UNIX)
 
-	# config for Z3 solver...
+# config for Z3 solver...
 if(UNIX)
 	set(Z3_ROOT "/usr" CACHE PATH "Root of Z3 distribution.")
 	find_library(Z3_LIBRARY NAMES z3 PATHS ${Z3_ROOT}/lib NO_DEFAULT_PATH)
@@ -43,30 +43,30 @@ if(WIN32)
 	find_library(Z3_LIBRARY NAMES libz3.lib PATHS ${Z3_ROOT}/bin NO_DEFAULT_PATH)
 endif(WIN32)
 
-	find_path(Z3_INCLUDE_DIR NAMES z3.h z3++.h PATHS ${Z3_ROOT}/include NO_DEFAULT_PATH)
-	mark_as_advanced(Z3_EXECUTABLE Z3_INCLUDE_DIR Z3_LIBRARY)
-	find_program (Z3_EXECUTABLE
-		NAMES z3 PATHS ${Z3_ROOT} PATH_SUFFIXES bin 
-		DOC "z3 command line executable" NO_DEFAULT_PATH)
-	mark_as_advanced(Z3_EXECUTABLE)
+find_path(Z3_INCLUDE_DIR NAMES z3.h z3++.h PATHS ${Z3_ROOT}/include NO_DEFAULT_PATH)
+mark_as_advanced(Z3_EXECUTABLE Z3_INCLUDE_DIR Z3_LIBRARY)
+find_program (Z3_EXECUTABLE
+	NAMES z3 PATHS ${Z3_ROOT} PATH_SUFFIXES bin 
+	DOC "z3 command line executable" NO_DEFAULT_PATH)
+mark_as_advanced(Z3_EXECUTABLE)
 
-	if (Z3_EXECUTABLE)
-		execute_process (COMMAND ${Z3_EXECUTABLE} -version
-			OUTPUT_VARIABLE z3_version
-			ERROR_QUIET
-			OUTPUT_STRIP_TRAILING_WHITESPACE)
-		if (z3_version MATCHES "^Z3 version [0-9]")
-			string (REPLACE "Z3 version " "" Z3_VERSION_STRING ${z3_version})
-		endif()
+if (Z3_EXECUTABLE)
+	execute_process (COMMAND ${Z3_EXECUTABLE} -version
+		OUTPUT_VARIABLE z3_version
+		ERROR_QUIET
+		OUTPUT_STRIP_TRAILING_WHITESPACE)
+	if (z3_version MATCHES "^Z3 version [0-9]")
+		string (REPLACE "Z3 version " "" Z3_VERSION_STRING ${z3_version})
 	endif()
-	mark_as_advanced(Z3_VERSION_STRING)
+endif()
+mark_as_advanced(Z3_VERSION_STRING)
 
-	include (FindPackageHandleStandardArgs)
-	find_package_handle_standard_args(Z3
-		REQUIRED_VARS Z3_LIBRARY Z3_INCLUDE_DIR Z3_EXECUTABLE
-		VERSION_VAR Z3_VERSION_STRING)
-	include_directories(${Z3_INCLUDE_DIR})
-	#endif(UNIX)
+include (FindPackageHandleStandardArgs)
+find_package_handle_standard_args(Z3
+	REQUIRED_VARS Z3_LIBRARY Z3_INCLUDE_DIR Z3_EXECUTABLE
+	VERSION_VAR Z3_VERSION_STRING)
+include_directories(${Z3_INCLUDE_DIR})
+#endif(UNIX)
 
 
 
@@ -99,7 +99,7 @@ foreach(test_src ${TEST})
 	if (Vars EQUAL VARS)
 		add_executable(${test_obj} ${test_src} ${DIR_SRCS} ${HEADER})
 		#if(UNIX)
-			target_link_libraries(${test_obj} ${Z3_LIBRARY})
-			#endif(UNIX)
+		target_link_libraries(${test_obj} ${Z3_LIBRARY})
+		#endif(UNIX)
 	endif(Vars EQUAL VARS)
 endforeach(test_src)

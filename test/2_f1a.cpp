@@ -1,27 +1,26 @@
 #include "iif.h"
-#include <iostream>
 
-int test_template(int* a)
-{
-	int x;
-	x = a[0];
-	iif_assume(pre condition);
-	while (loop condition) {
-		recordi(x);
-		loop body;
+int f1a(int* a) {
+	int x = a[0];
+	int y = a[1];
+
+	iif_assume(x + y >= 0);
+	while (x >= 0) {
+		recordi(x, y);
+		x--;
+		y++;
 	}
-	recordi(x);
-	iif_assert(post condition);
+	recordi(x, y);
+	iif_assert(y > 0);
 	return 0;
 }
-
 
 int main(int argc, char** argv)
 {
 	States global_states_sets[4];
 	States* gsets = &global_states_sets[1];
 
-	if (register_program(test_template, "temp_template") == false){ 
+	if (register_program(f1a, "f1a") == false) {
 		return -1;
 	} 
 
