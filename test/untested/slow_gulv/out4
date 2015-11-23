@@ -1,5 +1,0 @@
-[H[2Jmake: 'ALL' is up to date.
-************************************** start **************************************************************
- ...1...svm...1...svm...1...svm...1...svm...1...svm...1...svm...1...svm...1...svm...1...svm...1...svm...1...svm...1COUNTER EXAMPLE! ./bin/markline exit with -1.
-./learn.sh  examples/gulv/ins_gulv.cpp 2 -500 40 > examples/gulv/out4
-Encounter a bug... Find out in file[./data/train1_1] at line[4--6]
