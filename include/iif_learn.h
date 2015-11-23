@@ -37,10 +37,10 @@ class IIF_learn{
 			func(a);
 
 			after_loop(gsets);
-			if (gsets[COUNT_EXAMPLE].traces_num() > 0) {
+			if (gsets[COUNTER_EXAMPLE].traces_num() > 0) {
 				set_console_color(std::cout, RED);
 				std::cout << "}\nProgram BUG! Program have encountered a Counter-Example trace." << std::endl;
-				std::cout << gsets[COUNT_EXAMPLE] << std::endl;
+				std::cout << gsets[COUNTER_EXAMPLE] << std::endl;
 				unset_console_color(std::cout);
 				exit(-1);
 			}
@@ -53,7 +53,7 @@ class IIF_learn{
 			gsets[NEGATIVE].label = -1;
 			gsets[QUESTION].label = 0;
 			gsets[POSITIVE].label = 1;
-			gsets[COUNT_EXAMPLE].label = 2;
+			gsets[COUNTER_EXAMPLE].label = 2;
 		}
 		States* gsets;
 		int (*func)(int*);

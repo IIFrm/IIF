@@ -1,3 +1,11 @@
+/** @file iif.h
+ *  @brief Contains all the files that needed to be included by a new test.
+ *  
+ *  By include this file, it should resolve all the reference errors to the framework.
+ *
+ *  @author Li Jiaying
+ *  @bug No found bugs
+ */
 #ifndef _IIF_H_
 #define _IIF_H_
 

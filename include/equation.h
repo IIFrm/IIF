@@ -185,7 +185,7 @@ solve:
 			return 0;
 		}
 
-		/** @brief This method is used to get the position info for the given point against given equation
+		/** @brief This static method is used to get the position info for the given point against given equation
 		 * 
 		 *	It just substitutes variants with the given point.
 		 *	

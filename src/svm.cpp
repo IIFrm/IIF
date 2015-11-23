@@ -172,12 +172,12 @@ int SVM::check_question_set(States& qset) {
 }
 
 
-int SVM::get_converged(Equation* last_equation, int equation_num) {
+int SVM::get_converged(Equation* previous_equation, int equation_num) {
 	if (equation_num != 1) {
 		std::cout << "SVM::get_converged: Unexpected equation number parameter.\n";
 		return -2;
 	}
-	return main_equation->is_similar(*last_equation);
+	return main_equation->is_similar(*previous_equation);
 }
 
 

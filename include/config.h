@@ -1,5 +1,5 @@
 /** @file config.h
- *  @brief Provide most configuration information for whole project. 
+ *  @brief Provide most configuration information for the whole project. 
  *
  *  This file contains most of the setting which are used to customize the project.
  *
