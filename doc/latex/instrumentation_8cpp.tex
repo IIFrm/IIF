@@ -1,0 +1,115 @@
+\hypertarget{instrumentation_8cpp}{}\section{src/instrumentation.cpp File Reference}
+\label{instrumentation_8cpp}\index{src/instrumentation.\+cpp@{src/instrumentation.\+cpp}}
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$cstdio$>$}\\*
+{\ttfamily \#include $<$cstdlib$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}instrumentation.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{instrumentation_8cpp_a5e789b884c2400c0791c4844c7f27ceb}{add\+\_\+state\+\_\+int} (int first...)
+\item 
+int \hyperlink{instrumentation_8cpp_a79372536ec6cea03f5965c1ba3cc53d0}{add\+\_\+state\+\_\+double} (double first,...)
+\item 
+int \hyperlink{instrumentation_8cpp_aabbf0f2d0ec3548d46e27866fc768e42}{before\+\_\+loop} ()
+\item 
+int \hyperlink{instrumentation_8cpp_af71513a816090ea5fe0c352784f96135}{after\+\_\+loop} (\hyperlink{classStates}{States} $\ast$gsets)
+\item 
+int \hyperlink{instrumentation_8cpp_a82b822bd13f3f17569fd7093d6c33b5b}{m\+\_\+double} (double $\ast$p)
+\item 
+int \hyperlink{instrumentation_8cpp_a8c67e75f0e4dfa4ec954a186f999c7f3}{m\+\_\+int} (int $\ast$p)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{instrumentation_8cpp_a73db7f19ba8224c4530f45fd832ef42b}{\+\_\+passP} = false
+\item 
+bool \hyperlink{instrumentation_8cpp_a87e762b3355fdc144393f0936c14f8ca}{\+\_\+passQ} = false
+\item 
+int \hyperlink{instrumentation_8cpp_a552efb21fe547d54565d8379dc8a95bc}{assume\+\_\+times} = 0
+\item 
+int \hyperlink{instrumentation_8cpp_a3b38e8ff0d716993240c2bbc5c25a59e}{assert\+\_\+times} = 0
+\item 
+char \hyperlink{instrumentation_8cpp_aae59c04ad495aa8b74707611bd476ef0}{lt} \mbox{[}4\mbox{]}\mbox{[}10\mbox{]} = \{ \char`\"{}Negative\char`\"{}, \char`\"{}Question\char`\"{}, \char`\"{}Positive\char`\"{}, \char`\"{}Bugtrace\char`\"{}\}
+\item 
+char($\ast$ \hyperlink{instrumentation_8cpp_adac0754712ac0d028c73fc7784e80d48}{Label\+Table} )\mbox{[}10\mbox{]} = \&\hyperlink{instrumentation_8cpp_aae59c04ad495aa8b74707611bd476ef0}{lt}\mbox{[}1\mbox{]}
+\item 
+double \hyperlink{instrumentation_8cpp_a63173cd509d92f01f5fada717cdedefd}{temp\+\_\+states} \mbox{[}256\mbox{]}\mbox{[}\hyperlink{config_8h_a1d6565a8ececd15de44965eec4790919}{V\+A\+RS}\mbox{]}
+\item 
+int \hyperlink{instrumentation_8cpp_ae30d349b541b91c49e0bc0bf7184cc12}{temp\+\_\+index}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!add\+\_\+state\+\_\+double@{add\+\_\+state\+\_\+double}}
+\index{add\+\_\+state\+\_\+double@{add\+\_\+state\+\_\+double}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{add\+\_\+state\+\_\+double(double first,...)}]{\setlength{\rightskip}{0pt plus 5cm}int add\+\_\+state\+\_\+double (
+\begin{DoxyParamCaption}
+\item[{double}]{first, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8cpp_a79372536ec6cea03f5965c1ba3cc53d0}{}\label{instrumentation_8cpp_a79372536ec6cea03f5965c1ba3cc53d0}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!add\+\_\+state\+\_\+int@{add\+\_\+state\+\_\+int}}
+\index{add\+\_\+state\+\_\+int@{add\+\_\+state\+\_\+int}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{add\+\_\+state\+\_\+int(int first...)}]{\setlength{\rightskip}{0pt plus 5cm}int add\+\_\+state\+\_\+int (
+\begin{DoxyParamCaption}
+\item[{int}]{first...}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8cpp_a5e789b884c2400c0791c4844c7f27ceb}{}\label{instrumentation_8cpp_a5e789b884c2400c0791c4844c7f27ceb}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!after\+\_\+loop@{after\+\_\+loop}}
+\index{after\+\_\+loop@{after\+\_\+loop}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{after\+\_\+loop(\+States $\ast$gsets)}]{\setlength{\rightskip}{0pt plus 5cm}int after\+\_\+loop (
+\begin{DoxyParamCaption}
+\item[{{\bf States} $\ast$}]{gsets}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8cpp_af71513a816090ea5fe0c352784f96135}{}\label{instrumentation_8cpp_af71513a816090ea5fe0c352784f96135}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!before\+\_\+loop@{before\+\_\+loop}}
+\index{before\+\_\+loop@{before\+\_\+loop}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{before\+\_\+loop()}]{\setlength{\rightskip}{0pt plus 5cm}int before\+\_\+loop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8cpp_aabbf0f2d0ec3548d46e27866fc768e42}{}\label{instrumentation_8cpp_aabbf0f2d0ec3548d46e27866fc768e42}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!m\+\_\+double@{m\+\_\+double}}
+\index{m\+\_\+double@{m\+\_\+double}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{m\+\_\+double(double $\ast$p)}]{\setlength{\rightskip}{0pt plus 5cm}int m\+\_\+double (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{p}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8cpp_a82b822bd13f3f17569fd7093d6c33b5b}{}\label{instrumentation_8cpp_a82b822bd13f3f17569fd7093d6c33b5b}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!m\+\_\+int@{m\+\_\+int}}
+\index{m\+\_\+int@{m\+\_\+int}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{m\+\_\+int(int $\ast$p)}]{\setlength{\rightskip}{0pt plus 5cm}int m\+\_\+int (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{p}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8cpp_a8c67e75f0e4dfa4ec954a186f999c7f3}{}\label{instrumentation_8cpp_a8c67e75f0e4dfa4ec954a186f999c7f3}
+
+
+\subsection{Variable Documentation}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!\+\_\+passP@{\+\_\+passP}}
+\index{\+\_\+passP@{\+\_\+passP}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{\+\_\+passP}]{\setlength{\rightskip}{0pt plus 5cm}bool \+\_\+passP = false}\hypertarget{instrumentation_8cpp_a73db7f19ba8224c4530f45fd832ef42b}{}\label{instrumentation_8cpp_a73db7f19ba8224c4530f45fd832ef42b}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!\+\_\+passQ@{\+\_\+passQ}}
+\index{\+\_\+passQ@{\+\_\+passQ}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{\+\_\+passQ}]{\setlength{\rightskip}{0pt plus 5cm}bool \+\_\+passQ = false}\hypertarget{instrumentation_8cpp_a87e762b3355fdc144393f0936c14f8ca}{}\label{instrumentation_8cpp_a87e762b3355fdc144393f0936c14f8ca}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!assert\+\_\+times@{assert\+\_\+times}}
+\index{assert\+\_\+times@{assert\+\_\+times}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{assert\+\_\+times}]{\setlength{\rightskip}{0pt plus 5cm}int assert\+\_\+times = 0}\hypertarget{instrumentation_8cpp_a3b38e8ff0d716993240c2bbc5c25a59e}{}\label{instrumentation_8cpp_a3b38e8ff0d716993240c2bbc5c25a59e}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!assume\+\_\+times@{assume\+\_\+times}}
+\index{assume\+\_\+times@{assume\+\_\+times}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{assume\+\_\+times}]{\setlength{\rightskip}{0pt plus 5cm}int assume\+\_\+times = 0}\hypertarget{instrumentation_8cpp_a552efb21fe547d54565d8379dc8a95bc}{}\label{instrumentation_8cpp_a552efb21fe547d54565d8379dc8a95bc}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!Label\+Table@{Label\+Table}}
+\index{Label\+Table@{Label\+Table}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{Label\+Table}]{\setlength{\rightskip}{0pt plus 5cm}char($\ast$ Label\+Table)\mbox{[}10\mbox{]} = \&{\bf lt}\mbox{[}1\mbox{]}}\hypertarget{instrumentation_8cpp_adac0754712ac0d028c73fc7784e80d48}{}\label{instrumentation_8cpp_adac0754712ac0d028c73fc7784e80d48}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!lt@{lt}}
+\index{lt@{lt}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{lt}]{\setlength{\rightskip}{0pt plus 5cm}char lt\mbox{[}4\mbox{]}\mbox{[}10\mbox{]} = \{ \char`\"{}Negative\char`\"{}, \char`\"{}Question\char`\"{}, \char`\"{}Positive\char`\"{}, \char`\"{}Bugtrace\char`\"{}\}}\hypertarget{instrumentation_8cpp_aae59c04ad495aa8b74707611bd476ef0}{}\label{instrumentation_8cpp_aae59c04ad495aa8b74707611bd476ef0}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!temp\+\_\+index@{temp\+\_\+index}}
+\index{temp\+\_\+index@{temp\+\_\+index}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{temp\+\_\+index}]{\setlength{\rightskip}{0pt plus 5cm}int temp\+\_\+index}\hypertarget{instrumentation_8cpp_ae30d349b541b91c49e0bc0bf7184cc12}{}\label{instrumentation_8cpp_ae30d349b541b91c49e0bc0bf7184cc12}
+\index{instrumentation.\+cpp@{instrumentation.\+cpp}!temp\+\_\+states@{temp\+\_\+states}}
+\index{temp\+\_\+states@{temp\+\_\+states}!instrumentation.\+cpp@{instrumentation.\+cpp}}
+\subsubsection[{temp\+\_\+states}]{\setlength{\rightskip}{0pt plus 5cm}double temp\+\_\+states\mbox{[}256\mbox{]}\mbox{[}{\bf V\+A\+RS}\mbox{]}}\hypertarget{instrumentation_8cpp_a63173cd509d92f01f5fada717cdedefd}{}\label{instrumentation_8cpp_a63173cd509d92f01f5fada717cdedefd}

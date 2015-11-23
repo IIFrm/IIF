@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['set',['set',['../CMakeLists_8txt.html#ad8bbd4e0055fe01d70cd6d7d03e74430',1,'CMakeLists.txt']]],
-  ['string',['string',['../CMakeLists_8txt.html#ab8642d11c358abbfe001aa300d5d4219',1,'CMakeLists.txt']]]
+  ['do_5fshrinking',['do_shrinking',['../classSolver.html#ad3f6665a1ca590e56b3d51f8ddcc347c',1,'Solver::do_shrinking()'],['../classSolver__NU.html#a6670a539940f4efdc40d2c9e75a9da1b',1,'Solver_NU::do_shrinking()']]],
+  ['dot',['dot',['../classKernel.html#af258ecfb8ca0182e6a79c06291586e5b',1,'Kernel']]]
 ];

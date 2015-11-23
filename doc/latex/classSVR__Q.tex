@@ -1,0 +1,124 @@
+\hypertarget{classSVR__Q}{}\section{S\+V\+R\+\_\+Q Class Reference}
+\label{classSVR__Q}\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+Inheritance diagram for S\+V\+R\+\_\+Q\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classSVR__Q}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classSVR__Q_a348978e0cce4c0bf503dc825241eb4ff}{S\+V\+R\+\_\+Q} (const \hyperlink{structsvm__problem}{svm\+\_\+problem} \&prob, const \hyperlink{structsvm__parameter}{svm\+\_\+parameter} \&param)
+\item 
+void \hyperlink{classSVR__Q_a9d3884f0c68f4ce18d47570e4a203405}{swap\+\_\+index} (int i, int j) const 
+\item 
+\hyperlink{svm__core_8cpp_a8755d90a54ecfb8d15051af3e0542592}{Qfloat} $\ast$ \hyperlink{classSVR__Q_aba55078d17e7815f093ffa154f3cee9d}{get\+\_\+Q} (int i, int len) const 
+\item 
+double $\ast$ \hyperlink{classSVR__Q_ac22ed5ce1b0bf6a900c3c8d631e77d76}{get\+\_\+\+QD} () const 
+\item 
+\hyperlink{classSVR__Q_a2a8efdc1fef68cc5bc9d0d2669d24e36}{$\sim$\+S\+V\+R\+\_\+Q} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classSVR__Q_aa3420dab3d0b1eabdc0614c71321ab3c}{l}
+\item 
+\hyperlink{classCache}{Cache} $\ast$ \hyperlink{classSVR__Q_acb75212bdcc8128a28b35601f8265828}{cache}
+\item 
+\hyperlink{svm__core_8cpp_a0fd9ce9d735064461bebfe6037026093}{schar} $\ast$ \hyperlink{classSVR__Q_a0255ad0a00ef589c69adc19a06527dfc}{sign}
+\item 
+int $\ast$ \hyperlink{classSVR__Q_a29e769c577358f518182ba3cbe255817}{index}
+\item 
+int \hyperlink{classSVR__Q_acbdbde823b714d30097648c9dc109524}{next\+\_\+buffer}
+\item 
+\hyperlink{svm__core_8cpp_a8755d90a54ecfb8d15051af3e0542592}{Qfloat} $\ast$ \hyperlink{classSVR__Q_a294d15ab4ee01b92c960a604afbd6f9f}{buffer} \mbox{[}2\mbox{]}
+\item 
+double $\ast$ \hyperlink{classSVR__Q_aaa4a8b37dbc15610de7fe46df8874e25}{QD}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{S\+V\+R\+\_\+\+Q(const svm\+\_\+problem \&prob, const svm\+\_\+parameter \&param)}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+R\+\_\+\+Q\+::\+S\+V\+R\+\_\+Q (
+\begin{DoxyParamCaption}
+\item[{const {\bf svm\+\_\+problem} \&}]{prob, }
+\item[{const {\bf svm\+\_\+parameter} \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classSVR__Q_a348978e0cce4c0bf503dc825241eb4ff}{}\label{classSVR__Q_a348978e0cce4c0bf503dc825241eb4ff}
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!````~S\+V\+R\+\_\+Q@{$\sim$\+S\+V\+R\+\_\+Q}}
+\index{````~S\+V\+R\+\_\+Q@{$\sim$\+S\+V\+R\+\_\+Q}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{$\sim$\+S\+V\+R\+\_\+\+Q()}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+R\+\_\+\+Q\+::$\sim$\+S\+V\+R\+\_\+Q (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classSVR__Q_a2a8efdc1fef68cc5bc9d0d2669d24e36}{}\label{classSVR__Q_a2a8efdc1fef68cc5bc9d0d2669d24e36}
+
+
+\subsection{Member Function Documentation}
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!get\+\_\+Q@{get\+\_\+Q}}
+\index{get\+\_\+Q@{get\+\_\+Q}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{get\+\_\+\+Q(int i, int len) const }]{\setlength{\rightskip}{0pt plus 5cm}{\bf Qfloat}$\ast$ S\+V\+R\+\_\+\+Q\+::get\+\_\+Q (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{int}]{len}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{classSVR__Q_aba55078d17e7815f093ffa154f3cee9d}{}\label{classSVR__Q_aba55078d17e7815f093ffa154f3cee9d}
+
+
+Implements \hyperlink{classKernel_a02f328649424359b92b941f5219a6060}{Kernel}.
+
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!get\+\_\+\+QD@{get\+\_\+\+QD}}
+\index{get\+\_\+\+QD@{get\+\_\+\+QD}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{get\+\_\+\+Q\+D() const }]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+R\+\_\+\+Q\+::get\+\_\+\+QD (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{classSVR__Q_ac22ed5ce1b0bf6a900c3c8d631e77d76}{}\label{classSVR__Q_ac22ed5ce1b0bf6a900c3c8d631e77d76}
+
+
+Implements \hyperlink{classKernel_a7bf9602583da1af48d15d19da69514ac}{Kernel}.
+
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!swap\+\_\+index@{swap\+\_\+index}}
+\index{swap\+\_\+index@{swap\+\_\+index}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{swap\+\_\+index(int i, int j) const }]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+R\+\_\+\+Q\+::swap\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{int}]{j}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{classSVR__Q_a9d3884f0c68f4ce18d47570e4a203405}{}\label{classSVR__Q_a9d3884f0c68f4ce18d47570e4a203405}
+
+
+Reimplemented from \hyperlink{classKernel_adca807c5584bc42fd098cd9eb1f19621}{Kernel}.
+
+
+
+\subsection{Field Documentation}
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!buffer@{buffer}}
+\index{buffer@{buffer}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{buffer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Qfloat}$\ast$ S\+V\+R\+\_\+\+Q\+::buffer\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classSVR__Q_a294d15ab4ee01b92c960a604afbd6f9f}{}\label{classSVR__Q_a294d15ab4ee01b92c960a604afbd6f9f}
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!cache@{cache}}
+\index{cache@{cache}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{cache}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Cache}$\ast$ S\+V\+R\+\_\+\+Q\+::cache\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classSVR__Q_acb75212bdcc8128a28b35601f8265828}{}\label{classSVR__Q_acb75212bdcc8128a28b35601f8265828}
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!index@{index}}
+\index{index@{index}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{index}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ S\+V\+R\+\_\+\+Q\+::index\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classSVR__Q_a29e769c577358f518182ba3cbe255817}{}\label{classSVR__Q_a29e769c577358f518182ba3cbe255817}
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!l@{l}}
+\index{l@{l}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{l}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+R\+\_\+\+Q\+::l\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classSVR__Q_aa3420dab3d0b1eabdc0614c71321ab3c}{}\label{classSVR__Q_aa3420dab3d0b1eabdc0614c71321ab3c}
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!next\+\_\+buffer@{next\+\_\+buffer}}
+\index{next\+\_\+buffer@{next\+\_\+buffer}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{next\+\_\+buffer}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+R\+\_\+\+Q\+::next\+\_\+buffer\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [private]}}\hypertarget{classSVR__Q_acbdbde823b714d30097648c9dc109524}{}\label{classSVR__Q_acbdbde823b714d30097648c9dc109524}
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!QD@{QD}}
+\index{QD@{QD}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{QD}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+R\+\_\+\+Q\+::\+QD\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classSVR__Q_aaa4a8b37dbc15610de7fe46df8874e25}{}\label{classSVR__Q_aaa4a8b37dbc15610de7fe46df8874e25}
+\index{S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}!sign@{sign}}
+\index{sign@{sign}!S\+V\+R\+\_\+Q@{S\+V\+R\+\_\+Q}}
+\subsubsection[{sign}]{\setlength{\rightskip}{0pt plus 5cm}{\bf schar}$\ast$ S\+V\+R\+\_\+\+Q\+::sign\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classSVR__Q_a0255ad0a00ef589c69adc19a06527dfc}{}\label{classSVR__Q_a0255ad0a00ef589c69adc19a06527dfc}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\hyperlink{svm__core_8cpp}{svm\+\_\+core.\+cpp}\end{DoxyCompactItemize}

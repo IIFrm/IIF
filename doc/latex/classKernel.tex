@@ -1,0 +1,219 @@
+\hypertarget{classKernel}{}\section{Kernel Class Reference}
+\label{classKernel}\index{Kernel@{Kernel}}
+Inheritance diagram for Kernel\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classKernel}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classKernel_a25ffaa0c67cc5b8c7fcdb6f97ca1725f}{Kernel} (int l, \hyperlink{structsvm__node}{svm\+\_\+node} $\ast$const $\ast$\hyperlink{classKernel_a725a35660c4309605c2628fa8290ce5f}{x}, const \hyperlink{structsvm__parameter}{svm\+\_\+parameter} \&param)
+\item 
+virtual \hyperlink{classKernel_a9c7407e3a0b1cb9b2f96e9a030187064}{$\sim$\+Kernel} ()
+\item 
+virtual \hyperlink{svm__core_8cpp_a8755d90a54ecfb8d15051af3e0542592}{Qfloat} $\ast$ \hyperlink{classKernel_a02f328649424359b92b941f5219a6060}{get\+\_\+Q} (int column, int len) const  =0
+\item 
+virtual double $\ast$ \hyperlink{classKernel_a7bf9602583da1af48d15d19da69514ac}{get\+\_\+\+QD} () const  =0
+\item 
+virtual void \hyperlink{classKernel_adca807c5584bc42fd098cd9eb1f19621}{swap\+\_\+index} (int i, int j) const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static double \hyperlink{classKernel_a6ff0d4ac64bf7fba29d2ca3433dd5127}{k\+\_\+function} (const \hyperlink{structsvm__node}{svm\+\_\+node} $\ast$\hyperlink{classKernel_a725a35660c4309605c2628fa8290ce5f}{x}, const \hyperlink{structsvm__node}{svm\+\_\+node} $\ast$y, const \hyperlink{structsvm__parameter}{svm\+\_\+parameter} \&param)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double(Kernel\+::$\ast$ \hyperlink{classKernel_ac7b39305896e51f9e1a08e026e2c4d9c}{kernel\+\_\+function} )(int i, int j) const 
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{classKernel_a9ccd52d8f291ab38be66944257420a87}{kernel\+\_\+linear} (int i, int j) const 
+\item 
+double \hyperlink{classKernel_af9a74728d70af7ec68947b1e443a5dc5}{kernel\+\_\+poly} (int i, int j) const 
+\item 
+double \hyperlink{classKernel_a78f1025eae410c560c8e55845b2fcb3f}{kernel\+\_\+rbf} (int i, int j) const 
+\item 
+double \hyperlink{classKernel_a16d668579ecb347c4188f8772ca00547}{kernel\+\_\+sigmoid} (int i, int j) const 
+\item 
+double \hyperlink{classKernel_aa7bce181dce4b32b1d84b0483006d934}{kernel\+\_\+precomputed} (int i, int j) const 
+\end{DoxyCompactItemize}
+\subsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static double \hyperlink{classKernel_af258ecfb8ca0182e6a79c06291586e5b}{dot} (const \hyperlink{structsvm__node}{svm\+\_\+node} $\ast$px, const \hyperlink{structsvm__node}{svm\+\_\+node} $\ast$py)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{structsvm__node}{svm\+\_\+node} $\ast$$\ast$ \hyperlink{classKernel_a725a35660c4309605c2628fa8290ce5f}{x}
+\item 
+double $\ast$ \hyperlink{classKernel_a97ca8abb41cd6ba8b1553738d59352d5}{x\+\_\+square}
+\item 
+const int \hyperlink{classKernel_a01e78214a5c60876d71ee05fe97f4566}{kernel\+\_\+type}
+\item 
+const int \hyperlink{classKernel_a332697fbc977298e3f8701224dbe4bf0}{degree}
+\item 
+const double \hyperlink{classKernel_a3a8a0a00a7d58708d6a7c5bc9c872513}{gamma}
+\item 
+const double \hyperlink{classKernel_a9b78d78675c9d5094daabf85c1d63b5d}{coef0}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Kernel@{Kernel}!Kernel@{Kernel}}
+\index{Kernel@{Kernel}!Kernel@{Kernel}}
+\subsubsection[{Kernel(int l, svm\+\_\+node $\ast$const $\ast$x, const svm\+\_\+parameter \&param)}]{\setlength{\rightskip}{0pt plus 5cm}Kernel\+::\+Kernel (
+\begin{DoxyParamCaption}
+\item[{int}]{l, }
+\item[{{\bf svm\+\_\+node} $\ast$const $\ast$}]{x, }
+\item[{const {\bf svm\+\_\+parameter} \&}]{param}
+\end{DoxyParamCaption}
+)}\hypertarget{classKernel_a25ffaa0c67cc5b8c7fcdb6f97ca1725f}{}\label{classKernel_a25ffaa0c67cc5b8c7fcdb6f97ca1725f}
+\index{Kernel@{Kernel}!````~Kernel@{$\sim$\+Kernel}}
+\index{````~Kernel@{$\sim$\+Kernel}!Kernel@{Kernel}}
+\subsubsection[{$\sim$\+Kernel()}]{\setlength{\rightskip}{0pt plus 5cm}Kernel\+::$\sim$\+Kernel (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classKernel_a9c7407e3a0b1cb9b2f96e9a030187064}{}\label{classKernel_a9c7407e3a0b1cb9b2f96e9a030187064}
+
+
+\subsection{Member Function Documentation}
+\index{Kernel@{Kernel}!dot@{dot}}
+\index{dot@{dot}!Kernel@{Kernel}}
+\subsubsection[{dot(const svm\+\_\+node $\ast$px, const svm\+\_\+node $\ast$py)}]{\setlength{\rightskip}{0pt plus 5cm}double Kernel\+::dot (
+\begin{DoxyParamCaption}
+\item[{const {\bf svm\+\_\+node} $\ast$}]{px, }
+\item[{const {\bf svm\+\_\+node} $\ast$}]{py}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}\hypertarget{classKernel_af258ecfb8ca0182e6a79c06291586e5b}{}\label{classKernel_af258ecfb8ca0182e6a79c06291586e5b}
+\index{Kernel@{Kernel}!get\+\_\+Q@{get\+\_\+Q}}
+\index{get\+\_\+Q@{get\+\_\+Q}!Kernel@{Kernel}}
+\subsubsection[{get\+\_\+\+Q(int column, int len) const  =0}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Qfloat}$\ast$ Kernel\+::get\+\_\+Q (
+\begin{DoxyParamCaption}
+\item[{int}]{column, }
+\item[{int}]{len}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classKernel_a02f328649424359b92b941f5219a6060}{}\label{classKernel_a02f328649424359b92b941f5219a6060}
+
+
+Implements \hyperlink{classQMatrix_aba360e5c50764e2dd013555d20c861f5}{Q\+Matrix}.
+
+
+
+Implemented in \hyperlink{classSVR__Q_aba55078d17e7815f093ffa154f3cee9d}{S\+V\+R\+\_\+Q}, \hyperlink{classONE__CLASS__Q_a1f8501234022e017cf46c4dfb2da9d31}{O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, and \hyperlink{classSVC__Q_a9341b6030b3fdc88466e4a602b5abff0}{S\+V\+C\+\_\+Q}.
+
+\index{Kernel@{Kernel}!get\+\_\+\+QD@{get\+\_\+\+QD}}
+\index{get\+\_\+\+QD@{get\+\_\+\+QD}!Kernel@{Kernel}}
+\subsubsection[{get\+\_\+\+Q\+D() const  =0}]{\setlength{\rightskip}{0pt plus 5cm}virtual double$\ast$ Kernel\+::get\+\_\+\+QD (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{classKernel_a7bf9602583da1af48d15d19da69514ac}{}\label{classKernel_a7bf9602583da1af48d15d19da69514ac}
+
+
+Implements \hyperlink{classQMatrix_a8fa3bebbb30838d2eef68afdb6da1024}{Q\+Matrix}.
+
+
+
+Implemented in \hyperlink{classSVR__Q_ac22ed5ce1b0bf6a900c3c8d631e77d76}{S\+V\+R\+\_\+Q}, \hyperlink{classONE__CLASS__Q_a882480d4370d8a89d667a28c3ed68a73}{O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, and \hyperlink{classSVC__Q_ac73020a6e438e209d63223e1fa8cac29}{S\+V\+C\+\_\+Q}.
+
+\index{Kernel@{Kernel}!k\+\_\+function@{k\+\_\+function}}
+\index{k\+\_\+function@{k\+\_\+function}!Kernel@{Kernel}}
+\subsubsection[{k\+\_\+function(const svm\+\_\+node $\ast$x, const svm\+\_\+node $\ast$y, const svm\+\_\+parameter \&param)}]{\setlength{\rightskip}{0pt plus 5cm}double Kernel\+::k\+\_\+function (
+\begin{DoxyParamCaption}
+\item[{const {\bf svm\+\_\+node} $\ast$}]{x, }
+\item[{const {\bf svm\+\_\+node} $\ast$}]{y, }
+\item[{const {\bf svm\+\_\+parameter} \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classKernel_a6ff0d4ac64bf7fba29d2ca3433dd5127}{}\label{classKernel_a6ff0d4ac64bf7fba29d2ca3433dd5127}
+\index{Kernel@{Kernel}!kernel\+\_\+linear@{kernel\+\_\+linear}}
+\index{kernel\+\_\+linear@{kernel\+\_\+linear}!Kernel@{Kernel}}
+\subsubsection[{kernel\+\_\+linear(int i, int j) const }]{\setlength{\rightskip}{0pt plus 5cm}double Kernel\+::kernel\+\_\+linear (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{int}]{j}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}\hypertarget{classKernel_a9ccd52d8f291ab38be66944257420a87}{}\label{classKernel_a9ccd52d8f291ab38be66944257420a87}
+\index{Kernel@{Kernel}!kernel\+\_\+poly@{kernel\+\_\+poly}}
+\index{kernel\+\_\+poly@{kernel\+\_\+poly}!Kernel@{Kernel}}
+\subsubsection[{kernel\+\_\+poly(int i, int j) const }]{\setlength{\rightskip}{0pt plus 5cm}double Kernel\+::kernel\+\_\+poly (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{int}]{j}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}\hypertarget{classKernel_af9a74728d70af7ec68947b1e443a5dc5}{}\label{classKernel_af9a74728d70af7ec68947b1e443a5dc5}
+\index{Kernel@{Kernel}!kernel\+\_\+precomputed@{kernel\+\_\+precomputed}}
+\index{kernel\+\_\+precomputed@{kernel\+\_\+precomputed}!Kernel@{Kernel}}
+\subsubsection[{kernel\+\_\+precomputed(int i, int j) const }]{\setlength{\rightskip}{0pt plus 5cm}double Kernel\+::kernel\+\_\+precomputed (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{int}]{j}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}\hypertarget{classKernel_aa7bce181dce4b32b1d84b0483006d934}{}\label{classKernel_aa7bce181dce4b32b1d84b0483006d934}
+\index{Kernel@{Kernel}!kernel\+\_\+rbf@{kernel\+\_\+rbf}}
+\index{kernel\+\_\+rbf@{kernel\+\_\+rbf}!Kernel@{Kernel}}
+\subsubsection[{kernel\+\_\+rbf(int i, int j) const }]{\setlength{\rightskip}{0pt plus 5cm}double Kernel\+::kernel\+\_\+rbf (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{int}]{j}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}\hypertarget{classKernel_a78f1025eae410c560c8e55845b2fcb3f}{}\label{classKernel_a78f1025eae410c560c8e55845b2fcb3f}
+\index{Kernel@{Kernel}!kernel\+\_\+sigmoid@{kernel\+\_\+sigmoid}}
+\index{kernel\+\_\+sigmoid@{kernel\+\_\+sigmoid}!Kernel@{Kernel}}
+\subsubsection[{kernel\+\_\+sigmoid(int i, int j) const }]{\setlength{\rightskip}{0pt plus 5cm}double Kernel\+::kernel\+\_\+sigmoid (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{int}]{j}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}\hypertarget{classKernel_a16d668579ecb347c4188f8772ca00547}{}\label{classKernel_a16d668579ecb347c4188f8772ca00547}
+\index{Kernel@{Kernel}!swap\+\_\+index@{swap\+\_\+index}}
+\index{swap\+\_\+index@{swap\+\_\+index}!Kernel@{Kernel}}
+\subsubsection[{swap\+\_\+index(int i, int j) const }]{\setlength{\rightskip}{0pt plus 5cm}virtual void Kernel\+::swap\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{int}]{j}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{classKernel_adca807c5584bc42fd098cd9eb1f19621}{}\label{classKernel_adca807c5584bc42fd098cd9eb1f19621}
+
+
+Implements \hyperlink{classQMatrix_a095e38cbf4a02cfb1acc2377f8370628}{Q\+Matrix}.
+
+
+
+Reimplemented in \hyperlink{classSVR__Q_a9d3884f0c68f4ce18d47570e4a203405}{S\+V\+R\+\_\+Q}, \hyperlink{classONE__CLASS__Q_ad8bc86ca742c27d82718346388f83fad}{O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, and \hyperlink{classSVC__Q_a9c889db8ee0156ed5bcdaa4d6bc4e245}{S\+V\+C\+\_\+Q}.
+
+
+
+\subsection{Field Documentation}
+\index{Kernel@{Kernel}!coef0@{coef0}}
+\index{coef0@{coef0}!Kernel@{Kernel}}
+\subsubsection[{coef0}]{\setlength{\rightskip}{0pt plus 5cm}const double Kernel\+::coef0\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classKernel_a9b78d78675c9d5094daabf85c1d63b5d}{}\label{classKernel_a9b78d78675c9d5094daabf85c1d63b5d}
+\index{Kernel@{Kernel}!degree@{degree}}
+\index{degree@{degree}!Kernel@{Kernel}}
+\subsubsection[{degree}]{\setlength{\rightskip}{0pt plus 5cm}const int Kernel\+::degree\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classKernel_a332697fbc977298e3f8701224dbe4bf0}{}\label{classKernel_a332697fbc977298e3f8701224dbe4bf0}
+\index{Kernel@{Kernel}!gamma@{gamma}}
+\index{gamma@{gamma}!Kernel@{Kernel}}
+\subsubsection[{gamma}]{\setlength{\rightskip}{0pt plus 5cm}const double Kernel\+::gamma\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classKernel_a3a8a0a00a7d58708d6a7c5bc9c872513}{}\label{classKernel_a3a8a0a00a7d58708d6a7c5bc9c872513}
+\index{Kernel@{Kernel}!kernel\+\_\+function@{kernel\+\_\+function}}
+\index{kernel\+\_\+function@{kernel\+\_\+function}!Kernel@{Kernel}}
+\subsubsection[{kernel\+\_\+function}]{\setlength{\rightskip}{0pt plus 5cm}double(Kernel\+::$\ast$ Kernel\+::kernel\+\_\+function) (int i, int j) const \hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classKernel_ac7b39305896e51f9e1a08e026e2c4d9c}{}\label{classKernel_ac7b39305896e51f9e1a08e026e2c4d9c}
+\index{Kernel@{Kernel}!kernel\+\_\+type@{kernel\+\_\+type}}
+\index{kernel\+\_\+type@{kernel\+\_\+type}!Kernel@{Kernel}}
+\subsubsection[{kernel\+\_\+type}]{\setlength{\rightskip}{0pt plus 5cm}const int Kernel\+::kernel\+\_\+type\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classKernel_a01e78214a5c60876d71ee05fe97f4566}{}\label{classKernel_a01e78214a5c60876d71ee05fe97f4566}
+\index{Kernel@{Kernel}!x@{x}}
+\index{x@{x}!Kernel@{Kernel}}
+\subsubsection[{x}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf svm\+\_\+node}$\ast$$\ast$ Kernel\+::x\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classKernel_a725a35660c4309605c2628fa8290ce5f}{}\label{classKernel_a725a35660c4309605c2628fa8290ce5f}
+\index{Kernel@{Kernel}!x\+\_\+square@{x\+\_\+square}}
+\index{x\+\_\+square@{x\+\_\+square}!Kernel@{Kernel}}
+\subsubsection[{x\+\_\+square}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ Kernel\+::x\+\_\+square\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classKernel_a97ca8abb41cd6ba8b1553738d59352d5}{}\label{classKernel_a97ca8abb41cd6ba8b1553738d59352d5}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\hyperlink{svm__core_8cpp}{svm\+\_\+core.\+cpp}\end{DoxyCompactItemize}

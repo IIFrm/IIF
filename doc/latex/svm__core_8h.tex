@@ -1,0 +1,314 @@
+\hypertarget{svm__core_8h}{}\section{include/svm\+\_\+core.h File Reference}
+\label{svm__core_8h}\index{include/svm\+\_\+core.\+h@{include/svm\+\_\+core.\+h}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}instrumentation.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}color.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structsvm__node}{svm\+\_\+node}
+\item 
+struct \hyperlink{structsvm__problem}{svm\+\_\+problem}
+\item 
+struct \hyperlink{structsvm__parameter}{svm\+\_\+parameter}
+\item 
+struct \hyperlink{structsvm__model}{svm\+\_\+model}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{svm__core_8h_ac7f5361b69ddd196a885f142b3c1d261}{L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON}~320
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \\*
+\hyperlink{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7a89cc33eead98f5e072fd76dcdb8da6f8}{C\+\_\+\+S\+VC}, 
+\hyperlink{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7aca90881af01036a7221b791eb08d03fc}{N\+U\+\_\+\+S\+VC}, 
+\hyperlink{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7a8bfb80856312eb703072e02f7ebd5e6b}{O\+N\+E\+\_\+\+C\+L\+A\+SS}, 
+\hyperlink{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7ae8edabc208c6076619bdfb064b68815a}{E\+P\+S\+I\+L\+O\+N\+\_\+\+S\+VR}, 
+\\*
+\hyperlink{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7a9e113c85baa91dc44fe128028e384309}{N\+U\+\_\+\+S\+VR}
+ \}
+\item 
+enum \{ \\*
+\hyperlink{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5adc101ebf31c49c2d4b80b7c6f59f22cb}{L\+I\+N\+E\+AR}, 
+\hyperlink{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a7d85766d041d397d096dcbc0d7c793fd}{P\+O\+LY}, 
+\hyperlink{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a7e039b006aa5830e8c45a1ccd0c4204f}{R\+BF}, 
+\hyperlink{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a11c1096689b7d3504dbcc4f61d854883}{S\+I\+G\+M\+O\+ID}, 
+\\*
+\hyperlink{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a27a6ccce9f5a44692a040b08a6923285}{P\+R\+E\+C\+O\+M\+P\+U\+T\+ED}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$ \hyperlink{svm__core_8h_a79ce3e65d01f2be1a4e5288c588c48a8}{svm\+\_\+train} (const struct \hyperlink{structsvm__problem}{svm\+\_\+problem} $\ast$prob, const struct \hyperlink{structsvm__parameter}{svm\+\_\+parameter} $\ast$param)
+\item 
+void \hyperlink{svm__core_8h_abe12fd0b263f0b31fdce8d48d9c38a32}{svm\+\_\+cross\+\_\+validation} (const struct \hyperlink{structsvm__problem}{svm\+\_\+problem} $\ast$prob, const struct \hyperlink{structsvm__parameter}{svm\+\_\+parameter} $\ast$param, int nr\+\_\+fold, double $\ast$target)
+\item 
+int \hyperlink{svm__core_8h_ae6aefb92d3b0b1a5158bd4b15ca8f8e2}{svm\+\_\+save\+\_\+model} (const char $\ast$model\+\_\+file\+\_\+name, const struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model)
+\item 
+struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$ \hyperlink{svm__core_8h_a569bb1a06e5181dfb19d66587463af4b}{svm\+\_\+load\+\_\+model} (const char $\ast$model\+\_\+file\+\_\+name)
+\item 
+int \hyperlink{svm__core_8h_add0a326d36e24044cf958a420d6f4e19}{svm\+\_\+get\+\_\+svm\+\_\+type} (const struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model)
+\item 
+int \hyperlink{svm__core_8h_a73c7339cbc8a38eb9f1e8ad6fbe11ae8}{svm\+\_\+get\+\_\+nr\+\_\+class} (const struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model)
+\item 
+void \hyperlink{svm__core_8h_a1eafdf09b884847a04a72cf22ddb95f2}{svm\+\_\+get\+\_\+labels} (const struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model, int $\ast$label)
+\item 
+void \hyperlink{svm__core_8h_ae61677f9adc1d3f0f6d55a4256923d43}{svm\+\_\+get\+\_\+sv\+\_\+indices} (const struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model, int $\ast$sv\+\_\+indices)
+\item 
+int \hyperlink{svm__core_8h_ae4430a93a840cff5c3d67be2c6a0de89}{svm\+\_\+get\+\_\+nr\+\_\+sv} (const struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model)
+\item 
+double \hyperlink{svm__core_8h_a3f15a9a6c23b2f0927fc48ef2f549001}{svm\+\_\+get\+\_\+svr\+\_\+probability} (const struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model)
+\item 
+double \hyperlink{svm__core_8h_aa34079376b55cfef083b8ff523d77f55}{svm\+\_\+predict\+\_\+values} (const struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model, const struct \hyperlink{structsvm__node}{svm\+\_\+node} $\ast$x, double $\ast$dec\+\_\+values)
+\item 
+double \hyperlink{svm__core_8h_af7c913d98f7cd411b147f8990a97f576}{svm\+\_\+predict} (const struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model, const struct \hyperlink{structsvm__node}{svm\+\_\+node} $\ast$x)
+\item 
+double \hyperlink{svm__core_8h_a301070a1fda12e1257d76c08f97322a5}{svm\+\_\+predict\+\_\+probability} (const struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model, const struct \hyperlink{structsvm__node}{svm\+\_\+node} $\ast$x, double $\ast$prob\+\_\+estimates)
+\item 
+void \hyperlink{svm__core_8h_a851dce2f69b666a414d67e0edef3ead9}{svm\+\_\+free\+\_\+model\+\_\+content} (struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model\+\_\+ptr)
+\item 
+void \hyperlink{svm__core_8h_afa14733010ded94cc8f2ba177b0b24c8}{svm\+\_\+free\+\_\+and\+\_\+destroy\+\_\+model} (struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$$\ast$model\+\_\+ptr\+\_\+ptr)
+\item 
+void \hyperlink{svm__core_8h_aaf17ba299f99cb74dc97f64bb29f4c06}{svm\+\_\+destroy\+\_\+param} (struct \hyperlink{structsvm__parameter}{svm\+\_\+parameter} $\ast$param)
+\item 
+const char $\ast$ \hyperlink{svm__core_8h_aa72a8c645b58830df32383fd1835aad0}{svm\+\_\+check\+\_\+parameter} (const struct \hyperlink{structsvm__problem}{svm\+\_\+problem} $\ast$prob, const struct \hyperlink{structsvm__parameter}{svm\+\_\+parameter} $\ast$param)
+\item 
+int \hyperlink{svm__core_8h_aeb231380b36264637caeccdae4fbad1a}{svm\+\_\+check\+\_\+probability\+\_\+model} (const struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model)
+\item 
+void \hyperlink{svm__core_8h_a308f7948988441f4a1a5c8c8abc367be}{svm\+\_\+set\+\_\+print\+\_\+string\+\_\+function} (void($\ast$print\+\_\+func)(const char $\ast$))
+\item 
+int \hyperlink{svm__core_8h_a2ee4e2b0866bf024c33687f5c5f591ea}{svm\+\_\+model\+\_\+visualization} (const \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$model, \hyperlink{classEquation}{Equation} $\ast$equ)
+\item 
+void \hyperlink{svm__core_8h_a1b795bf075ffbba82d9eee29e9814120}{print\+\_\+svm\+\_\+samples} (const \hyperlink{structsvm__problem}{svm\+\_\+problem} $\ast$sp)
+\item 
+struct \hyperlink{structsvm__model}{svm\+\_\+model} $\ast$ \hyperlink{svm__core_8h_a2e5db8ea4dcb0ad72079dffcff86f6d1}{svm\+\_\+\+I\+\_\+train} (const struct \hyperlink{structsvm__problem}{svm\+\_\+problem} $\ast$prob, const struct \hyperlink{structsvm__parameter}{svm\+\_\+parameter} $\ast$param)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{svm__core_8h_a9ba41253b462f42e64917cc38e0f2cc7}{libsvm\+\_\+version}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON@{L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON}}
+\index{L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON@{L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON~320}\hypertarget{svm__core_8h_ac7f5361b69ddd196a885f142b3c1d261}{}\label{svm__core_8h_ac7f5361b69ddd196a885f142b3c1d261}
+
+
+\subsection{Enumeration Type Documentation}
+\subsubsection[{anonymous enum}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}\hypertarget{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7}{}\label{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{C\+\_\+\+S\+VC@{C\+\_\+\+S\+VC}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!C\+\_\+\+S\+VC@{C\+\_\+\+S\+VC}}\item[{\em 
+C\+\_\+\+S\+VC\hypertarget{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7a89cc33eead98f5e072fd76dcdb8da6f8}{}\label{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7a89cc33eead98f5e072fd76dcdb8da6f8}
+}]\index{N\+U\+\_\+\+S\+VC@{N\+U\+\_\+\+S\+VC}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!N\+U\+\_\+\+S\+VC@{N\+U\+\_\+\+S\+VC}}\item[{\em 
+N\+U\+\_\+\+S\+VC\hypertarget{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7aca90881af01036a7221b791eb08d03fc}{}\label{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7aca90881af01036a7221b791eb08d03fc}
+}]\index{O\+N\+E\+\_\+\+C\+L\+A\+SS@{O\+N\+E\+\_\+\+C\+L\+A\+SS}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!O\+N\+E\+\_\+\+C\+L\+A\+SS@{O\+N\+E\+\_\+\+C\+L\+A\+SS}}\item[{\em 
+O\+N\+E\+\_\+\+C\+L\+A\+SS\hypertarget{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7a8bfb80856312eb703072e02f7ebd5e6b}{}\label{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7a8bfb80856312eb703072e02f7ebd5e6b}
+}]\index{E\+P\+S\+I\+L\+O\+N\+\_\+\+S\+VR@{E\+P\+S\+I\+L\+O\+N\+\_\+\+S\+VR}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!E\+P\+S\+I\+L\+O\+N\+\_\+\+S\+VR@{E\+P\+S\+I\+L\+O\+N\+\_\+\+S\+VR}}\item[{\em 
+E\+P\+S\+I\+L\+O\+N\+\_\+\+S\+VR\hypertarget{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7ae8edabc208c6076619bdfb064b68815a}{}\label{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7ae8edabc208c6076619bdfb064b68815a}
+}]\index{N\+U\+\_\+\+S\+VR@{N\+U\+\_\+\+S\+VR}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!N\+U\+\_\+\+S\+VR@{N\+U\+\_\+\+S\+VR}}\item[{\em 
+N\+U\+\_\+\+S\+VR\hypertarget{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7a9e113c85baa91dc44fe128028e384309}{}\label{svm__core_8h_adf764cbdea00d65edcd07bb9953ad2b7a9e113c85baa91dc44fe128028e384309}
+}]\end{description}
+\end{Desc}
+\subsubsection[{anonymous enum}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}\hypertarget{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5}{}\label{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{L\+I\+N\+E\+AR@{L\+I\+N\+E\+AR}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!L\+I\+N\+E\+AR@{L\+I\+N\+E\+AR}}\item[{\em 
+L\+I\+N\+E\+AR\hypertarget{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5adc101ebf31c49c2d4b80b7c6f59f22cb}{}\label{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5adc101ebf31c49c2d4b80b7c6f59f22cb}
+}]\index{P\+O\+LY@{P\+O\+LY}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!P\+O\+LY@{P\+O\+LY}}\item[{\em 
+P\+O\+LY\hypertarget{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a7d85766d041d397d096dcbc0d7c793fd}{}\label{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a7d85766d041d397d096dcbc0d7c793fd}
+}]\index{R\+BF@{R\+BF}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!R\+BF@{R\+BF}}\item[{\em 
+R\+BF\hypertarget{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a7e039b006aa5830e8c45a1ccd0c4204f}{}\label{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a7e039b006aa5830e8c45a1ccd0c4204f}
+}]\index{S\+I\+G\+M\+O\+ID@{S\+I\+G\+M\+O\+ID}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!S\+I\+G\+M\+O\+ID@{S\+I\+G\+M\+O\+ID}}\item[{\em 
+S\+I\+G\+M\+O\+ID\hypertarget{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a11c1096689b7d3504dbcc4f61d854883}{}\label{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a11c1096689b7d3504dbcc4f61d854883}
+}]\index{P\+R\+E\+C\+O\+M\+P\+U\+T\+ED@{P\+R\+E\+C\+O\+M\+P\+U\+T\+ED}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!P\+R\+E\+C\+O\+M\+P\+U\+T\+ED@{P\+R\+E\+C\+O\+M\+P\+U\+T\+ED}}\item[{\em 
+P\+R\+E\+C\+O\+M\+P\+U\+T\+ED\hypertarget{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a27a6ccce9f5a44692a040b08a6923285}{}\label{svm__core_8h_a99fb83031ce9923c84392b4e92f956b5a27a6ccce9f5a44692a040b08a6923285}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!print\+\_\+svm\+\_\+samples@{print\+\_\+svm\+\_\+samples}}
+\index{print\+\_\+svm\+\_\+samples@{print\+\_\+svm\+\_\+samples}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{print\+\_\+svm\+\_\+samples(const svm\+\_\+problem $\ast$sp)}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+svm\+\_\+samples (
+\begin{DoxyParamCaption}
+\item[{const {\bf svm\+\_\+problem} $\ast$}]{sp}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_a1b795bf075ffbba82d9eee29e9814120}{}\label{svm__core_8h_a1b795bf075ffbba82d9eee29e9814120}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+check\+\_\+parameter@{svm\+\_\+check\+\_\+parameter}}
+\index{svm\+\_\+check\+\_\+parameter@{svm\+\_\+check\+\_\+parameter}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+check\+\_\+parameter(const struct svm\+\_\+problem $\ast$prob, const struct svm\+\_\+parameter $\ast$param)}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ svm\+\_\+check\+\_\+parameter (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+problem} $\ast$}]{prob, }
+\item[{const struct {\bf svm\+\_\+parameter} $\ast$}]{param}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_aa72a8c645b58830df32383fd1835aad0}{}\label{svm__core_8h_aa72a8c645b58830df32383fd1835aad0}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+check\+\_\+probability\+\_\+model@{svm\+\_\+check\+\_\+probability\+\_\+model}}
+\index{svm\+\_\+check\+\_\+probability\+\_\+model@{svm\+\_\+check\+\_\+probability\+\_\+model}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+check\+\_\+probability\+\_\+model(const struct svm\+\_\+model $\ast$model)}]{\setlength{\rightskip}{0pt plus 5cm}int svm\+\_\+check\+\_\+probability\+\_\+model (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+model} $\ast$}]{model}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_aeb231380b36264637caeccdae4fbad1a}{}\label{svm__core_8h_aeb231380b36264637caeccdae4fbad1a}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+cross\+\_\+validation@{svm\+\_\+cross\+\_\+validation}}
+\index{svm\+\_\+cross\+\_\+validation@{svm\+\_\+cross\+\_\+validation}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+cross\+\_\+validation(const struct svm\+\_\+problem $\ast$prob, const struct svm\+\_\+parameter $\ast$param, int nr\+\_\+fold, double $\ast$target)}]{\setlength{\rightskip}{0pt plus 5cm}void svm\+\_\+cross\+\_\+validation (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+problem} $\ast$}]{prob, }
+\item[{const struct {\bf svm\+\_\+parameter} $\ast$}]{param, }
+\item[{int}]{nr\+\_\+fold, }
+\item[{double $\ast$}]{target}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_abe12fd0b263f0b31fdce8d48d9c38a32}{}\label{svm__core_8h_abe12fd0b263f0b31fdce8d48d9c38a32}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+destroy\+\_\+param@{svm\+\_\+destroy\+\_\+param}}
+\index{svm\+\_\+destroy\+\_\+param@{svm\+\_\+destroy\+\_\+param}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+destroy\+\_\+param(struct svm\+\_\+parameter $\ast$param)}]{\setlength{\rightskip}{0pt plus 5cm}void svm\+\_\+destroy\+\_\+param (
+\begin{DoxyParamCaption}
+\item[{struct {\bf svm\+\_\+parameter} $\ast$}]{param}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_aaf17ba299f99cb74dc97f64bb29f4c06}{}\label{svm__core_8h_aaf17ba299f99cb74dc97f64bb29f4c06}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+free\+\_\+and\+\_\+destroy\+\_\+model@{svm\+\_\+free\+\_\+and\+\_\+destroy\+\_\+model}}
+\index{svm\+\_\+free\+\_\+and\+\_\+destroy\+\_\+model@{svm\+\_\+free\+\_\+and\+\_\+destroy\+\_\+model}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+free\+\_\+and\+\_\+destroy\+\_\+model(struct svm\+\_\+model $\ast$$\ast$model\+\_\+ptr\+\_\+ptr)}]{\setlength{\rightskip}{0pt plus 5cm}void svm\+\_\+free\+\_\+and\+\_\+destroy\+\_\+model (
+\begin{DoxyParamCaption}
+\item[{struct {\bf svm\+\_\+model} $\ast$$\ast$}]{model\+\_\+ptr\+\_\+ptr}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_afa14733010ded94cc8f2ba177b0b24c8}{}\label{svm__core_8h_afa14733010ded94cc8f2ba177b0b24c8}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+free\+\_\+model\+\_\+content@{svm\+\_\+free\+\_\+model\+\_\+content}}
+\index{svm\+\_\+free\+\_\+model\+\_\+content@{svm\+\_\+free\+\_\+model\+\_\+content}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+free\+\_\+model\+\_\+content(struct svm\+\_\+model $\ast$model\+\_\+ptr)}]{\setlength{\rightskip}{0pt plus 5cm}void svm\+\_\+free\+\_\+model\+\_\+content (
+\begin{DoxyParamCaption}
+\item[{struct {\bf svm\+\_\+model} $\ast$}]{model\+\_\+ptr}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_a851dce2f69b666a414d67e0edef3ead9}{}\label{svm__core_8h_a851dce2f69b666a414d67e0edef3ead9}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+get\+\_\+labels@{svm\+\_\+get\+\_\+labels}}
+\index{svm\+\_\+get\+\_\+labels@{svm\+\_\+get\+\_\+labels}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+get\+\_\+labels(const struct svm\+\_\+model $\ast$model, int $\ast$label)}]{\setlength{\rightskip}{0pt plus 5cm}void svm\+\_\+get\+\_\+labels (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+model} $\ast$}]{model, }
+\item[{int $\ast$}]{label}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_a1eafdf09b884847a04a72cf22ddb95f2}{}\label{svm__core_8h_a1eafdf09b884847a04a72cf22ddb95f2}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+get\+\_\+nr\+\_\+class@{svm\+\_\+get\+\_\+nr\+\_\+class}}
+\index{svm\+\_\+get\+\_\+nr\+\_\+class@{svm\+\_\+get\+\_\+nr\+\_\+class}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+get\+\_\+nr\+\_\+class(const struct svm\+\_\+model $\ast$model)}]{\setlength{\rightskip}{0pt plus 5cm}int svm\+\_\+get\+\_\+nr\+\_\+class (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+model} $\ast$}]{model}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_a73c7339cbc8a38eb9f1e8ad6fbe11ae8}{}\label{svm__core_8h_a73c7339cbc8a38eb9f1e8ad6fbe11ae8}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+get\+\_\+nr\+\_\+sv@{svm\+\_\+get\+\_\+nr\+\_\+sv}}
+\index{svm\+\_\+get\+\_\+nr\+\_\+sv@{svm\+\_\+get\+\_\+nr\+\_\+sv}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+get\+\_\+nr\+\_\+sv(const struct svm\+\_\+model $\ast$model)}]{\setlength{\rightskip}{0pt plus 5cm}int svm\+\_\+get\+\_\+nr\+\_\+sv (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+model} $\ast$}]{model}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_ae4430a93a840cff5c3d67be2c6a0de89}{}\label{svm__core_8h_ae4430a93a840cff5c3d67be2c6a0de89}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+get\+\_\+sv\+\_\+indices@{svm\+\_\+get\+\_\+sv\+\_\+indices}}
+\index{svm\+\_\+get\+\_\+sv\+\_\+indices@{svm\+\_\+get\+\_\+sv\+\_\+indices}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+get\+\_\+sv\+\_\+indices(const struct svm\+\_\+model $\ast$model, int $\ast$sv\+\_\+indices)}]{\setlength{\rightskip}{0pt plus 5cm}void svm\+\_\+get\+\_\+sv\+\_\+indices (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+model} $\ast$}]{model, }
+\item[{int $\ast$}]{sv\+\_\+indices}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_ae61677f9adc1d3f0f6d55a4256923d43}{}\label{svm__core_8h_ae61677f9adc1d3f0f6d55a4256923d43}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+get\+\_\+svm\+\_\+type@{svm\+\_\+get\+\_\+svm\+\_\+type}}
+\index{svm\+\_\+get\+\_\+svm\+\_\+type@{svm\+\_\+get\+\_\+svm\+\_\+type}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+get\+\_\+svm\+\_\+type(const struct svm\+\_\+model $\ast$model)}]{\setlength{\rightskip}{0pt plus 5cm}int svm\+\_\+get\+\_\+svm\+\_\+type (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+model} $\ast$}]{model}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_add0a326d36e24044cf958a420d6f4e19}{}\label{svm__core_8h_add0a326d36e24044cf958a420d6f4e19}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+get\+\_\+svr\+\_\+probability@{svm\+\_\+get\+\_\+svr\+\_\+probability}}
+\index{svm\+\_\+get\+\_\+svr\+\_\+probability@{svm\+\_\+get\+\_\+svr\+\_\+probability}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+get\+\_\+svr\+\_\+probability(const struct svm\+\_\+model $\ast$model)}]{\setlength{\rightskip}{0pt plus 5cm}double svm\+\_\+get\+\_\+svr\+\_\+probability (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+model} $\ast$}]{model}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_a3f15a9a6c23b2f0927fc48ef2f549001}{}\label{svm__core_8h_a3f15a9a6c23b2f0927fc48ef2f549001}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+\+I\+\_\+train@{svm\+\_\+\+I\+\_\+train}}
+\index{svm\+\_\+\+I\+\_\+train@{svm\+\_\+\+I\+\_\+train}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+\+I\+\_\+train(const struct svm\+\_\+problem $\ast$prob, const struct svm\+\_\+parameter $\ast$param)}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf svm\+\_\+model}$\ast$ svm\+\_\+\+I\+\_\+train (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+problem} $\ast$}]{prob, }
+\item[{const struct {\bf svm\+\_\+parameter} $\ast$}]{param}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_a2e5db8ea4dcb0ad72079dffcff86f6d1}{}\label{svm__core_8h_a2e5db8ea4dcb0ad72079dffcff86f6d1}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+load\+\_\+model@{svm\+\_\+load\+\_\+model}}
+\index{svm\+\_\+load\+\_\+model@{svm\+\_\+load\+\_\+model}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+load\+\_\+model(const char $\ast$model\+\_\+file\+\_\+name)}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf svm\+\_\+model}$\ast$ svm\+\_\+load\+\_\+model (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{model\+\_\+file\+\_\+name}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_a569bb1a06e5181dfb19d66587463af4b}{}\label{svm__core_8h_a569bb1a06e5181dfb19d66587463af4b}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+model\+\_\+visualization@{svm\+\_\+model\+\_\+visualization}}
+\index{svm\+\_\+model\+\_\+visualization@{svm\+\_\+model\+\_\+visualization}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+model\+\_\+visualization(const svm\+\_\+model $\ast$model, Equation $\ast$equ)}]{\setlength{\rightskip}{0pt plus 5cm}int svm\+\_\+model\+\_\+visualization (
+\begin{DoxyParamCaption}
+\item[{const {\bf svm\+\_\+model} $\ast$}]{model, }
+\item[{{\bf Equation} $\ast$}]{equ}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_a2ee4e2b0866bf024c33687f5c5f591ea}{}\label{svm__core_8h_a2ee4e2b0866bf024c33687f5c5f591ea}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+predict@{svm\+\_\+predict}}
+\index{svm\+\_\+predict@{svm\+\_\+predict}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+predict(const struct svm\+\_\+model $\ast$model, const struct svm\+\_\+node $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}double svm\+\_\+predict (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+model} $\ast$}]{model, }
+\item[{const struct {\bf svm\+\_\+node} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_af7c913d98f7cd411b147f8990a97f576}{}\label{svm__core_8h_af7c913d98f7cd411b147f8990a97f576}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+predict\+\_\+probability@{svm\+\_\+predict\+\_\+probability}}
+\index{svm\+\_\+predict\+\_\+probability@{svm\+\_\+predict\+\_\+probability}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+predict\+\_\+probability(const struct svm\+\_\+model $\ast$model, const struct svm\+\_\+node $\ast$x, double $\ast$prob\+\_\+estimates)}]{\setlength{\rightskip}{0pt plus 5cm}double svm\+\_\+predict\+\_\+probability (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+model} $\ast$}]{model, }
+\item[{const struct {\bf svm\+\_\+node} $\ast$}]{x, }
+\item[{double $\ast$}]{prob\+\_\+estimates}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_a301070a1fda12e1257d76c08f97322a5}{}\label{svm__core_8h_a301070a1fda12e1257d76c08f97322a5}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+predict\+\_\+values@{svm\+\_\+predict\+\_\+values}}
+\index{svm\+\_\+predict\+\_\+values@{svm\+\_\+predict\+\_\+values}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+predict\+\_\+values(const struct svm\+\_\+model $\ast$model, const struct svm\+\_\+node $\ast$x, double $\ast$dec\+\_\+values)}]{\setlength{\rightskip}{0pt plus 5cm}double svm\+\_\+predict\+\_\+values (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+model} $\ast$}]{model, }
+\item[{const struct {\bf svm\+\_\+node} $\ast$}]{x, }
+\item[{double $\ast$}]{dec\+\_\+values}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_aa34079376b55cfef083b8ff523d77f55}{}\label{svm__core_8h_aa34079376b55cfef083b8ff523d77f55}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+save\+\_\+model@{svm\+\_\+save\+\_\+model}}
+\index{svm\+\_\+save\+\_\+model@{svm\+\_\+save\+\_\+model}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+save\+\_\+model(const char $\ast$model\+\_\+file\+\_\+name, const struct svm\+\_\+model $\ast$model)}]{\setlength{\rightskip}{0pt plus 5cm}int svm\+\_\+save\+\_\+model (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{model\+\_\+file\+\_\+name, }
+\item[{const struct {\bf svm\+\_\+model} $\ast$}]{model}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_ae6aefb92d3b0b1a5158bd4b15ca8f8e2}{}\label{svm__core_8h_ae6aefb92d3b0b1a5158bd4b15ca8f8e2}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+set\+\_\+print\+\_\+string\+\_\+function@{svm\+\_\+set\+\_\+print\+\_\+string\+\_\+function}}
+\index{svm\+\_\+set\+\_\+print\+\_\+string\+\_\+function@{svm\+\_\+set\+\_\+print\+\_\+string\+\_\+function}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+set\+\_\+print\+\_\+string\+\_\+function(void($\ast$print\+\_\+func)(const char $\ast$))}]{\setlength{\rightskip}{0pt plus 5cm}void svm\+\_\+set\+\_\+print\+\_\+string\+\_\+function (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)(const char $\ast$)}]{print\+\_\+func}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_a308f7948988441f4a1a5c8c8abc367be}{}\label{svm__core_8h_a308f7948988441f4a1a5c8c8abc367be}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!svm\+\_\+train@{svm\+\_\+train}}
+\index{svm\+\_\+train@{svm\+\_\+train}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{svm\+\_\+train(const struct svm\+\_\+problem $\ast$prob, const struct svm\+\_\+parameter $\ast$param)}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf svm\+\_\+model}$\ast$ svm\+\_\+train (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf svm\+\_\+problem} $\ast$}]{prob, }
+\item[{const struct {\bf svm\+\_\+parameter} $\ast$}]{param}
+\end{DoxyParamCaption}
+)}\hypertarget{svm__core_8h_a79ce3e65d01f2be1a4e5288c588c48a8}{}\label{svm__core_8h_a79ce3e65d01f2be1a4e5288c588c48a8}
+
+
+\subsection{Variable Documentation}
+\index{svm\+\_\+core.\+h@{svm\+\_\+core.\+h}!libsvm\+\_\+version@{libsvm\+\_\+version}}
+\index{libsvm\+\_\+version@{libsvm\+\_\+version}!svm\+\_\+core.\+h@{svm\+\_\+core.\+h}}
+\subsubsection[{libsvm\+\_\+version}]{\setlength{\rightskip}{0pt plus 5cm}int libsvm\+\_\+version}\hypertarget{svm__core_8h_a9ba41253b462f42e64917cc38e0f2cc7}{}\label{svm__core_8h_a9ba41253b462f42e64917cc38e0f2cc7}

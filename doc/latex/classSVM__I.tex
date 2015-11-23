@@ -1,0 +1,244 @@
+\hypertarget{classSVM__I}{}\section{S\+V\+M\+\_\+I Class Reference}
+\label{classSVM__I}\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+
+
+{\ttfamily \#include $<$svm\+\_\+i.\+h$>$}
+
+Inheritance diagram for S\+V\+M\+\_\+I\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classSVM__I}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classSVM__I_aa7843beb94a2df684a5c8874322341c2}{S\+V\+M\+\_\+I} (void($\ast$f)(const char $\ast$)=N\+U\+LL, int \hyperlink{classSVM__I_a1b66cefe313cffaa77d4271dfb4b8474}{size}=10000, int equ=16)
+\item 
+\hyperlink{classSVM__I_a72cef53f36557c007f36a03724a62fb8}{$\sim$\+S\+V\+M\+\_\+I} ()
+\item 
+virtual int \hyperlink{classSVM__I_ab0236699daa4967cfec71234faa785c5}{prepare\+\_\+training\+\_\+data} (\hyperlink{classStates}{States} $\ast$gsets, int \&pre\+\_\+positive\+\_\+size, int \&pre\+\_\+negative\+\_\+size)
+\item 
+int \hyperlink{classSVM__I_abf732821c264b2cb8bef5d252991f2b6}{train} ()
+\item 
+double \hyperlink{classSVM__I_a643c2a6e58f8e70ab276ade9b1873bf6}{predict\+\_\+on\+\_\+training\+\_\+set} ()
+\item 
+virtual int \hyperlink{classSVM__I_a84470dce77add6377454c4408c6c1466}{check\+\_\+question\+\_\+set} (\hyperlink{classStates}{States} \&qset)
+\item 
+virtual int \hyperlink{classSVM__I_a5d1a8c93d41597aea5f31689687dbc77}{get\+\_\+converged} (\hyperlink{classEquation}{Equation} $\ast$, int)
+\item 
+virtual std\+::ostream \& \hyperlink{classSVM__I_ab0ae30d86d9f9026908a7b902f7a78e3}{\+\_\+print} (std\+::ostream \&out) const 
+\item 
+int \hyperlink{classSVM__I_a1b66cefe313cffaa77d4271dfb4b8474}{size} ()
+\item 
+virtual \hyperlink{classEquation}{Equation} $\ast$ \hyperlink{classSVM__I_a91b713ef0810fd4c83a5c711aea9fecf}{roundoff} (int \&num)
+\item 
+virtual int \hyperlink{classSVM__I_abe0a76aa6d31d18c2ee66002c35c813f}{predict} (double $\ast$v, int label=0)
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsvm__model}{svm\+\_\+model} $\ast$ \hyperlink{classSVM__I_a7b7466c2246c73438ead77631278ff3a}{model}
+\item 
+\hyperlink{classEquation}{Equation} $\ast$ \hyperlink{classSVM__I_af905b6378094007502fa5d81f018a11b}{equations}
+\item 
+int \hyperlink{classSVM__I_ab674468eec42010761332da3f9b2f69c}{equ\+\_\+num}
+\item 
+\hyperlink{structsvm__parameter}{svm\+\_\+parameter} \hyperlink{classSVM__I_afbec56807dada05e9e527587d25acfb6}{param}
+\item 
+\hyperlink{classStates}{States} $\ast$ \hyperlink{classSVM__I_a8a56898f346ff15c5bb904ff6e001dad}{negatives}
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classSVM__I_aaa890d6eaac46a447820a368f056eea7}{max\+\_\+equ}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{classSVM__I_aa8eb2219340d322c9293e0d24a8b0e2e}{check\+\_\+postives\+\_\+and\+\_\+one\+\_\+negative} ()
+\item 
+int \hyperlink{classSVM__I_a099369c15005eea9f7d69c820431e0cb}{get\+\_\+misclassified} (int \&idx)
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \hyperlink{classSVM__I_ac0ce6164082022082361d78ba7b1c245}{operator$<$$<$} (std\+::ostream \&out, const \hyperlink{classSVM__I}{S\+V\+M\+\_\+I} \&svm\+\_\+i)
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{S\+V\+M\+\_\+\+I(void($\ast$f)(const char $\ast$)=\+N\+U\+L\+L, int size=10000, int equ=16)}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+M\+\_\+\+I\+::\+S\+V\+M\+\_\+I (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)(const char $\ast$)}]{f = {\ttfamily NULL}, }
+\item[{int}]{size = {\ttfamily 10000}, }
+\item[{int}]{equ = {\ttfamily 16}}
+\end{DoxyParamCaption}
+)}\hypertarget{classSVM__I_aa7843beb94a2df684a5c8874322341c2}{}\label{classSVM__I_aa7843beb94a2df684a5c8874322341c2}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!````~S\+V\+M\+\_\+I@{$\sim$\+S\+V\+M\+\_\+I}}
+\index{````~S\+V\+M\+\_\+I@{$\sim$\+S\+V\+M\+\_\+I}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{$\sim$\+S\+V\+M\+\_\+\+I()}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+M\+\_\+\+I\+::$\sim$\+S\+V\+M\+\_\+I (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classSVM__I_a72cef53f36557c007f36a03724a62fb8}{}\label{classSVM__I_a72cef53f36557c007f36a03724a62fb8}
+
+
+\subsection{Member Function Documentation}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!\+\_\+print@{\+\_\+print}}
+\index{\+\_\+print@{\+\_\+print}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{\+\_\+print(std\+::ostream \&out) const }]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream \& S\+V\+M\+\_\+\+I\+::\+\_\+print (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM__I_ab0ae30d86d9f9026908a7b902f7a78e3}{}\label{classSVM__I_ab0ae30d86d9f9026908a7b902f7a78e3}
+
+
+Reimplemented from \hyperlink{classSVM_a6e5a3fbae4da1ecd4773173a2b590c21}{S\+VM}.
+
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!check\+\_\+postives\+\_\+and\+\_\+one\+\_\+negative@{check\+\_\+postives\+\_\+and\+\_\+one\+\_\+negative}}
+\index{check\+\_\+postives\+\_\+and\+\_\+one\+\_\+negative@{check\+\_\+postives\+\_\+and\+\_\+one\+\_\+negative}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{check\+\_\+postives\+\_\+and\+\_\+one\+\_\+negative()}]{\setlength{\rightskip}{0pt plus 5cm}double S\+V\+M\+\_\+\+I\+::check\+\_\+postives\+\_\+and\+\_\+one\+\_\+negative (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classSVM__I_aa8eb2219340d322c9293e0d24a8b0e2e}{}\label{classSVM__I_aa8eb2219340d322c9293e0d24a8b0e2e}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!check\+\_\+question\+\_\+set@{check\+\_\+question\+\_\+set}}
+\index{check\+\_\+question\+\_\+set@{check\+\_\+question\+\_\+set}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{check\+\_\+question\+\_\+set(\+States \&qset)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+M\+\_\+\+I\+::check\+\_\+question\+\_\+set (
+\begin{DoxyParamCaption}
+\item[{{\bf States} \&}]{qset}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM__I_a84470dce77add6377454c4408c6c1466}{}\label{classSVM__I_a84470dce77add6377454c4408c6c1466}
+
+
+Reimplemented from \hyperlink{classSVM_aa610ec08173c8603ad6e02f26cbe8e1c}{S\+VM}.
+
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!get\+\_\+converged@{get\+\_\+converged}}
+\index{get\+\_\+converged@{get\+\_\+converged}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{get\+\_\+converged(\+Equation $\ast$, int)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+M\+\_\+\+I\+::get\+\_\+converged (
+\begin{DoxyParamCaption}
+\item[{{\bf Equation} $\ast$}]{previous\+\_\+equations, }
+\item[{int}]{previous\+\_\+equation\+\_\+num}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM__I_a5d1a8c93d41597aea5f31689687dbc77}{}\label{classSVM__I_a5d1a8c93d41597aea5f31689687dbc77}
+
+
+Reimplemented from \hyperlink{classSVM_a712dcd7cb65a8045a77dd474869dd5c4}{S\+VM}.
+
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!get\+\_\+misclassified@{get\+\_\+misclassified}}
+\index{get\+\_\+misclassified@{get\+\_\+misclassified}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{get\+\_\+misclassified(int \&idx)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+M\+\_\+\+I\+::get\+\_\+misclassified (
+\begin{DoxyParamCaption}
+\item[{int \&}]{idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classSVM__I_a099369c15005eea9f7d69c820431e0cb}{}\label{classSVM__I_a099369c15005eea9f7d69c820431e0cb}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!predict@{predict}}
+\index{predict@{predict}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{predict(double $\ast$v, int label=0)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+M\+\_\+\+I\+::predict (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{v, }
+\item[{int}]{label = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM__I_abe0a76aa6d31d18c2ee66002c35c813f}{}\label{classSVM__I_abe0a76aa6d31d18c2ee66002c35c813f}
+
+
+Reimplemented from \hyperlink{classSVM_a972215d3c749ba550c85763c8871567f}{S\+VM}.
+
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!predict\+\_\+on\+\_\+training\+\_\+set@{predict\+\_\+on\+\_\+training\+\_\+set}}
+\index{predict\+\_\+on\+\_\+training\+\_\+set@{predict\+\_\+on\+\_\+training\+\_\+set}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{predict\+\_\+on\+\_\+training\+\_\+set()}]{\setlength{\rightskip}{0pt plus 5cm}double S\+V\+M\+\_\+\+I\+::predict\+\_\+on\+\_\+training\+\_\+set (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM__I_a643c2a6e58f8e70ab276ade9b1873bf6}{}\label{classSVM__I_a643c2a6e58f8e70ab276ade9b1873bf6}
+
+
+Reimplemented from \hyperlink{classSVM_af208fc653a382591f20c0fcf7a186362}{S\+VM}.
+
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!prepare\+\_\+training\+\_\+data@{prepare\+\_\+training\+\_\+data}}
+\index{prepare\+\_\+training\+\_\+data@{prepare\+\_\+training\+\_\+data}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{prepare\+\_\+training\+\_\+data(\+States $\ast$gsets, int \&pre\+\_\+positive\+\_\+size, int \&pre\+\_\+negative\+\_\+size)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+M\+\_\+\+I\+::prepare\+\_\+training\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{{\bf States} $\ast$}]{gsets, }
+\item[{int \&}]{pre\+\_\+positive\+\_\+size, }
+\item[{int \&}]{pre\+\_\+negative\+\_\+size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM__I_ab0236699daa4967cfec71234faa785c5}{}\label{classSVM__I_ab0236699daa4967cfec71234faa785c5}
+
+
+Reimplemented from \hyperlink{classSVM_a930fe217e3affd64acb6700f5f8082e1}{S\+VM}.
+
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!roundoff@{roundoff}}
+\index{roundoff@{roundoff}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{roundoff(int \&num)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Equation} $\ast$ S\+V\+M\+\_\+\+I\+::roundoff (
+\begin{DoxyParamCaption}
+\item[{int \&}]{num}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM__I_a91b713ef0810fd4c83a5c711aea9fecf}{}\label{classSVM__I_a91b713ef0810fd4c83a5c711aea9fecf}
+
+
+Reimplemented from \hyperlink{classSVM_abd2d511c6cb9f64a29a4551f6435bfd2}{S\+VM}.
+
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!size@{size}}
+\index{size@{size}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{size()}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+M\+\_\+\+I\+::size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM__I_a1b66cefe313cffaa77d4271dfb4b8474}{}\label{classSVM__I_a1b66cefe313cffaa77d4271dfb4b8474}
+
+
+Reimplemented from \hyperlink{classSVM_a4563cef982f6e1c67acf0c7b0ec8909b}{S\+VM}.
+
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!train@{train}}
+\index{train@{train}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{train()}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+M\+\_\+\+I\+::train (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM__I_abf732821c264b2cb8bef5d252991f2b6}{}\label{classSVM__I_abf732821c264b2cb8bef5d252991f2b6}
+
+
+Reimplemented from \hyperlink{classSVM_a6a1d895b86522eab683d66ded4d3a049}{S\+VM}.
+
+
+
+\subsection{Friends And Related Function Documentation}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out, }
+\item[{const {\bf S\+V\+M\+\_\+I} \&}]{svm\+\_\+i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{classSVM__I_ac0ce6164082022082361d78ba7b1c245}{}\label{classSVM__I_ac0ce6164082022082361d78ba7b1c245}
+
+
+\subsection{Field Documentation}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!equ\+\_\+num@{equ\+\_\+num}}
+\index{equ\+\_\+num@{equ\+\_\+num}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{equ\+\_\+num}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+M\+\_\+\+I\+::equ\+\_\+num}\hypertarget{classSVM__I_ab674468eec42010761332da3f9b2f69c}{}\label{classSVM__I_ab674468eec42010761332da3f9b2f69c}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!equations@{equations}}
+\index{equations@{equations}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{equations}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Equation}$\ast$ S\+V\+M\+\_\+\+I\+::equations}\hypertarget{classSVM__I_af905b6378094007502fa5d81f018a11b}{}\label{classSVM__I_af905b6378094007502fa5d81f018a11b}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!max\+\_\+equ@{max\+\_\+equ}}
+\index{max\+\_\+equ@{max\+\_\+equ}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{max\+\_\+equ}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+M\+\_\+\+I\+::max\+\_\+equ\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classSVM__I_aaa890d6eaac46a447820a368f056eea7}{}\label{classSVM__I_aaa890d6eaac46a447820a368f056eea7}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!model@{model}}
+\index{model@{model}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{model}]{\setlength{\rightskip}{0pt plus 5cm}{\bf svm\+\_\+model}$\ast$ S\+V\+M\+\_\+\+I\+::model}\hypertarget{classSVM__I_a7b7466c2246c73438ead77631278ff3a}{}\label{classSVM__I_a7b7466c2246c73438ead77631278ff3a}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!negatives@{negatives}}
+\index{negatives@{negatives}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{negatives}]{\setlength{\rightskip}{0pt plus 5cm}{\bf States}$\ast$ S\+V\+M\+\_\+\+I\+::negatives}\hypertarget{classSVM__I_a8a56898f346ff15c5bb904ff6e001dad}{}\label{classSVM__I_a8a56898f346ff15c5bb904ff6e001dad}
+\index{S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}!param@{param}}
+\index{param@{param}!S\+V\+M\+\_\+I@{S\+V\+M\+\_\+I}}
+\subsubsection[{param}]{\setlength{\rightskip}{0pt plus 5cm}{\bf svm\+\_\+parameter} S\+V\+M\+\_\+\+I\+::param}\hypertarget{classSVM__I_afbec56807dada05e9e527587d25acfb6}{}\label{classSVM__I_afbec56807dada05e9e527587d25acfb6}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{svm__i_8h}{svm\+\_\+i.\+h}\item 
+src/\hyperlink{svm__i_8cpp}{svm\+\_\+i.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,66 @@
+\hypertarget{iif__assert_8h}{}\section{include/iif\+\_\+assert.h File Reference}
+\label{iif__assert_8h}\index{include/iif\+\_\+assert.\+h@{include/iif\+\_\+assert.\+h}}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{iif__assert_8h_a77c691e35bf160a48b865e93073dd759}{iif\+\_\+assume}(expr)
+\item 
+\#define \hyperlink{iif__assert_8h_af22e31973faa40470618b5f370326651}{iif\+\_\+assert}(expr)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{iif__assert_8h_a73db7f19ba8224c4530f45fd832ef42b}{\+\_\+passP}
+\item 
+bool \hyperlink{iif__assert_8h_a87e762b3355fdc144393f0936c14f8ca}{\+\_\+passQ}
+\item 
+int \hyperlink{iif__assert_8h_a552efb21fe547d54565d8379dc8a95bc}{assume\+\_\+times}
+\item 
+int \hyperlink{iif__assert_8h_a3b38e8ff0d716993240c2bbc5c25a59e}{assert\+\_\+times}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}!iif\+\_\+assert@{iif\+\_\+assert}}
+\index{iif\+\_\+assert@{iif\+\_\+assert}!iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}}
+\subsubsection[{iif\+\_\+assert}]{\setlength{\rightskip}{0pt plus 5cm}\#define iif\+\_\+assert(
+\begin{DoxyParamCaption}
+\item[{}]{expr}
+\end{DoxyParamCaption}
+)}\hypertarget{iif__assert_8h_af22e31973faa40470618b5f370326651}{}\label{iif__assert_8h_af22e31973faa40470618b5f370326651}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \{ \hyperlink{iif__assert_8h_a87e762b3355fdc144393f0936c14f8ca}{\(\backslash\)}
+\hyperlink{iif__assert_8h_a87e762b3355fdc144393f0936c14f8ca}{    \_passQ} = (expr)? \textcolor{keyword}{true} : \textcolor{keyword}{false};\hyperlink{iif__assert_8h_a3b38e8ff0d716993240c2bbc5c25a59e}{\(\backslash\)}
+\hyperlink{iif__assert_8h_a3b38e8ff0d716993240c2bbc5c25a59e}{    assert\_times}++;\(\backslash\)
+\} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+\index{iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}!iif\+\_\+assume@{iif\+\_\+assume}}
+\index{iif\+\_\+assume@{iif\+\_\+assume}!iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}}
+\subsubsection[{iif\+\_\+assume}]{\setlength{\rightskip}{0pt plus 5cm}\#define iif\+\_\+assume(
+\begin{DoxyParamCaption}
+\item[{}]{expr}
+\end{DoxyParamCaption}
+)}\hypertarget{iif__assert_8h_a77c691e35bf160a48b865e93073dd759}{}\label{iif__assert_8h_a77c691e35bf160a48b865e93073dd759}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \{ \hyperlink{iif__assert_8h_a73db7f19ba8224c4530f45fd832ef42b}{\(\backslash\)}
+\hyperlink{iif__assert_8h_a73db7f19ba8224c4530f45fd832ef42b}{    \_passP} = (expr)? \textcolor{keyword}{true} : \textcolor{keyword}{false};\hyperlink{iif__assert_8h_a552efb21fe547d54565d8379dc8a95bc}{\(\backslash\)}
+\hyperlink{iif__assert_8h_a552efb21fe547d54565d8379dc8a95bc}{    assume\_times}++;\(\backslash\)
+\} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\index{iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}!\+\_\+passP@{\+\_\+passP}}
+\index{\+\_\+passP@{\+\_\+passP}!iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}}
+\subsubsection[{\+\_\+passP}]{\setlength{\rightskip}{0pt plus 5cm}bool \+\_\+passP}\hypertarget{iif__assert_8h_a73db7f19ba8224c4530f45fd832ef42b}{}\label{iif__assert_8h_a73db7f19ba8224c4530f45fd832ef42b}
+\index{iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}!\+\_\+passQ@{\+\_\+passQ}}
+\index{\+\_\+passQ@{\+\_\+passQ}!iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}}
+\subsubsection[{\+\_\+passQ}]{\setlength{\rightskip}{0pt plus 5cm}bool \+\_\+passQ}\hypertarget{iif__assert_8h_a87e762b3355fdc144393f0936c14f8ca}{}\label{iif__assert_8h_a87e762b3355fdc144393f0936c14f8ca}
+\index{iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}!assert\+\_\+times@{assert\+\_\+times}}
+\index{assert\+\_\+times@{assert\+\_\+times}!iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}}
+\subsubsection[{assert\+\_\+times}]{\setlength{\rightskip}{0pt plus 5cm}int assert\+\_\+times}\hypertarget{iif__assert_8h_a3b38e8ff0d716993240c2bbc5c25a59e}{}\label{iif__assert_8h_a3b38e8ff0d716993240c2bbc5c25a59e}
+\index{iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}!assume\+\_\+times@{assume\+\_\+times}}
+\index{assume\+\_\+times@{assume\+\_\+times}!iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}}
+\subsubsection[{assume\+\_\+times}]{\setlength{\rightskip}{0pt plus 5cm}int assume\+\_\+times}\hypertarget{iif__assert_8h_a552efb21fe547d54565d8379dc8a95bc}{}\label{iif__assert_8h_a552efb21fe547d54565d8379dc8a95bc}

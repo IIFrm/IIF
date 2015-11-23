@@ -1,0 +1,93 @@
+\hypertarget{instrumentation_8h}{}\section{include/instrumentation.h File Reference}
+\label{instrumentation_8h}\index{include/instrumentation.\+h@{include/instrumentation.\+h}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}states.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdarg.\+h$>$}\\*
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \hyperlink{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55ba62d66a51fa7574c652597716f7709865}{N\+E\+G\+A\+T\+I\+VE} = -\/1, 
+\hyperlink{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55bad126f509c35e1661274f8b72693c7848}{Q\+U\+E\+S\+T\+I\+ON}, 
+\hyperlink{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55ba03d440bbbfb042afc85347f994b44fb5}{P\+O\+S\+I\+T\+I\+VE}, 
+\hyperlink{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55baca3ef05411426a5f11dc987d95aa3529}{C\+O\+U\+N\+T\+\_\+\+E\+X\+A\+M\+P\+LE}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{instrumentation_8h_a1f273c8173d42c0d0afdc027771f8a87}{add\+\_\+state\+\_\+int} (int first,...)
+\item 
+int \hyperlink{instrumentation_8h_a79372536ec6cea03f5965c1ba3cc53d0}{add\+\_\+state\+\_\+double} (double first,...)
+\item 
+int \hyperlink{instrumentation_8h_a2d59d0b15971adab199af12052e349ef}{m\+\_\+int} (int $\ast$)
+\item 
+int \hyperlink{instrumentation_8h_a672c47c9112ab553c00e2910b255ff1a}{m\+\_\+double} (double $\ast$)
+\item 
+int \hyperlink{instrumentation_8h_aabbf0f2d0ec3548d46e27866fc768e42}{before\+\_\+loop} ()
+\item 
+int \hyperlink{instrumentation_8h_a84778c6fd993bc3a85b2d5f9c354f38f}{after\+\_\+loop} (\hyperlink{classStates}{States} $\ast$)
+\end{DoxyCompactItemize}
+
+
+\subsection{Enumeration Type Documentation}
+\subsubsection[{anonymous enum}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}\hypertarget{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55b}{}\label{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55b}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{N\+E\+G\+A\+T\+I\+VE@{N\+E\+G\+A\+T\+I\+VE}!instrumentation.\+h@{instrumentation.\+h}}\index{instrumentation.\+h@{instrumentation.\+h}!N\+E\+G\+A\+T\+I\+VE@{N\+E\+G\+A\+T\+I\+VE}}\item[{\em 
+N\+E\+G\+A\+T\+I\+VE\hypertarget{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55ba62d66a51fa7574c652597716f7709865}{}\label{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55ba62d66a51fa7574c652597716f7709865}
+}]\index{Q\+U\+E\+S\+T\+I\+ON@{Q\+U\+E\+S\+T\+I\+ON}!instrumentation.\+h@{instrumentation.\+h}}\index{instrumentation.\+h@{instrumentation.\+h}!Q\+U\+E\+S\+T\+I\+ON@{Q\+U\+E\+S\+T\+I\+ON}}\item[{\em 
+Q\+U\+E\+S\+T\+I\+ON\hypertarget{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55bad126f509c35e1661274f8b72693c7848}{}\label{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55bad126f509c35e1661274f8b72693c7848}
+}]\index{P\+O\+S\+I\+T\+I\+VE@{P\+O\+S\+I\+T\+I\+VE}!instrumentation.\+h@{instrumentation.\+h}}\index{instrumentation.\+h@{instrumentation.\+h}!P\+O\+S\+I\+T\+I\+VE@{P\+O\+S\+I\+T\+I\+VE}}\item[{\em 
+P\+O\+S\+I\+T\+I\+VE\hypertarget{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55ba03d440bbbfb042afc85347f994b44fb5}{}\label{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55ba03d440bbbfb042afc85347f994b44fb5}
+}]\index{C\+O\+U\+N\+T\+\_\+\+E\+X\+A\+M\+P\+LE@{C\+O\+U\+N\+T\+\_\+\+E\+X\+A\+M\+P\+LE}!instrumentation.\+h@{instrumentation.\+h}}\index{instrumentation.\+h@{instrumentation.\+h}!C\+O\+U\+N\+T\+\_\+\+E\+X\+A\+M\+P\+LE@{C\+O\+U\+N\+T\+\_\+\+E\+X\+A\+M\+P\+LE}}\item[{\em 
+C\+O\+U\+N\+T\+\_\+\+E\+X\+A\+M\+P\+LE\hypertarget{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55baca3ef05411426a5f11dc987d95aa3529}{}\label{instrumentation_8h_a06fc87d81c62e9abb8790b6e5713c55baca3ef05411426a5f11dc987d95aa3529}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{instrumentation.\+h@{instrumentation.\+h}!add\+\_\+state\+\_\+double@{add\+\_\+state\+\_\+double}}
+\index{add\+\_\+state\+\_\+double@{add\+\_\+state\+\_\+double}!instrumentation.\+h@{instrumentation.\+h}}
+\subsubsection[{add\+\_\+state\+\_\+double(double first,...)}]{\setlength{\rightskip}{0pt plus 5cm}int add\+\_\+state\+\_\+double (
+\begin{DoxyParamCaption}
+\item[{double}]{first, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8h_a79372536ec6cea03f5965c1ba3cc53d0}{}\label{instrumentation_8h_a79372536ec6cea03f5965c1ba3cc53d0}
+\index{instrumentation.\+h@{instrumentation.\+h}!add\+\_\+state\+\_\+int@{add\+\_\+state\+\_\+int}}
+\index{add\+\_\+state\+\_\+int@{add\+\_\+state\+\_\+int}!instrumentation.\+h@{instrumentation.\+h}}
+\subsubsection[{add\+\_\+state\+\_\+int(int first,...)}]{\setlength{\rightskip}{0pt plus 5cm}int add\+\_\+state\+\_\+int (
+\begin{DoxyParamCaption}
+\item[{int}]{first, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8h_a1f273c8173d42c0d0afdc027771f8a87}{}\label{instrumentation_8h_a1f273c8173d42c0d0afdc027771f8a87}
+\index{instrumentation.\+h@{instrumentation.\+h}!after\+\_\+loop@{after\+\_\+loop}}
+\index{after\+\_\+loop@{after\+\_\+loop}!instrumentation.\+h@{instrumentation.\+h}}
+\subsubsection[{after\+\_\+loop(\+States $\ast$)}]{\setlength{\rightskip}{0pt plus 5cm}int after\+\_\+loop (
+\begin{DoxyParamCaption}
+\item[{{\bf States} $\ast$}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8h_a84778c6fd993bc3a85b2d5f9c354f38f}{}\label{instrumentation_8h_a84778c6fd993bc3a85b2d5f9c354f38f}
+\index{instrumentation.\+h@{instrumentation.\+h}!before\+\_\+loop@{before\+\_\+loop}}
+\index{before\+\_\+loop@{before\+\_\+loop}!instrumentation.\+h@{instrumentation.\+h}}
+\subsubsection[{before\+\_\+loop()}]{\setlength{\rightskip}{0pt plus 5cm}int before\+\_\+loop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8h_aabbf0f2d0ec3548d46e27866fc768e42}{}\label{instrumentation_8h_aabbf0f2d0ec3548d46e27866fc768e42}
+\index{instrumentation.\+h@{instrumentation.\+h}!m\+\_\+double@{m\+\_\+double}}
+\index{m\+\_\+double@{m\+\_\+double}!instrumentation.\+h@{instrumentation.\+h}}
+\subsubsection[{m\+\_\+double(double $\ast$)}]{\setlength{\rightskip}{0pt plus 5cm}int m\+\_\+double (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8h_a672c47c9112ab553c00e2910b255ff1a}{}\label{instrumentation_8h_a672c47c9112ab553c00e2910b255ff1a}
+\index{instrumentation.\+h@{instrumentation.\+h}!m\+\_\+int@{m\+\_\+int}}
+\index{m\+\_\+int@{m\+\_\+int}!instrumentation.\+h@{instrumentation.\+h}}
+\subsubsection[{m\+\_\+int(int $\ast$)}]{\setlength{\rightskip}{0pt plus 5cm}int m\+\_\+int (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{instrumentation_8h_a2d59d0b15971adab199af12052e349ef}{}\label{instrumentation_8h_a2d59d0b15971adab199af12052e349ef}

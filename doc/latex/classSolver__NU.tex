@@ -1,0 +1,117 @@
+\hypertarget{classSolver__NU}{}\section{Solver\+\_\+\+NU Class Reference}
+\label{classSolver__NU}\index{Solver\+\_\+\+NU@{Solver\+\_\+\+NU}}
+Inheritance diagram for Solver\+\_\+\+NU\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classSolver__NU}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classSolver__NU_a4f05e99c9939dcdf36840f27b1a9dde7}{Solver\+\_\+\+NU} ()
+\item 
+void \hyperlink{classSolver__NU_a3852f49023c0032934508156d7a9f132}{Solve} (int \hyperlink{classSolver_a88832d45b6de977b1cbb2afd4c0e494c}{l}, const \hyperlink{classQMatrix}{Q\+Matrix} \&\hyperlink{classSolver_a2d3461718f0570bdc47f5dfb31d61e0a}{Q}, const double $\ast$\hyperlink{classSolver_a882cce072f56679880d409e3e73f7ae8}{p}, const \hyperlink{svm__core_8cpp_a0fd9ce9d735064461bebfe6037026093}{schar} $\ast$\hyperlink{classSolver_a3acc1043d06dedf87f054ff3eea5c426}{y}, double $\ast$\hyperlink{classSolver_a00d7a7cefa2504d41c7db6cd7cc6b428}{alpha}, double \hyperlink{classSolver_a2e45dbea8be469bf8247e14768549dd5}{Cp}, double \hyperlink{classSolver_a38d741d194839fb445f982dd78e0b97b}{Cn}, double \hyperlink{classSolver_a718333cc2c1d40abf9c292a788cba1e5}{eps}, \hyperlink{structSolver_1_1SolutionInfo}{Solution\+Info} $\ast$\hyperlink{classSolver__NU_ab4f51d421dfaec61482401ff5ef0d86c}{si}, int shrinking)
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classSolver__NU_a39577d8d09b1d04500c41a999dfd21e9}{select\+\_\+working\+\_\+set} (int \&i, int \&j)
+\item 
+double \hyperlink{classSolver__NU_aa4514c004c2a398ae320c6c619f67c98}{calculate\+\_\+rho} ()
+\item 
+bool \hyperlink{classSolver__NU_ab22738c68164e939d7d0d5de5a5b15f3}{be\+\_\+shrunk} (int i, double Gmax1, double Gmax2, double Gmax3, double Gmax4)
+\item 
+void \hyperlink{classSolver__NU_a6670a539940f4efdc40d2c9e75a9da1b}{do\+\_\+shrinking} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structSolver_1_1SolutionInfo}{Solution\+Info} $\ast$ \hyperlink{classSolver__NU_ab4f51d421dfaec61482401ff5ef0d86c}{si}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Solver\+\_\+\+NU@{Solver\+\_\+\+NU}!Solver\+\_\+\+NU@{Solver\+\_\+\+NU}}
+\index{Solver\+\_\+\+NU@{Solver\+\_\+\+NU}!Solver\+\_\+\+NU@{Solver\+\_\+\+NU}}
+\subsubsection[{Solver\+\_\+\+N\+U()}]{\setlength{\rightskip}{0pt plus 5cm}Solver\+\_\+\+N\+U\+::\+Solver\+\_\+\+NU (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classSolver__NU_a4f05e99c9939dcdf36840f27b1a9dde7}{}\label{classSolver__NU_a4f05e99c9939dcdf36840f27b1a9dde7}
+
+
+\subsection{Member Function Documentation}
+\index{Solver\+\_\+\+NU@{Solver\+\_\+\+NU}!be\+\_\+shrunk@{be\+\_\+shrunk}}
+\index{be\+\_\+shrunk@{be\+\_\+shrunk}!Solver\+\_\+\+NU@{Solver\+\_\+\+NU}}
+\subsubsection[{be\+\_\+shrunk(int i, double Gmax1, double Gmax2, double Gmax3, double Gmax4)}]{\setlength{\rightskip}{0pt plus 5cm}bool Solver\+\_\+\+N\+U\+::be\+\_\+shrunk (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{double}]{Gmax1, }
+\item[{double}]{Gmax2, }
+\item[{double}]{Gmax3, }
+\item[{double}]{Gmax4}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classSolver__NU_ab22738c68164e939d7d0d5de5a5b15f3}{}\label{classSolver__NU_ab22738c68164e939d7d0d5de5a5b15f3}
+\index{Solver\+\_\+\+NU@{Solver\+\_\+\+NU}!calculate\+\_\+rho@{calculate\+\_\+rho}}
+\index{calculate\+\_\+rho@{calculate\+\_\+rho}!Solver\+\_\+\+NU@{Solver\+\_\+\+NU}}
+\subsubsection[{calculate\+\_\+rho()}]{\setlength{\rightskip}{0pt plus 5cm}double Solver\+\_\+\+N\+U\+::calculate\+\_\+rho (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [virtual]}}\hypertarget{classSolver__NU_aa4514c004c2a398ae320c6c619f67c98}{}\label{classSolver__NU_aa4514c004c2a398ae320c6c619f67c98}
+
+
+Reimplemented from \hyperlink{classSolver_ad00b01f72232ca932cad68e58c9cde5a}{Solver}.
+
+\index{Solver\+\_\+\+NU@{Solver\+\_\+\+NU}!do\+\_\+shrinking@{do\+\_\+shrinking}}
+\index{do\+\_\+shrinking@{do\+\_\+shrinking}!Solver\+\_\+\+NU@{Solver\+\_\+\+NU}}
+\subsubsection[{do\+\_\+shrinking()}]{\setlength{\rightskip}{0pt plus 5cm}void Solver\+\_\+\+N\+U\+::do\+\_\+shrinking (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [virtual]}}\hypertarget{classSolver__NU_a6670a539940f4efdc40d2c9e75a9da1b}{}\label{classSolver__NU_a6670a539940f4efdc40d2c9e75a9da1b}
+
+
+Reimplemented from \hyperlink{classSolver_ad3f6665a1ca590e56b3d51f8ddcc347c}{Solver}.
+
+\index{Solver\+\_\+\+NU@{Solver\+\_\+\+NU}!select\+\_\+working\+\_\+set@{select\+\_\+working\+\_\+set}}
+\index{select\+\_\+working\+\_\+set@{select\+\_\+working\+\_\+set}!Solver\+\_\+\+NU@{Solver\+\_\+\+NU}}
+\subsubsection[{select\+\_\+working\+\_\+set(int \&i, int \&j)}]{\setlength{\rightskip}{0pt plus 5cm}int Solver\+\_\+\+N\+U\+::select\+\_\+working\+\_\+set (
+\begin{DoxyParamCaption}
+\item[{int \&}]{i, }
+\item[{int \&}]{j}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [virtual]}}\hypertarget{classSolver__NU_a39577d8d09b1d04500c41a999dfd21e9}{}\label{classSolver__NU_a39577d8d09b1d04500c41a999dfd21e9}
+
+
+Reimplemented from \hyperlink{classSolver_a95fb4eaf33362558e1fc768f4db019d3}{Solver}.
+
+\index{Solver\+\_\+\+NU@{Solver\+\_\+\+NU}!Solve@{Solve}}
+\index{Solve@{Solve}!Solver\+\_\+\+NU@{Solver\+\_\+\+NU}}
+\subsubsection[{Solve(int l, const Q\+Matrix \&\+Q, const double $\ast$p, const schar $\ast$y, double $\ast$alpha, double Cp, double Cn, double eps, Solution\+Info $\ast$si, int shrinking)}]{\setlength{\rightskip}{0pt plus 5cm}void Solver\+\_\+\+N\+U\+::\+Solve (
+\begin{DoxyParamCaption}
+\item[{int}]{l, }
+\item[{const {\bf Q\+Matrix} \&}]{Q, }
+\item[{const double $\ast$}]{p, }
+\item[{const {\bf schar} $\ast$}]{y, }
+\item[{double $\ast$}]{alpha, }
+\item[{double}]{Cp, }
+\item[{double}]{Cn, }
+\item[{double}]{eps, }
+\item[{{\bf Solution\+Info} $\ast$}]{si, }
+\item[{int}]{shrinking}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classSolver__NU_a3852f49023c0032934508156d7a9f132}{}\label{classSolver__NU_a3852f49023c0032934508156d7a9f132}
+
+
+\subsection{Field Documentation}
+\index{Solver\+\_\+\+NU@{Solver\+\_\+\+NU}!si@{si}}
+\index{si@{si}!Solver\+\_\+\+NU@{Solver\+\_\+\+NU}}
+\subsubsection[{si}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Solution\+Info}$\ast$ Solver\+\_\+\+N\+U\+::si\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classSolver__NU_ab4f51d421dfaec61482401ff5ef0d86c}{}\label{classSolver__NU_ab4f51d421dfaec61482401ff5ef0d86c}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\hyperlink{svm__core_8cpp}{svm\+\_\+core.\+cpp}\end{DoxyCompactItemize}

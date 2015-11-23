@@ -1,0 +1,193 @@
+\hypertarget{classPerceptron}{}\section{Perceptron Class Reference}
+\label{classPerceptron}\index{Perceptron@{Perceptron}}
+
+
+{\ttfamily \#include $<$perceptron.\+h$>$}
+
+Inheritance diagram for Perceptron\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classPerceptron}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classPerceptron_aa2364f629d771f5e9bf4fc9f70a17cbc}{Perceptron} (void($\ast$f)(const char $\ast$)=N\+U\+LL)
+\item 
+virtual \hyperlink{classPerceptron_a0267e40e981df9907129d858911840e7}{$\sim$\+Perceptron} ()
+\item 
+virtual int \hyperlink{classPerceptron_a2267c5acf9b4a7bd0f47522a530d3863}{prepare\+\_\+training\+\_\+data} (\hyperlink{classStates}{States} $\ast$gsets, int \&pre\+\_\+positive\+\_\+size, int \&pre\+\_\+negative\+\_\+size)
+\item 
+virtual int \hyperlink{classPerceptron_adc779991ee63dca333c12fb247b32c9d}{train} ()
+\item 
+virtual double \hyperlink{classPerceptron_ac9214d2cda4eeb9a06f6562bcb5df8ca}{predict\+\_\+on\+\_\+training\+\_\+set} ()
+\item 
+virtual int \hyperlink{classPerceptron_ac7ed76c6a28180691f63f2afbf93cc26}{check\+\_\+question\+\_\+set} (\hyperlink{classStates}{States} \&qset)
+\item 
+virtual int \hyperlink{classPerceptron_a50b1f76eb2760b540477135100dcbf49}{size} ()
+\item 
+virtual \hyperlink{classEquation}{Equation} $\ast$ \hyperlink{classPerceptron_a5408f0ea545d06bbef6630071c73fea2}{roundoff} (int \&num)
+\item 
+virtual int \hyperlink{classPerceptron_a414600a1f189c4f44c858b87048ae655}{predict} (double $\ast$v, int label=0)
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classEquation}{Equation} $\ast$ \hyperlink{classPerceptron_ae021428eb8cf08ebb46383fbc0ea1c46}{main\+\_\+equation}
+\item 
+double \hyperlink{classPerceptron_a7b395bb8dd492268fc2324c275b8ca4c}{training\+\_\+label} \mbox{[}\hyperlink{config_8h_ab763a0a7202006efe98fe9953784e6a9}{max\+\_\+items} $\ast$2\mbox{]}
+\item 
+double $\ast$ \hyperlink{classPerceptron_af93816c52b31be423764b53c22733a01}{training\+\_\+set} \mbox{[}\hyperlink{config_8h_ab763a0a7202006efe98fe9953784e6a9}{max\+\_\+items} $\ast$2\mbox{]}
+\item 
+int \hyperlink{classPerceptron_a996b4296c5e5e4950099a8fe0b37b9df}{length}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classEquation}{Equation} $\ast$ \hyperlink{classPerceptron_a9424ff060e4f990038669c9629cfab58}{perceptron\+\_\+train} ()
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \hyperlink{classPerceptron_a829793c1338f5ab9c9e7e63b6c63be21}{operator$<$$<$} (std\+::ostream \&out, const \hyperlink{classPerceptron}{Perceptron} \&)
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Perceptron@{Perceptron}!Perceptron@{Perceptron}}
+\index{Perceptron@{Perceptron}!Perceptron@{Perceptron}}
+\subsubsection[{Perceptron(void($\ast$f)(const char $\ast$)=\+N\+U\+L\+L)}]{\setlength{\rightskip}{0pt plus 5cm}Perceptron\+::\+Perceptron (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)(const char $\ast$)}]{f = {\ttfamily NULL}}
+\end{DoxyParamCaption}
+)}\hypertarget{classPerceptron_aa2364f629d771f5e9bf4fc9f70a17cbc}{}\label{classPerceptron_aa2364f629d771f5e9bf4fc9f70a17cbc}
+\index{Perceptron@{Perceptron}!````~Perceptron@{$\sim$\+Perceptron}}
+\index{````~Perceptron@{$\sim$\+Perceptron}!Perceptron@{Perceptron}}
+\subsubsection[{$\sim$\+Perceptron()}]{\setlength{\rightskip}{0pt plus 5cm}Perceptron\+::$\sim$\+Perceptron (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_a0267e40e981df9907129d858911840e7}{}\label{classPerceptron_a0267e40e981df9907129d858911840e7}
+
+
+\subsection{Member Function Documentation}
+\index{Perceptron@{Perceptron}!check\+\_\+question\+\_\+set@{check\+\_\+question\+\_\+set}}
+\index{check\+\_\+question\+\_\+set@{check\+\_\+question\+\_\+set}!Perceptron@{Perceptron}}
+\subsubsection[{check\+\_\+question\+\_\+set(\+States \&qset)}]{\setlength{\rightskip}{0pt plus 5cm}int Perceptron\+::check\+\_\+question\+\_\+set (
+\begin{DoxyParamCaption}
+\item[{{\bf States} \&}]{qset}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_ac7ed76c6a28180691f63f2afbf93cc26}{}\label{classPerceptron_ac7ed76c6a28180691f63f2afbf93cc26}
+
+
+Implements \hyperlink{classML__Algo_aa6b2dd6e3c5571b7bebe0d5f3de5483b}{M\+L\+\_\+\+Algo}.
+
+\index{Perceptron@{Perceptron}!perceptron\+\_\+train@{perceptron\+\_\+train}}
+\index{perceptron\+\_\+train@{perceptron\+\_\+train}!Perceptron@{Perceptron}}
+\subsubsection[{perceptron\+\_\+train()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Equation} $\ast$ Perceptron\+::perceptron\+\_\+train (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classPerceptron_a9424ff060e4f990038669c9629cfab58}{}\label{classPerceptron_a9424ff060e4f990038669c9629cfab58}
+\index{Perceptron@{Perceptron}!predict@{predict}}
+\index{predict@{predict}!Perceptron@{Perceptron}}
+\subsubsection[{predict(double $\ast$v, int label=0)}]{\setlength{\rightskip}{0pt plus 5cm}int Perceptron\+::predict (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{v, }
+\item[{int}]{label = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_a414600a1f189c4f44c858b87048ae655}{}\label{classPerceptron_a414600a1f189c4f44c858b87048ae655}
+
+
+Implements \hyperlink{classML__Algo_a8c2a89155672a87131161c5dcdfa1c5a}{M\+L\+\_\+\+Algo}.
+
+\index{Perceptron@{Perceptron}!predict\+\_\+on\+\_\+training\+\_\+set@{predict\+\_\+on\+\_\+training\+\_\+set}}
+\index{predict\+\_\+on\+\_\+training\+\_\+set@{predict\+\_\+on\+\_\+training\+\_\+set}!Perceptron@{Perceptron}}
+\subsubsection[{predict\+\_\+on\+\_\+training\+\_\+set()}]{\setlength{\rightskip}{0pt plus 5cm}double Perceptron\+::predict\+\_\+on\+\_\+training\+\_\+set (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_ac9214d2cda4eeb9a06f6562bcb5df8ca}{}\label{classPerceptron_ac9214d2cda4eeb9a06f6562bcb5df8ca}
+
+
+Implements \hyperlink{classML__Algo_a39dd640e7c910becf611b9265843ac77}{M\+L\+\_\+\+Algo}.
+
+\index{Perceptron@{Perceptron}!prepare\+\_\+training\+\_\+data@{prepare\+\_\+training\+\_\+data}}
+\index{prepare\+\_\+training\+\_\+data@{prepare\+\_\+training\+\_\+data}!Perceptron@{Perceptron}}
+\subsubsection[{prepare\+\_\+training\+\_\+data(\+States $\ast$gsets, int \&pre\+\_\+positive\+\_\+size, int \&pre\+\_\+negative\+\_\+size)}]{\setlength{\rightskip}{0pt plus 5cm}int Perceptron\+::prepare\+\_\+training\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{{\bf States} $\ast$}]{gsets, }
+\item[{int \&}]{pre\+\_\+positive\+\_\+size, }
+\item[{int \&}]{pre\+\_\+negative\+\_\+size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_a2267c5acf9b4a7bd0f47522a530d3863}{}\label{classPerceptron_a2267c5acf9b4a7bd0f47522a530d3863}
+
+
+Implements \hyperlink{classML__Algo_aaecc3e3fb875eea2867dcac24bc1e550}{M\+L\+\_\+\+Algo}.
+
+\index{Perceptron@{Perceptron}!roundoff@{roundoff}}
+\index{roundoff@{roundoff}!Perceptron@{Perceptron}}
+\subsubsection[{roundoff(int \&num)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Equation} $\ast$ Perceptron\+::roundoff (
+\begin{DoxyParamCaption}
+\item[{int \&}]{num}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_a5408f0ea545d06bbef6630071c73fea2}{}\label{classPerceptron_a5408f0ea545d06bbef6630071c73fea2}
+
+
+Implements \hyperlink{classML__Algo_ad847559865d5e4208371a00fe1cbe12e}{M\+L\+\_\+\+Algo}.
+
+\index{Perceptron@{Perceptron}!size@{size}}
+\index{size@{size}!Perceptron@{Perceptron}}
+\subsubsection[{size()}]{\setlength{\rightskip}{0pt plus 5cm}int Perceptron\+::size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_a50b1f76eb2760b540477135100dcbf49}{}\label{classPerceptron_a50b1f76eb2760b540477135100dcbf49}
+
+
+Implements \hyperlink{classML__Algo_a8650c3894c1992492f8bc86edf1b3ffd}{M\+L\+\_\+\+Algo}.
+
+\index{Perceptron@{Perceptron}!train@{train}}
+\index{train@{train}!Perceptron@{Perceptron}}
+\subsubsection[{train()}]{\setlength{\rightskip}{0pt plus 5cm}int Perceptron\+::train (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_adc779991ee63dca333c12fb247b32c9d}{}\label{classPerceptron_adc779991ee63dca333c12fb247b32c9d}
+
+
+Implements \hyperlink{classML__Algo_a0a5d241191d4249c60a40d966fb19aee}{M\+L\+\_\+\+Algo}.
+
+
+
+\subsection{Friends And Related Function Documentation}
+\index{Perceptron@{Perceptron}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Perceptron@{Perceptron}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out, }
+\item[{const {\bf Perceptron} \&}]{perceptron}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{classPerceptron_a829793c1338f5ab9c9e7e63b6c63be21}{}\label{classPerceptron_a829793c1338f5ab9c9e7e63b6c63be21}
+
+
+\subsection{Field Documentation}
+\index{Perceptron@{Perceptron}!length@{length}}
+\index{length@{length}!Perceptron@{Perceptron}}
+\subsubsection[{length}]{\setlength{\rightskip}{0pt plus 5cm}int Perceptron\+::length}\hypertarget{classPerceptron_a996b4296c5e5e4950099a8fe0b37b9df}{}\label{classPerceptron_a996b4296c5e5e4950099a8fe0b37b9df}
+\index{Perceptron@{Perceptron}!main\+\_\+equation@{main\+\_\+equation}}
+\index{main\+\_\+equation@{main\+\_\+equation}!Perceptron@{Perceptron}}
+\subsubsection[{main\+\_\+equation}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Equation}$\ast$ Perceptron\+::main\+\_\+equation}\hypertarget{classPerceptron_ae021428eb8cf08ebb46383fbc0ea1c46}{}\label{classPerceptron_ae021428eb8cf08ebb46383fbc0ea1c46}
+\index{Perceptron@{Perceptron}!training\+\_\+label@{training\+\_\+label}}
+\index{training\+\_\+label@{training\+\_\+label}!Perceptron@{Perceptron}}
+\subsubsection[{training\+\_\+label}]{\setlength{\rightskip}{0pt plus 5cm}double Perceptron\+::training\+\_\+label\mbox{[}{\bf max\+\_\+items} $\ast$2\mbox{]}}\hypertarget{classPerceptron_a7b395bb8dd492268fc2324c275b8ca4c}{}\label{classPerceptron_a7b395bb8dd492268fc2324c275b8ca4c}
+\index{Perceptron@{Perceptron}!training\+\_\+set@{training\+\_\+set}}
+\index{training\+\_\+set@{training\+\_\+set}!Perceptron@{Perceptron}}
+\subsubsection[{training\+\_\+set}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ Perceptron\+::training\+\_\+set\mbox{[}{\bf max\+\_\+items} $\ast$2\mbox{]}}\hypertarget{classPerceptron_af93816c52b31be423764b53c22733a01}{}\label{classPerceptron_af93816c52b31be423764b53c22733a01}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{perceptron_8h}{perceptron.\+h}\item 
+src/\hyperlink{perceptron_8cpp}{perceptron.\+cpp}\end{DoxyCompactItemize}
