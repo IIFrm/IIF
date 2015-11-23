@@ -1,12 +1,12 @@
 var searchData=
 [
   ['c',['C',['../structsvm__parameter.html#af4f905a3f7d589d86964289af3c9d812',1,'svm_parameter']]],
-  ['c_5fsvc',['C_SVC',['../svm__core_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a89cc33eead98f5e072fd76dcdb8da6f8',1,'svm_core.h']]],
+  ['c_5fsvc',['C_SVC',['../svm__core_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba89cc33eead98f5e072fd76dcdb8da6f8',1,'svm_core.h']]],
   ['cache',['Cache',['../classCache.html',1,'Cache'],['../classCache.html#a2823f543d4f9b92c29472b904961afe1',1,'Cache::Cache()']]],
   ['cache_5fsize',['cache_size',['../structsvm__parameter.html#a00286b7e0767e45d68ac7abceb60c821',1,'svm_parameter']]],
   ['calc',['calc',['../classEquation.html#ada446e2cdda9e86007ae08a4c0f6537a',1,'Equation']]],
   ['calculate_5frho',['calculate_rho',['../classSolver.html#ad00b01f72232ca932cad68e58c9cde5a',1,'Solver']]],
-  ['check_5fquestion_5fset',['check_question_set',['../classML__Algo.html#aa6b2dd6e3c5571b7bebe0d5f3de5483b',1,'ML_Algo::check_question_set()'],['../classPerceptron.html#ac7ed76c6a28180691f63f2afbf93cc26',1,'Perceptron::check_question_set()'],['../classSVM.html#aa610ec08173c8603ad6e02f26cbe8e1c',1,'SVM::check_question_set()'],['../classSVM__I.html#a84470dce77add6377454c4408c6c1466',1,'SVM_I::check_question_set()']]],
+  ['check_5fquestion_5fset',['check_question_set',['../classML__Algo.html#a4d757e7fb178ce41ec713bcd84807d33',1,'ML_Algo::check_question_set()'],['../classPerceptron.html#ac7ed76c6a28180691f63f2afbf93cc26',1,'Perceptron::check_question_set()'],['../classSVM.html#aa610ec08173c8603ad6e02f26cbe8e1c',1,'SVM::check_question_set()'],['../classSVM__I.html#a84470dce77add6377454c4408c6c1466',1,'SVM_I::check_question_set()']]],
   ['check_5ftarget_5fprogram',['check_target_program',['../config_8cpp.html#adcbd1dcd583604441ce438418b6c5310',1,'config.cpp']]],
   ['clone',['clone',['../svm__core_8cpp.html#af2d4d35f18533f3571dad9ce21f8e1cc',1,'svm_core.cpp']]],
   ['cmakecache_2etxt',['CMakeCache.txt',['../CMakeCache_8txt.html',1,'']]],
@@ -22,6 +22,6 @@ var searchData=
   ['config_2ecpp',['config.cpp',['../config_8cpp.html',1,'']]],
   ['config_2eh',['config.h',['../config_8h.html',1,'']]],
   ['conj',['conj',['../1__conj_8cpp.html#ae33e4817d8771bb37195402a5d3d6e01',1,'1_conj.cpp']]],
-  ['count_5fexample',['COUNT_EXAMPLE',['../instrumentation_8h.html#a06fc87d81c62e9abb8790b6e5713c55baca3ef05411426a5f11dc987d95aa3529',1,'instrumentation.h']]],
+  ['counter_5fexample',['COUNTER_EXAMPLE',['../instrumentation_8h.html#a88668637ccaca17d11f722f59f59406bab8cd4148b6c0698f69f8a72f8646980f',1,'instrumentation.h']]],
   ['cp',['Cp',['../classSolver.html#a2e45dbea8be469bf8247e14768549dd5',1,'Solver']]]
 ];

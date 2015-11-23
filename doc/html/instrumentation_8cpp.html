@@ -106,21 +106,28 @@ Functions</h2></td></tr>
 <tr class="memitem:a79372536ec6cea03f5965c1ba3cc53d0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8cpp.html#a79372536ec6cea03f5965c1ba3cc53d0">add_state_double</a> (double first,...)</td></tr>
 <tr class="separator:a79372536ec6cea03f5965c1ba3cc53d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabbf0f2d0ec3548d46e27866fc768e42"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8cpp.html#aabbf0f2d0ec3548d46e27866fc768e42">before_loop</a> ()</td></tr>
+<tr class="memdesc:aabbf0f2d0ec3548d46e27866fc768e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called each time before executing loop.  <a href="#aabbf0f2d0ec3548d46e27866fc768e42">More...</a><br /></td></tr>
 <tr class="separator:aabbf0f2d0ec3548d46e27866fc768e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af71513a816090ea5fe0c352784f96135"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8cpp.html#af71513a816090ea5fe0c352784f96135">after_loop</a> (<a class="el" href="classStates.html">States</a> *gsets)</td></tr>
+<tr class="memdesc:af71513a816090ea5fe0c352784f96135"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called each time after executing loop.  <a href="#af71513a816090ea5fe0c352784f96135">More...</a><br /></td></tr>
 <tr class="separator:af71513a816090ea5fe0c352784f96135"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82b822bd13f3f17569fd7093d6c33b5b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8cpp.html#a82b822bd13f3f17569fd7093d6c33b5b">m_double</a> (double *p)</td></tr>
+<tr class="memdesc:a82b822bd13f3f17569fd7093d6c33b5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">function jump list, DONOT use it unless you know what you are doing  <a href="#a82b822bd13f3f17569fd7093d6c33b5b">More...</a><br /></td></tr>
 <tr class="separator:a82b822bd13f3f17569fd7093d6c33b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c67e75f0e4dfa4ec954a186f999c7f3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8cpp.html#a8c67e75f0e4dfa4ec954a186f999c7f3">m_int</a> (int *p)</td></tr>
+<tr class="memdesc:a8c67e75f0e4dfa4ec954a186f999c7f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">record furntions for each platform  <a href="#a8c67e75f0e4dfa4ec954a186f999c7f3">More...</a><br /></td></tr>
 <tr class="separator:a8c67e75f0e4dfa4ec954a186f999c7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a73db7f19ba8224c4530f45fd832ef42b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8cpp.html#a73db7f19ba8224c4530f45fd832ef42b">_passP</a> = false</td></tr>
+<tr class="memdesc:a73db7f19ba8224c4530f45fd832ef42b"><td class="mdescLeft">&#160;</td><td class="mdescRight">a flag to justify whether the given input has pass loop precondition  <a href="#a73db7f19ba8224c4530f45fd832ef42b">More...</a><br /></td></tr>
 <tr class="separator:a73db7f19ba8224c4530f45fd832ef42b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87e762b3355fdc144393f0936c14f8ca"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8cpp.html#a87e762b3355fdc144393f0936c14f8ca">_passQ</a> = false</td></tr>
+<tr class="memdesc:a87e762b3355fdc144393f0936c14f8ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">a flag to justify whether the given input has pass loop postcondition  <a href="#a87e762b3355fdc144393f0936c14f8ca">More...</a><br /></td></tr>
 <tr class="separator:a87e762b3355fdc144393f0936c14f8ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a552efb21fe547d54565d8379dc8a95bc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8cpp.html#a552efb21fe547d54565d8379dc8a95bc">assume_times</a> = 0</td></tr>
+<tr class="memdesc:a552efb21fe547d54565d8379dc8a95bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">integers values contain the call times to iif_assume and iif_assert, used to validate a given test  <a href="#a552efb21fe547d54565d8379dc8a95bc">More...</a><br /></td></tr>
 <tr class="separator:a552efb21fe547d54565d8379dc8a95bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b38e8ff0d716993240c2bbc5c25a59e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8cpp.html#a3b38e8ff0d716993240c2bbc5c25a59e">assert_times</a> = 0</td></tr>
 <tr class="separator:a3b38e8ff0d716993240c2bbc5c25a59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,11 +191,20 @@ Variables</h2></td></tr>
           <td class="memname">int after_loop </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classStates.html">States</a> *&#160;</td>
-          <td class="paramname"><em>gsets</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>This function should be called each time after executing loop. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">void</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>
@@ -204,6 +220,15 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>This function should be called each time before executing loop. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">void</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>
@@ -221,6 +246,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>function jump list, DONOT use it unless you know what you are doing </p>
+
 </div>
 </div>
 <a class="anchor" id="a8c67e75f0e4dfa4ec954a186f999c7f3"></a>
@@ -231,11 +258,14 @@ Variables</h2></td></tr>
           <td class="memname">int m_int </td>
           <td>(</td>
           <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>p</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>record furntions for each platform </p>
+<p>function jump list, DONOT use it unless you know what you are doing </p>
 
 </div>
 </div>
@@ -250,6 +280,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>a flag to justify whether the given input has pass loop precondition </p>
+
 </div>
 </div>
 <a class="anchor" id="a87e762b3355fdc144393f0936c14f8ca"></a>
@@ -261,6 +293,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>a flag to justify whether the given input has pass loop postcondition </p>
 
 </div>
 </div>
@@ -285,6 +319,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>integers values contain the call times to iif_assume and iif_assert, used to validate a given test </p>
 
 </div>
 </div>

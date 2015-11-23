@@ -1,7 +1,7 @@
 var searchData=
 [
   ['eps',['eps',['../structsvm__parameter.html#a1feab5a4e0d5842a20e544f3f944f841',1,'svm_parameter::eps()'],['../classSolver.html#a718333cc2c1d40abf9c292a788cba1e5',1,'Solver::eps()']]],
-  ['epsilon_5fsvr',['EPSILON_SVR',['../svm__core_8h.html#adf764cbdea00d65edcd07bb9953ad2b7ae8edabc208c6076619bdfb064b68815a',1,'svm_core.h']]],
+  ['epsilon_5fsvr',['EPSILON_SVR',['../svm__core_8h.html#a06fc87d81c62e9abb8790b6e5713c55bae8edabc208c6076619bdfb064b68815a',1,'svm_core.h']]],
   ['equ_5fnum',['equ_num',['../classSVM__I.html#ab674468eec42010761332da3f9b2f69c',1,'SVM_I']]],
   ['equation',['Equation',['../classEquation.html',1,'Equation'],['../classEquation.html#a68511fc719250ed80f86c50de9136733',1,'Equation::Equation()'],['../classEquation.html#a2899879892ff76b229b4f11c0ec1de78',1,'Equation::Equation(double a0,...)'],['../classEquation.html#a81aaa52692da38c62bb684186912d91c',1,'Equation::Equation(const Equation &amp;equ)']]],
   ['equation_2ecpp',['equation.cpp',['../equation_8cpp.html',1,'']]],

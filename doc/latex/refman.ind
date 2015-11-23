@@ -1,347 +1,311 @@
 \begin{theindex}
 
   \item {\+\_\+passP}
-    \subitem {iif\+\_\+assert.\+h}, \hyperpage{50}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
+    \subitem {iif\+\_\+assert.\+h}, \hyperpage{58}
+    \subitem {instrumentation.\+cpp}, \hyperpage{70}
   \item {\+\_\+passQ}
-    \subitem {iif\+\_\+assert.\+h}, \hyperpage{50}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
+    \subitem {iif\+\_\+assert.\+h}, \hyperpage{58}
+    \subitem {instrumentation.\+cpp}, \hyperpage{70}
   \item {\+\_\+print}
     \subitem {M\+L\+\_\+\+Algo}, \hyperpage{21}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{37}
-    \subitem {S\+VM}, \hyperpage{34}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{40}
+    \subitem {S\+VM}, \hyperpage{36}
   \item {\+\_\+roundoff}
-    \subitem {equation.\+cpp}, \hyperpage{57}
+    \subitem {equation.\+cpp}, \hyperpage{67}
   \item {$\sim$\+Cache}
     \subitem {Cache}, \hyperpage{11}
   \item {$\sim$\+Kernel}
     \subitem {Kernel}, \hyperpage{19}
   \item {$\sim$\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}
-    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{22}
+    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{24}
   \item {$\sim$\+Perceptron}
-    \subitem {Perceptron}, \hyperpage{24}
+    \subitem {Perceptron}, \hyperpage{25}
   \item {$\sim$\+Q\+Matrix}
-    \subitem {Q\+Matrix}, \hyperpage{25}
+    \subitem {Q\+Matrix}, \hyperpage{28}
   \item {$\sim$\+S\+VM}
-    \subitem {S\+VM}, \hyperpage{34}
+    \subitem {S\+VM}, \hyperpage{36}
   \item {$\sim$\+S\+V\+C\+\_\+Q}
-    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{33}
+    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{35}
   \item {$\sim$\+S\+V\+M\+\_\+I}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{37}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{40}
   \item {$\sim$\+S\+V\+R\+\_\+Q}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
+    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{47}
   \item {$\sim$\+Solver}
-    \subitem {Solver}, \hyperpage{28}
+    \subitem {Solver}, \hyperpage{31}
   \item {$\sim$\+States}
-    \subitem {States}, \hyperpage{32}
+    \subitem {States}, \hyperpage{33}
   \item {1\+\_\+conj.\+cpp}
-    \subitem {conj}, \hyperpage{66}
-    \subitem {main}, \hyperpage{66}
-    \subitem {nondet}, \hyperpage{66}
+    \subitem {conj}, \hyperpage{76}
+    \subitem {main}, \hyperpage{76}
+    \subitem {nondet}, \hyperpage{77}
   \item {2\+\_\+ex1.\+cpp}
-    \subitem {ex1}, \hyperpage{66}
-    \subitem {main}, \hyperpage{66}
-    \subitem {nondet}, \hyperpage{66}
+    \subitem {ex1}, \hyperpage{77}
+    \subitem {main}, \hyperpage{77}
+    \subitem {nondet}, \hyperpage{77}
   \item {2\+\_\+f1.\+cpp}
-    \subitem {f1}, \hyperpage{67}
-    \subitem {main}, \hyperpage{67}
+    \subitem {f1}, \hyperpage{77}
+    \subitem {main}, \hyperpage{77}
   \item {2\+\_\+f2.\+cpp}
-    \subitem {f2}, \hyperpage{67}
-    \subitem {main}, \hyperpage{67}
+    \subitem {f2}, \hyperpage{78}
+    \subitem {main}, \hyperpage{78}
   \item {2\+\_\+z3test.\+cpp}
-    \subitem {main}, \hyperpage{67}
+    \subitem {main}, \hyperpage{78}
   \item {3\+\_\+f3.\+cpp}
-    \subitem {f3}, \hyperpage{67}
-    \subitem {main}, \hyperpage{67}
+    \subitem {f3}, \hyperpage{78}
+    \subitem {main}, \hyperpage{78}
 
   \indexspace
 
   \item {A\+R\+C\+H\+I\+T\+E\+C\+T\+U\+R\+E\+\_\+\+ID}
-    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{43}
-    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{44}
+    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{49}
+    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{50}
   \item {active\+\_\+set}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{32}
   \item {active\+\_\+size}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{32}
   \item {add\+\_\+state\+\_\+double}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
-    \subitem {instrumentation.\+h}, \hyperpage{52}
+    \subitem {instrumentation.\+cpp}, \hyperpage{69}
+    \subitem {instrumentation.\+h}, \hyperpage{60}
   \item {add\+\_\+state\+\_\+int}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
-    \subitem {instrumentation.\+h}, \hyperpage{52}
+    \subitem {instrumentation.\+cpp}, \hyperpage{69}
+    \subitem {instrumentation.\+h}, \hyperpage{60}
   \item {add\+\_\+states}
-    \subitem {States}, \hyperpage{32}
+    \subitem {States}, \hyperpage{33}
   \item {after\+\_\+exes}
-    \subitem {config.\+h}, \hyperpage{47}
+    \subitem {config.\+h}, \hyperpage{54}
   \item {after\+\_\+loop}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
-    \subitem {instrumentation.\+h}, \hyperpage{52}
+    \subitem {instrumentation.\+cpp}, \hyperpage{69}
+    \subitem {instrumentation.\+h}, \hyperpage{60}
   \item {alpha}
-    \subitem {decision\+\_\+function}, \hyperpage{12}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {decision\+\_\+function}, \hyperpage{11}
+    \subitem {Solver}, \hyperpage{32}
   \item {alpha\+\_\+status}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{32}
   \item {assert\+\_\+times}
-    \subitem {config.\+cpp}, \hyperpage{56}
-    \subitem {iif\+\_\+assert.\+h}, \hyperpage{50}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
+    \subitem {config.\+cpp}, \hyperpage{66}
+    \subitem {iif\+\_\+assert.\+h}, \hyperpage{58}
+    \subitem {instrumentation.\+cpp}, \hyperpage{70}
   \item {assume\+\_\+times}
-    \subitem {config.\+cpp}, \hyperpage{56}
-    \subitem {iif\+\_\+assert.\+h}, \hyperpage{50}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
+    \subitem {config.\+cpp}, \hyperpage{66}
+    \subitem {iif\+\_\+assert.\+h}, \hyperpage{58}
+    \subitem {instrumentation.\+cpp}, \hyperpage{70}
 
   \indexspace
 
   \item {B\+L\+UE}
-    \subitem {color.\+h}, \hyperpage{46}
-  \item {be\+\_\+shrunk}
-    \subitem {Solver}, \hyperpage{28}
-    \subitem {Solver\+\_\+\+NU}, \hyperpage{30}
+    \subitem {color.\+h}, \hyperpage{52}
   \item {before\+\_\+loop}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
-    \subitem {instrumentation.\+h}, \hyperpage{52}
-  \item {buffer}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
-  \item {build/\+C\+Make\+Cache.\+txt}, \hyperpage{43}
+    \subitem {instrumentation.\+cpp}, \hyperpage{69}
+    \subitem {instrumentation.\+h}, \hyperpage{61}
+  \item {build/\+C\+Make\+Cache.\+txt}, \hyperpage{49}
   \item {build/\+C\+Make\+Files/2.\+8.\+12.\+2/\+Compiler\+Id\+C/\+C\+Make\+C\+Compiler\+Id.\+c}, 
-		\hyperpage{43}
+		\hyperpage{49}
   \item {build/\+C\+Make\+Files/2.\+8.\+12.\+2/\+Compiler\+Id\+C\+X\+X/\+C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, 
-		\hyperpage{44}
+		\hyperpage{50}
   \item {build/\+C\+Make\+Files/\+Target\+Directories.\+txt}, 
-		\hyperpage{45}
-  \item {build/\+C\+Make\+Files/conj.\+dir/link.\+txt}, \hyperpage{45}
-  \item {build/\+C\+Make\+Files/ex1.\+dir/link.\+txt}, \hyperpage{45}
-  \item {build/\+C\+Make\+Files/f1.\+dir/link.\+txt}, \hyperpage{45}
-  \item {build/\+C\+Make\+Files/f2.\+dir/link.\+txt}, \hyperpage{45}
-  \item {build/\+C\+Make\+Files/f3.\+dir/link.\+txt}, \hyperpage{45}
+		\hyperpage{51}
+  \item {build/\+C\+Make\+Files/conj.\+dir/link.\+txt}, \hyperpage{51}
+  \item {build/\+C\+Make\+Files/ex1.\+dir/link.\+txt}, \hyperpage{51}
+  \item {build/\+C\+Make\+Files/f1.\+dir/link.\+txt}, \hyperpage{51}
+  \item {build/\+C\+Make\+Files/f2.\+dir/link.\+txt}, \hyperpage{51}
+  \item {build/\+C\+Make\+Files/f3.\+dir/link.\+txt}, \hyperpage{51}
   \item {build/\+C\+Make\+Files/z3test.\+dir/link.\+txt}, 
-		\hyperpage{45}
+		\hyperpage{51}
 
   \indexspace
 
   \item {C}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {C\+\_\+\+S\+VC}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{63}
   \item {C\+Make\+C\+Compiler\+Id.\+c}
     \subitem {A\+R\+C\+H\+I\+T\+E\+C\+T\+U\+R\+E\+\_\+\+ID}, 
-		\hyperpage{43}
-    \subitem {C\+O\+M\+P\+I\+L\+E\+R\+\_\+\+ID}, \hyperpage{43}
-    \subitem {D\+EC}, \hyperpage{43}
-    \subitem {H\+EX}, \hyperpage{43}
-    \subitem {info\+\_\+arch}, \hyperpage{44}
-    \subitem {info\+\_\+compiler}, \hyperpage{44}
-    \subitem {info\+\_\+platform}, \hyperpage{44}
-    \subitem {main}, \hyperpage{44}
-    \subitem {P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+ID}, \hyperpage{44}
+		\hyperpage{49}
+    \subitem {C\+O\+M\+P\+I\+L\+E\+R\+\_\+\+ID}, \hyperpage{49}
+    \subitem {D\+EC}, \hyperpage{49}
+    \subitem {H\+EX}, \hyperpage{49}
+    \subitem {info\+\_\+arch}, \hyperpage{50}
+    \subitem {info\+\_\+compiler}, \hyperpage{50}
+    \subitem {info\+\_\+platform}, \hyperpage{50}
+    \subitem {main}, \hyperpage{50}
+    \subitem {P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+ID}, \hyperpage{50}
   \item {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}
     \subitem {A\+R\+C\+H\+I\+T\+E\+C\+T\+U\+R\+E\+\_\+\+ID}, 
-		\hyperpage{44}
-    \subitem {C\+O\+M\+P\+I\+L\+E\+R\+\_\+\+ID}, \hyperpage{44}
-    \subitem {D\+EC}, \hyperpage{44}
-    \subitem {H\+EX}, \hyperpage{45}
-    \subitem {info\+\_\+arch}, \hyperpage{45}
-    \subitem {info\+\_\+compiler}, \hyperpage{45}
-    \subitem {info\+\_\+platform}, \hyperpage{45}
-    \subitem {main}, \hyperpage{45}
-    \subitem {P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+ID}, \hyperpage{45}
-  \item {C\+Make\+Lists.\+txt}, \hyperpage{46}
+		\hyperpage{50}
+    \subitem {C\+O\+M\+P\+I\+L\+E\+R\+\_\+\+ID}, \hyperpage{50}
+    \subitem {D\+EC}, \hyperpage{50}
+    \subitem {H\+EX}, \hyperpage{51}
+    \subitem {info\+\_\+arch}, \hyperpage{51}
+    \subitem {info\+\_\+compiler}, \hyperpage{51}
+    \subitem {info\+\_\+platform}, \hyperpage{51}
+    \subitem {main}, \hyperpage{51}
+    \subitem {P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+ID}, \hyperpage{51}
+  \item {C\+Make\+Lists.\+txt}, \hyperpage{52}
   \item {C\+O\+M\+P\+I\+L\+E\+R\+\_\+\+ID}
-    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{43}
-    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{44}
-  \item {C\+O\+U\+N\+T\+\_\+\+E\+X\+A\+M\+P\+LE}
-    \subitem {instrumentation.\+h}, \hyperpage{51}
+    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{49}
+    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{50}
+  \item {C\+O\+U\+N\+T\+E\+R\+\_\+\+E\+X\+A\+M\+P\+LE}
+    \subitem {instrumentation.\+h}, \hyperpage{60}
   \item {Cache}, \hyperpage{11}
     \subitem {$\sim$\+Cache}, \hyperpage{11}
     \subitem {Cache}, \hyperpage{11}
     \subitem {get\+\_\+data}, \hyperpage{11}
-    \subitem {head}, \hyperpage{12}
-    \subitem {l}, \hyperpage{12}
-    \subitem {lru\+\_\+delete}, \hyperpage{11}
-    \subitem {lru\+\_\+head}, \hyperpage{12}
-    \subitem {lru\+\_\+insert}, \hyperpage{11}
-    \subitem {size}, \hyperpage{12}
-    \subitem {swap\+\_\+index}, \hyperpage{12}
-  \item {cache}
-    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{23}
-    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{33}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
-  \item {Cache\+::head\+\_\+t}, \hyperpage{15}
-    \subitem {data}, \hyperpage{15}
-    \subitem {len}, \hyperpage{15}
-    \subitem {next}, \hyperpage{15}
-    \subitem {prev}, \hyperpage{15}
+    \subitem {swap\+\_\+index}, \hyperpage{11}
   \item {cache\+\_\+size}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {calc}
     \subitem {Equation}, \hyperpage{13}
   \item {calculate\+\_\+rho}
-    \subitem {Solver}, \hyperpage{29}
-    \subitem {Solver\+\_\+\+NU}, \hyperpage{30}
-  \item {check\+\_\+postives\+\_\+and\+\_\+one\+\_\+negative}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{37}
+    \subitem {Solver}, \hyperpage{31}
   \item {check\+\_\+question\+\_\+set}
     \subitem {M\+L\+\_\+\+Algo}, \hyperpage{21}
-    \subitem {Perceptron}, \hyperpage{24}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{37}
-    \subitem {S\+VM}, \hyperpage{34}
+    \subitem {Perceptron}, \hyperpage{25}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{40}
+    \subitem {S\+VM}, \hyperpage{36}
   \item {check\+\_\+target\+\_\+program}
-    \subitem {config.\+cpp}, \hyperpage{56}
+    \subitem {config.\+cpp}, \hyperpage{66}
   \item {clone}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {Cn}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{32}
   \item {coef0}
-    \subitem {Kernel}, \hyperpage{20}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {color}
-    \subitem {color.\+h}, \hyperpage{46}
+    \subitem {color.\+h}, \hyperpage{52}
   \item {color.\+cpp}
-    \subitem {unset\+\_\+console\+\_\+color}, \hyperpage{56}
+    \subitem {unset\+\_\+console\+\_\+color}, \hyperpage{65}
   \item {color.\+h}
-    \subitem {B\+L\+UE}, \hyperpage{46}
-    \subitem {color}, \hyperpage{46}
-    \subitem {G\+R\+E\+EN}, \hyperpage{46}
-    \subitem {R\+ED}, \hyperpage{46}
-    \subitem {set\+\_\+console\+\_\+color}, \hyperpage{47}
-    \subitem {unset\+\_\+console\+\_\+color}, \hyperpage{47}
-    \subitem {W\+H\+I\+TE}, \hyperpage{46}
-    \subitem {Y\+E\+L\+L\+OW}, \hyperpage{46}
+    \subitem {B\+L\+UE}, \hyperpage{52}
+    \subitem {color}, \hyperpage{52}
+    \subitem {G\+R\+E\+EN}, \hyperpage{52}
+    \subitem {R\+ED}, \hyperpage{52}
+    \subitem {set\+\_\+console\+\_\+color}, \hyperpage{53}
+    \subitem {unset\+\_\+console\+\_\+color}, \hyperpage{53}
+    \subitem {W\+H\+I\+TE}, \hyperpage{52}
+    \subitem {Y\+E\+L\+L\+OW}, \hyperpage{52}
   \item {config.\+cpp}
-    \subitem {assert\+\_\+times}, \hyperpage{56}
-    \subitem {assume\+\_\+times}, \hyperpage{56}
-    \subitem {check\+\_\+target\+\_\+program}, \hyperpage{56}
-    \subitem {maxv}, \hyperpage{57}
-    \subitem {minv}, \hyperpage{57}
-    \subitem {register\+\_\+program}, \hyperpage{56}
-    \subitem {target\+\_\+program}, \hyperpage{57}
+    \subitem {assert\+\_\+times}, \hyperpage{66}
+    \subitem {assume\+\_\+times}, \hyperpage{66}
+    \subitem {check\+\_\+target\+\_\+program}, \hyperpage{66}
+    \subitem {maxv}, \hyperpage{66}
+    \subitem {minv}, \hyperpage{66}
+    \subitem {register\+\_\+program}, \hyperpage{66}
+    \subitem {target\+\_\+program}, \hyperpage{66}
   \item {config.\+h}
-    \subitem {after\+\_\+exes}, \hyperpage{47}
-    \subitem {init\+\_\+exes}, \hyperpage{47}
-    \subitem {max\+\_\+items}, \hyperpage{48}
-    \subitem {max\+\_\+iter}, \hyperpage{48}
-    \subitem {P\+R\+E\+C\+I\+S\+I\+ON}, \hyperpage{47}
-    \subitem {q\+\_\+items}, \hyperpage{48}
-    \subitem {random\+\_\+exes}, \hyperpage{48}
-    \subitem {register\+\_\+program}, \hyperpage{47}
-    \subitem {target\+\_\+program}, \hyperpage{48}
-    \subitem {V\+A\+RS}, \hyperpage{47}
+    \subitem {after\+\_\+exes}, \hyperpage{54}
+    \subitem {init\+\_\+exes}, \hyperpage{54}
+    \subitem {max\+\_\+items}, \hyperpage{54}
+    \subitem {max\+\_\+iter}, \hyperpage{54}
+    \subitem {P\+R\+E\+C\+I\+S\+I\+ON}, \hyperpage{54}
+    \subitem {random\+\_\+exes}, \hyperpage{55}
+    \subitem {register\+\_\+program}, \hyperpage{54}
+    \subitem {target\+\_\+program}, \hyperpage{55}
+    \subitem {V\+A\+RS}, \hyperpage{54}
   \item {conj}
-    \subitem {1\+\_\+conj.\+cpp}, \hyperpage{66}
+    \subitem {1\+\_\+conj.\+cpp}, \hyperpage{76}
   \item {Cp}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{32}
 
   \indexspace
 
   \item {D\+EC}
-    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{43}
-    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{44}
-  \item {data}
-    \subitem {Cache\+::head\+\_\+t}, \hyperpage{15}
-  \item {decision\+\_\+function}, \hyperpage{12}
-    \subitem {alpha}, \hyperpage{12}
-    \subitem {rho}, \hyperpage{12}
+    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{49}
+    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{50}
+  \item {decision\+\_\+function}, \hyperpage{11}
+    \subitem {alpha}, \hyperpage{11}
+    \subitem {rho}, \hyperpage{11}
   \item {degree}
-    \subitem {Kernel}, \hyperpage{20}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {do\+\_\+shrinking}
-    \subitem {Solver}, \hyperpage{29}
-    \subitem {Solver\+\_\+\+NU}, \hyperpage{30}
-  \item {dot}
-    \subitem {Kernel}, \hyperpage{19}
+    \subitem {Solver}, \hyperpage{31}
 
   \indexspace
 
   \item {E\+P\+S\+I\+L\+O\+N\+\_\+\+S\+VR}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {eps}
-    \subitem {Solver}, \hyperpage{29}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {Solver}, \hyperpage{32}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {equ\+\_\+num}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{38}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{43}
   \item {Equation}, \hyperpage{12}
     \subitem {calc}, \hyperpage{13}
     \subitem {Equation}, \hyperpage{13}
     \subitem {imply}, \hyperpage{13}
     \subitem {is\+\_\+similar}, \hyperpage{14}
     \subitem {linear\+\_\+solver}, \hyperpage{14}
-    \subitem {operator$<$$<$}, \hyperpage{14}
+    \subitem {operator$<$$<$}, \hyperpage{15}
     \subitem {operator=}, \hyperpage{14}
-    \subitem {roundoff}, \hyperpage{14}
+    \subitem {roundoff}, \hyperpage{15}
     \subitem {theta}, \hyperpage{15}
     \subitem {theta0}, \hyperpage{15}
   \item {equation.\+cpp}
-    \subitem {\+\_\+roundoff}, \hyperpage{57}
-    \subitem {operator$<$$<$}, \hyperpage{57}
-    \subitem {U\+P\+B\+O\+U\+ND}, \hyperpage{57}
+    \subitem {\+\_\+roundoff}, \hyperpage{67}
+    \subitem {operator$<$$<$}, \hyperpage{67}
+    \subitem {U\+P\+B\+O\+U\+ND}, \hyperpage{67}
   \item {equation.\+h}
-    \subitem {maxv}, \hyperpage{48}
-    \subitem {minv}, \hyperpage{48}
+    \subitem {maxv}, \hyperpage{56}
+    \subitem {minv}, \hyperpage{56}
   \item {equations}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{38}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{43}
   \item {ex1}
-    \subitem {2\+\_\+ex1.\+cpp}, \hyperpage{66}
+    \subitem {2\+\_\+ex1.\+cpp}, \hyperpage{77}
 
   \indexspace
 
   \item {f1}
-    \subitem {2\+\_\+f1.\+cpp}, \hyperpage{67}
+    \subitem {2\+\_\+f1.\+cpp}, \hyperpage{77}
   \item {f2}
-    \subitem {2\+\_\+f2.\+cpp}, \hyperpage{67}
+    \subitem {2\+\_\+f2.\+cpp}, \hyperpage{78}
   \item {f3}
-    \subitem {3\+\_\+f3.\+cpp}, \hyperpage{67}
+    \subitem {3\+\_\+f3.\+cpp}, \hyperpage{78}
   \item {F\+R\+EE}
-    \subitem {Solver}, \hyperpage{28}
+    \subitem {Solver}, \hyperpage{31}
   \item {F\+S\+C\+A\+NF}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{73}
   \item {free\+\_\+sv}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
+    \subitem {svm\+\_\+model}, \hyperpage{43}
   \item {func}
     \subitem {I\+I\+F\+\_\+learn}, \hyperpage{16}
 
   \indexspace
 
   \item {G}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{32}
   \item {G\+\_\+bar}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{32}
   \item {G\+R\+E\+EN}
-    \subitem {color.\+h}, \hyperpage{46}
+    \subitem {color.\+h}, \hyperpage{52}
   \item {gamma}
-    \subitem {Kernel}, \hyperpage{20}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {get\+\_\+\+QD}
     \subitem {Kernel}, \hyperpage{19}
-    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{23}
-    \subitem {Q\+Matrix}, \hyperpage{25}
-    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{33}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
+    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{24}
+    \subitem {Q\+Matrix}, \hyperpage{28}
+    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{35}
+    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{47}
   \item {get\+\_\+C}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{31}
   \item {get\+\_\+converged}
     \subitem {M\+L\+\_\+\+Algo}, \hyperpage{21}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{37}
-    \subitem {S\+VM}, \hyperpage{35}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{41}
+    \subitem {S\+VM}, \hyperpage{37}
   \item {get\+\_\+data}
     \subitem {Cache}, \hyperpage{11}
-  \item {get\+\_\+misclassified}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{37}
   \item {get\+\_\+Q}
     \subitem {Kernel}, \hyperpage{19}
-    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{22}
-    \subitem {Q\+Matrix}, \hyperpage{25}
-    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{33}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
+    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{24}
+    \subitem {Q\+Matrix}, \hyperpage{28}
+    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{35}
+    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{47}
   \item {gsets}
     \subitem {I\+I\+F\+\_\+learn}, \hyperpage{16}
 
   \indexspace
 
   \item {H\+EX}
-    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{43}
-    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{45}
-  \item {head}
-    \subitem {Cache}, \hyperpage{12}
+    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{49}
+    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{51}
 
   \indexspace
 
@@ -352,7 +316,7 @@
     \subitem {init\+\_\+gsets}, \hyperpage{16}
     \subitem {learn}, \hyperpage{16}
     \subitem {run\+\_\+target}, \hyperpage{16}
-  \item {I\+I\+F\+\_\+svm\+\_\+i\+\_\+learn}, \hyperpage{16}
+  \item {I\+I\+F\+\_\+svm\+\_\+i\+\_\+learn}, \hyperpage{17}
     \subitem {I\+I\+F\+\_\+svm\+\_\+i\+\_\+learn}, \hyperpage{17}
     \subitem {learn}, \hyperpage{17}
     \subitem {max\+\_\+iteration}, \hyperpage{17}
@@ -363,94 +327,95 @@
     \subitem {max\+\_\+iteration}, \hyperpage{18}
     \subitem {svm}, \hyperpage{18}
   \item {I\+NF}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{73}
   \item {iif.\+h}
-    \subitem {maxv}, \hyperpage{49}
-    \subitem {minv}, \hyperpage{49}
+    \subitem {maxv}, \hyperpage{56}
+    \subitem {minv}, \hyperpage{56}
   \item {iif\+\_\+assert}
-    \subitem {iif\+\_\+assert.\+h}, \hyperpage{49}
+    \subitem {iif\+\_\+assert.\+h}, \hyperpage{57}
   \item {iif\+\_\+assert.\+h}
-    \subitem {\+\_\+passP}, \hyperpage{50}
-    \subitem {\+\_\+passQ}, \hyperpage{50}
-    \subitem {assert\+\_\+times}, \hyperpage{50}
-    \subitem {assume\+\_\+times}, \hyperpage{50}
-    \subitem {iif\+\_\+assert}, \hyperpage{49}
-    \subitem {iif\+\_\+assume}, \hyperpage{50}
+    \subitem {\+\_\+passP}, \hyperpage{58}
+    \subitem {\+\_\+passQ}, \hyperpage{58}
+    \subitem {assert\+\_\+times}, \hyperpage{58}
+    \subitem {assume\+\_\+times}, \hyperpage{58}
+    \subitem {iif\+\_\+assert}, \hyperpage{57}
+    \subitem {iif\+\_\+assume}, \hyperpage{57}
   \item {iif\+\_\+assume}
-    \subitem {iif\+\_\+assert.\+h}, \hyperpage{50}
+    \subitem {iif\+\_\+assert.\+h}, \hyperpage{57}
   \item {iif\+\_\+svm\+\_\+i\+\_\+learn.\+cpp}
-    \subitem {print\+\_\+null}, \hyperpage{58}
+    \subitem {print\+\_\+null}, \hyperpage{68}
   \item {iif\+\_\+svm\+\_\+learn.\+cpp}
-    \subitem {print\+\_\+null}, \hyperpage{58}
+    \subitem {print\+\_\+null}, \hyperpage{68}
   \item {imply}
     \subitem {Equation}, \hyperpage{13}
-  \item {include/color.\+h}, \hyperpage{46}
-  \item {include/config.\+h}, \hyperpage{47}
-  \item {include/equation.\+h}, \hyperpage{48}
-  \item {include/iif.\+h}, \hyperpage{49}
-  \item {include/iif\+\_\+assert.\+h}, \hyperpage{49}
-  \item {include/iif\+\_\+learn.\+h}, \hyperpage{50}
-  \item {include/iif\+\_\+svm\+\_\+i\+\_\+learn.\+h}, \hyperpage{50}
-  \item {include/iif\+\_\+svm\+\_\+learn.\+h}, \hyperpage{51}
-  \item {include/instrumentation.\+h}, \hyperpage{51}
-  \item {include/ml\+\_\+algo.\+h}, \hyperpage{52}
-  \item {include/perceptron.\+h}, \hyperpage{52}
-  \item {include/states.\+h}, \hyperpage{52}
-  \item {include/svm.\+h}, \hyperpage{53}
-  \item {include/svm\+\_\+core.\+h}, \hyperpage{53}
-  \item {include/svm\+\_\+i.\+h}, \hyperpage{55}
+  \item {include/color.\+h}, \hyperpage{52}
+  \item {include/config.\+h}, \hyperpage{53}
+  \item {include/equation.\+h}, \hyperpage{55}
+  \item {include/iif.\+h}, \hyperpage{56}
+  \item {include/iif\+\_\+assert.\+h}, \hyperpage{56}
+  \item {include/iif\+\_\+learn.\+h}, \hyperpage{58}
+  \item {include/iif\+\_\+svm\+\_\+i\+\_\+learn.\+h}, \hyperpage{59}
+  \item {include/iif\+\_\+svm\+\_\+learn.\+h}, \hyperpage{59}
+  \item {include/instrumentation.\+h}, \hyperpage{59}
+  \item {include/ml\+\_\+algo.\+h}, \hyperpage{61}
+  \item {include/perceptron.\+h}, \hyperpage{62}
+  \item {include/states.\+h}, \hyperpage{62}
+  \item {include/svm.\+h}, \hyperpage{62}
+  \item {include/svm\+\_\+core.\+h}, \hyperpage{62}
+  \item {include/svm\+\_\+i.\+h}, \hyperpage{65}
   \item {index}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
-    \subitem {States}, \hyperpage{32}
+    \subitem {States}, \hyperpage{34}
   \item {info}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {info\+\_\+arch}
-    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{44}
-    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{45}
+    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{50}
+    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{51}
   \item {info\+\_\+compiler}
-    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{44}
-    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{45}
+    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{50}
+    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{51}
   \item {info\+\_\+platform}
-    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{44}
-    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{45}
+    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{50}
+    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{51}
   \item {init\+\_\+exes}
-    \subitem {config.\+h}, \hyperpage{47}
+    \subitem {config.\+h}, \hyperpage{54}
   \item {init\+\_\+gsets}
     \subitem {I\+I\+F\+\_\+learn}, \hyperpage{16}
   \item {instrumentation.\+cpp}
-    \subitem {\+\_\+passP}, \hyperpage{59}
-    \subitem {\+\_\+passQ}, \hyperpage{59}
-    \subitem {add\+\_\+state\+\_\+double}, \hyperpage{59}
-    \subitem {add\+\_\+state\+\_\+int}, \hyperpage{59}
-    \subitem {after\+\_\+loop}, \hyperpage{59}
-    \subitem {assert\+\_\+times}, \hyperpage{59}
-    \subitem {assume\+\_\+times}, \hyperpage{59}
-    \subitem {before\+\_\+loop}, \hyperpage{59}
-    \subitem {Label\+Table}, \hyperpage{59}
-    \subitem {lt}, \hyperpage{59}
-    \subitem {m\+\_\+double}, \hyperpage{59}
-    \subitem {m\+\_\+int}, \hyperpage{59}
-    \subitem {temp\+\_\+index}, \hyperpage{59}
-    \subitem {temp\+\_\+states}, \hyperpage{59}
+    \subitem {\+\_\+passP}, \hyperpage{70}
+    \subitem {\+\_\+passQ}, \hyperpage{70}
+    \subitem {add\+\_\+state\+\_\+double}, \hyperpage{69}
+    \subitem {add\+\_\+state\+\_\+int}, \hyperpage{69}
+    \subitem {after\+\_\+loop}, \hyperpage{69}
+    \subitem {assert\+\_\+times}, \hyperpage{70}
+    \subitem {assume\+\_\+times}, \hyperpage{70}
+    \subitem {before\+\_\+loop}, \hyperpage{69}
+    \subitem {Label\+Table}, \hyperpage{70}
+    \subitem {lt}, \hyperpage{70}
+    \subitem {m\+\_\+double}, \hyperpage{70}
+    \subitem {m\+\_\+int}, \hyperpage{70}
+    \subitem {temp\+\_\+index}, \hyperpage{70}
+    \subitem {temp\+\_\+states}, \hyperpage{70}
   \item {instrumentation.\+h}
-    \subitem {add\+\_\+state\+\_\+double}, \hyperpage{52}
-    \subitem {add\+\_\+state\+\_\+int}, \hyperpage{52}
-    \subitem {after\+\_\+loop}, \hyperpage{52}
-    \subitem {before\+\_\+loop}, \hyperpage{52}
-    \subitem {C\+O\+U\+N\+T\+\_\+\+E\+X\+A\+M\+P\+LE}, \hyperpage{51}
-    \subitem {m\+\_\+double}, \hyperpage{52}
-    \subitem {m\+\_\+int}, \hyperpage{52}
-    \subitem {N\+E\+G\+A\+T\+I\+VE}, \hyperpage{51}
-    \subitem {P\+O\+S\+I\+T\+I\+VE}, \hyperpage{51}
-    \subitem {Q\+U\+E\+S\+T\+I\+ON}, \hyperpage{51}
+    \subitem {add\+\_\+state\+\_\+double}, \hyperpage{60}
+    \subitem {add\+\_\+state\+\_\+int}, \hyperpage{60}
+    \subitem {after\+\_\+loop}, \hyperpage{60}
+    \subitem {before\+\_\+loop}, \hyperpage{61}
+    \subitem {C\+O\+U\+N\+T\+E\+R\+\_\+\+E\+X\+A\+M\+P\+LE}, 
+		\hyperpage{60}
+    \subitem {m\+\_\+double}, \hyperpage{61}
+    \subitem {m\+\_\+int}, \hyperpage{61}
+    \subitem {N\+E\+G\+A\+T\+I\+VE}, \hyperpage{60}
+    \subitem {P\+O\+S\+I\+T\+I\+VE}, \hyperpage{60}
+    \subitem {Q\+U\+E\+S\+T\+I\+ON}, \hyperpage{60}
+    \subitem {trace\+\_\+type}, \hyperpage{60}
   \item {is\+\_\+free}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{31}
   \item {is\+\_\+lower\+\_\+bound}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{31}
   \item {is\+\_\+similar}
     \subitem {Equation}, \hyperpage{14}
   \item {is\+\_\+upper\+\_\+bound}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{31}
 
   \indexspace
 
@@ -458,583 +423,553 @@
     \subitem {Kernel}, \hyperpage{19}
   \item {Kernel}, \hyperpage{18}
     \subitem {$\sim$\+Kernel}, \hyperpage{19}
-    \subitem {coef0}, \hyperpage{20}
-    \subitem {degree}, \hyperpage{20}
-    \subitem {dot}, \hyperpage{19}
-    \subitem {gamma}, \hyperpage{20}
     \subitem {get\+\_\+\+QD}, \hyperpage{19}
     \subitem {get\+\_\+Q}, \hyperpage{19}
     \subitem {k\+\_\+function}, \hyperpage{19}
     \subitem {Kernel}, \hyperpage{19}
     \subitem {kernel\+\_\+function}, \hyperpage{20}
-    \subitem {kernel\+\_\+linear}, \hyperpage{20}
-    \subitem {kernel\+\_\+poly}, \hyperpage{20}
-    \subitem {kernel\+\_\+precomputed}, \hyperpage{20}
-    \subitem {kernel\+\_\+rbf}, \hyperpage{20}
-    \subitem {kernel\+\_\+sigmoid}, \hyperpage{20}
-    \subitem {kernel\+\_\+type}, \hyperpage{20}
-    \subitem {swap\+\_\+index}, \hyperpage{20}
-    \subitem {x}, \hyperpage{20}
-    \subitem {x\+\_\+square}, \hyperpage{20}
+    \subitem {swap\+\_\+index}, \hyperpage{19}
   \item {kernel\+\_\+function}
     \subitem {Kernel}, \hyperpage{20}
-  \item {kernel\+\_\+linear}
-    \subitem {Kernel}, \hyperpage{20}
-  \item {kernel\+\_\+poly}
-    \subitem {Kernel}, \hyperpage{20}
-  \item {kernel\+\_\+precomputed}
-    \subitem {Kernel}, \hyperpage{20}
-  \item {kernel\+\_\+rbf}
-    \subitem {Kernel}, \hyperpage{20}
-  \item {kernel\+\_\+sigmoid}
-    \subitem {Kernel}, \hyperpage{20}
   \item {kernel\+\_\+type}
-    \subitem {Kernel}, \hyperpage{20}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {kernel\+\_\+type\+\_\+table}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{65}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
 
   \indexspace
 
   \item {l}
-    \subitem {Cache}, \hyperpage{12}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
-    \subitem {Solver}, \hyperpage{29}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
-    \subitem {svm\+\_\+problem}, \hyperpage{41}
+    \subitem {Solver}, \hyperpage{32}
+    \subitem {svm\+\_\+model}, \hyperpage{43}
+    \subitem {svm\+\_\+problem}, \hyperpage{46}
   \item {L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{63}
   \item {L\+I\+N\+E\+AR}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {L\+O\+W\+E\+R\+\_\+\+B\+O\+U\+ND}
-    \subitem {Solver}, \hyperpage{28}
+    \subitem {Solver}, \hyperpage{31}
   \item {label}
-    \subitem {States}, \hyperpage{32}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
+    \subitem {States}, \hyperpage{34}
+    \subitem {svm\+\_\+model}, \hyperpage{43}
   \item {Label\+Table}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
+    \subitem {instrumentation.\+cpp}, \hyperpage{70}
   \item {learn}
     \subitem {I\+I\+F\+\_\+learn}, \hyperpage{16}
     \subitem {I\+I\+F\+\_\+svm\+\_\+i\+\_\+learn}, \hyperpage{17}
     \subitem {I\+I\+F\+\_\+svm\+\_\+learn}, \hyperpage{18}
-  \item {len}
-    \subitem {Cache\+::head\+\_\+t}, \hyperpage{15}
   \item {length}
-    \subitem {Perceptron}, \hyperpage{25}
+    \subitem {Perceptron}, \hyperpage{27}
   \item {libsvm\+\_\+version}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{65}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{65}
   \item {line}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{65}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{76}
   \item {linear\+\_\+solver}
     \subitem {Equation}, \hyperpage{14}
-  \item {lru\+\_\+delete}
-    \subitem {Cache}, \hyperpage{11}
-  \item {lru\+\_\+head}
-    \subitem {Cache}, \hyperpage{12}
-  \item {lru\+\_\+insert}
-    \subitem {Cache}, \hyperpage{11}
   \item {lt}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
+    \subitem {instrumentation.\+cpp}, \hyperpage{70}
 
   \indexspace
 
   \item {m\+\_\+double}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
-    \subitem {instrumentation.\+h}, \hyperpage{52}
+    \subitem {instrumentation.\+cpp}, \hyperpage{70}
+    \subitem {instrumentation.\+h}, \hyperpage{61}
   \item {m\+\_\+int}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
-    \subitem {instrumentation.\+h}, \hyperpage{52}
+    \subitem {instrumentation.\+cpp}, \hyperpage{70}
+    \subitem {instrumentation.\+h}, \hyperpage{61}
   \item {M\+L\+\_\+\+Algo}, \hyperpage{20}
     \subitem {\+\_\+print}, \hyperpage{21}
     \subitem {check\+\_\+question\+\_\+set}, \hyperpage{21}
     \subitem {get\+\_\+converged}, \hyperpage{21}
     \subitem {M\+L\+\_\+\+Algo}, \hyperpage{21}
-    \subitem {operator$<$$<$}, \hyperpage{22}
+    \subitem {operator$<$$<$}, \hyperpage{23}
     \subitem {predict}, \hyperpage{21}
-    \subitem {predict\+\_\+on\+\_\+training\+\_\+set}, \hyperpage{21}
-    \subitem {prepare\+\_\+training\+\_\+data}, \hyperpage{21}
-    \subitem {roundoff}, \hyperpage{21}
-    \subitem {size}, \hyperpage{21}
-    \subitem {train}, \hyperpage{22}
+    \subitem {predict\+\_\+on\+\_\+training\+\_\+set}, \hyperpage{22}
+    \subitem {prepare\+\_\+training\+\_\+data}, \hyperpage{22}
+    \subitem {roundoff}, \hyperpage{22}
+    \subitem {size}, \hyperpage{22}
+    \subitem {train}, \hyperpage{23}
   \item {main}
-    \subitem {1\+\_\+conj.\+cpp}, \hyperpage{66}
-    \subitem {2\+\_\+ex1.\+cpp}, \hyperpage{66}
-    \subitem {2\+\_\+f1.\+cpp}, \hyperpage{67}
-    \subitem {2\+\_\+f2.\+cpp}, \hyperpage{67}
-    \subitem {2\+\_\+z3test.\+cpp}, \hyperpage{67}
-    \subitem {3\+\_\+f3.\+cpp}, \hyperpage{67}
-    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{44}
-    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{45}
+    \subitem {1\+\_\+conj.\+cpp}, \hyperpage{76}
+    \subitem {2\+\_\+ex1.\+cpp}, \hyperpage{77}
+    \subitem {2\+\_\+f1.\+cpp}, \hyperpage{77}
+    \subitem {2\+\_\+f2.\+cpp}, \hyperpage{78}
+    \subitem {2\+\_\+z3test.\+cpp}, \hyperpage{78}
+    \subitem {3\+\_\+f3.\+cpp}, \hyperpage{78}
+    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{50}
+    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{51}
   \item {main\+\_\+equation}
-    \subitem {Perceptron}, \hyperpage{25}
-    \subitem {S\+VM}, \hyperpage{35}
+    \subitem {Perceptron}, \hyperpage{27}
+    \subitem {S\+VM}, \hyperpage{39}
   \item {Malloc}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{73}
   \item {max}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {max\+\_\+equ}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{38}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{43}
   \item {max\+\_\+items}
-    \subitem {config.\+h}, \hyperpage{48}
+    \subitem {config.\+h}, \hyperpage{54}
   \item {max\+\_\+iter}
-    \subitem {config.\+h}, \hyperpage{48}
+    \subitem {config.\+h}, \hyperpage{54}
   \item {max\+\_\+iteration}
     \subitem {I\+I\+F\+\_\+svm\+\_\+i\+\_\+learn}, \hyperpage{17}
     \subitem {I\+I\+F\+\_\+svm\+\_\+learn}, \hyperpage{18}
   \item {max\+\_\+line\+\_\+len}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{65}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{76}
   \item {max\+\_\+size}
-    \subitem {S\+VM}, \hyperpage{35}
-    \subitem {States}, \hyperpage{32}
+    \subitem {S\+VM}, \hyperpage{39}
   \item {maxv}
-    \subitem {config.\+cpp}, \hyperpage{57}
-    \subitem {equation.\+h}, \hyperpage{48}
-    \subitem {iif.\+h}, \hyperpage{49}
+    \subitem {config.\+cpp}, \hyperpage{66}
+    \subitem {equation.\+h}, \hyperpage{56}
+    \subitem {iif.\+h}, \hyperpage{56}
   \item {min}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {minv}
-    \subitem {config.\+cpp}, \hyperpage{57}
-    \subitem {equation.\+h}, \hyperpage{48}
-    \subitem {iif.\+h}, \hyperpage{49}
+    \subitem {config.\+cpp}, \hyperpage{66}
+    \subitem {equation.\+h}, \hyperpage{56}
+    \subitem {iif.\+h}, \hyperpage{56}
   \item {model}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{38}
-    \subitem {S\+VM}, \hyperpage{36}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{43}
+    \subitem {S\+VM}, \hyperpage{39}
   \item {multiclass\+\_\+probability}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
 
   \indexspace
 
   \item {N\+E\+G\+A\+T\+I\+VE}
-    \subitem {instrumentation.\+h}, \hyperpage{51}
+    \subitem {instrumentation.\+h}, \hyperpage{60}
   \item {n\+SV}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
+    \subitem {svm\+\_\+model}, \hyperpage{43}
   \item {N\+U\+\_\+\+S\+VC}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{63}
   \item {N\+U\+\_\+\+S\+VR}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {negative\+\_\+nodes}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{65}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{76}
   \item {negatives}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{38}
-  \item {next}
-    \subitem {Cache\+::head\+\_\+t}, \hyperpage{15}
-  \item {next\+\_\+buffer}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{43}
   \item {nondet}
-    \subitem {1\+\_\+conj.\+cpp}, \hyperpage{66}
-    \subitem {2\+\_\+ex1.\+cpp}, \hyperpage{66}
+    \subitem {1\+\_\+conj.\+cpp}, \hyperpage{77}
+    \subitem {2\+\_\+ex1.\+cpp}, \hyperpage{77}
   \item {nr\+\_\+class}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
+    \subitem {svm\+\_\+model}, \hyperpage{43}
   \item {nr\+\_\+weight}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {nu}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
 
   \indexspace
 
-  \item {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{22}
+  \item {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{23}
     \subitem {$\sim$\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, 
-		\hyperpage{22}
-    \subitem {cache}, \hyperpage{23}
-    \subitem {get\+\_\+\+QD}, \hyperpage{23}
-    \subitem {get\+\_\+Q}, \hyperpage{22}
-    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{22}
-    \subitem {QD}, \hyperpage{23}
-    \subitem {swap\+\_\+index}, \hyperpage{23}
+		\hyperpage{24}
+    \subitem {get\+\_\+\+QD}, \hyperpage{24}
+    \subitem {get\+\_\+Q}, \hyperpage{24}
+    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{24}
+    \subitem {swap\+\_\+index}, \hyperpage{24}
   \item {O\+N\+E\+\_\+\+C\+L\+A\+SS}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {obj}
-    \subitem {Solver\+::\+Solution\+Info}, \hyperpage{27}
+    \subitem {Solver\+::\+Solution\+Info}, \hyperpage{30}
   \item {operator$<$$<$}
-    \subitem {Equation}, \hyperpage{14}
-    \subitem {equation.\+cpp}, \hyperpage{57}
-    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{22}
-    \subitem {Perceptron}, \hyperpage{25}
-    \subitem {perceptron.\+cpp}, \hyperpage{60}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{38}
-    \subitem {S\+VM}, \hyperpage{35}
-    \subitem {Solution}, \hyperpage{26}
-    \subitem {States}, \hyperpage{32}
-    \subitem {states.\+cpp}, \hyperpage{60}
-    \subitem {svm.\+cpp}, \hyperpage{60}
-    \subitem {svm\+\_\+i.\+cpp}, \hyperpage{65}
-    \subitem {svm\+\_\+node}, \hyperpage{39}
-    \subitem {svm\+\_\+problem}, \hyperpage{41}
+    \subitem {Equation}, \hyperpage{15}
+    \subitem {equation.\+cpp}, \hyperpage{67}
+    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{23}
+    \subitem {Perceptron}, \hyperpage{27}
+    \subitem {perceptron.\+cpp}, \hyperpage{71}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{43}
+    \subitem {S\+VM}, \hyperpage{39}
+    \subitem {Solution}, \hyperpage{29}
+    \subitem {States}, \hyperpage{34}
+    \subitem {states.\+cpp}, \hyperpage{71}
+    \subitem {svm.\+cpp}, \hyperpage{71}
+    \subitem {svm\+\_\+i.\+cpp}, \hyperpage{76}
+    \subitem {svm\+\_\+node}, \hyperpage{44}
+    \subitem {svm\+\_\+problem}, \hyperpage{46}
   \item {operator=}
     \subitem {Equation}, \hyperpage{14}
 
   \indexspace
 
   \item {p}
-    \subitem {Solver}, \hyperpage{29}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {Solver}, \hyperpage{32}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {p\+\_\+index}
-    \subitem {States}, \hyperpage{32}
+    \subitem {States}, \hyperpage{34}
   \item {P\+L\+A\+T\+F\+O\+R\+M\+\_\+\+ID}
-    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{44}
-    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{45}
+    \subitem {C\+Make\+C\+Compiler\+Id.\+c}, \hyperpage{50}
+    \subitem {C\+Make\+C\+X\+X\+Compiler\+Id.\+cpp}, \hyperpage{51}
   \item {P\+O\+LY}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {P\+O\+S\+I\+T\+I\+VE}
-    \subitem {instrumentation.\+h}, \hyperpage{51}
+    \subitem {instrumentation.\+h}, \hyperpage{60}
   \item {P\+R\+E\+C\+I\+S\+I\+ON}
-    \subitem {config.\+h}, \hyperpage{47}
+    \subitem {config.\+h}, \hyperpage{54}
   \item {P\+R\+E\+C\+O\+M\+P\+U\+T\+ED}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {param}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{38}
-    \subitem {S\+VM}, \hyperpage{36}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
-  \item {Perceptron}, \hyperpage{23}
-    \subitem {$\sim$\+Perceptron}, \hyperpage{24}
-    \subitem {check\+\_\+question\+\_\+set}, \hyperpage{24}
-    \subitem {length}, \hyperpage{25}
-    \subitem {main\+\_\+equation}, \hyperpage{25}
-    \subitem {operator$<$$<$}, \hyperpage{25}
-    \subitem {Perceptron}, \hyperpage{24}
-    \subitem {perceptron\+\_\+train}, \hyperpage{24}
-    \subitem {predict}, \hyperpage{24}
-    \subitem {predict\+\_\+on\+\_\+training\+\_\+set}, \hyperpage{24}
-    \subitem {prepare\+\_\+training\+\_\+data}, \hyperpage{24}
-    \subitem {roundoff}, \hyperpage{24}
-    \subitem {size}, \hyperpage{24}
-    \subitem {train}, \hyperpage{24}
-    \subitem {training\+\_\+label}, \hyperpage{25}
-    \subitem {training\+\_\+set}, \hyperpage{25}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{43}
+    \subitem {S\+VM}, \hyperpage{39}
+    \subitem {svm\+\_\+model}, \hyperpage{44}
+  \item {Perceptron}, \hyperpage{24}
+    \subitem {$\sim$\+Perceptron}, \hyperpage{25}
+    \subitem {check\+\_\+question\+\_\+set}, \hyperpage{25}
+    \subitem {length}, \hyperpage{27}
+    \subitem {main\+\_\+equation}, \hyperpage{27}
+    \subitem {operator$<$$<$}, \hyperpage{27}
+    \subitem {Perceptron}, \hyperpage{25}
+    \subitem {predict}, \hyperpage{25}
+    \subitem {predict\+\_\+on\+\_\+training\+\_\+set}, \hyperpage{26}
+    \subitem {prepare\+\_\+training\+\_\+data}, \hyperpage{26}
+    \subitem {roundoff}, \hyperpage{26}
+    \subitem {size}, \hyperpage{26}
+    \subitem {train}, \hyperpage{27}
+    \subitem {training\+\_\+label}, \hyperpage{27}
+    \subitem {training\+\_\+set}, \hyperpage{27}
   \item {perceptron.\+cpp}
-    \subitem {operator$<$$<$}, \hyperpage{60}
-  \item {perceptron\+\_\+train}
-    \subitem {Perceptron}, \hyperpage{24}
+    \subitem {operator$<$$<$}, \hyperpage{71}
   \item {positive\+\_\+nodes}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{65}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{76}
   \item {powi}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {predict}
     \subitem {M\+L\+\_\+\+Algo}, \hyperpage{21}
-    \subitem {Perceptron}, \hyperpage{24}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{37}
-    \subitem {S\+VM}, \hyperpage{35}
+    \subitem {Perceptron}, \hyperpage{25}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{41}
+    \subitem {S\+VM}, \hyperpage{37}
   \item {predict\+\_\+on\+\_\+training\+\_\+set}
-    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{21}
-    \subitem {Perceptron}, \hyperpage{24}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{37}
-    \subitem {S\+VM}, \hyperpage{35}
+    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{22}
+    \subitem {Perceptron}, \hyperpage{26}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{41}
+    \subitem {S\+VM}, \hyperpage{37}
   \item {prepare\+\_\+training\+\_\+data}
-    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{21}
-    \subitem {Perceptron}, \hyperpage{24}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{37}
-    \subitem {S\+VM}, \hyperpage{35}
-  \item {prev}
-    \subitem {Cache\+::head\+\_\+t}, \hyperpage{15}
+    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{22}
+    \subitem {Perceptron}, \hyperpage{26}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{41}
+    \subitem {S\+VM}, \hyperpage{37}
   \item {print\+\_\+null}
-    \subitem {iif\+\_\+svm\+\_\+i\+\_\+learn.\+cpp}, \hyperpage{58}
-    \subitem {iif\+\_\+svm\+\_\+learn.\+cpp}, \hyperpage{58}
+    \subitem {iif\+\_\+svm\+\_\+i\+\_\+learn.\+cpp}, \hyperpage{68}
+    \subitem {iif\+\_\+svm\+\_\+learn.\+cpp}, \hyperpage{68}
   \item {print\+\_\+string\+\_\+stdout}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {print\+\_\+svm\+\_\+samples}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {print\+\_\+trace}
-    \subitem {States}, \hyperpage{32}
+    \subitem {States}, \hyperpage{34}
   \item {probA}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
+    \subitem {svm\+\_\+model}, \hyperpage{44}
   \item {probability}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {probB}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
+    \subitem {svm\+\_\+model}, \hyperpage{44}
   \item {problem}
-    \subitem {S\+VM}, \hyperpage{36}
+    \subitem {S\+VM}, \hyperpage{39}
 
   \indexspace
 
   \item {Q}
-    \subitem {Solver}, \hyperpage{29}
-  \item {q\+\_\+items}
-    \subitem {config.\+h}, \hyperpage{48}
-  \item {Q\+Matrix}, \hyperpage{25}
-    \subitem {$\sim$\+Q\+Matrix}, \hyperpage{25}
-    \subitem {get\+\_\+\+QD}, \hyperpage{25}
-    \subitem {get\+\_\+Q}, \hyperpage{25}
-    \subitem {swap\+\_\+index}, \hyperpage{25}
+    \subitem {Solver}, \hyperpage{32}
+  \item {Q\+Matrix}, \hyperpage{27}
+    \subitem {$\sim$\+Q\+Matrix}, \hyperpage{28}
+    \subitem {get\+\_\+\+QD}, \hyperpage{28}
+    \subitem {get\+\_\+Q}, \hyperpage{28}
+    \subitem {swap\+\_\+index}, \hyperpage{28}
   \item {Q\+U\+E\+S\+T\+I\+ON}
-    \subitem {instrumentation.\+h}, \hyperpage{51}
+    \subitem {instrumentation.\+h}, \hyperpage{60}
   \item {QD}
-    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{23}
-    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{33}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
-    \subitem {Solver}, \hyperpage{30}
+    \subitem {Solver}, \hyperpage{32}
   \item {Qfloat}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{73}
 
   \indexspace
 
   \item {r}
-    \subitem {Solver\+::\+Solution\+Info}, \hyperpage{27}
+    \subitem {Solver\+::\+Solution\+Info}, \hyperpage{30}
   \item {R\+BF}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
-  \item {R\+E\+A\+D\+M\+E.\+md}, \hyperpage{56}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
+  \item {R\+E\+A\+D\+M\+E.\+md}, \hyperpage{65}
   \item {R\+ED}
-    \subitem {color.\+h}, \hyperpage{46}
+    \subitem {color.\+h}, \hyperpage{52}
   \item {random\+\_\+exes}
-    \subitem {config.\+h}, \hyperpage{48}
+    \subitem {config.\+h}, \hyperpage{55}
   \item {read\+\_\+model\+\_\+header}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {readline}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {reconstruct\+\_\+gradient}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{31}
   \item {register\+\_\+program}
-    \subitem {config.\+cpp}, \hyperpage{56}
-    \subitem {config.\+h}, \hyperpage{47}
+    \subitem {config.\+cpp}, \hyperpage{66}
+    \subitem {config.\+h}, \hyperpage{54}
   \item {rho}
-    \subitem {decision\+\_\+function}, \hyperpage{12}
-    \subitem {Solver\+::\+Solution\+Info}, \hyperpage{27}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
+    \subitem {decision\+\_\+function}, \hyperpage{11}
+    \subitem {Solver\+::\+Solution\+Info}, \hyperpage{30}
+    \subitem {svm\+\_\+model}, \hyperpage{44}
   \item {roundoff}
-    \subitem {Equation}, \hyperpage{14}
-    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{21}
-    \subitem {Perceptron}, \hyperpage{24}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{37}
-    \subitem {S\+VM}, \hyperpage{35}
+    \subitem {Equation}, \hyperpage{15}
+    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{22}
+    \subitem {Perceptron}, \hyperpage{26}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{42}
+    \subitem {S\+VM}, \hyperpage{38}
   \item {run\+\_\+target}
     \subitem {I\+I\+F\+\_\+learn}, \hyperpage{16}
 
   \indexspace
 
   \item {S\+I\+G\+M\+O\+ID}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
-  \item {S\+V\+C\+\_\+Q}, \hyperpage{32}
-    \subitem {$\sim$\+S\+V\+C\+\_\+Q}, \hyperpage{33}
-    \subitem {cache}, \hyperpage{33}
-    \subitem {get\+\_\+\+QD}, \hyperpage{33}
-    \subitem {get\+\_\+Q}, \hyperpage{33}
-    \subitem {QD}, \hyperpage{33}
-    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{33}
-    \subitem {swap\+\_\+index}, \hyperpage{33}
-    \subitem {y}, \hyperpage{33}
-  \item {S\+V\+M\+\_\+I}, \hyperpage{36}
-    \subitem {\+\_\+print}, \hyperpage{37}
-    \subitem {$\sim$\+S\+V\+M\+\_\+I}, \hyperpage{37}
-    \subitem {check\+\_\+postives\+\_\+and\+\_\+one\+\_\+negative}, 
-		\hyperpage{37}
-    \subitem {check\+\_\+question\+\_\+set}, \hyperpage{37}
-    \subitem {equ\+\_\+num}, \hyperpage{38}
-    \subitem {equations}, \hyperpage{38}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
+  \item {S\+V\+C\+\_\+Q}, \hyperpage{34}
+    \subitem {$\sim$\+S\+V\+C\+\_\+Q}, \hyperpage{35}
+    \subitem {get\+\_\+\+QD}, \hyperpage{35}
+    \subitem {get\+\_\+Q}, \hyperpage{35}
+    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{34}
+    \subitem {swap\+\_\+index}, \hyperpage{35}
+  \item {S\+V\+M\+\_\+I}, \hyperpage{39}
+    \subitem {\+\_\+print}, \hyperpage{40}
+    \subitem {$\sim$\+S\+V\+M\+\_\+I}, \hyperpage{40}
+    \subitem {check\+\_\+question\+\_\+set}, \hyperpage{40}
+    \subitem {equ\+\_\+num}, \hyperpage{43}
+    \subitem {equations}, \hyperpage{43}
+    \subitem {get\+\_\+converged}, \hyperpage{41}
+    \subitem {max\+\_\+equ}, \hyperpage{43}
+    \subitem {model}, \hyperpage{43}
+    \subitem {negatives}, \hyperpage{43}
+    \subitem {operator$<$$<$}, \hyperpage{43}
+    \subitem {param}, \hyperpage{43}
+    \subitem {predict}, \hyperpage{41}
+    \subitem {predict\+\_\+on\+\_\+training\+\_\+set}, \hyperpage{41}
+    \subitem {prepare\+\_\+training\+\_\+data}, \hyperpage{41}
+    \subitem {roundoff}, \hyperpage{42}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{40}
+    \subitem {size}, \hyperpage{42}
+    \subitem {train}, \hyperpage{42}
+  \item {S\+V\+R\+\_\+Q}, \hyperpage{46}
+    \subitem {$\sim$\+S\+V\+R\+\_\+Q}, \hyperpage{47}
+    \subitem {get\+\_\+\+QD}, \hyperpage{47}
+    \subitem {get\+\_\+Q}, \hyperpage{47}
+    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{47}
+    \subitem {swap\+\_\+index}, \hyperpage{47}
+  \item {S\+VM}, \hyperpage{35}
+    \subitem {\+\_\+print}, \hyperpage{36}
+    \subitem {$\sim$\+S\+VM}, \hyperpage{36}
+    \subitem {check\+\_\+question\+\_\+set}, \hyperpage{36}
     \subitem {get\+\_\+converged}, \hyperpage{37}
-    \subitem {get\+\_\+misclassified}, \hyperpage{37}
-    \subitem {max\+\_\+equ}, \hyperpage{38}
-    \subitem {model}, \hyperpage{38}
-    \subitem {negatives}, \hyperpage{38}
-    \subitem {operator$<$$<$}, \hyperpage{38}
-    \subitem {param}, \hyperpage{38}
+    \subitem {main\+\_\+equation}, \hyperpage{39}
+    \subitem {max\+\_\+size}, \hyperpage{39}
+    \subitem {model}, \hyperpage{39}
+    \subitem {operator$<$$<$}, \hyperpage{39}
+    \subitem {param}, \hyperpage{39}
     \subitem {predict}, \hyperpage{37}
     \subitem {predict\+\_\+on\+\_\+training\+\_\+set}, \hyperpage{37}
     \subitem {prepare\+\_\+training\+\_\+data}, \hyperpage{37}
-    \subitem {roundoff}, \hyperpage{37}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{37}
+    \subitem {problem}, \hyperpage{39}
+    \subitem {roundoff}, \hyperpage{38}
+    \subitem {S\+VM}, \hyperpage{36}
     \subitem {size}, \hyperpage{38}
     \subitem {train}, \hyperpage{38}
-  \item {S\+V\+R\+\_\+Q}, \hyperpage{41}
-    \subitem {$\sim$\+S\+V\+R\+\_\+Q}, \hyperpage{42}
-    \subitem {buffer}, \hyperpage{42}
-    \subitem {cache}, \hyperpage{42}
-    \subitem {get\+\_\+\+QD}, \hyperpage{42}
-    \subitem {get\+\_\+Q}, \hyperpage{42}
-    \subitem {index}, \hyperpage{42}
-    \subitem {l}, \hyperpage{42}
-    \subitem {next\+\_\+buffer}, \hyperpage{42}
-    \subitem {QD}, \hyperpage{42}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
-    \subitem {sign}, \hyperpage{42}
-    \subitem {swap\+\_\+index}, \hyperpage{42}
-  \item {S\+VM}, \hyperpage{33}
-    \subitem {\+\_\+print}, \hyperpage{34}
-    \subitem {$\sim$\+S\+VM}, \hyperpage{34}
-    \subitem {check\+\_\+question\+\_\+set}, \hyperpage{34}
-    \subitem {get\+\_\+converged}, \hyperpage{35}
-    \subitem {main\+\_\+equation}, \hyperpage{35}
-    \subitem {max\+\_\+size}, \hyperpage{35}
-    \subitem {model}, \hyperpage{36}
-    \subitem {operator$<$$<$}, \hyperpage{35}
-    \subitem {param}, \hyperpage{36}
-    \subitem {predict}, \hyperpage{35}
-    \subitem {predict\+\_\+on\+\_\+training\+\_\+set}, \hyperpage{35}
-    \subitem {prepare\+\_\+training\+\_\+data}, \hyperpage{35}
-    \subitem {problem}, \hyperpage{36}
-    \subitem {roundoff}, \hyperpage{35}
-    \subitem {S\+VM}, \hyperpage{34}
-    \subitem {size}, \hyperpage{35}
-    \subitem {train}, \hyperpage{35}
-    \subitem {training\+\_\+label}, \hyperpage{36}
-    \subitem {training\+\_\+set}, \hyperpage{36}
+    \subitem {training\+\_\+label}, \hyperpage{39}
+    \subitem {training\+\_\+set}, \hyperpage{39}
   \item {schar}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {select\+\_\+working\+\_\+set}
-    \subitem {Solver}, \hyperpage{29}
-    \subitem {Solver\+\_\+\+NU}, \hyperpage{31}
+    \subitem {Solver}, \hyperpage{31}
   \item {set\+\_\+console\+\_\+color}
-    \subitem {color.\+h}, \hyperpage{47}
+    \subitem {color.\+h}, \hyperpage{53}
   \item {shrinking}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
-  \item {si}
-    \subitem {Solver\+\_\+\+NU}, \hyperpage{31}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {sigmoid\+\_\+predict}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {sigmoid\+\_\+train}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
-  \item {sign}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {size}
-    \subitem {Cache}, \hyperpage{12}
-    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{21}
-    \subitem {Perceptron}, \hyperpage{24}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{38}
-    \subitem {S\+VM}, \hyperpage{35}
-    \subitem {States}, \hyperpage{32}
-  \item {Solution}, \hyperpage{26}
-    \subitem {operator$<$$<$}, \hyperpage{26}
-    \subitem {Solution}, \hyperpage{26}
-    \subitem {x}, \hyperpage{26}
+    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{22}
+    \subitem {Perceptron}, \hyperpage{26}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{42}
+    \subitem {S\+VM}, \hyperpage{38}
+    \subitem {States}, \hyperpage{34}
+  \item {Solution}, \hyperpage{28}
+    \subitem {operator$<$$<$}, \hyperpage{29}
+    \subitem {Solution}, \hyperpage{29}
+    \subitem {x}, \hyperpage{29}
   \item {Solve}
-    \subitem {Solver}, \hyperpage{29}
-    \subitem {Solver\+\_\+\+NU}, \hyperpage{31}
+    \subitem {Solver}, \hyperpage{31}
+    \subitem {Solver\+\_\+\+NU}, \hyperpage{33}
   \item {solve\+\_\+c\+\_\+svc}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {solve\+\_\+epsilon\+\_\+svr}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {solve\+\_\+nu\+\_\+svc}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {solve\+\_\+nu\+\_\+svr}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {solve\+\_\+one\+\_\+class}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
-  \item {Solver}, \hyperpage{27}
-    \subitem {$\sim$\+Solver}, \hyperpage{28}
-    \subitem {active\+\_\+set}, \hyperpage{29}
-    \subitem {active\+\_\+size}, \hyperpage{29}
-    \subitem {alpha}, \hyperpage{29}
-    \subitem {alpha\+\_\+status}, \hyperpage{29}
-    \subitem {be\+\_\+shrunk}, \hyperpage{28}
-    \subitem {calculate\+\_\+rho}, \hyperpage{29}
-    \subitem {Cn}, \hyperpage{29}
-    \subitem {Cp}, \hyperpage{29}
-    \subitem {do\+\_\+shrinking}, \hyperpage{29}
-    \subitem {eps}, \hyperpage{29}
-    \subitem {F\+R\+EE}, \hyperpage{28}
-    \subitem {G}, \hyperpage{29}
-    \subitem {G\+\_\+bar}, \hyperpage{29}
-    \subitem {get\+\_\+C}, \hyperpage{29}
-    \subitem {is\+\_\+free}, \hyperpage{29}
-    \subitem {is\+\_\+lower\+\_\+bound}, \hyperpage{29}
-    \subitem {is\+\_\+upper\+\_\+bound}, \hyperpage{29}
-    \subitem {l}, \hyperpage{29}
-    \subitem {L\+O\+W\+E\+R\+\_\+\+B\+O\+U\+ND}, \hyperpage{28}
-    \subitem {p}, \hyperpage{29}
-    \subitem {Q}, \hyperpage{29}
-    \subitem {QD}, \hyperpage{30}
-    \subitem {reconstruct\+\_\+gradient}, \hyperpage{29}
-    \subitem {select\+\_\+working\+\_\+set}, \hyperpage{29}
-    \subitem {Solve}, \hyperpage{29}
-    \subitem {Solver}, \hyperpage{28}
-    \subitem {swap\+\_\+index}, \hyperpage{29}
-    \subitem {U\+P\+P\+E\+R\+\_\+\+B\+O\+U\+ND}, \hyperpage{28}
-    \subitem {unshrink}, \hyperpage{30}
-    \subitem {update\+\_\+alpha\+\_\+status}, \hyperpage{29}
-    \subitem {y}, \hyperpage{30}
-  \item {Solver\+::\+Solution\+Info}, \hyperpage{27}
-    \subitem {obj}, \hyperpage{27}
-    \subitem {r}, \hyperpage{27}
-    \subitem {rho}, \hyperpage{27}
-    \subitem {upper\+\_\+bound\+\_\+n}, \hyperpage{27}
-    \subitem {upper\+\_\+bound\+\_\+p}, \hyperpage{27}
-  \item {Solver\+\_\+\+NU}, \hyperpage{30}
-    \subitem {be\+\_\+shrunk}, \hyperpage{30}
-    \subitem {calculate\+\_\+rho}, \hyperpage{30}
-    \subitem {do\+\_\+shrinking}, \hyperpage{30}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
+  \item {Solver}, \hyperpage{30}
+    \subitem {$\sim$\+Solver}, \hyperpage{31}
+    \subitem {active\+\_\+set}, \hyperpage{32}
+    \subitem {active\+\_\+size}, \hyperpage{32}
+    \subitem {alpha}, \hyperpage{32}
+    \subitem {alpha\+\_\+status}, \hyperpage{32}
+    \subitem {calculate\+\_\+rho}, \hyperpage{31}
+    \subitem {Cn}, \hyperpage{32}
+    \subitem {Cp}, \hyperpage{32}
+    \subitem {do\+\_\+shrinking}, \hyperpage{31}
+    \subitem {eps}, \hyperpage{32}
+    \subitem {F\+R\+EE}, \hyperpage{31}
+    \subitem {G}, \hyperpage{32}
+    \subitem {G\+\_\+bar}, \hyperpage{32}
+    \subitem {get\+\_\+C}, \hyperpage{31}
+    \subitem {is\+\_\+free}, \hyperpage{31}
+    \subitem {is\+\_\+lower\+\_\+bound}, \hyperpage{31}
+    \subitem {is\+\_\+upper\+\_\+bound}, \hyperpage{31}
+    \subitem {l}, \hyperpage{32}
+    \subitem {L\+O\+W\+E\+R\+\_\+\+B\+O\+U\+ND}, \hyperpage{31}
+    \subitem {p}, \hyperpage{32}
+    \subitem {Q}, \hyperpage{32}
+    \subitem {QD}, \hyperpage{32}
+    \subitem {reconstruct\+\_\+gradient}, \hyperpage{31}
     \subitem {select\+\_\+working\+\_\+set}, \hyperpage{31}
-    \subitem {si}, \hyperpage{31}
     \subitem {Solve}, \hyperpage{31}
-    \subitem {Solver\+\_\+\+NU}, \hyperpage{30}
-  \item {src/color.\+cpp}, \hyperpage{56}
-  \item {src/config.\+cpp}, \hyperpage{56}
-  \item {src/equation.\+cpp}, \hyperpage{57}
-  \item {src/iif\+\_\+svm\+\_\+i\+\_\+learn.\+cpp}, \hyperpage{58}
-  \item {src/iif\+\_\+svm\+\_\+learn.\+cpp}, \hyperpage{58}
-  \item {src/instrumentation.\+cpp}, \hyperpage{58}
-  \item {src/perceptron.\+cpp}, \hyperpage{60}
-  \item {src/states.\+cpp}, \hyperpage{60}
-  \item {src/svm.\+cpp}, \hyperpage{60}
-  \item {src/svm\+\_\+core.\+cpp}, \hyperpage{61}
-  \item {src/svm\+\_\+i.\+cpp}, \hyperpage{65}
-  \item {States}, \hyperpage{31}
-    \subitem {$\sim$\+States}, \hyperpage{32}
-    \subitem {add\+\_\+states}, \hyperpage{32}
-    \subitem {index}, \hyperpage{32}
-    \subitem {label}, \hyperpage{32}
-    \subitem {max\+\_\+size}, \hyperpage{32}
-    \subitem {operator$<$$<$}, \hyperpage{32}
-    \subitem {p\+\_\+index}, \hyperpage{32}
-    \subitem {print\+\_\+trace}, \hyperpage{32}
-    \subitem {size}, \hyperpage{32}
-    \subitem {States}, \hyperpage{32}
-    \subitem {traces\+\_\+num}, \hyperpage{32}
-    \subitem {values}, \hyperpage{32}
+    \subitem {Solver}, \hyperpage{31}
+    \subitem {swap\+\_\+index}, \hyperpage{31}
+    \subitem {U\+P\+P\+E\+R\+\_\+\+B\+O\+U\+ND}, \hyperpage{31}
+    \subitem {unshrink}, \hyperpage{32}
+    \subitem {update\+\_\+alpha\+\_\+status}, \hyperpage{32}
+    \subitem {y}, \hyperpage{32}
+  \item {Solver\+::\+Solution\+Info}, \hyperpage{29}
+    \subitem {obj}, \hyperpage{30}
+    \subitem {r}, \hyperpage{30}
+    \subitem {rho}, \hyperpage{30}
+    \subitem {upper\+\_\+bound\+\_\+n}, \hyperpage{30}
+    \subitem {upper\+\_\+bound\+\_\+p}, \hyperpage{30}
+  \item {Solver\+\_\+\+NU}, \hyperpage{32}
+    \subitem {Solve}, \hyperpage{33}
+    \subitem {Solver\+\_\+\+NU}, \hyperpage{33}
+  \item {src/color.\+cpp}, \hyperpage{65}
+  \item {src/config.\+cpp}, \hyperpage{65}
+  \item {src/equation.\+cpp}, \hyperpage{67}
+  \item {src/iif\+\_\+svm\+\_\+i\+\_\+learn.\+cpp}, \hyperpage{68}
+  \item {src/iif\+\_\+svm\+\_\+learn.\+cpp}, \hyperpage{68}
+  \item {src/instrumentation.\+cpp}, \hyperpage{68}
+  \item {src/perceptron.\+cpp}, \hyperpage{70}
+  \item {src/states.\+cpp}, \hyperpage{71}
+  \item {src/svm.\+cpp}, \hyperpage{71}
+  \item {src/svm\+\_\+core.\+cpp}, \hyperpage{71}
+  \item {src/svm\+\_\+i.\+cpp}, \hyperpage{76}
+  \item {States}, \hyperpage{33}
+    \subitem {$\sim$\+States}, \hyperpage{33}
+    \subitem {add\+\_\+states}, \hyperpage{33}
+    \subitem {index}, \hyperpage{34}
+    \subitem {label}, \hyperpage{34}
+    \subitem {operator$<$$<$}, \hyperpage{34}
+    \subitem {p\+\_\+index}, \hyperpage{34}
+    \subitem {print\+\_\+trace}, \hyperpage{34}
+    \subitem {size}, \hyperpage{34}
+    \subitem {States}, \hyperpage{33}
+    \subitem {traces\+\_\+num}, \hyperpage{34}
+    \subitem {values}, \hyperpage{34}
   \item {states.\+cpp}
-    \subitem {operator$<$$<$}, \hyperpage{60}
+    \subitem {operator$<$$<$}, \hyperpage{71}
   \item {SV}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
+    \subitem {svm\+\_\+model}, \hyperpage{44}
   \item {sv\+\_\+coef}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
+    \subitem {svm\+\_\+model}, \hyperpage{44}
   \item {sv\+\_\+indices}
-    \subitem {svm\+\_\+model}, \hyperpage{39}
+    \subitem {svm\+\_\+model}, \hyperpage{44}
   \item {svm}
     \subitem {I\+I\+F\+\_\+svm\+\_\+learn}, \hyperpage{18}
   \item {svm.\+cpp}
-    \subitem {operator$<$$<$}, \hyperpage{60}
+    \subitem {operator$<$$<$}, \hyperpage{71}
   \item {svm\+\_\+\+I\+\_\+train}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+binary\+\_\+svc\+\_\+probability}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
   \item {svm\+\_\+check\+\_\+parameter}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+check\+\_\+probability\+\_\+model}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+core.\+cpp}
-    \subitem {clone}, \hyperpage{63}
-    \subitem {F\+S\+C\+A\+NF}, \hyperpage{63}
-    \subitem {I\+NF}, \hyperpage{63}
-    \subitem {info}, \hyperpage{63}
-    \subitem {kernel\+\_\+type\+\_\+table}, \hyperpage{65}
-    \subitem {libsvm\+\_\+version}, \hyperpage{65}
-    \subitem {line}, \hyperpage{65}
-    \subitem {Malloc}, \hyperpage{63}
-    \subitem {max}, \hyperpage{63}
-    \subitem {max\+\_\+line\+\_\+len}, \hyperpage{65}
-    \subitem {min}, \hyperpage{63}
-    \subitem {multiclass\+\_\+probability}, \hyperpage{63}
-    \subitem {negative\+\_\+nodes}, \hyperpage{65}
-    \subitem {positive\+\_\+nodes}, \hyperpage{65}
-    \subitem {powi}, \hyperpage{63}
-    \subitem {print\+\_\+string\+\_\+stdout}, \hyperpage{63}
-    \subitem {print\+\_\+svm\+\_\+samples}, \hyperpage{63}
-    \subitem {Qfloat}, \hyperpage{63}
-    \subitem {read\+\_\+model\+\_\+header}, \hyperpage{63}
-    \subitem {readline}, \hyperpage{63}
-    \subitem {schar}, \hyperpage{63}
-    \subitem {sigmoid\+\_\+predict}, \hyperpage{63}
-    \subitem {sigmoid\+\_\+train}, \hyperpage{63}
-    \subitem {solve\+\_\+c\+\_\+svc}, \hyperpage{63}
-    \subitem {solve\+\_\+epsilon\+\_\+svr}, \hyperpage{63}
-    \subitem {solve\+\_\+nu\+\_\+svc}, \hyperpage{63}
-    \subitem {solve\+\_\+nu\+\_\+svr}, \hyperpage{63}
-    \subitem {solve\+\_\+one\+\_\+class}, \hyperpage{63}
-    \subitem {svm\+\_\+\+I\+\_\+train}, \hyperpage{64}
+    \subitem {clone}, \hyperpage{74}
+    \subitem {F\+S\+C\+A\+NF}, \hyperpage{73}
+    \subitem {I\+NF}, \hyperpage{73}
+    \subitem {info}, \hyperpage{74}
+    \subitem {kernel\+\_\+type\+\_\+table}, \hyperpage{75}
+    \subitem {libsvm\+\_\+version}, \hyperpage{75}
+    \subitem {line}, \hyperpage{76}
+    \subitem {Malloc}, \hyperpage{73}
+    \subitem {max}, \hyperpage{74}
+    \subitem {max\+\_\+line\+\_\+len}, \hyperpage{76}
+    \subitem {min}, \hyperpage{74}
+    \subitem {multiclass\+\_\+probability}, \hyperpage{74}
+    \subitem {negative\+\_\+nodes}, \hyperpage{76}
+    \subitem {positive\+\_\+nodes}, \hyperpage{76}
+    \subitem {powi}, \hyperpage{74}
+    \subitem {print\+\_\+string\+\_\+stdout}, \hyperpage{74}
+    \subitem {print\+\_\+svm\+\_\+samples}, \hyperpage{74}
+    \subitem {Qfloat}, \hyperpage{73}
+    \subitem {read\+\_\+model\+\_\+header}, \hyperpage{74}
+    \subitem {readline}, \hyperpage{74}
+    \subitem {schar}, \hyperpage{74}
+    \subitem {sigmoid\+\_\+predict}, \hyperpage{74}
+    \subitem {sigmoid\+\_\+train}, \hyperpage{74}
+    \subitem {solve\+\_\+c\+\_\+svc}, \hyperpage{74}
+    \subitem {solve\+\_\+epsilon\+\_\+svr}, \hyperpage{74}
+    \subitem {solve\+\_\+nu\+\_\+svc}, \hyperpage{74}
+    \subitem {solve\+\_\+nu\+\_\+svr}, \hyperpage{74}
+    \subitem {solve\+\_\+one\+\_\+class}, \hyperpage{74}
+    \subitem {svm\+\_\+\+I\+\_\+train}, \hyperpage{75}
     \subitem {svm\+\_\+binary\+\_\+svc\+\_\+probability}, 
-		\hyperpage{64}
+		\hyperpage{74}
+    \subitem {svm\+\_\+check\+\_\+parameter}, \hyperpage{74}
+    \subitem {svm\+\_\+check\+\_\+probability\+\_\+model}, 
+		\hyperpage{74}
+    \subitem {svm\+\_\+cross\+\_\+validation}, \hyperpage{74}
+    \subitem {svm\+\_\+destroy\+\_\+param}, \hyperpage{74}
+    \subitem {svm\+\_\+free\+\_\+and\+\_\+destroy\+\_\+model}, 
+		\hyperpage{75}
+    \subitem {svm\+\_\+free\+\_\+model\+\_\+content}, \hyperpage{75}
+    \subitem {svm\+\_\+get\+\_\+labels}, \hyperpage{75}
+    \subitem {svm\+\_\+get\+\_\+nr\+\_\+class}, \hyperpage{75}
+    \subitem {svm\+\_\+get\+\_\+nr\+\_\+sv}, \hyperpage{75}
+    \subitem {svm\+\_\+get\+\_\+sv\+\_\+indices}, \hyperpage{75}
+    \subitem {svm\+\_\+get\+\_\+svm\+\_\+type}, \hyperpage{75}
+    \subitem {svm\+\_\+get\+\_\+svr\+\_\+probability}, \hyperpage{75}
+    \subitem {svm\+\_\+group\+\_\+classes}, \hyperpage{75}
+    \subitem {svm\+\_\+load\+\_\+model}, \hyperpage{75}
+    \subitem {svm\+\_\+model\+\_\+visualization}, \hyperpage{75}
+    \subitem {svm\+\_\+predict}, \hyperpage{75}
+    \subitem {svm\+\_\+predict\+\_\+probability}, \hyperpage{75}
+    \subitem {svm\+\_\+predict\+\_\+values}, \hyperpage{75}
+    \subitem {svm\+\_\+print\+\_\+string}, \hyperpage{76}
+    \subitem {svm\+\_\+save\+\_\+model}, \hyperpage{75}
+    \subitem {svm\+\_\+set\+\_\+print\+\_\+string\+\_\+function}, 
+		\hyperpage{75}
+    \subitem {svm\+\_\+svr\+\_\+probability}, \hyperpage{75}
+    \subitem {svm\+\_\+train}, \hyperpage{75}
+    \subitem {svm\+\_\+train\+\_\+one}, \hyperpage{75}
+    \subitem {svm\+\_\+type\+\_\+table}, \hyperpage{76}
+    \subitem {swap}, \hyperpage{75}
+    \subitem {T\+AU}, \hyperpage{73}
+  \item {svm\+\_\+core.\+h}
+    \subitem {C\+\_\+\+S\+VC}, \hyperpage{63}
+    \subitem {E\+P\+S\+I\+L\+O\+N\+\_\+\+S\+VR}, \hyperpage{64}
+    \subitem {L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON}, 
+		\hyperpage{63}
+    \subitem {L\+I\+N\+E\+AR}, \hyperpage{64}
+    \subitem {libsvm\+\_\+version}, \hyperpage{65}
+    \subitem {N\+U\+\_\+\+S\+VC}, \hyperpage{63}
+    \subitem {N\+U\+\_\+\+S\+VR}, \hyperpage{64}
+    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+SS}, \hyperpage{64}
+    \subitem {P\+O\+LY}, \hyperpage{64}
+    \subitem {P\+R\+E\+C\+O\+M\+P\+U\+T\+ED}, \hyperpage{64}
+    \subitem {print\+\_\+svm\+\_\+samples}, \hyperpage{64}
+    \subitem {R\+BF}, \hyperpage{64}
+    \subitem {S\+I\+G\+M\+O\+ID}, \hyperpage{64}
+    \subitem {svm\+\_\+\+I\+\_\+train}, \hyperpage{64}
     \subitem {svm\+\_\+check\+\_\+parameter}, \hyperpage{64}
     \subitem {svm\+\_\+check\+\_\+probability\+\_\+model}, 
 		\hyperpage{64}
@@ -1049,266 +984,218 @@
     \subitem {svm\+\_\+get\+\_\+sv\+\_\+indices}, \hyperpage{64}
     \subitem {svm\+\_\+get\+\_\+svm\+\_\+type}, \hyperpage{64}
     \subitem {svm\+\_\+get\+\_\+svr\+\_\+probability}, \hyperpage{64}
-    \subitem {svm\+\_\+group\+\_\+classes}, \hyperpage{64}
     \subitem {svm\+\_\+load\+\_\+model}, \hyperpage{64}
     \subitem {svm\+\_\+model\+\_\+visualization}, \hyperpage{64}
     \subitem {svm\+\_\+predict}, \hyperpage{64}
     \subitem {svm\+\_\+predict\+\_\+probability}, \hyperpage{64}
     \subitem {svm\+\_\+predict\+\_\+values}, \hyperpage{64}
-    \subitem {svm\+\_\+print\+\_\+string}, \hyperpage{65}
-    \subitem {svm\+\_\+save\+\_\+model}, \hyperpage{64}
+    \subitem {svm\+\_\+save\+\_\+model}, \hyperpage{65}
     \subitem {svm\+\_\+set\+\_\+print\+\_\+string\+\_\+function}, 
-		\hyperpage{64}
-    \subitem {svm\+\_\+svr\+\_\+probability}, \hyperpage{64}
-    \subitem {svm\+\_\+train}, \hyperpage{64}
-    \subitem {svm\+\_\+train\+\_\+one}, \hyperpage{64}
-    \subitem {svm\+\_\+type\+\_\+table}, \hyperpage{65}
-    \subitem {swap}, \hyperpage{65}
-    \subitem {T\+AU}, \hyperpage{63}
-  \item {svm\+\_\+core.\+h}
-    \subitem {C\+\_\+\+S\+VC}, \hyperpage{54}
-    \subitem {E\+P\+S\+I\+L\+O\+N\+\_\+\+S\+VR}, \hyperpage{54}
-    \subitem {L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON}, 
-		\hyperpage{54}
-    \subitem {L\+I\+N\+E\+AR}, \hyperpage{54}
-    \subitem {libsvm\+\_\+version}, \hyperpage{55}
-    \subitem {N\+U\+\_\+\+S\+VC}, \hyperpage{54}
-    \subitem {N\+U\+\_\+\+S\+VR}, \hyperpage{54}
-    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+SS}, \hyperpage{54}
-    \subitem {P\+O\+LY}, \hyperpage{54}
-    \subitem {P\+R\+E\+C\+O\+M\+P\+U\+T\+ED}, \hyperpage{54}
-    \subitem {print\+\_\+svm\+\_\+samples}, \hyperpage{54}
-    \subitem {R\+BF}, \hyperpage{54}
-    \subitem {S\+I\+G\+M\+O\+ID}, \hyperpage{54}
-    \subitem {svm\+\_\+\+I\+\_\+train}, \hyperpage{55}
-    \subitem {svm\+\_\+check\+\_\+parameter}, \hyperpage{54}
-    \subitem {svm\+\_\+check\+\_\+probability\+\_\+model}, 
-		\hyperpage{54}
-    \subitem {svm\+\_\+cross\+\_\+validation}, \hyperpage{54}
-    \subitem {svm\+\_\+destroy\+\_\+param}, \hyperpage{55}
-    \subitem {svm\+\_\+free\+\_\+and\+\_\+destroy\+\_\+model}, 
-		\hyperpage{55}
-    \subitem {svm\+\_\+free\+\_\+model\+\_\+content}, \hyperpage{55}
-    \subitem {svm\+\_\+get\+\_\+labels}, \hyperpage{55}
-    \subitem {svm\+\_\+get\+\_\+nr\+\_\+class}, \hyperpage{55}
-    \subitem {svm\+\_\+get\+\_\+nr\+\_\+sv}, \hyperpage{55}
-    \subitem {svm\+\_\+get\+\_\+sv\+\_\+indices}, \hyperpage{55}
-    \subitem {svm\+\_\+get\+\_\+svm\+\_\+type}, \hyperpage{55}
-    \subitem {svm\+\_\+get\+\_\+svr\+\_\+probability}, \hyperpage{55}
-    \subitem {svm\+\_\+load\+\_\+model}, \hyperpage{55}
-    \subitem {svm\+\_\+model\+\_\+visualization}, \hyperpage{55}
-    \subitem {svm\+\_\+predict}, \hyperpage{55}
-    \subitem {svm\+\_\+predict\+\_\+probability}, \hyperpage{55}
-    \subitem {svm\+\_\+predict\+\_\+values}, \hyperpage{55}
-    \subitem {svm\+\_\+save\+\_\+model}, \hyperpage{55}
-    \subitem {svm\+\_\+set\+\_\+print\+\_\+string\+\_\+function}, 
-		\hyperpage{55}
-    \subitem {svm\+\_\+train}, \hyperpage{55}
+		\hyperpage{65}
+    \subitem {svm\+\_\+train}, \hyperpage{65}
   \item {svm\+\_\+cross\+\_\+validation}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{54}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+destroy\+\_\+param}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{74}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+free\+\_\+and\+\_\+destroy\+\_\+model}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+free\+\_\+model\+\_\+content}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+get\+\_\+labels}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+get\+\_\+nr\+\_\+class}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+get\+\_\+nr\+\_\+sv}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+get\+\_\+sv\+\_\+indices}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+get\+\_\+svm\+\_\+type}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+get\+\_\+svr\+\_\+probability}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+group\+\_\+classes}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
   \item {svm\+\_\+i}
     \subitem {I\+I\+F\+\_\+svm\+\_\+i\+\_\+learn}, \hyperpage{17}
   \item {svm\+\_\+i.\+cpp}
-    \subitem {operator$<$$<$}, \hyperpage{65}
+    \subitem {operator$<$$<$}, \hyperpage{76}
   \item {svm\+\_\+load\+\_\+model}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
-  \item {svm\+\_\+model}, \hyperpage{38}
-    \subitem {free\+\_\+sv}, \hyperpage{39}
-    \subitem {l}, \hyperpage{39}
-    \subitem {label}, \hyperpage{39}
-    \subitem {n\+SV}, \hyperpage{39}
-    \subitem {nr\+\_\+class}, \hyperpage{39}
-    \subitem {param}, \hyperpage{39}
-    \subitem {probA}, \hyperpage{39}
-    \subitem {probB}, \hyperpage{39}
-    \subitem {rho}, \hyperpage{39}
-    \subitem {SV}, \hyperpage{39}
-    \subitem {sv\+\_\+coef}, \hyperpage{39}
-    \subitem {sv\+\_\+indices}, \hyperpage{39}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
+  \item {svm\+\_\+model}, \hyperpage{43}
+    \subitem {free\+\_\+sv}, \hyperpage{43}
+    \subitem {l}, \hyperpage{43}
+    \subitem {label}, \hyperpage{43}
+    \subitem {n\+SV}, \hyperpage{43}
+    \subitem {nr\+\_\+class}, \hyperpage{43}
+    \subitem {param}, \hyperpage{44}
+    \subitem {probA}, \hyperpage{44}
+    \subitem {probB}, \hyperpage{44}
+    \subitem {rho}, \hyperpage{44}
+    \subitem {SV}, \hyperpage{44}
+    \subitem {sv\+\_\+coef}, \hyperpage{44}
+    \subitem {sv\+\_\+indices}, \hyperpage{44}
   \item {svm\+\_\+model\+\_\+visualization}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
-  \item {svm\+\_\+node}, \hyperpage{39}
-    \subitem {operator$<$$<$}, \hyperpage{39}
-    \subitem {value}, \hyperpage{39}
-  \item {svm\+\_\+parameter}, \hyperpage{40}
-    \subitem {C}, \hyperpage{40}
-    \subitem {cache\+\_\+size}, \hyperpage{40}
-    \subitem {coef0}, \hyperpage{40}
-    \subitem {degree}, \hyperpage{40}
-    \subitem {eps}, \hyperpage{40}
-    \subitem {gamma}, \hyperpage{40}
-    \subitem {kernel\+\_\+type}, \hyperpage{40}
-    \subitem {nr\+\_\+weight}, \hyperpage{40}
-    \subitem {nu}, \hyperpage{40}
-    \subitem {p}, \hyperpage{40}
-    \subitem {probability}, \hyperpage{40}
-    \subitem {shrinking}, \hyperpage{40}
-    \subitem {svm\+\_\+type}, \hyperpage{40}
-    \subitem {weight}, \hyperpage{40}
-    \subitem {weight\+\_\+label}, \hyperpage{40}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
+  \item {svm\+\_\+node}, \hyperpage{44}
+    \subitem {operator$<$$<$}, \hyperpage{44}
+    \subitem {value}, \hyperpage{44}
+  \item {svm\+\_\+parameter}, \hyperpage{44}
+    \subitem {C}, \hyperpage{45}
+    \subitem {cache\+\_\+size}, \hyperpage{45}
+    \subitem {coef0}, \hyperpage{45}
+    \subitem {degree}, \hyperpage{45}
+    \subitem {eps}, \hyperpage{45}
+    \subitem {gamma}, \hyperpage{45}
+    \subitem {kernel\+\_\+type}, \hyperpage{45}
+    \subitem {nr\+\_\+weight}, \hyperpage{45}
+    \subitem {nu}, \hyperpage{45}
+    \subitem {p}, \hyperpage{45}
+    \subitem {probability}, \hyperpage{45}
+    \subitem {shrinking}, \hyperpage{45}
+    \subitem {svm\+\_\+type}, \hyperpage{45}
+    \subitem {weight}, \hyperpage{45}
+    \subitem {weight\+\_\+label}, \hyperpage{45}
   \item {svm\+\_\+predict}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+predict\+\_\+probability}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+predict\+\_\+values}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{64}
   \item {svm\+\_\+print\+\_\+string}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{65}
-  \item {svm\+\_\+problem}, \hyperpage{41}
-    \subitem {l}, \hyperpage{41}
-    \subitem {operator$<$$<$}, \hyperpage{41}
-    \subitem {x}, \hyperpage{41}
-    \subitem {y}, \hyperpage{41}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{76}
+  \item {svm\+\_\+problem}, \hyperpage{46}
+    \subitem {l}, \hyperpage{46}
+    \subitem {operator$<$$<$}, \hyperpage{46}
+    \subitem {x}, \hyperpage{46}
+    \subitem {y}, \hyperpage{46}
   \item {svm\+\_\+save\+\_\+model}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{65}
   \item {svm\+\_\+set\+\_\+print\+\_\+string\+\_\+function}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{65}
   \item {svm\+\_\+svr\+\_\+probability}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
   \item {svm\+\_\+train}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
-    \subitem {svm\+\_\+core.\+h}, \hyperpage{55}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
+    \subitem {svm\+\_\+core.\+h}, \hyperpage{65}
   \item {svm\+\_\+train\+\_\+one}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{64}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
   \item {svm\+\_\+type}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {svm\+\_\+type\+\_\+table}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{65}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{76}
   \item {swap}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{65}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{75}
   \item {swap\+\_\+index}
-    \subitem {Cache}, \hyperpage{12}
-    \subitem {Kernel}, \hyperpage{20}
-    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{23}
-    \subitem {Q\+Matrix}, \hyperpage{25}
-    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{33}
-    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{42}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Cache}, \hyperpage{11}
+    \subitem {Kernel}, \hyperpage{19}
+    \subitem {O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, \hyperpage{24}
+    \subitem {Q\+Matrix}, \hyperpage{28}
+    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{35}
+    \subitem {S\+V\+R\+\_\+Q}, \hyperpage{47}
+    \subitem {Solver}, \hyperpage{31}
 
   \indexspace
 
   \item {T\+AU}
-    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{63}
+    \subitem {svm\+\_\+core.\+cpp}, \hyperpage{73}
   \item {target\+\_\+program}
-    \subitem {config.\+cpp}, \hyperpage{57}
-    \subitem {config.\+h}, \hyperpage{48}
+    \subitem {config.\+cpp}, \hyperpage{66}
+    \subitem {config.\+h}, \hyperpage{55}
   \item {temp\+\_\+index}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
+    \subitem {instrumentation.\+cpp}, \hyperpage{70}
   \item {temp\+\_\+states}
-    \subitem {instrumentation.\+cpp}, \hyperpage{59}
-  \item {test/1\+\_\+conj.\+cpp}, \hyperpage{66}
-  \item {test/2\+\_\+ex1.\+cpp}, \hyperpage{66}
-  \item {test/2\+\_\+f1.\+cpp}, \hyperpage{66}
-  \item {test/2\+\_\+f2.\+cpp}, \hyperpage{67}
-  \item {test/2\+\_\+z3test.\+cpp}, \hyperpage{67}
-  \item {test/3\+\_\+f3.\+cpp}, \hyperpage{67}
+    \subitem {instrumentation.\+cpp}, \hyperpage{70}
+  \item {test/1\+\_\+conj.\+cpp}, \hyperpage{76}
+  \item {test/2\+\_\+ex1.\+cpp}, \hyperpage{77}
+  \item {test/2\+\_\+f1.\+cpp}, \hyperpage{77}
+  \item {test/2\+\_\+f2.\+cpp}, \hyperpage{77}
+  \item {test/2\+\_\+z3test.\+cpp}, \hyperpage{78}
+  \item {test/3\+\_\+f3.\+cpp}, \hyperpage{78}
   \item {theta}
     \subitem {Equation}, \hyperpage{15}
   \item {theta0}
     \subitem {Equation}, \hyperpage{15}
+  \item {trace\+\_\+type}
+    \subitem {instrumentation.\+h}, \hyperpage{60}
   \item {traces\+\_\+num}
-    \subitem {States}, \hyperpage{32}
+    \subitem {States}, \hyperpage{34}
   \item {train}
-    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{22}
-    \subitem {Perceptron}, \hyperpage{24}
-    \subitem {S\+V\+M\+\_\+I}, \hyperpage{38}
-    \subitem {S\+VM}, \hyperpage{35}
+    \subitem {M\+L\+\_\+\+Algo}, \hyperpage{23}
+    \subitem {Perceptron}, \hyperpage{27}
+    \subitem {S\+V\+M\+\_\+I}, \hyperpage{42}
+    \subitem {S\+VM}, \hyperpage{38}
   \item {training\+\_\+label}
-    \subitem {Perceptron}, \hyperpage{25}
-    \subitem {S\+VM}, \hyperpage{36}
+    \subitem {Perceptron}, \hyperpage{27}
+    \subitem {S\+VM}, \hyperpage{39}
   \item {training\+\_\+set}
-    \subitem {Perceptron}, \hyperpage{25}
-    \subitem {S\+VM}, \hyperpage{36}
+    \subitem {Perceptron}, \hyperpage{27}
+    \subitem {S\+VM}, \hyperpage{39}
 
   \indexspace
 
   \item {U\+P\+B\+O\+U\+ND}
-    \subitem {equation.\+cpp}, \hyperpage{57}
+    \subitem {equation.\+cpp}, \hyperpage{67}
   \item {U\+P\+P\+E\+R\+\_\+\+B\+O\+U\+ND}
-    \subitem {Solver}, \hyperpage{28}
+    \subitem {Solver}, \hyperpage{31}
   \item {unset\+\_\+console\+\_\+color}
-    \subitem {color.\+cpp}, \hyperpage{56}
-    \subitem {color.\+h}, \hyperpage{47}
+    \subitem {color.\+cpp}, \hyperpage{65}
+    \subitem {color.\+h}, \hyperpage{53}
   \item {unshrink}
-    \subitem {Solver}, \hyperpage{30}
+    \subitem {Solver}, \hyperpage{32}
   \item {update\+\_\+alpha\+\_\+status}
-    \subitem {Solver}, \hyperpage{29}
+    \subitem {Solver}, \hyperpage{32}
   \item {upper\+\_\+bound\+\_\+n}
-    \subitem {Solver\+::\+Solution\+Info}, \hyperpage{27}
+    \subitem {Solver\+::\+Solution\+Info}, \hyperpage{30}
   \item {upper\+\_\+bound\+\_\+p}
-    \subitem {Solver\+::\+Solution\+Info}, \hyperpage{27}
+    \subitem {Solver\+::\+Solution\+Info}, \hyperpage{30}
 
   \indexspace
 
   \item {V\+A\+RS}
-    \subitem {config.\+h}, \hyperpage{47}
+    \subitem {config.\+h}, \hyperpage{54}
   \item {value}
-    \subitem {svm\+\_\+node}, \hyperpage{39}
+    \subitem {svm\+\_\+node}, \hyperpage{44}
   \item {values}
-    \subitem {States}, \hyperpage{32}
+    \subitem {States}, \hyperpage{34}
 
   \indexspace
 
   \item {W\+H\+I\+TE}
-    \subitem {color.\+h}, \hyperpage{46}
+    \subitem {color.\+h}, \hyperpage{52}
   \item {weight}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
   \item {weight\+\_\+label}
-    \subitem {svm\+\_\+parameter}, \hyperpage{40}
+    \subitem {svm\+\_\+parameter}, \hyperpage{45}
 
   \indexspace
 
   \item {x}
-    \subitem {Kernel}, \hyperpage{20}
-    \subitem {Solution}, \hyperpage{26}
-    \subitem {svm\+\_\+problem}, \hyperpage{41}
-  \item {x\+\_\+square}
-    \subitem {Kernel}, \hyperpage{20}
+    \subitem {Solution}, \hyperpage{29}
+    \subitem {svm\+\_\+problem}, \hyperpage{46}
 
   \indexspace
 
   \item {y}
-    \subitem {S\+V\+C\+\_\+Q}, \hyperpage{33}
-    \subitem {Solver}, \hyperpage{30}
-    \subitem {svm\+\_\+problem}, \hyperpage{41}
+    \subitem {Solver}, \hyperpage{32}
+    \subitem {svm\+\_\+problem}, \hyperpage{46}
   \item {Y\+E\+L\+L\+OW}
-    \subitem {color.\+h}, \hyperpage{46}
+    \subitem {color.\+h}, \hyperpage{52}
 
 \end{theindex}

@@ -93,7 +93,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperplane in math.  
+<p>This class defines an equation by storing all its coefficiencies. An equation is regarded a hyperplane in math.  
  <a href="classEquation.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="equation_8h_source.html">equation.h</a>&gt;</code></p>
@@ -119,17 +119,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a9ce8d3263523f807d35592797e8efd1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A shell on linear_solver(equ, sol)  <a href="#a9ce8d3263523f807d35592797e8efd1a">More...</a><br /></td></tr>
 <tr class="separator:a9ce8d3263523f807d35592797e8efd1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa602708c6dc480ebdb8d05a7a7d367c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#afa602708c6dc480ebdb8d05a7a7d367c">is_similar</a> (const <a class="el" href="classEquation.html">Equation</a> &amp;e, int precision=<a class="el" href="config_8h.html#a9c7b069fee3c8184e14a7de8e5da2dc6">PRECISION</a>)</td></tr>
+<tr class="memdesc:afa602708c6dc480ebdb8d05a7a7d367c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is used to check whether *this equation is similar to given equation e or not. *this ~= e ???  <a href="#afa602708c6dc480ebdb8d05a7a7d367c">More...</a><br /></td></tr>
 <tr class="separator:afa602708c6dc480ebdb8d05a7a7d367c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a337d5e20578e86ac30257622e03b1fe4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a337d5e20578e86ac30257622e03b1fe4">roundoff</a> (<a class="el" href="classEquation.html">Equation</a> &amp;e)</td></tr>
+<tr class="memdesc:a337d5e20578e86ac30257622e03b1fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do roundoff job for an equation.  <a href="#a337d5e20578e86ac30257622e03b1fe4">More...</a><br /></td></tr>
 <tr class="separator:a337d5e20578e86ac30257622e03b1fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a061e5066dffec79ea306546da919ddbf"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a061e5066dffec79ea306546da919ddbf">linear_solver</a> (const <a class="el" href="classEquation.html">Equation</a> *equ, <a class="el" href="classSolution.html">Solution</a> &amp;sol)</td></tr>
-<tr class="memdesc:a061e5066dffec79ea306546da919ddbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The solver for an <a class="el" href="classEquation.html" title="This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperpla...">Equation</a>.  <a href="#a061e5066dffec79ea306546da919ddbf">More...</a><br /></td></tr>
+<tr class="memdesc:a061e5066dffec79ea306546da919ddbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The solver for an <a class="el" href="classEquation.html" title="This class defines an equation by storing all its coefficiencies. An equation is regarded a hyperplan...">Equation</a>.  <a href="#a061e5066dffec79ea306546da919ddbf">More...</a><br /></td></tr>
 <tr class="separator:a061e5066dffec79ea306546da919ddbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada446e2cdda9e86007ae08a4c0f6537a"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#ada446e2cdda9e86007ae08a4c0f6537a">calc</a> (<a class="el" href="classEquation.html">Equation</a> &amp;equ, double *sol)</td></tr>
-<tr class="memdesc:ada446e2cdda9e86007ae08a4c0f6537a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is used to get the position info for the given point against given equation.  <a href="#ada446e2cdda9e86007ae08a4c0f6537a">More...</a><br /></td></tr>
+<tr class="memdesc:ada446e2cdda9e86007ae08a4c0f6537a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This static method is used to get the position info for the given point against given equation.  <a href="#ada446e2cdda9e86007ae08a4c0f6537a">More...</a><br /></td></tr>
 <tr class="separator:ada446e2cdda9e86007ae08a4c0f6537a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -146,8 +148,8 @@ Friends</h2></td></tr>
 <tr class="separator:a63697c4e5c47b42ace2f45f59c923108"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperplane in math. </p>
-<p>$$ + [0] * x_0 + [1] * x_1 + ... + [VARS] * x_{VARS} &gt;= 0$$ </p>
+<div class="textblock"><p>This class defines an equation by storing all its coefficiencies. An equation is regarded a hyperplane in math. </p>
+<p>theta0 + theta[0] * x_0 + theta[1] * x_1 + ... + theta[VARS] * x_{VARS} &gt;= 0 </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a68511fc719250ed80f86c50de9136733"></a>
 <div class="memitem">
@@ -251,8 +253,8 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>This method is used to get the position info for the given point against given equation. </p>
-<p>It just substitute variants with the given point.</p>
+<p>This static method is used to get the position info for the given point against given equation. </p>
+<p>It just substitutes variants with the given point.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">equ</td><td>is the given equation, should not be NULL </td></tr>
@@ -313,7 +315,9 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This method is used to check whether *this equation is similar to given equation e or not *this ~= e ??? </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>This method is used to check whether *this equation is similar to given equation e or not. *this ~= e ??? </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">precision</td><td>defines how much variance we can bare. The default is 4, which means we can bare 0.0001 difference. In this case 1 ~=1.00001, but 1!~=1.000011 </td></tr>
   </table>
@@ -387,7 +391,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The solver for an <a class="el" href="classEquation.html" title="This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperpla...">Equation</a>. </p>
+<p>The solver for an <a class="el" href="classEquation.html" title="This class defines an equation by storing all its coefficiencies. An equation is regarded a hyperplan...">Equation</a>. </p>
 <p>This method calcuate the most informative points in space It return a points really on the margin or next to the margin</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -442,7 +446,17 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>sometimes the equation has ugly coefficiencies we want to make it elegent, which is the purpose of involing this method Currently we have not done much work on this We have not even use gcd function to adjust the coefficients. For example. 1.2345 x1 &gt;= 2.4690 ==&gt; x1 &gt;= 2 2 x1 &gt;= 5.000001 ==&gt; x1 &gt;= 2.5 </p>
+
+<p>Do roundoff job for an equation. </p>
+<p>Sometimes the equation has ugly coefficiencies we want to make it elegent, which is the purpose of involing this method Currently we have not done much work on this We have not even use gcd function to adjust the coefficients.</p>
+<p>For example. 1.2345 x1 &gt;= 2.4690 ==&gt; x1 &gt;= 2 2 x1 &gt;= 5.000001 ==&gt; x1 &gt;= 2.5</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">e</td><td>Contains the equation that has already rounded off </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int 0 if no error. </dd></dl>
 
 </div>
 </div>

@@ -2,7 +2,7 @@
 \label{classEquation}\index{Equation@{Equation}}
 
 
-This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperplane in math.  
+This class defines an equation by storing all its coefficiencies. An equation is regarded a hyperplane in math.  
 
 
 
@@ -25,16 +25,16 @@ bool \hyperlink{classEquation_a0e6c0d52385361a604b5a8cab3d42e5e}{imply} (const \
 int \hyperlink{classEquation_a9ce8d3263523f807d35592797e8efd1a}{linear\+\_\+solver} (\hyperlink{classSolution}{Solution} \&sol)
 \begin{DoxyCompactList}\small\item\em A shell on linear\+\_\+solver(equ, sol) \end{DoxyCompactList}\item 
 int \hyperlink{classEquation_afa602708c6dc480ebdb8d05a7a7d367c}{is\+\_\+similar} (const \hyperlink{classEquation}{Equation} \&e, int precision=\hyperlink{config_8h_a9c7b069fee3c8184e14a7de8e5da2dc6}{P\+R\+E\+C\+I\+S\+I\+ON})
-\item 
+\begin{DoxyCompactList}\small\item\em This method is used to check whether $\ast$this equation is similar to given equation e or not. $\ast$this $\sim$= e ??? \end{DoxyCompactList}\item 
 int \hyperlink{classEquation_a337d5e20578e86ac30257622e03b1fe4}{roundoff} (\hyperlink{classEquation}{Equation} \&e)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Do roundoff job for an equation. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 static int \hyperlink{classEquation_a061e5066dffec79ea306546da919ddbf}{linear\+\_\+solver} (const \hyperlink{classEquation}{Equation} $\ast$equ, \hyperlink{classSolution}{Solution} \&sol)
 \begin{DoxyCompactList}\small\item\em The solver for an \hyperlink{classEquation}{Equation}. \end{DoxyCompactList}\item 
 static double \hyperlink{classEquation_ada446e2cdda9e86007ae08a4c0f6537a}{calc} (\hyperlink{classEquation}{Equation} \&equ, double $\ast$sol)
-\begin{DoxyCompactList}\small\item\em This method is used to get the position info for the given point against given equation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This static method is used to get the position info for the given point against given equation. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Data Fields}
 \begin{DoxyCompactItemize}
 \item 
@@ -50,9 +50,9 @@ std\+::ostream \& \hyperlink{classEquation_a63697c4e5c47b42ace2f45f59c923108}{op
 
 
 \subsection{Detailed Description}
-This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperplane in math. 
+This class defines an equation by storing all its coefficiencies. An equation is regarded a hyperplane in math. 
 
-\$\$ + \mbox{[}0\mbox{]} $\ast$ x\+\_\+0 + \mbox{[}1\mbox{]} $\ast$ x\+\_\+1 + ... + \mbox{[}V\+A\+RS\mbox{]} $\ast$ x\+\_\+\{V\+A\+RS\} $>$= 0\$\$ 
+theta0 + theta\mbox{[}0\mbox{]} $\ast$ x\+\_\+0 + theta\mbox{[}1\mbox{]} $\ast$ x\+\_\+1 + ... + theta\mbox{[}V\+A\+RS\mbox{]} $\ast$ x\+\_\+\{V\+A\+RS\} $>$= 0 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{Equation@{Equation}!Equation@{Equation}}
@@ -107,9 +107,9 @@ Copy constructor.
 )\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{classEquation_ada446e2cdda9e86007ae08a4c0f6537a}{}\label{classEquation_ada446e2cdda9e86007ae08a4c0f6537a}
 
 
-This method is used to get the position info for the given point against given equation. 
+This static method is used to get the position info for the given point against given equation. 
 
-It just substitute variants with the given point.
+It just substitutes variants with the given point.
 
 
 \begin{DoxyParams}{Parameters}
@@ -150,7 +150,11 @@ bool true if yes, false if no.
 \item[{int}]{precision = {\ttfamily {\bf P\+R\+E\+C\+I\+S\+I\+ON}}}
 \end{DoxyParamCaption}
 )}\hypertarget{classEquation_afa602708c6dc480ebdb8d05a7a7d367c}{}\label{classEquation_afa602708c6dc480ebdb8d05a7a7d367c}
-This method is used to check whether $\ast$this equation is similar to given equation e or not $\ast$this $\sim$= e ??? 
+
+
+This method is used to check whether $\ast$this equation is similar to given equation e or not. $\ast$this $\sim$= e ??? 
+
+
 \begin{DoxyParams}{Parameters}
 {\em precision} & defines how much variance we can bare. The default is 4, which means we can bare 0.\+0001 difference. In this case 1 $\sim$=1.\+00001, but 1!$\sim$=1.\+000011 \\
 \hline
@@ -229,7 +233,23 @@ This is needed when we want to delete a equation in an equation list We copy the
 \item[{{\bf Equation} \&}]{e}
 \end{DoxyParamCaption}
 )}\hypertarget{classEquation_a337d5e20578e86ac30257622e03b1fe4}{}\label{classEquation_a337d5e20578e86ac30257622e03b1fe4}
-sometimes the equation has ugly coefficiencies we want to make it elegent, which is the purpose of involing this method Currently we have not done much work on this We have not even use gcd function to adjust the coefficients. For example. 1.\+2345 x1 $>$= 2.\+4690 ==$>$ x1 $>$= 2 2 x1 $>$= 5.\+000001 ==$>$ x1 $>$= 2.\+5 
+
+
+Do roundoff job for an equation. 
+
+Sometimes the equation has ugly coefficiencies we want to make it elegent, which is the purpose of involing this method Currently we have not done much work on this We have not even use gcd function to adjust the coefficients.
+
+For example. 1.\+2345 x1 $>$= 2.\+4690 ==$>$ x1 $>$= 2 2 x1 $>$= 5.\+000001 ==$>$ x1 $>$= 2.\+5
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Contains the equation that has already rounded off \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 0 if no error. 
+\end{DoxyReturn}
+
 
 \subsection{Friends And Related Function Documentation}
 \index{Equation@{Equation}!operator$<$$<$@{operator$<$$<$}}

@@ -92,6 +92,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">instrumentation.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Provide instrumentation function support for the framework.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="config_8h_source.html">config.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="states_8h_source.html">states.h</a>&quot;</code><br />
 <code>#include &lt;stdarg.h&gt;</code><br />
@@ -100,12 +103,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a06fc87d81c62e9abb8790b6e5713c55b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="instrumentation_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba62d66a51fa7574c652597716f7709865">NEGATIVE</a> = -1, 
-<a class="el" href="instrumentation_8h.html#a06fc87d81c62e9abb8790b6e5713c55bad126f509c35e1661274f8b72693c7848">QUESTION</a>, 
-<a class="el" href="instrumentation_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba03d440bbbfb042afc85347f994b44fb5">POSITIVE</a>, 
-<a class="el" href="instrumentation_8h.html#a06fc87d81c62e9abb8790b6e5713c55baca3ef05411426a5f11dc987d95aa3529">COUNT_EXAMPLE</a>
- }</td></tr>
-<tr class="separator:a06fc87d81c62e9abb8790b6e5713c55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88668637ccaca17d11f722f59f59406b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8h.html#a88668637ccaca17d11f722f59f59406b">trace_type</a> { <a class="el" href="instrumentation_8h.html#a88668637ccaca17d11f722f59f59406ba62d66a51fa7574c652597716f7709865">NEGATIVE</a> = -1, 
+<a class="el" href="instrumentation_8h.html#a88668637ccaca17d11f722f59f59406bad126f509c35e1661274f8b72693c7848">QUESTION</a>, 
+<a class="el" href="instrumentation_8h.html#a88668637ccaca17d11f722f59f59406ba03d440bbbfb042afc85347f994b44fb5">POSITIVE</a>, 
+<a class="el" href="instrumentation_8h.html#a88668637ccaca17d11f722f59f59406bab8cd4148b6c0698f69f8a72f8646980f">COUNTER_EXAMPLE</a>
+ }<tr class="memdesc:a88668637ccaca17d11f722f59f59406b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all the FOUR trace typies here. Negative, Quesion, Positive and Counter_example.  <a href="instrumentation_8h.html#a88668637ccaca17d11f722f59f59406b">More...</a><br /></td></tr>
+</td></tr>
+<tr class="separator:a88668637ccaca17d11f722f59f59406b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -114,32 +118,43 @@ Functions</h2></td></tr>
 <tr class="memitem:a79372536ec6cea03f5965c1ba3cc53d0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8h.html#a79372536ec6cea03f5965c1ba3cc53d0">add_state_double</a> (double first,...)</td></tr>
 <tr class="separator:a79372536ec6cea03f5965c1ba3cc53d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d59d0b15971adab199af12052e349ef"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8h.html#a2d59d0b15971adab199af12052e349ef">m_int</a> (int *)</td></tr>
+<tr class="memdesc:a2d59d0b15971adab199af12052e349ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">record furntions for each platform  <a href="#a2d59d0b15971adab199af12052e349ef">More...</a><br /></td></tr>
 <tr class="separator:a2d59d0b15971adab199af12052e349ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a672c47c9112ab553c00e2910b255ff1a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8h.html#a672c47c9112ab553c00e2910b255ff1a">m_double</a> (double *)</td></tr>
+<tr class="memdesc:a672c47c9112ab553c00e2910b255ff1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">function jump list, DONOT use it unless you know what you are doing  <a href="#a672c47c9112ab553c00e2910b255ff1a">More...</a><br /></td></tr>
 <tr class="separator:a672c47c9112ab553c00e2910b255ff1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabbf0f2d0ec3548d46e27866fc768e42"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8h.html#aabbf0f2d0ec3548d46e27866fc768e42">before_loop</a> ()</td></tr>
+<tr class="memdesc:aabbf0f2d0ec3548d46e27866fc768e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called each time before executing loop.  <a href="#aabbf0f2d0ec3548d46e27866fc768e42">More...</a><br /></td></tr>
 <tr class="separator:aabbf0f2d0ec3548d46e27866fc768e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84778c6fd993bc3a85b2d5f9c354f38f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="instrumentation_8h.html#a84778c6fd993bc3a85b2d5f9c354f38f">after_loop</a> (<a class="el" href="classStates.html">States</a> *)</td></tr>
+<tr class="memdesc:a84778c6fd993bc3a85b2d5f9c354f38f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called each time after executing loop.  <a href="#a84778c6fd993bc3a85b2d5f9c354f38f">More...</a><br /></td></tr>
 <tr class="separator:a84778c6fd993bc3a85b2d5f9c354f38f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="a06fc87d81c62e9abb8790b6e5713c55b"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Provide instrumentation function support for the framework. </p>
+<dl class="section author"><dt>Author</dt><dd>Li Jiaying </dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000006">Bug:</a></b></dt><dd>No known bugs </dd></dl>
+</div><h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="a88668637ccaca17d11f722f59f59406b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="instrumentation_8h.html#a88668637ccaca17d11f722f59f59406b">trace_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Contains all the FOUR trace typies here. Negative, Quesion, Positive and Counter_example. </p>
+<p>Negative = -1 because we want to compatible with natural meaning and svm labels. This also cause a problem to reassign states point in each test file which is ugly </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a06fc87d81c62e9abb8790b6e5713c55ba62d66a51fa7574c652597716f7709865"></a>NEGATIVE&#160;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a88668637ccaca17d11f722f59f59406ba62d66a51fa7574c652597716f7709865"></a>NEGATIVE&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a06fc87d81c62e9abb8790b6e5713c55bad126f509c35e1661274f8b72693c7848"></a>QUESTION&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a88668637ccaca17d11f722f59f59406bad126f509c35e1661274f8b72693c7848"></a>QUESTION&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a06fc87d81c62e9abb8790b6e5713c55ba03d440bbbfb042afc85347f994b44fb5"></a>POSITIVE&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a88668637ccaca17d11f722f59f59406ba03d440bbbfb042afc85347f994b44fb5"></a>POSITIVE&#160;</td><td class="fielddoc">
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a06fc87d81c62e9abb8790b6e5713c55baca3ef05411426a5f11dc987d95aa3529"></a>COUNT_EXAMPLE&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="a88668637ccaca17d11f722f59f59406bab8cd4148b6c0698f69f8a72f8646980f"></a>COUNTER_EXAMPLE&#160;</td><td class="fielddoc">
 </td></tr>
 </table>
 
@@ -212,6 +227,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>This function should be called each time after executing loop. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">void</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="aabbf0f2d0ec3548d46e27866fc768e42"></a>
@@ -226,6 +250,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>This function should be called each time before executing loop. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">void</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>
@@ -243,6 +276,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>function jump list, DONOT use it unless you know what you are doing </p>
+
 </div>
 </div>
 <a class="anchor" id="a2d59d0b15971adab199af12052e349ef"></a>
@@ -258,6 +293,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>record furntions for each platform </p>
+<p>function jump list, DONOT use it unless you know what you are doing </p>
 
 </div>
 </div>

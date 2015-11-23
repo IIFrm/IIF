@@ -1,23 +1,40 @@
 \hypertarget{iif__assert_8h}{}\section{include/iif\+\_\+assert.h File Reference}
 \label{iif__assert_8h}\index{include/iif\+\_\+assert.\+h@{include/iif\+\_\+assert.\+h}}
+
+
+Provide iif\+\_\+assert and iif\+\_\+assume support for system assume and assert macros.  
+
+
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
 \#define \hyperlink{iif__assert_8h_a77c691e35bf160a48b865e93073dd759}{iif\+\_\+assume}(expr)
-\item 
+\begin{DoxyCompactList}\small\item\em Used to envelope loop precondition. \end{DoxyCompactList}\item 
 \#define \hyperlink{iif__assert_8h_af22e31973faa40470618b5f370326651}{iif\+\_\+assert}(expr)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Used to envelope loop precondition. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
 bool \hyperlink{iif__assert_8h_a73db7f19ba8224c4530f45fd832ef42b}{\+\_\+passP}
-\item 
+\begin{DoxyCompactList}\small\item\em a flag to justify whether the given input has pass loop precondition \end{DoxyCompactList}\item 
 bool \hyperlink{iif__assert_8h_a87e762b3355fdc144393f0936c14f8ca}{\+\_\+passQ}
-\item 
+\begin{DoxyCompactList}\small\item\em a flag to justify whether the given input has pass loop postcondition \end{DoxyCompactList}\item 
 int \hyperlink{iif__assert_8h_a552efb21fe547d54565d8379dc8a95bc}{assume\+\_\+times}
-\item 
+\begin{DoxyCompactList}\small\item\em integers values contain the call times to iif\+\_\+assume and iif\+\_\+assert, used to validate a given test \end{DoxyCompactList}\item 
 int \hyperlink{iif__assert_8h_a3b38e8ff0d716993240c2bbc5c25a59e}{assert\+\_\+times}
 \end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Provide iif\+\_\+assert and iif\+\_\+assume support for system assume and assert macros. 
+
+For each valid test, iif\+\_\+assume and iif\+\_\+assert should be called only once. Otherwise, the test is regarded as an invalid test.
+
+\begin{DoxyAuthor}{Author}
+Li Jiaying 
+\end{DoxyAuthor}
+\begin{DoxyRefDesc}{Bug}
+\item[\hyperlink{bug__bug000005}{Bug}]unset\+\_\+console\+\_\+color is set the console back to black background, white forground, no strong comparision instead of the previous setting. \end{DoxyRefDesc}
 
 
 \subsection{Macro Definition Documentation}
@@ -35,6 +52,17 @@ int \hyperlink{iif__assert_8h_a3b38e8ff0d716993240c2bbc5c25a59e}{assert\+\_\+tim
 \hyperlink{iif__assert_8h_a3b38e8ff0d716993240c2bbc5c25a59e}{    assert\_times}++;\(\backslash\)
 \} \textcolor{keywordflow}{while}(0)
 \end{DoxyCode}
+
+
+Used to envelope loop precondition. 
+
+Do not support multiple calls
+
+
+\begin{DoxyParams}{Parameters}
+{\em expr} & loop postcondition \\
+\hline
+\end{DoxyParams}
 \index{iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}!iif\+\_\+assume@{iif\+\_\+assume}}
 \index{iif\+\_\+assume@{iif\+\_\+assume}!iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}}
 \subsubsection[{iif\+\_\+assume}]{\setlength{\rightskip}{0pt plus 5cm}\#define iif\+\_\+assume(
@@ -51,16 +79,39 @@ int \hyperlink{iif__assert_8h_a3b38e8ff0d716993240c2bbc5c25a59e}{assert\+\_\+tim
 \end{DoxyCode}
 
 
+Used to envelope loop precondition. 
+
+Do not support multiple calls
+
+
+\begin{DoxyParams}{Parameters}
+{\em expr} & loop precondition \\
+\hline
+\end{DoxyParams}
+
+
 \subsection{Variable Documentation}
 \index{iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}!\+\_\+passP@{\+\_\+passP}}
 \index{\+\_\+passP@{\+\_\+passP}!iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}}
 \subsubsection[{\+\_\+passP}]{\setlength{\rightskip}{0pt plus 5cm}bool \+\_\+passP}\hypertarget{iif__assert_8h_a73db7f19ba8224c4530f45fd832ef42b}{}\label{iif__assert_8h_a73db7f19ba8224c4530f45fd832ef42b}
+
+
+a flag to justify whether the given input has pass loop precondition 
+
 \index{iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}!\+\_\+passQ@{\+\_\+passQ}}
 \index{\+\_\+passQ@{\+\_\+passQ}!iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}}
 \subsubsection[{\+\_\+passQ}]{\setlength{\rightskip}{0pt plus 5cm}bool \+\_\+passQ}\hypertarget{iif__assert_8h_a87e762b3355fdc144393f0936c14f8ca}{}\label{iif__assert_8h_a87e762b3355fdc144393f0936c14f8ca}
+
+
+a flag to justify whether the given input has pass loop postcondition 
+
 \index{iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}!assert\+\_\+times@{assert\+\_\+times}}
 \index{assert\+\_\+times@{assert\+\_\+times}!iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}}
 \subsubsection[{assert\+\_\+times}]{\setlength{\rightskip}{0pt plus 5cm}int assert\+\_\+times}\hypertarget{iif__assert_8h_a3b38e8ff0d716993240c2bbc5c25a59e}{}\label{iif__assert_8h_a3b38e8ff0d716993240c2bbc5c25a59e}
 \index{iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}!assume\+\_\+times@{assume\+\_\+times}}
 \index{assume\+\_\+times@{assume\+\_\+times}!iif\+\_\+assert.\+h@{iif\+\_\+assert.\+h}}
 \subsubsection[{assume\+\_\+times}]{\setlength{\rightskip}{0pt plus 5cm}int assume\+\_\+times}\hypertarget{iif__assert_8h_a552efb21fe547d54565d8379dc8a95bc}{}\label{iif__assert_8h_a552efb21fe547d54565d8379dc8a95bc}
+
+
+integers values contain the call times to iif\+\_\+assume and iif\+\_\+assert, used to validate a given test 
+

@@ -18,19 +18,19 @@ Inheritance diagram for Perceptron\+:\begin{figure}[H]
 virtual \hyperlink{classPerceptron_a0267e40e981df9907129d858911840e7}{$\sim$\+Perceptron} ()
 \item 
 virtual int \hyperlink{classPerceptron_a2267c5acf9b4a7bd0f47522a530d3863}{prepare\+\_\+training\+\_\+data} (\hyperlink{classStates}{States} $\ast$gsets, int \&pre\+\_\+positive\+\_\+size, int \&pre\+\_\+negative\+\_\+size)
-\item 
+\begin{DoxyCompactList}\small\item\em init training data method. This should be called before any training happens. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classPerceptron_adc779991ee63dca333c12fb247b32c9d}{train} ()
-\item 
+\begin{DoxyCompactList}\small\item\em The most important T\+R\+A\+IN method, which calls real training algorithm to do training. \end{DoxyCompactList}\item 
 virtual double \hyperlink{classPerceptron_ac9214d2cda4eeb9a06f6562bcb5df8ca}{predict\+\_\+on\+\_\+training\+\_\+set} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Calculate the predict precision of the training-\/model on the training set. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classPerceptron_ac7ed76c6a28180691f63f2afbf93cc26}{check\+\_\+question\+\_\+set} (\hyperlink{classStates}{States} \&qset)
-\item 
+\begin{DoxyCompactList}\small\item\em test on question state sets to see if there is an invalidation \end{DoxyCompactList}\item 
 virtual int \hyperlink{classPerceptron_a50b1f76eb2760b540477135100dcbf49}{size} ()
-\item 
+\begin{DoxyCompactList}\small\item\em This method returns the current problem size (the number of training states). \end{DoxyCompactList}\item 
 virtual \hyperlink{classEquation}{Equation} $\ast$ \hyperlink{classPerceptron_a5408f0ea545d06bbef6630071c73fea2}{roundoff} (int \&num)
-\item 
+\begin{DoxyCompactList}\small\item\em Round off the whole training model.(equations) \end{DoxyCompactList}\item 
 virtual int \hyperlink{classPerceptron_a414600a1f189c4f44c858b87048ae655}{predict} (double $\ast$v, int label=0)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Predict sample x against the whole training model.(equations) \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Data Fields}
 \begin{DoxyCompactItemize}
 \item 
@@ -77,19 +77,47 @@ std\+::ostream \& \hyperlink{classPerceptron_a829793c1338f5ab9c9e7e63b6c63be21}{
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_ac7ed76c6a28180691f63f2afbf93cc26}{}\label{classPerceptron_ac7ed76c6a28180691f63f2afbf93cc26}
 
 
-Implements \hyperlink{classML__Algo_aa6b2dd6e3c5571b7bebe0d5f3de5483b}{M\+L\+\_\+\+Algo}.
+test on question state sets to see if there is an invalidation 
+
+The method will output the inforamtion if a question trace invalidate the training model
+
+
+\begin{DoxyParams}{Parameters}
+{\em qset} & is a reference type to question states. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 0 if no error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classML__Algo_a4d757e7fb178ce41ec713bcd84807d33}{M\+L\+\_\+\+Algo}.
 
 \index{Perceptron@{Perceptron}!predict@{predict}}
 \index{predict@{predict}!Perceptron@{Perceptron}}
 \subsubsection[{predict(double $\ast$v, int label=0)}]{\setlength{\rightskip}{0pt plus 5cm}int Perceptron\+::predict (
 \begin{DoxyParamCaption}
-\item[{double $\ast$}]{v, }
-\item[{int}]{label = {\ttfamily 0}}
+\item[{double $\ast$}]{x, }
+\item[{int}]{flag = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_a414600a1f189c4f44c858b87048ae655}{}\label{classPerceptron_a414600a1f189c4f44c858b87048ae655}
 
 
-Implements \hyperlink{classML__Algo_a8c2a89155672a87131161c5dcdfa1c5a}{M\+L\+\_\+\+Algo}.
+Predict sample x against the whole training model.(equations) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & contains the sample to be tested. \\
+\hline
+{\em flag} & leave this to be Z\+E\+RO... \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The label of prediction 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classML__Algo_aae12eabc95fd3eb5305f1ae7a14e0193}{M\+L\+\_\+\+Algo}.
 
 \index{Perceptron@{Perceptron}!predict\+\_\+on\+\_\+training\+\_\+set@{predict\+\_\+on\+\_\+training\+\_\+set}}
 \index{predict\+\_\+on\+\_\+training\+\_\+set@{predict\+\_\+on\+\_\+training\+\_\+set}!Perceptron@{Perceptron}}
@@ -98,6 +126,13 @@ Implements \hyperlink{classML__Algo_a8c2a89155672a87131161c5dcdfa1c5a}{M\+L\+\_\
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_ac9214d2cda4eeb9a06f6562bcb5df8ca}{}\label{classPerceptron_ac9214d2cda4eeb9a06f6562bcb5df8ca}
+
+
+Calculate the predict precision of the training-\/model on the training set. 
+
+\begin{DoxyReturn}{Returns}
+double Return precision we can get. Should be a value between 0 and 1. 
+\end{DoxyReturn}
 
 
 Implements \hyperlink{classML__Algo_a39dd640e7c910becf611b9265843ac77}{M\+L\+\_\+\+Algo}.
@@ -113,18 +148,46 @@ Implements \hyperlink{classML__Algo_a39dd640e7c910becf611b9265843ac77}{M\+L\+\_\
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_a2267c5acf9b4a7bd0f47522a530d3863}{}\label{classPerceptron_a2267c5acf9b4a7bd0f47522a530d3863}
 
 
-Implements \hyperlink{classML__Algo_aaecc3e3fb875eea2867dcac24bc1e550}{M\+L\+\_\+\+Algo}.
+init training data method. This should be called before any training happens. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gsets} & The states array to store all the generated states information. The size must be 4, and index -\/1 should be accessible \\
+\hline
+{\em pre\+\_\+positive\+\_\+size} & This records the last positive size of states. And also set by callee to the new value Initially set to 0, as there is no elements in positive states. Calls afterwards should pass the value set by last call. \\
+\hline
+{\em pre\+\_\+negative\+\_\+size} & This records the last negative size of states. And also set by callee to the new value Initially set to 0, as there is no elements in positive states. Calls afterwards should pass the value set by last call. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 0 if no error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classML__Algo_ab98458d234bdf97c2ed678030d90c513}{M\+L\+\_\+\+Algo}.
 
 \index{Perceptron@{Perceptron}!roundoff@{roundoff}}
 \index{roundoff@{roundoff}!Perceptron@{Perceptron}}
 \subsubsection[{roundoff(int \&num)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Equation} $\ast$ Perceptron\+::roundoff (
 \begin{DoxyParamCaption}
-\item[{int \&}]{num}
+\item[{int \&}]{equation\+\_\+num}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_a5408f0ea545d06bbef6630071c73fea2}{}\label{classPerceptron_a5408f0ea545d06bbef6630071c73fea2}
 
 
-Implements \hyperlink{classML__Algo_ad847559865d5e4208371a00fe1cbe12e}{M\+L\+\_\+\+Algo}.
+Round off the whole training model.(equations) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em equation\+\_\+num} & set by callee to notify the number of equations we currently get \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Eqation Point the rounded off equations. Remember to D\+E\+L\+E\+TE them after use by caller. Otherwise memory leak. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classML__Algo_a398214e0462ebfdde10e745240030a34}{M\+L\+\_\+\+Algo}.
 
 \index{Perceptron@{Perceptron}!size@{size}}
 \index{size@{size}!Perceptron@{Perceptron}}
@@ -133,6 +196,13 @@ Implements \hyperlink{classML__Algo_ad847559865d5e4208371a00fe1cbe12e}{M\+L\+\_\
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_a50b1f76eb2760b540477135100dcbf49}{}\label{classPerceptron_a50b1f76eb2760b540477135100dcbf49}
+
+
+This method returns the current problem size (the number of training states). 
+
+\begin{DoxyReturn}{Returns}
+int the size of problem 
+\end{DoxyReturn}
 
 
 Implements \hyperlink{classML__Algo_a8650c3894c1992492f8bc86edf1b3ffd}{M\+L\+\_\+\+Algo}.
@@ -144,6 +214,13 @@ Implements \hyperlink{classML__Algo_a8650c3894c1992492f8bc86edf1b3ffd}{M\+L\+\_\
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classPerceptron_adc779991ee63dca333c12fb247b32c9d}{}\label{classPerceptron_adc779991ee63dca333c12fb247b32c9d}
+
+
+The most important T\+R\+A\+IN method, which calls real training algorithm to do training. 
+
+\begin{DoxyReturn}{Returns}
+int 0 if no error. 
+\end{DoxyReturn}
 
 
 Implements \hyperlink{classML__Algo_a0a5d241191d4249c60a40d966fb19aee}{M\+L\+\_\+\+Algo}.

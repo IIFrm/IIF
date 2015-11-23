@@ -18,23 +18,23 @@ Inheritance diagram for S\+VM\+:\begin{figure}[H]
 virtual \hyperlink{classSVM_ad2a87ef0f940145f04150e9561f10478}{$\sim$\+S\+VM} ()
 \item 
 virtual int \hyperlink{classSVM_a930fe217e3affd64acb6700f5f8082e1}{prepare\+\_\+training\+\_\+data} (\hyperlink{classStates}{States} $\ast$gsets, int \&pre\+\_\+positive\+\_\+size, int \&pre\+\_\+negative\+\_\+size)
-\item 
+\begin{DoxyCompactList}\small\item\em init training data method. This should be called before any training happens. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classSVM_a6a1d895b86522eab683d66ded4d3a049}{train} ()
-\item 
+\begin{DoxyCompactList}\small\item\em The most important T\+R\+A\+IN method, which calls real training algorithm to do training. \end{DoxyCompactList}\item 
 virtual double \hyperlink{classSVM_af208fc653a382591f20c0fcf7a186362}{predict\+\_\+on\+\_\+training\+\_\+set} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Calculate the predict precision of the training-\/model on the training set. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classSVM_aa610ec08173c8603ad6e02f26cbe8e1c}{check\+\_\+question\+\_\+set} (\hyperlink{classStates}{States} \&qset)
-\item 
+\begin{DoxyCompactList}\small\item\em test on question state sets to see if there is an invalidation \end{DoxyCompactList}\item 
 virtual int \hyperlink{classSVM_a712dcd7cb65a8045a77dd474869dd5c4}{get\+\_\+converged} (\hyperlink{classEquation}{Equation} $\ast$, int)
-\item 
+\begin{DoxyCompactList}\small\item\em check whether the training is converged or not \end{DoxyCompactList}\item 
 virtual std\+::ostream \& \hyperlink{classSVM_a6e5a3fbae4da1ecd4773173a2b590c21}{\+\_\+print} (std\+::ostream \&out) const 
-\item 
+\begin{DoxyCompactList}\small\item\em This is the function really called to output this object. We involve this as to support polymophism for operator $<$$<$. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classSVM_a4563cef982f6e1c67acf0c7b0ec8909b}{size} ()
-\item 
+\begin{DoxyCompactList}\small\item\em This method returns the current problem size (the number of training states). \end{DoxyCompactList}\item 
 virtual \hyperlink{classEquation}{Equation} $\ast$ \hyperlink{classSVM_abd2d511c6cb9f64a29a4551f6435bfd2}{roundoff} (int \&num)
-\item 
+\begin{DoxyCompactList}\small\item\em Round off the whole training model.(equations) \end{DoxyCompactList}\item 
 virtual int \hyperlink{classSVM_a972215d3c749ba550c85763c8871567f}{predict} (double $\ast$v, int label=0)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Predict sample x against the whole training model.(equations) \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Data Fields}
 \begin{DoxyCompactItemize}
 \item 
@@ -90,6 +90,10 @@ std\+::ostream \& \hyperlink{classSVM_af21f811318dedf7522a8f48741a1d979}{operato
 ) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM_a6e5a3fbae4da1ecd4773173a2b590c21}{}\label{classSVM_a6e5a3fbae4da1ecd4773173a2b590c21}
 
 
+This is the function really called to output this object. We involve this as to support polymophism for operator $<$$<$. 
+
+
+
 Reimplemented from \hyperlink{classML__Algo_ad689e5642c5db0971c53909b52cc67d4}{M\+L\+\_\+\+Algo}.
 
 
@@ -105,7 +109,21 @@ Reimplemented in \hyperlink{classSVM__I_ab0ae30d86d9f9026908a7b902f7a78e3}{S\+V\
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM_aa610ec08173c8603ad6e02f26cbe8e1c}{}\label{classSVM_aa610ec08173c8603ad6e02f26cbe8e1c}
 
 
-Implements \hyperlink{classML__Algo_aa6b2dd6e3c5571b7bebe0d5f3de5483b}{M\+L\+\_\+\+Algo}.
+test on question state sets to see if there is an invalidation 
+
+The method will output the inforamtion if a question trace invalidate the training model
+
+
+\begin{DoxyParams}{Parameters}
+{\em qset} & is a reference type to question states. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 0 if no error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classML__Algo_a4d757e7fb178ce41ec713bcd84807d33}{M\+L\+\_\+\+Algo}.
 
 
 
@@ -115,13 +133,29 @@ Reimplemented in \hyperlink{classSVM__I_a84470dce77add6377454c4408c6c1466}{S\+V\
 \index{get\+\_\+converged@{get\+\_\+converged}!S\+VM@{S\+VM}}
 \subsubsection[{get\+\_\+converged(\+Equation $\ast$, int)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+M\+::get\+\_\+converged (
 \begin{DoxyParamCaption}
-\item[{{\bf Equation} $\ast$}]{last\+\_\+equation, }
+\item[{{\bf Equation} $\ast$}]{previous\+\_\+equations, }
 \item[{int}]{equation\+\_\+num}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM_a712dcd7cb65a8045a77dd474869dd5c4}{}\label{classSVM_a712dcd7cb65a8045a77dd474869dd5c4}
 
 
-Implements \hyperlink{classML__Algo_a51cd9c90baae617c40d8495985f03a5e}{M\+L\+\_\+\+Algo}.
+check whether the training is converged or not 
+
+current\+\_\+training\+\_\+equations $\sim$= previous\+\_\+trainig\+\_\+equations ???
+
+
+\begin{DoxyParams}{Parameters}
+{\em previous\+\_\+equations} & contains all the equation we get from last trainig session. \\
+\hline
+{\em equation\+\_\+num} & is the number of equations get from last training session \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 0 if converged 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classML__Algo_a3d2c7bfa53c13005dfde112c9e473c5e}{M\+L\+\_\+\+Algo}.
 
 
 
@@ -131,13 +165,27 @@ Reimplemented in \hyperlink{classSVM__I_a5d1a8c93d41597aea5f31689687dbc77}{S\+V\
 \index{predict@{predict}!S\+VM@{S\+VM}}
 \subsubsection[{predict(double $\ast$v, int label=0)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+V\+M\+::predict (
 \begin{DoxyParamCaption}
-\item[{double $\ast$}]{v, }
-\item[{int}]{label = {\ttfamily 0}}
+\item[{double $\ast$}]{x, }
+\item[{int}]{flag = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM_a972215d3c749ba550c85763c8871567f}{}\label{classSVM_a972215d3c749ba550c85763c8871567f}
 
 
-Implements \hyperlink{classML__Algo_a8c2a89155672a87131161c5dcdfa1c5a}{M\+L\+\_\+\+Algo}.
+Predict sample x against the whole training model.(equations) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & contains the sample to be tested. \\
+\hline
+{\em flag} & leave this to be Z\+E\+RO... \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The label of prediction 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classML__Algo_aae12eabc95fd3eb5305f1ae7a14e0193}{M\+L\+\_\+\+Algo}.
 
 
 
@@ -150,6 +198,13 @@ Reimplemented in \hyperlink{classSVM__I_abe0a76aa6d31d18c2ee66002c35c813f}{S\+V\
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM_af208fc653a382591f20c0fcf7a186362}{}\label{classSVM_af208fc653a382591f20c0fcf7a186362}
+
+
+Calculate the predict precision of the training-\/model on the training set. 
+
+\begin{DoxyReturn}{Returns}
+double Return precision we can get. Should be a value between 0 and 1. 
+\end{DoxyReturn}
 
 
 Implements \hyperlink{classML__Algo_a39dd640e7c910becf611b9265843ac77}{M\+L\+\_\+\+Algo}.
@@ -169,7 +224,23 @@ Reimplemented in \hyperlink{classSVM__I_a643c2a6e58f8e70ab276ade9b1873bf6}{S\+V\
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM_a930fe217e3affd64acb6700f5f8082e1}{}\label{classSVM_a930fe217e3affd64acb6700f5f8082e1}
 
 
-Implements \hyperlink{classML__Algo_aaecc3e3fb875eea2867dcac24bc1e550}{M\+L\+\_\+\+Algo}.
+init training data method. This should be called before any training happens. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gsets} & The states array to store all the generated states information. The size must be 4, and index -\/1 should be accessible \\
+\hline
+{\em pre\+\_\+positive\+\_\+size} & This records the last positive size of states. And also set by callee to the new value Initially set to 0, as there is no elements in positive states. Calls afterwards should pass the value set by last call. \\
+\hline
+{\em pre\+\_\+negative\+\_\+size} & This records the last negative size of states. And also set by callee to the new value Initially set to 0, as there is no elements in positive states. Calls afterwards should pass the value set by last call. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 0 if no error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classML__Algo_ab98458d234bdf97c2ed678030d90c513}{M\+L\+\_\+\+Algo}.
 
 
 
@@ -179,12 +250,24 @@ Reimplemented in \hyperlink{classSVM__I_ab0236699daa4967cfec71234faa785c5}{S\+V\
 \index{roundoff@{roundoff}!S\+VM@{S\+VM}}
 \subsubsection[{roundoff(int \&num)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Equation} $\ast$ S\+V\+M\+::roundoff (
 \begin{DoxyParamCaption}
-\item[{int \&}]{num}
+\item[{int \&}]{equation\+\_\+num}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM_abd2d511c6cb9f64a29a4551f6435bfd2}{}\label{classSVM_abd2d511c6cb9f64a29a4551f6435bfd2}
 
 
-Implements \hyperlink{classML__Algo_ad847559865d5e4208371a00fe1cbe12e}{M\+L\+\_\+\+Algo}.
+Round off the whole training model.(equations) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em equation\+\_\+num} & set by callee to notify the number of equations we currently get \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Eqation Point the rounded off equations. Remember to D\+E\+L\+E\+TE them after use by caller. Otherwise memory leak. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classML__Algo_a398214e0462ebfdde10e745240030a34}{M\+L\+\_\+\+Algo}.
 
 
 
@@ -197,6 +280,13 @@ Reimplemented in \hyperlink{classSVM__I_a91b713ef0810fd4c83a5c711aea9fecf}{S\+V\
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM_a4563cef982f6e1c67acf0c7b0ec8909b}{}\label{classSVM_a4563cef982f6e1c67acf0c7b0ec8909b}
+
+
+This method returns the current problem size (the number of training states). 
+
+\begin{DoxyReturn}{Returns}
+int the size of problem 
+\end{DoxyReturn}
 
 
 Implements \hyperlink{classML__Algo_a8650c3894c1992492f8bc86edf1b3ffd}{M\+L\+\_\+\+Algo}.
@@ -212,6 +302,13 @@ Reimplemented in \hyperlink{classSVM__I_a1b66cefe313cffaa77d4271dfb4b8474}{S\+V\
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classSVM_a6a1d895b86522eab683d66ded4d3a049}{}\label{classSVM_a6a1d895b86522eab683d66ded4d3a049}
+
+
+The most important T\+R\+A\+IN method, which calls real training algorithm to do training. 
+
+\begin{DoxyReturn}{Returns}
+int 0 if no error. 
+\end{DoxyReturn}
 
 
 Implements \hyperlink{classML__Algo_a0a5d241191d4249c60a40d966fb19aee}{M\+L\+\_\+\+Algo}.

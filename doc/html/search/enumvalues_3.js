@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['free',['FREE',['../classSolver.html#ab8abfd7c2e958e4343d30e471b2f86a1a904f6af2170b6f900fbd3d46cd055c76',1,'Solver']]]
+  ['free',['FREE',['../classSolver.html#a86c1a7637bc803ef8496c7dbf7f00b03a904f6af2170b6f900fbd3d46cd055c76',1,'Solver']]]
 ];

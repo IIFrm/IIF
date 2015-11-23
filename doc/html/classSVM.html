@@ -112,22 +112,31 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad2a87ef0f940145f04150e9561f10478"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSVM.html#ad2a87ef0f940145f04150e9561f10478">~SVM</a> ()</td></tr>
 <tr class="separator:ad2a87ef0f940145f04150e9561f10478"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a930fe217e3affd64acb6700f5f8082e1"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSVM.html#a930fe217e3affd64acb6700f5f8082e1">prepare_training_data</a> (<a class="el" href="classStates.html">States</a> *gsets, int &amp;pre_positive_size, int &amp;pre_negative_size)</td></tr>
+<tr class="memdesc:a930fe217e3affd64acb6700f5f8082e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">init training data method. This should be called before any training happens.  <a href="#a930fe217e3affd64acb6700f5f8082e1">More...</a><br /></td></tr>
 <tr class="separator:a930fe217e3affd64acb6700f5f8082e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a1d895b86522eab683d66ded4d3a049"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSVM.html#a6a1d895b86522eab683d66ded4d3a049">train</a> ()</td></tr>
+<tr class="memdesc:a6a1d895b86522eab683d66ded4d3a049"><td class="mdescLeft">&#160;</td><td class="mdescRight">The most important TRAIN method, which calls real training algorithm to do training.  <a href="#a6a1d895b86522eab683d66ded4d3a049">More...</a><br /></td></tr>
 <tr class="separator:a6a1d895b86522eab683d66ded4d3a049"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af208fc653a382591f20c0fcf7a186362"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSVM.html#af208fc653a382591f20c0fcf7a186362">predict_on_training_set</a> ()</td></tr>
+<tr class="memdesc:af208fc653a382591f20c0fcf7a186362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the predict precision of the training-model on the training set.  <a href="#af208fc653a382591f20c0fcf7a186362">More...</a><br /></td></tr>
 <tr class="separator:af208fc653a382591f20c0fcf7a186362"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa610ec08173c8603ad6e02f26cbe8e1c"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSVM.html#aa610ec08173c8603ad6e02f26cbe8e1c">check_question_set</a> (<a class="el" href="classStates.html">States</a> &amp;qset)</td></tr>
+<tr class="memdesc:aa610ec08173c8603ad6e02f26cbe8e1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">test on question state sets to see if there is an invalidation  <a href="#aa610ec08173c8603ad6e02f26cbe8e1c">More...</a><br /></td></tr>
 <tr class="separator:aa610ec08173c8603ad6e02f26cbe8e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a712dcd7cb65a8045a77dd474869dd5c4"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSVM.html#a712dcd7cb65a8045a77dd474869dd5c4">get_converged</a> (<a class="el" href="classEquation.html">Equation</a> *, int)</td></tr>
+<tr class="memdesc:a712dcd7cb65a8045a77dd474869dd5c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether the training is converged or not  <a href="#a712dcd7cb65a8045a77dd474869dd5c4">More...</a><br /></td></tr>
 <tr class="separator:a712dcd7cb65a8045a77dd474869dd5c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e5a3fbae4da1ecd4773173a2b590c21"><td class="memItemLeft" align="right" valign="top">virtual std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSVM.html#a6e5a3fbae4da1ecd4773173a2b590c21">_print</a> (std::ostream &amp;out) const </td></tr>
+<tr class="memdesc:a6e5a3fbae4da1ecd4773173a2b590c21"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the function really called to output this object. We involve this as to support polymophism for operator &lt;&lt;.  <a href="#a6e5a3fbae4da1ecd4773173a2b590c21">More...</a><br /></td></tr>
 <tr class="separator:a6e5a3fbae4da1ecd4773173a2b590c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4563cef982f6e1c67acf0c7b0ec8909b"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSVM.html#a4563cef982f6e1c67acf0c7b0ec8909b">size</a> ()</td></tr>
+<tr class="memdesc:a4563cef982f6e1c67acf0c7b0ec8909b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method returns the current problem size (the number of training states).  <a href="#a4563cef982f6e1c67acf0c7b0ec8909b">More...</a><br /></td></tr>
 <tr class="separator:a4563cef982f6e1c67acf0c7b0ec8909b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd2d511c6cb9f64a29a4551f6435bfd2"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classEquation.html">Equation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSVM.html#abd2d511c6cb9f64a29a4551f6435bfd2">roundoff</a> (int &amp;num)</td></tr>
+<tr class="memdesc:abd2d511c6cb9f64a29a4551f6435bfd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Round off the whole training model.(equations)  <a href="#abd2d511c6cb9f64a29a4551f6435bfd2">More...</a><br /></td></tr>
 <tr class="separator:abd2d511c6cb9f64a29a4551f6435bfd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a972215d3c749ba550c85763c8871567f"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSVM.html#a972215d3c749ba550c85763c8871567f">predict</a> (double *v, int label=0)</td></tr>
+<tr class="memdesc:a972215d3c749ba550c85763c8871567f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predict sample x against the whole training model.(equations)  <a href="#a972215d3c749ba550c85763c8871567f">More...</a><br /></td></tr>
 <tr class="separator:a972215d3c749ba550c85763c8871567f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classML__Algo"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classML__Algo')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classML__Algo.html">ML_Algo</a></td></tr>
 <tr class="memitem:a7b8c13ce9739e50cc6f6d097469f0326 inherit pub_methods_classML__Algo"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classML__Algo.html#a7b8c13ce9739e50cc6f6d097469f0326">ML_Algo</a> ()</td></tr>
@@ -231,6 +240,8 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>This is the function really called to output this object. We involve this as to support polymophism for operator &lt;&lt;. </p>
+
 <p>Reimplemented from <a class="el" href="classML__Algo.html#ad689e5642c5db0971c53909b52cc67d4">ML_Algo</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classSVM__I.html#ab0ae30d86d9f9026908a7b902f7a78e3">SVM_I</a>.</p>
@@ -259,7 +270,17 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classML__Algo.html#aa6b2dd6e3c5571b7bebe0d5f3de5483b">ML_Algo</a>.</p>
+<p>test on question state sets to see if there is an invalidation </p>
+<p>The method will output the inforamtion if a question trace invalidate the training model</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">qset</td><td>is a reference type to question states. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int 0 if no error </dd></dl>
+
+<p>Implements <a class="el" href="classML__Algo.html#a4d757e7fb178ce41ec713bcd84807d33">ML_Algo</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classSVM__I.html#a84470dce77add6377454c4408c6c1466">SVM_I</a>.</p>
 
@@ -276,7 +297,7 @@ Friends</h2></td></tr>
           <td class="memname">int SVM::get_converged </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classEquation.html">Equation</a> *&#160;</td>
-          <td class="paramname"><em>last_equation</em>, </td>
+          <td class="paramname"><em>previous_equations</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -297,7 +318,18 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classML__Algo.html#a51cd9c90baae617c40d8495985f03a5e">ML_Algo</a>.</p>
+<p>check whether the training is converged or not </p>
+<p>current_training_equations ~= previous_trainig_equations ???</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">previous_equations</td><td>contains all the equation we get from last trainig session. </td></tr>
+    <tr><td class="paramname">equation_num</td><td>is the number of equations get from last training session </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int 0 if converged </dd></dl>
+
+<p>Implements <a class="el" href="classML__Algo.html#a3d2c7bfa53c13005dfde112c9e473c5e">ML_Algo</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classSVM__I.html#a5d1a8c93d41597aea5f31689687dbc77">SVM_I</a>.</p>
 
@@ -314,13 +346,13 @@ Friends</h2></td></tr>
           <td class="memname">int SVM::predict </td>
           <td>(</td>
           <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
+          <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>label</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>flag</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -335,7 +367,17 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classML__Algo.html#a8c2a89155672a87131161c5dcdfa1c5a">ML_Algo</a>.</p>
+<p>Predict sample x against the whole training model.(equations) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>contains the sample to be tested. </td></tr>
+    <tr><td class="paramname">flag</td><td>leave this to be ZERO... </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The label of prediction </dd></dl>
+
+<p>Implements <a class="el" href="classML__Algo.html#aae12eabc95fd3eb5305f1ae7a14e0193">ML_Algo</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classSVM__I.html#abe0a76aa6d31d18c2ee66002c35c813f">SVM_I</a>.</p>
 
@@ -361,6 +403,9 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Calculate the predict precision of the training-model on the training set. </p>
+<dl class="section return"><dt>Returns</dt><dd>double Return precision we can get. Should be a value between 0 and 1. </dd></dl>
 
 <p>Implements <a class="el" href="classML__Algo.html#a39dd640e7c910becf611b9265843ac77">ML_Algo</a>.</p>
 
@@ -406,7 +451,18 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classML__Algo.html#aaecc3e3fb875eea2867dcac24bc1e550">ML_Algo</a>.</p>
+<p>init training data method. This should be called before any training happens. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gsets</td><td>The states array to store all the generated states information. The size must be 4, and index -1 should be accessible </td></tr>
+    <tr><td class="paramname">pre_positive_size</td><td>This records the last positive size of states. And also set by callee to the new value Initially set to 0, as there is no elements in positive states. Calls afterwards should pass the value set by last call. </td></tr>
+    <tr><td class="paramname">pre_negative_size</td><td>This records the last negative size of states. And also set by callee to the new value Initially set to 0, as there is no elements in positive states. Calls afterwards should pass the value set by last call. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int 0 if no error </dd></dl>
+
+<p>Implements <a class="el" href="classML__Algo.html#ab98458d234bdf97c2ed678030d90c513">ML_Algo</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classSVM__I.html#ab0236699daa4967cfec71234faa785c5">SVM_I</a>.</p>
 
@@ -423,7 +479,7 @@ Friends</h2></td></tr>
           <td class="memname"><a class="el" href="classEquation.html">Equation</a> * SVM::roundoff </td>
           <td>(</td>
           <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>num</em></td><td>)</td>
+          <td class="paramname"><em>equation_num</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -434,7 +490,16 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classML__Algo.html#ad847559865d5e4208371a00fe1cbe12e">ML_Algo</a>.</p>
+<p>Round off the whole training model.(equations) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">equation_num</td><td>set by callee to notify the number of equations we currently get </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Eqation Point the rounded off equations. Remember to DELETE them after use by caller. Otherwise memory leak. </dd></dl>
+
+<p>Implements <a class="el" href="classML__Algo.html#a398214e0462ebfdde10e745240030a34">ML_Algo</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classSVM__I.html#a91b713ef0810fd4c83a5c711aea9fecf">SVM_I</a>.</p>
 
@@ -460,6 +525,9 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>This method returns the current problem size (the number of training states). </p>
+<dl class="section return"><dt>Returns</dt><dd>int the size of problem </dd></dl>
 
 <p>Implements <a class="el" href="classML__Algo.html#a8650c3894c1992492f8bc86edf1b3ffd">ML_Algo</a>.</p>
 
@@ -487,6 +555,9 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>The most important TRAIN method, which calls real training algorithm to do training. </p>
+<dl class="section return"><dt>Returns</dt><dd>int 0 if no error. </dd></dl>
 
 <p>Implements <a class="el" href="classML__Algo.html#a0a5d241191d4249c60a40d966fb19aee">ML_Algo</a>.</p>
 
