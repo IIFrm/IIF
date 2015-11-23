@@ -21,100 +21,103 @@ extern int minv;
 
 class Solution{
 	public:
-		/**
-		 * Default constructor.
-		 * Set all its elements to value 0
+		/** @brief Default constructor.
+		 *		   Set all its elements to value 0
 		 */
 		Solution();
 
-		/** 
-		 * Most useful constructor
-		 * Set its elements to the given values, order keeps
+		/** @brief Most useful constructor
+		 *		   Set its elements to the given values, order keeps
+		 *		   
+		 *	@param a0... each element values for a solution
 		 */
 		Solution(double a0, ...);
 
-		/**
-		 * support << operator
-		 * simply output its elements as a tuple
+		/** @brief support << operator
+		 *		   simply output its elements as a tuple
+		 *
+		 *	@param sol The solution object to be output
 		 */
 		friend std::ostream& operator << (std::ostream& out, const Solution& sol);
 
-		/**
-		 * The data field of Solution
-		 * stores all the values as a solution to an Equation 
-		 */
+		/// The data field of Solution, stores all the values as a solution to an Equation 
 		double x[VARS];
 };
 
 
-
-/**
- * This class defines an equation we use in this project.
- * Which is regards as a hyperplane in math.
- * It stores all the coefficiency of the Equation.
+/** \class Equation
+ *  @brief This class defines an equation by storeing all its coefficiencies.
+ *		   An equation is regarded a hyperplane in math.
  * 
  * $$\theta0 + \theta[0] * x_0 + \theta[1] * x_1 + ... + \theta[VARS] * x_{VARS} >= 0$$
  *
  */
 class Equation{
 	public:
-		/**
-		 * Default constructor.
-		 * Set all its elements to value 0
+		/** @brief Default constructor.
+		 *		   Set all its elements to value 0
 		 */
 		Equation();
 
-		/** 
-		 * Most useful constructor
-		 * Set its elements to the given values, order keeps
-		 * The first element is Theta0
+		/** @brief Most useful constructor
+		 *		   Set its elements to the given values, order keeps
+		 *		   The first element is Theta0
 		 */
 		Equation(double a0, ...);
 
-		/**
-		 * Copy constructor.
-		 * No comments.
+		/** @brief Copy constructor.
+		 *
+		 * @param equ The equation to be copied.
 		 */
 		Equation(const Equation& equ);
 		
-		/**
-		 * Overwrite = operator
-		 * This is needed when we want to delete a equation in an equation list
-		 * We copy the next equation to the current one, and repeat this process until tails
+		/** @brief Overwrite = operator
+		 *	
+		 *	This is needed when we want to delete a equation in an equation list
+		 *	We copy the next equation to the current one, and repeat this process until tails
+		 *
+		 *	@param rhs The right-hand-side equation of assignment
 		 */
 		Equation& operator = (const Equation& rhs);
 
-		/**
-		 * Output the equation in a readable format
-		 * Example:
-		 * 2{0} + 3{1} >= 5
+		/** @brief Output the equation in a readable format
+		 * 
+		 *	Example:
+		 *  2{0} + 3{1} >= 5
+		 *  
+		 *  @param equ the equation to be ouput
 		 */
 		friend std::ostream& operator << (std::ostream& out, const Equation& equ);
 
-		/**
-		 * imply method checks whether one equation can imply another one or not
-		 * *this is default equation left side
-		 * @param e2 is the equation right side
-		 * we check whether *this ==> e2 ??
-		 * @return true if yes, false if no.
-		 * Currently, it is based on Z3 prover.
-		 * And the default precision is set to E-8 (2.8f), which is changeable if need 
+		/** @brief This imply method checks whether this equation object can imply another one or not
+		 *		   That is to say:  *this ==> e2 ??
+		 *		   *this is default equation left side
+		 *
+		 *  Currently, it is based on Z3 prover.
+		 *  And the default precision is set to E-8 (2.8f), which is changeable if need 
+		 *  
+		 *  @param e2 is the equation right side
+		 *  @return bool true if yes, false if no.
 		 */
 		bool imply(const Equation& e2);
 
-		/**
-		 * A shell on linear_solver(equ, sol)
-		 * More understandable
+		/** @brief A shell on linear_solver(equ, sol)
+		 * 
+		 * @param sol set by callee as a solution to given object
+		 * @return int 0 if no error.
 		 */
 		int linear_solver(Solution& sol) {
 			return linear_solver(this, sol);
 		}
 
-		/**
-		 * The real solver for an Equation
+		/** @brief The solver for an Equation.
+		 * 
 		 * This method calcuate the most informative points in space
 		 * It return a points really on the margin or next to the margin
-		 * @param sol contains the solution, integer format
+		 *
+		 * @param sol is set by callee as a solution to given object
+		 *			  contains the solution, integer format
+		 * @return int 0 if no error.
 		 */
 		static int linear_solver(const Equation* equ, Solution& sol) {
 			if (equ == NULL) {
@@ -127,12 +130,13 @@ class Equation{
 				return 0;
 			}
 
-			int j; /// justify whether all the coefficients are zeros...
+			int j; 
+			///< a flag to justify whether all the coefficients are zeros...
 			for (j = 0; j < VARS; j++) {
 				if (equ->theta[j] != 0) break;
 			}
-			///< If all the coefficients are zeros....
-			///< We just randomly pickup solutions to return
+			/// If all the coefficients are zeros....
+			/// We just randomly pickup solutions to return
 			if (j == VARS) {
 				for (int i = 0; i < VARS; i++) {
 					sol.x[i] = rand() % (maxv - minv + 1) + minv;
@@ -145,7 +149,8 @@ class Equation{
 			double reminder;
 			int times = 0;
 solve:
-			pick = rand() % VARS; ///< pick store the dimension that should not generate randomly
+			pick = rand() % VARS; 
+			///< pick store the dimension that should not generate randomly
 			///< The algo is we generate numbers randomly, unless the picked dimension
 			///< The picked dimension should be calcuate based on equation and other dimensions
 			while (equ->theta[pick] == 0)
@@ -159,8 +164,7 @@ solve:
 			sol.x[pick] = int(reminder / equ->theta[pick]) + rand() % 2;
 			if (sol.x[pick] > maxv || sol.x[pick] < minv) {
 				if (++times > 10) 
-					/** 
-					 * sometimes we can not get solution between given scope
+					/** sometimes we can not get solution between given scope
 					 *	we try 10 times, if still no suitable solution, we pick the last one...
 					 */
 					goto solve;
@@ -169,9 +173,13 @@ solve:
 			return 0;
 		}
 
-		/**
-		 * This method is used to get the position info for the given point against given equation
-		 * It just substitute variants with the given point.
+		/** @brief This method is used to get the position info for the given point against given equation
+		 * 
+		 *	It just substitute variants with the given point.
+		 *	
+		 *	@param equ is the given equation, should not be NULL
+		 *	@param sol is the tested solution, should not be NULL
+		 *	@return The distance/value of the solution to the given equation
 		 */
 		static double calc(Equation& equ, double* sol) {
 			if (sol == NULL) return -1;

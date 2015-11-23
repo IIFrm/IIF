@@ -6,7 +6,7 @@
 #include <iostream>
 //using namespace std;
 
-States::States() : max_size(10000) {
+States::States() : max_size(max_items) {
 	values = new double[max_items][VARS];
 	index = new int[max_items];
 	//values = vector< vector<double> > (max_size, vector<double>(VARS));

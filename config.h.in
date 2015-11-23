@@ -1,25 +1,65 @@
-/*************************************************************************
-    > File Name: config.h
-    > Author: Li Jiaying
-    > Mail: lijiaying1989@gmail.com 
-    > Created Time: 2015年11月05日 星期四 11时50分51秒
- ************************************************************************/
+/** @file config.h
+ *  @brief Provide most configuration information for whole project. 
+ *
+ *  This file contains most of the setting which are used to customize the project.
+ *
+ *  @author Li Jiaying
+ *  @bug No known bugs. 
+ */
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
+/**  @brief defines the number of paramenters by a given loop,\
+ *		   This also is the number of parameters we need to record for processing.
+ *		   This should be set in ${project_root}/CMakeLists.txt file
+ *		   If it is not set correctly, you may come across a runtime error
+ */
 #define VARS ${VARS} 
+
+
+/** @brief is a integer, which defines precision as pow(10, -PRECISION)  
+ *		   This should be set in ${project_root}/CMakeLists.txt file
+ *		   You'd better set this value in a scope [1, 12] 
+ */
 #define PRECISION ${PRECISION}
 
+/** @brief The pointer to test program, DO NOT assign directly
+ *		   Call register_program to set its value
+ */
 extern int (*target_program) (int*);
+
+/** @brief This function register the test program to the framework.
+ *
+ *	@param func The function to be tested
+ *		   It involves a small validation test on the given function.
+ *  @param fun_name defines the function name, can be ignored, or set to NULL
+ *  @return a boolean value false only when the given function is not valid.
+ */
 bool register_program(int (*func)(int*), const char* func_name = 0);
 
-const int max_items = 100000;
-const int q_items = 1000;
 
+/** @brief defines the initial max number items contains by states set. 
+ *		   Better to be a number larger than 1000 
+ */
+const int max_items = 100000;
+
+/** @brief defines the number of tests runs initially. Should be a positive integer.
+ */
 const int init_exes = 6 * VARS;
+
+/** @brief defines the number of tests runs after the first time. Should be a positive integer.
+ */
 const int after_exes = 4 * VARS;
-//const int final_exes_times = 10; /* 10 times of current exes*/
+
+/** @brief defines the number of random tests runs each time, 
+ *		   which is used to avoid bias caused by tests picking chioce. 
+ *		   Should be a non-negative integer.
+ */
 const int random_exes = 2;
+
+/** @brief defines the max number of iterations tried by machine learning algorithm, 
+ *		   Should be a positive integer. Usually set between 8-128
+ */
 const int max_iter = 32;
 
 #endif

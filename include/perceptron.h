@@ -1,5 +1,6 @@
 #ifndef _PERCEPTRON_H_
 #define _PERCEPTRON_H_
+
 #include "config.h"
 #include "instrumentation.h"
 #include "color.h"
@@ -7,13 +8,15 @@
 
 class Perceptron : public ML_Algo
 {
+	private:
+		const int max_size;
 	public:
 		Equation* main_equation;
 		double training_label[max_items * 2];
 		double* training_set[max_items * 2];
 		int length;
 
-		Perceptron(void (*f) (const char*) = NULL);
+		Perceptron(void (*f) (const char*) = NULL, int max_size = 10000);
 
 		virtual ~Perceptron(); 
 
