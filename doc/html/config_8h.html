@@ -94,38 +94,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>Provide most configuration information for whole project.  
+<a href="#details">More...</a></p>
+
 <p><a href="config_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a1d6565a8ececd15de44965eec4790919"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a1d6565a8ececd15de44965eec4790919">VARS</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:a1d6565a8ececd15de44965eec4790919"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the number of paramenters by a given loop,\ This also is the number of parameters we need to record for processing. This should be set in /CMakeLists.txt file If it is not set correctly, you may come across a runtime error  <a href="#a1d6565a8ececd15de44965eec4790919">More...</a><br /></td></tr>
 <tr class="separator:a1d6565a8ececd15de44965eec4790919"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c7b069fee3c8184e14a7de8e5da2dc6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a9c7b069fee3c8184e14a7de8e5da2dc6">PRECISION</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:a9c7b069fee3c8184e14a7de8e5da2dc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">is a integer, which defines precision as pow(10, -PRECISION) This should be set in /CMakeLists.txt file You'd better set this value in a scope [1, 12]  <a href="#a9c7b069fee3c8184e14a7de8e5da2dc6">More...</a><br /></td></tr>
 <tr class="separator:a9c7b069fee3c8184e14a7de8e5da2dc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a8c5bae50d678b664c26f20fe2714b643"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a8c5bae50d678b664c26f20fe2714b643">register_program</a> (int(*func)(int *), const char *func_name=0)</td></tr>
+<tr class="memdesc:a8c5bae50d678b664c26f20fe2714b643"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function register the test program to the framework.  <a href="#a8c5bae50d678b664c26f20fe2714b643">More...</a><br /></td></tr>
 <tr class="separator:a8c5bae50d678b664c26f20fe2714b643"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:aa4ddce24d31048c0e720e8a881102639"><td class="memItemLeft" align="right" valign="top">int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#aa4ddce24d31048c0e720e8a881102639">target_program</a> )(int *)</td></tr>
+<tr class="memdesc:aa4ddce24d31048c0e720e8a881102639"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pointer to test program, DO NOT assign directly Call register_program to set its value.  <a href="#aa4ddce24d31048c0e720e8a881102639">More...</a><br /></td></tr>
 <tr class="separator:aa4ddce24d31048c0e720e8a881102639"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab763a0a7202006efe98fe9953784e6a9"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#ab763a0a7202006efe98fe9953784e6a9">max_items</a> = 100000</td></tr>
+<tr class="memdesc:ab763a0a7202006efe98fe9953784e6a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the initial max number items contains by states set. Better to be a number larger than 1000  <a href="#ab763a0a7202006efe98fe9953784e6a9">More...</a><br /></td></tr>
 <tr class="separator:ab763a0a7202006efe98fe9953784e6a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e6919c94370d97d8d3644d68cc5d5ec"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a0e6919c94370d97d8d3644d68cc5d5ec">q_items</a> = 1000</td></tr>
-<tr class="separator:a0e6919c94370d97d8d3644d68cc5d5ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cdc06717fd3c453855e0f1236107749"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a9cdc06717fd3c453855e0f1236107749">init_exes</a> = 6 * <a class="el" href="config_8h.html#a1d6565a8ececd15de44965eec4790919">VARS</a></td></tr>
+<tr class="memdesc:a9cdc06717fd3c453855e0f1236107749"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the number of tests runs initially. Should be a positive integer.  <a href="#a9cdc06717fd3c453855e0f1236107749">More...</a><br /></td></tr>
 <tr class="separator:a9cdc06717fd3c453855e0f1236107749"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9899f4090dc9468966227cb6af15906"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#af9899f4090dc9468966227cb6af15906">after_exes</a> = 4 * <a class="el" href="config_8h.html#a1d6565a8ececd15de44965eec4790919">VARS</a></td></tr>
+<tr class="memdesc:af9899f4090dc9468966227cb6af15906"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the number of tests runs after the first time. Should be a positive integer.  <a href="#af9899f4090dc9468966227cb6af15906">More...</a><br /></td></tr>
 <tr class="separator:af9899f4090dc9468966227cb6af15906"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13c279f1a09e02e6224a93ee6aadae5b"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a13c279f1a09e02e6224a93ee6aadae5b">random_exes</a> = 2</td></tr>
+<tr class="memdesc:a13c279f1a09e02e6224a93ee6aadae5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the number of random tests runs each time, which is used to avoid bias caused by tests picking chioce. Should be a non-negative integer.  <a href="#a13c279f1a09e02e6224a93ee6aadae5b">More...</a><br /></td></tr>
 <tr class="separator:a13c279f1a09e02e6224a93ee6aadae5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a2c49f1d0b87e326420efb7e71cb89f"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a7a2c49f1d0b87e326420efb7e71cb89f">max_iter</a> = 32</td></tr>
+<tr class="memdesc:a7a2c49f1d0b87e326420efb7e71cb89f"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the max number of iterations tried by machine learning algorithm, Should be a positive integer. Usually set between 8-128  <a href="#a7a2c49f1d0b87e326420efb7e71cb89f">More...</a><br /></td></tr>
 <tr class="separator:a7a2c49f1d0b87e326420efb7e71cb89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Provide most configuration information for whole project. </p>
+<p>This file contains most of the setting which are used to customize the project.</p>
+<dl class="section author"><dt>Author</dt><dd>Li Jiaying </dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000002">Bug:</a></b></dt><dd>No known bugs. </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a9c7b069fee3c8184e14a7de8e5da2dc6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -135,6 +150,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>is a integer, which defines precision as pow(10, -PRECISION) This should be set in /CMakeLists.txt file You'd better set this value in a scope [1, 12] </p>
 
 </div>
 </div>
@@ -147,6 +164,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>defines the number of paramenters by a given loop,\ This also is the number of parameters we need to record for processing. This should be set in /CMakeLists.txt file If it is not set correctly, you may come across a runtime error </p>
 
 </div>
 </div>
@@ -175,6 +194,16 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>This function register the test program to the framework. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">func</td><td>The function to be tested It involves a small validation test on the given function. </td></tr>
+    <tr><td class="paramname">fun_name</td><td>defines the function name, can be ignored, or set to NULL </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a boolean value false only when the given function is not valid. </dd></dl>
+
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
@@ -188,6 +217,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>defines the number of tests runs after the first time. Should be a positive integer. </p>
+
 </div>
 </div>
 <a class="anchor" id="a9cdc06717fd3c453855e0f1236107749"></a>
@@ -199,6 +230,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>defines the number of tests runs initially. Should be a positive integer. </p>
 
 </div>
 </div>
@@ -212,6 +245,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>defines the initial max number items contains by states set. Better to be a number larger than 1000 </p>
+
 </div>
 </div>
 <a class="anchor" id="a7a2c49f1d0b87e326420efb7e71cb89f"></a>
@@ -224,17 +259,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a class="anchor" id="a0e6919c94370d97d8d3644d68cc5d5ec"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const int q_items = 1000</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>defines the max number of iterations tried by machine learning algorithm, Should be a positive integer. Usually set between 8-128 </p>
 
 </div>
 </div>
@@ -248,6 +273,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>defines the number of random tests runs each time, which is used to avoid bias caused by tests picking chioce. Should be a non-negative integer. </p>
+
 </div>
 </div>
 <a class="anchor" id="aa4ddce24d31048c0e720e8a881102639"></a>
@@ -259,6 +286,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The pointer to test program, DO NOT assign directly Call register_program to set its value. </p>
 
 </div>
 </div>

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['data',['data',['../structCache_1_1head__t.html#a630b97ea8171e7e8c1f4ff6c3b12c587',1,'Cache::head_t']]],
-  ['degree',['degree',['../structsvm__parameter.html#afef1c4508ec0045c236a3308b0fa5138',1,'svm_parameter::degree()'],['../classKernel.html#a332697fbc977298e3f8701224dbe4bf0',1,'Kernel::degree()']]]
+  ['eps',['eps',['../structsvm__parameter.html#a1feab5a4e0d5842a20e544f3f944f841',1,'svm_parameter::eps()'],['../classSolver.html#a718333cc2c1d40abf9c292a788cba1e5',1,'Solver::eps()']]],
+  ['equ_5fnum',['equ_num',['../classSVM__I.html#ab674468eec42010761332da3f9b2f69c',1,'SVM_I']]],
+  ['equations',['equations',['../classSVM__I.html#af905b6378094007502fa5d81f018a11b',1,'SVM_I']]]
 ];

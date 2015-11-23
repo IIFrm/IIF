@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['value',['value',['../structsvm__node.html#a9ca47b8a156238d04213453f3b89e177',1,'svm_node']]],
-  ['values',['values',['../classStates.html#a8b9a87b26c50e560d98c98d7e18f36b4',1,'States']]]
+  ['x',['x',['../classSolution.html#a67672e91e753de458afef2ca270510dd',1,'Solution::x()'],['../structsvm__problem.html#acddda9b49a8e38bbda079f35c2e18984',1,'svm_problem::x()']]]
 ];

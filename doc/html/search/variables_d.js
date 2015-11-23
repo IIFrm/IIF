@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['negative_5fnodes',['negative_nodes',['../svm__core_8cpp.html#a8978a07bac0902080a5bd5b4275f9752',1,'svm_core.cpp']]],
-  ['negatives',['negatives',['../classSVM__I.html#a8a56898f346ff15c5bb904ff6e001dad',1,'SVM_I']]],
-  ['next',['next',['../structCache_1_1head__t.html#aa152a104ec07250949c234d164f5f3fd',1,'Cache::head_t']]],
-  ['next_5fbuffer',['next_buffer',['../classSVR__Q.html#acbdbde823b714d30097648c9dc109524',1,'SVR_Q']]],
-  ['nr_5fclass',['nr_class',['../structsvm__model.html#a5af6e0cfb063e8aac03c99aa9d319116',1,'svm_model']]],
-  ['nr_5fweight',['nr_weight',['../structsvm__parameter.html#a44014738d1db5444f7f9a1ebf74e4214',1,'svm_parameter']]],
-  ['nsv',['nSV',['../structsvm__model.html#a1d342c9b9e5e4a6377862e13123a25ef',1,'svm_model']]],
-  ['nu',['nu',['../structsvm__parameter.html#a4c20c566cb61d5808e8cabd7adbc35c1',1,'svm_parameter']]]
+  ['p',['p',['../structsvm__parameter.html#a3b60d7ce96137a64caca81095d1a188b',1,'svm_parameter::p()'],['../classSolver.html#a882cce072f56679880d409e3e73f7ae8',1,'Solver::p()']]],
+  ['p_5findex',['p_index',['../classStates.html#a13e3842ad77b702e0f68cf875ded9534',1,'States']]],
+  ['param',['param',['../classSVM.html#ad28af66070f8e9f9f6c74132c78aa245',1,'SVM::param()'],['../structsvm__model.html#a95f43f398a173e63d0ce26911d0a9273',1,'svm_model::param()'],['../classSVM__I.html#afbec56807dada05e9e527587d25acfb6',1,'SVM_I::param()']]],
+  ['positive_5fnodes',['positive_nodes',['../svm__core_8cpp.html#a276a8bdfbae037927a3281a9351fa9b6',1,'svm_core.cpp']]],
+  ['proba',['probA',['../structsvm__model.html#adf5f28fcdd3ca1c5b23c1f6167710a04',1,'svm_model']]],
+  ['probability',['probability',['../structsvm__parameter.html#afac0ef02879d7e27e17ac2a75115a7d9',1,'svm_parameter']]],
+  ['probb',['probB',['../structsvm__model.html#a73ba8feaaf3c2c38c6bb81f7bcb5809e',1,'svm_model']]],
+  ['problem',['problem',['../classSVM.html#a154369e018e4f487838709b350474bc6',1,'SVM']]]
 ];

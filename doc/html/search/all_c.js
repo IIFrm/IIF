@@ -13,7 +13,7 @@ var searchData=
   ['iif_5fsvm_5flearn_2ecpp',['iif_svm_learn.cpp',['../iif__svm__learn_8cpp.html',1,'']]],
   ['iif_5fsvm_5flearn_2eh',['iif_svm_learn.h',['../iif__svm__learn_8h.html',1,'']]],
   ['imply',['imply',['../classEquation.html#a0e6c0d52385361a604b5a8cab3d42e5e',1,'Equation']]],
-  ['index',['index',['../classStates.html#ac7f438346962624026633389d156b5d0',1,'States::index()'],['../classSVR__Q.html#a29e769c577358f518182ba3cbe255817',1,'SVR_Q::index()']]],
+  ['index',['index',['../classStates.html#ac7f438346962624026633389d156b5d0',1,'States']]],
   ['inf',['INF',['../svm__core_8cpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6',1,'svm_core.cpp']]],
   ['info',['info',['../svm__core_8cpp.html#ab834c069665121a3467868539fde9101',1,'svm_core.cpp']]],
   ['info_5farch',['info_arch',['../CMakeCCompilerId_8c.html#a59647e99d304ed33b15cb284c27ed391',1,'info_arch():&#160;CMakeCCompilerId.c'],['../CMakeCXXCompilerId_8cpp.html#a59647e99d304ed33b15cb284c27ed391',1,'info_arch():&#160;CMakeCXXCompilerId.cpp']]],

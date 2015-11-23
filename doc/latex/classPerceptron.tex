@@ -13,7 +13,7 @@ Inheritance diagram for Perceptron\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classPerceptron_aa2364f629d771f5e9bf4fc9f70a17cbc}{Perceptron} (void($\ast$f)(const char $\ast$)=N\+U\+LL)
+\hyperlink{classPerceptron_a74b79b672c7d5ac9d69c2f3f66ec09fa}{Perceptron} (void($\ast$f)(const char $\ast$)=N\+U\+LL, int max\+\_\+size=10000)
 \item 
 virtual \hyperlink{classPerceptron_a0267e40e981df9907129d858911840e7}{$\sim$\+Perceptron} ()
 \item 
@@ -42,11 +42,6 @@ double $\ast$ \hyperlink{classPerceptron_af93816c52b31be423764b53c22733a01}{trai
 \item 
 int \hyperlink{classPerceptron_a996b4296c5e5e4950099a8fe0b37b9df}{length}
 \end{DoxyCompactItemize}
-\subsection*{Private Member Functions}
-\begin{DoxyCompactItemize}
-\item 
-\hyperlink{classEquation}{Equation} $\ast$ \hyperlink{classPerceptron_a9424ff060e4f990038669c9629cfab58}{perceptron\+\_\+train} ()
-\end{DoxyCompactItemize}
 \subsection*{Friends}
 \begin{DoxyCompactItemize}
 \item 
@@ -57,11 +52,12 @@ std\+::ostream \& \hyperlink{classPerceptron_a829793c1338f5ab9c9e7e63b6c63be21}{
 \subsection{Constructor \& Destructor Documentation}
 \index{Perceptron@{Perceptron}!Perceptron@{Perceptron}}
 \index{Perceptron@{Perceptron}!Perceptron@{Perceptron}}
-\subsubsection[{Perceptron(void($\ast$f)(const char $\ast$)=\+N\+U\+L\+L)}]{\setlength{\rightskip}{0pt plus 5cm}Perceptron\+::\+Perceptron (
+\subsubsection[{Perceptron(void($\ast$f)(const char $\ast$)=\+N\+U\+L\+L, int max\+\_\+size=10000)}]{\setlength{\rightskip}{0pt plus 5cm}Perceptron\+::\+Perceptron (
 \begin{DoxyParamCaption}
-\item[{void($\ast$)(const char $\ast$)}]{f = {\ttfamily NULL}}
+\item[{void($\ast$)(const char $\ast$)}]{f = {\ttfamily NULL}, }
+\item[{int}]{max\+\_\+size = {\ttfamily 10000}}
 \end{DoxyParamCaption}
-)}\hypertarget{classPerceptron_aa2364f629d771f5e9bf4fc9f70a17cbc}{}\label{classPerceptron_aa2364f629d771f5e9bf4fc9f70a17cbc}
+)}\hypertarget{classPerceptron_a74b79b672c7d5ac9d69c2f3f66ec09fa}{}\label{classPerceptron_a74b79b672c7d5ac9d69c2f3f66ec09fa}
 \index{Perceptron@{Perceptron}!````~Perceptron@{$\sim$\+Perceptron}}
 \index{````~Perceptron@{$\sim$\+Perceptron}!Perceptron@{Perceptron}}
 \subsubsection[{$\sim$\+Perceptron()}]{\setlength{\rightskip}{0pt plus 5cm}Perceptron\+::$\sim$\+Perceptron (
@@ -83,13 +79,6 @@ std\+::ostream \& \hyperlink{classPerceptron_a829793c1338f5ab9c9e7e63b6c63be21}{
 
 Implements \hyperlink{classML__Algo_aa6b2dd6e3c5571b7bebe0d5f3de5483b}{M\+L\+\_\+\+Algo}.
 
-\index{Perceptron@{Perceptron}!perceptron\+\_\+train@{perceptron\+\_\+train}}
-\index{perceptron\+\_\+train@{perceptron\+\_\+train}!Perceptron@{Perceptron}}
-\subsubsection[{perceptron\+\_\+train()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Equation} $\ast$ Perceptron\+::perceptron\+\_\+train (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classPerceptron_a9424ff060e4f990038669c9629cfab58}{}\label{classPerceptron_a9424ff060e4f990038669c9629cfab58}
 \index{Perceptron@{Perceptron}!predict@{predict}}
 \index{predict@{predict}!Perceptron@{Perceptron}}
 \subsubsection[{predict(double $\ast$v, int label=0)}]{\setlength{\rightskip}{0pt plus 5cm}int Perceptron\+::predict (

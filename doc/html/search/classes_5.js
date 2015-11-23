@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kernel',['Kernel',['../classKernel.html',1,'']]]
+  ['ml_5falgo',['ML_Algo',['../classML__Algo.html',1,'']]]
 ];

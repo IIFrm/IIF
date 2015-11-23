@@ -2,23 +2,28 @@
 \label{classEquation}\index{Equation@{Equation}}
 
 
+This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperplane in math.  
+
+
+
+
 {\ttfamily \#include $<$equation.\+h$>$}
 
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classEquation_a68511fc719250ed80f86c50de9136733}{Equation} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Default constructor. Set all its elements to value 0. \end{DoxyCompactList}\item 
 \hyperlink{classEquation_a2899879892ff76b229b4f11c0ec1de78}{Equation} (double a0,...)
-\item 
+\begin{DoxyCompactList}\small\item\em Most useful constructor Set its elements to the given values, order keeps The first element is Theta0. \end{DoxyCompactList}\item 
 \hyperlink{classEquation_a81aaa52692da38c62bb684186912d91c}{Equation} (const \hyperlink{classEquation}{Equation} \&equ)
-\item 
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
 \hyperlink{classEquation}{Equation} \& \hyperlink{classEquation_a114154c932768fbe0e3587c10c44071d}{operator=} (const \hyperlink{classEquation}{Equation} \&rhs)
-\item 
+\begin{DoxyCompactList}\small\item\em Overwrite = operator. \end{DoxyCompactList}\item 
 bool \hyperlink{classEquation_a0e6c0d52385361a604b5a8cab3d42e5e}{imply} (const \hyperlink{classEquation}{Equation} \&e2)
-\item 
+\begin{DoxyCompactList}\small\item\em This imply method checks whether this equation object can imply another one or not That is to say\+: $\ast$this ==$>$ e2 ?? $\ast$this is default equation left side. \end{DoxyCompactList}\item 
 int \hyperlink{classEquation_a9ce8d3263523f807d35592797e8efd1a}{linear\+\_\+solver} (\hyperlink{classSolution}{Solution} \&sol)
-\item 
+\begin{DoxyCompactList}\small\item\em A shell on linear\+\_\+solver(equ, sol) \end{DoxyCompactList}\item 
 int \hyperlink{classEquation_afa602708c6dc480ebdb8d05a7a7d367c}{is\+\_\+similar} (const \hyperlink{classEquation}{Equation} \&e, int precision=\hyperlink{config_8h_a9c7b069fee3c8184e14a7de8e5da2dc6}{P\+R\+E\+C\+I\+S\+I\+ON})
 \item 
 int \hyperlink{classEquation_a337d5e20578e86ac30257622e03b1fe4}{roundoff} (\hyperlink{classEquation}{Equation} \&e)
@@ -27,9 +32,9 @@ int \hyperlink{classEquation_a337d5e20578e86ac30257622e03b1fe4}{roundoff} (\hype
 \begin{DoxyCompactItemize}
 \item 
 static int \hyperlink{classEquation_a061e5066dffec79ea306546da919ddbf}{linear\+\_\+solver} (const \hyperlink{classEquation}{Equation} $\ast$equ, \hyperlink{classSolution}{Solution} \&sol)
-\item 
+\begin{DoxyCompactList}\small\item\em The solver for an \hyperlink{classEquation}{Equation}. \end{DoxyCompactList}\item 
 static double \hyperlink{classEquation_ada446e2cdda9e86007ae08a4c0f6537a}{calc} (\hyperlink{classEquation}{Equation} \&equ, double $\ast$sol)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This method is used to get the position info for the given point against given equation. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Data Fields}
 \begin{DoxyCompactItemize}
 \item 
@@ -41,11 +46,11 @@ double \hyperlink{classEquation_af346bba0364be7c84ebc969061d0315f}{theta} \mbox{
 \begin{DoxyCompactItemize}
 \item 
 std\+::ostream \& \hyperlink{classEquation_a63697c4e5c47b42ace2f45f59c923108}{operator$<$$<$} (std\+::ostream \&out, const \hyperlink{classEquation}{Equation} \&equ)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Output the equation in a readable format. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-This class defines an equation we use in this project. Which is regards as a hyperplane in math. It stores all the coefficiency of the \hyperlink{classEquation}{Equation}.
+This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperplane in math. 
 
 \$\$ + \mbox{[}0\mbox{]} $\ast$ x\+\_\+0 + \mbox{[}1\mbox{]} $\ast$ x\+\_\+1 + ... + \mbox{[}V\+A\+RS\mbox{]} $\ast$ x\+\_\+\{V\+A\+RS\} $>$= 0\$\$ 
 
@@ -57,7 +62,11 @@ This class defines an equation we use in this project. Which is regards as a hyp
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{classEquation_a68511fc719250ed80f86c50de9136733}{}\label{classEquation_a68511fc719250ed80f86c50de9136733}
-Default constructor. Set all its elements to value 0 \index{Equation@{Equation}!Equation@{Equation}}
+
+
+Default constructor. Set all its elements to value 0. 
+
+\index{Equation@{Equation}!Equation@{Equation}}
 \index{Equation@{Equation}!Equation@{Equation}}
 \subsubsection[{Equation(double a0,...)}]{\setlength{\rightskip}{0pt plus 5cm}Equation\+::\+Equation (
 \begin{DoxyParamCaption}
@@ -65,14 +74,27 @@ Default constructor. Set all its elements to value 0 \index{Equation@{Equation}!
 \item[{}]{...}
 \end{DoxyParamCaption}
 )}\hypertarget{classEquation_a2899879892ff76b229b4f11c0ec1de78}{}\label{classEquation_a2899879892ff76b229b4f11c0ec1de78}
-Most useful constructor Set its elements to the given values, order keeps The first element is Theta0 \index{Equation@{Equation}!Equation@{Equation}}
+
+
+Most useful constructor Set its elements to the given values, order keeps The first element is Theta0. 
+
+\index{Equation@{Equation}!Equation@{Equation}}
 \index{Equation@{Equation}!Equation@{Equation}}
 \subsubsection[{Equation(const Equation \&equ)}]{\setlength{\rightskip}{0pt plus 5cm}Equation\+::\+Equation (
 \begin{DoxyParamCaption}
 \item[{const {\bf Equation} \&}]{equ}
 \end{DoxyParamCaption}
 )}\hypertarget{classEquation_a81aaa52692da38c62bb684186912d91c}{}\label{classEquation_a81aaa52692da38c62bb684186912d91c}
-Copy constructor. No comments. 
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em equ} & The equation to be copied. \\
+\hline
+\end{DoxyParams}
+
 
 \subsection{Member Function Documentation}
 \index{Equation@{Equation}!calc@{calc}}
@@ -83,20 +105,42 @@ Copy constructor. No comments.
 \item[{double $\ast$}]{sol}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{classEquation_ada446e2cdda9e86007ae08a4c0f6537a}{}\label{classEquation_ada446e2cdda9e86007ae08a4c0f6537a}
-This method is used to get the position info for the given point against given equation It just substitute variants with the given point. \index{Equation@{Equation}!imply@{imply}}
+
+
+This method is used to get the position info for the given point against given equation. 
+
+It just substitute variants with the given point.
+
+
+\begin{DoxyParams}{Parameters}
+{\em equ} & is the given equation, should not be N\+U\+LL \\
+\hline
+{\em sol} & is the tested solution, should not be N\+U\+LL \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The distance/value of the solution to the given equation 
+\end{DoxyReturn}
+\index{Equation@{Equation}!imply@{imply}}
 \index{imply@{imply}!Equation@{Equation}}
 \subsubsection[{imply(const Equation \&e2)}]{\setlength{\rightskip}{0pt plus 5cm}bool Equation\+::imply (
 \begin{DoxyParamCaption}
 \item[{const {\bf Equation} \&}]{e2}
 \end{DoxyParamCaption}
 )}\hypertarget{classEquation_a0e6c0d52385361a604b5a8cab3d42e5e}{}\label{classEquation_a0e6c0d52385361a604b5a8cab3d42e5e}
-imply method checks whether one equation can imply another one or not $\ast$this is default equation left side 
+
+
+This imply method checks whether this equation object can imply another one or not That is to say\+: $\ast$this ==$>$ e2 ?? $\ast$this is default equation left side. 
+
+Currently, it is based on Z3 prover. And the default precision is set to E-\/8 (2.\+8f), which is changeable if need
+
+
 \begin{DoxyParams}{Parameters}
-{\em e2} & is the equation right side we check whether $\ast$this ==$>$ e2 ?? \\
+{\em e2} & is the equation right side \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-true if yes, false if no. Currently, it is based on Z3 prover. And the default precision is set to E-\/8 (2.\+8f), which is changeable if need 
+bool true if yes, false if no. 
 \end{DoxyReturn}
 \index{Equation@{Equation}!is\+\_\+similar@{is\+\_\+similar}}
 \index{is\+\_\+similar@{is\+\_\+similar}!Equation@{Equation}}
@@ -118,7 +162,19 @@ This method is used to check whether $\ast$this equation is similar to given equ
 \item[{{\bf Solution} \&}]{sol}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classEquation_a9ce8d3263523f807d35592797e8efd1a}{}\label{classEquation_a9ce8d3263523f807d35592797e8efd1a}
-A shell on linear\+\_\+solver(equ, sol) More understandable \index{Equation@{Equation}!linear\+\_\+solver@{linear\+\_\+solver}}
+
+
+A shell on linear\+\_\+solver(equ, sol) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sol} & set by callee as a solution to given object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 0 if no error. 
+\end{DoxyReturn}
+\index{Equation@{Equation}!linear\+\_\+solver@{linear\+\_\+solver}}
 \index{linear\+\_\+solver@{linear\+\_\+solver}!Equation@{Equation}}
 \subsubsection[{linear\+\_\+solver(const Equation $\ast$equ, Solution \&sol)}]{\setlength{\rightskip}{0pt plus 5cm}static int Equation\+::linear\+\_\+solver (
 \begin{DoxyParamCaption}
@@ -126,18 +182,27 @@ A shell on linear\+\_\+solver(equ, sol) More understandable \index{Equation@{Equ
 \item[{{\bf Solution} \&}]{sol}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{classEquation_a061e5066dffec79ea306546da919ddbf}{}\label{classEquation_a061e5066dffec79ea306546da919ddbf}
-The real solver for an \hyperlink{classEquation}{Equation} This method calcuate the most informative points in space It return a points really on the margin or next to the margin 
+
+
+The solver for an \hyperlink{classEquation}{Equation}. 
+
+This method calcuate the most informative points in space It return a points really on the margin or next to the margin
+
+
 \begin{DoxyParams}{Parameters}
-{\em sol} & contains the solution, integer format \\
+{\em sol} & is set by callee as a solution to given object contains the solution, integer format \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 0 if no error. 
+\end{DoxyReturn}
 equ == N\+U\+LL means no equation is specified So we randomly generate points in given scope \mbox{[}minv, maxv\mbox{]}
 
-justify whether all the coefficients are zeros...
+$<$ a flag to justify whether all the coefficients are zeros...
 
-$<$ pick store the dimension that should not generate randomly
+If all the coefficients are zeros.... We just randomly pickup solutions to return
 
-$<$ The algo is we generate numbers randomly, unless the picked dimension The picked dimension should be calcuate based on equation and other dimensions
+$<$ pick store the dimension that should not generate randomly The algo is we generate numbers randomly, unless the picked dimension The picked dimension should be calcuate based on equation and other dimensions
 
 sometimes we can not get solution between given scope we try 10 times, if still no suitable solution, we pick the last one...\index{Equation@{Equation}!operator=@{operator=}}
 \index{operator=@{operator=}!Equation@{Equation}}
@@ -146,7 +211,18 @@ sometimes we can not get solution between given scope we try 10 times, if still 
 \item[{const {\bf Equation} \&}]{rhs}
 \end{DoxyParamCaption}
 )}\hypertarget{classEquation_a114154c932768fbe0e3587c10c44071d}{}\label{classEquation_a114154c932768fbe0e3587c10c44071d}
-Overwrite = operator This is needed when we want to delete a equation in an equation list We copy the next equation to the current one, and repeat this process until tails \index{Equation@{Equation}!roundoff@{roundoff}}
+
+
+Overwrite = operator. 
+
+This is needed when we want to delete a equation in an equation list We copy the next equation to the current one, and repeat this process until tails
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & The right-\/hand-\/side equation of assignment \\
+\hline
+\end{DoxyParams}
+\index{Equation@{Equation}!roundoff@{roundoff}}
 \index{roundoff@{roundoff}!Equation@{Equation}}
 \subsubsection[{roundoff(\+Equation \&e)}]{\setlength{\rightskip}{0pt plus 5cm}int Equation\+::roundoff (
 \begin{DoxyParamCaption}
@@ -164,7 +240,18 @@ sometimes the equation has ugly coefficiencies we want to make it elegent, which
 \item[{const {\bf Equation} \&}]{equ}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{classEquation_a63697c4e5c47b42ace2f45f59c923108}{}\label{classEquation_a63697c4e5c47b42ace2f45f59c923108}
-Output the equation in a readable format Example\+: 2\{0\} + 3\{1\} $>$= 5 
+
+
+Output the equation in a readable format. 
+
+Example\+: 2\{0\} + 3\{1\} $>$= 5
+
+
+\begin{DoxyParams}{Parameters}
+{\em equ} & the equation to be ouput \\
+\hline
+\end{DoxyParams}
+
 
 \subsection{Field Documentation}
 \index{Equation@{Equation}!theta@{theta}}

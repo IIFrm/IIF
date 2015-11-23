@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['perceptron',['Perceptron',['../classPerceptron.html',1,'']]]
+  ['qmatrix',['QMatrix',['../classQMatrix.html',1,'']]]
 ];

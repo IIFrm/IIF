@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['g',['G',['../classSolver.html#ad8ab27068f2e045591970aae1201afe9',1,'Solver']]],
-  ['g_5fbar',['G_bar',['../classSolver.html#a89e58cf39a0415c9032b8ec2f4575dcc',1,'Solver']]],
-  ['gamma',['gamma',['../structsvm__parameter.html#a91667b90506e171482b5fc619377110d',1,'svm_parameter::gamma()'],['../classKernel.html#a3a8a0a00a7d58708d6a7c5bc9c872513',1,'Kernel::gamma()']]],
-  ['gsets',['gsets',['../classIIF__learn.html#a2c2157269ef33cd2881ed48c5b38946a',1,'IIF_learn']]]
+  ['index',['index',['../classStates.html#ac7f438346962624026633389d156b5d0',1,'States']]],
+  ['info_5farch',['info_arch',['../CMakeCCompilerId_8c.html#a59647e99d304ed33b15cb284c27ed391',1,'info_arch():&#160;CMakeCCompilerId.c'],['../CMakeCXXCompilerId_8cpp.html#a59647e99d304ed33b15cb284c27ed391',1,'info_arch():&#160;CMakeCXXCompilerId.cpp']]],
+  ['info_5fcompiler',['info_compiler',['../CMakeCCompilerId_8c.html#a4b0efeb7a5d59313986b3a0390f050f6',1,'info_compiler():&#160;CMakeCCompilerId.c'],['../CMakeCXXCompilerId_8cpp.html#a4b0efeb7a5d59313986b3a0390f050f6',1,'info_compiler():&#160;CMakeCXXCompilerId.cpp']]],
+  ['info_5fplatform',['info_platform',['../CMakeCCompilerId_8c.html#a2321403dee54ee23f0c2fa849c60f7d4',1,'info_platform():&#160;CMakeCCompilerId.c'],['../CMakeCXXCompilerId_8cpp.html#a2321403dee54ee23f0c2fa849c60f7d4',1,'info_platform():&#160;CMakeCXXCompilerId.cpp']]],
+  ['init_5fexes',['init_exes',['../config_8h.html#a9cdc06717fd3c453855e0f1236107749',1,'config.h']]]
 ];

@@ -86,7 +86,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Data Fields</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#friends">Friends</a>  </div>
   <div class="headertitle">
 <div class="title">Perceptron Class Reference</div>  </div>
@@ -106,8 +105,8 @@ Inheritance diagram for Perceptron:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa2364f629d771f5e9bf4fc9f70a17cbc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPerceptron.html#aa2364f629d771f5e9bf4fc9f70a17cbc">Perceptron</a> (void(*f)(const char *)=NULL)</td></tr>
-<tr class="separator:aa2364f629d771f5e9bf4fc9f70a17cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74b79b672c7d5ac9d69c2f3f66ec09fa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPerceptron.html#a74b79b672c7d5ac9d69c2f3f66ec09fa">Perceptron</a> (void(*f)(const char *)=NULL, int max_size=10000)</td></tr>
+<tr class="separator:a74b79b672c7d5ac9d69c2f3f66ec09fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0267e40e981df9907129d858911840e7"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPerceptron.html#a0267e40e981df9907129d858911840e7">~Perceptron</a> ()</td></tr>
 <tr class="separator:a0267e40e981df9907129d858911840e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2267c5acf9b4a7bd0f47522a530d3863"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPerceptron.html#a2267c5acf9b4a7bd0f47522a530d3863">prepare_training_data</a> (<a class="el" href="classStates.html">States</a> *gsets, int &amp;pre_positive_size, int &amp;pre_negative_size)</td></tr>
@@ -143,18 +142,13 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a996b4296c5e5e4950099a8fe0b37b9df"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPerceptron.html#a996b4296c5e5e4950099a8fe0b37b9df">length</a></td></tr>
 <tr class="separator:a996b4296c5e5e4950099a8fe0b37b9df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:a9424ff060e4f990038669c9629cfab58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEquation.html">Equation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPerceptron.html#a9424ff060e4f990038669c9629cfab58">perceptron_train</a> ()</td></tr>
-<tr class="separator:a9424ff060e4f990038669c9629cfab58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:a829793c1338f5ab9c9e7e63b6c63be21"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPerceptron.html#a829793c1338f5ab9c9e7e63b6c63be21">operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="classPerceptron.html">Perceptron</a> &amp;)</td></tr>
 <tr class="separator:a829793c1338f5ab9c9e7e63b6c63be21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aa2364f629d771f5e9bf4fc9f70a17cbc"></a>
+<a class="anchor" id="a74b79b672c7d5ac9d69c2f3f66ec09fa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -162,8 +156,18 @@ Friends</h2></td></tr>
           <td class="memname">Perceptron::Perceptron </td>
           <td>(</td>
           <td class="paramtype">void(*)(const char *)&#160;</td>
-          <td class="paramname"><em>f</em> = <code>NULL</code></td><td>)</td>
+          <td class="paramname"><em>f</em> = <code>NULL</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max_size</em> = <code>10000</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -217,29 +221,6 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classML__Algo.html#aa6b2dd6e3c5571b7bebe0d5f3de5483b">ML_Algo</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a9424ff060e4f990038669c9629cfab58"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classEquation.html">Equation</a> * Perceptron::perceptron_train </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 
 </div>
 </div>

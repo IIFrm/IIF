@@ -102,6 +102,7 @@ Functions</h2></td></tr>
 <tr class="memitem:adcbd1dcd583604441ce438418b6c5310"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8cpp.html#adcbd1dcd583604441ce438418b6c5310">check_target_program</a> (int(*func)(int *))</td></tr>
 <tr class="separator:adcbd1dcd583604441ce438418b6c5310"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c492df2fe48a09f71628e7e0f0c67fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8cpp.html#a4c492df2fe48a09f71628e7e0f0c67fa">register_program</a> (int(*func)(int *), const char *func_name)</td></tr>
+<tr class="memdesc:a4c492df2fe48a09f71628e7e0f0c67fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function register the test program to the framework.  <a href="#a4c492df2fe48a09f71628e7e0f0c67fa">More...</a><br /></td></tr>
 <tr class="separator:a4c492df2fe48a09f71628e7e0f0c67fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
@@ -111,6 +112,7 @@ Variables</h2></td></tr>
 <tr class="memitem:a3b38e8ff0d716993240c2bbc5c25a59e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8cpp.html#a3b38e8ff0d716993240c2bbc5c25a59e">assert_times</a></td></tr>
 <tr class="separator:a3b38e8ff0d716993240c2bbc5c25a59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4ddce24d31048c0e720e8a881102639"><td class="memItemLeft" align="right" valign="top">int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8cpp.html#aa4ddce24d31048c0e720e8a881102639">target_program</a> )(int *) = NULL</td></tr>
+<tr class="memdesc:aa4ddce24d31048c0e720e8a881102639"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pointer to test program, DO NOT assign directly Call register_program to set its value.  <a href="#aa4ddce24d31048c0e720e8a881102639">More...</a><br /></td></tr>
 <tr class="separator:aa4ddce24d31048c0e720e8a881102639"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85cc72fa9528a0cf48804027b7e943ec"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8cpp.html#a85cc72fa9528a0cf48804027b7e943ec">minv</a> = -100</td></tr>
 <tr class="separator:a85cc72fa9528a0cf48804027b7e943ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,7 +150,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>func_name</em>&#160;</td>
+          <td class="paramname"><em>func_name</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -157,6 +159,16 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>This function register the test program to the framework. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">func</td><td>The function to be tested It involves a small validation test on the given function. </td></tr>
+    <tr><td class="paramname">fun_name</td><td>defines the function name, can be ignored, or set to NULL </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a boolean value false only when the given function is not valid. </dd></dl>
 
 </div>
 </div>
@@ -218,6 +230,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The pointer to test program, DO NOT assign directly Call register_program to set its value. </p>
 
 </div>
 </div>

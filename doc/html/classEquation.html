@@ -93,21 +93,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperplane in math.  
+ <a href="classEquation.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="equation_8h_source.html">equation.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a68511fc719250ed80f86c50de9136733"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a68511fc719250ed80f86c50de9136733">Equation</a> ()</td></tr>
+<tr class="memdesc:a68511fc719250ed80f86c50de9136733"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. Set all its elements to value 0.  <a href="#a68511fc719250ed80f86c50de9136733">More...</a><br /></td></tr>
 <tr class="separator:a68511fc719250ed80f86c50de9136733"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2899879892ff76b229b4f11c0ec1de78"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a2899879892ff76b229b4f11c0ec1de78">Equation</a> (double a0,...)</td></tr>
+<tr class="memdesc:a2899879892ff76b229b4f11c0ec1de78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Most useful constructor Set its elements to the given values, order keeps The first element is Theta0.  <a href="#a2899879892ff76b229b4f11c0ec1de78">More...</a><br /></td></tr>
 <tr class="separator:a2899879892ff76b229b4f11c0ec1de78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81aaa52692da38c62bb684186912d91c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a81aaa52692da38c62bb684186912d91c">Equation</a> (const <a class="el" href="classEquation.html">Equation</a> &amp;equ)</td></tr>
+<tr class="memdesc:a81aaa52692da38c62bb684186912d91c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#a81aaa52692da38c62bb684186912d91c">More...</a><br /></td></tr>
 <tr class="separator:a81aaa52692da38c62bb684186912d91c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a114154c932768fbe0e3587c10c44071d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEquation.html">Equation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a114154c932768fbe0e3587c10c44071d">operator=</a> (const <a class="el" href="classEquation.html">Equation</a> &amp;rhs)</td></tr>
+<tr class="memdesc:a114154c932768fbe0e3587c10c44071d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overwrite = operator.  <a href="#a114154c932768fbe0e3587c10c44071d">More...</a><br /></td></tr>
 <tr class="separator:a114154c932768fbe0e3587c10c44071d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e6c0d52385361a604b5a8cab3d42e5e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a0e6c0d52385361a604b5a8cab3d42e5e">imply</a> (const <a class="el" href="classEquation.html">Equation</a> &amp;e2)</td></tr>
+<tr class="memdesc:a0e6c0d52385361a604b5a8cab3d42e5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This imply method checks whether this equation object can imply another one or not That is to say: *this ==&gt; e2 ?? *this is default equation left side.  <a href="#a0e6c0d52385361a604b5a8cab3d42e5e">More...</a><br /></td></tr>
 <tr class="separator:a0e6c0d52385361a604b5a8cab3d42e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ce8d3263523f807d35592797e8efd1a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a9ce8d3263523f807d35592797e8efd1a">linear_solver</a> (<a class="el" href="classSolution.html">Solution</a> &amp;sol)</td></tr>
+<tr class="memdesc:a9ce8d3263523f807d35592797e8efd1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A shell on linear_solver(equ, sol)  <a href="#a9ce8d3263523f807d35592797e8efd1a">More...</a><br /></td></tr>
 <tr class="separator:a9ce8d3263523f807d35592797e8efd1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa602708c6dc480ebdb8d05a7a7d367c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#afa602708c6dc480ebdb8d05a7a7d367c">is_similar</a> (const <a class="el" href="classEquation.html">Equation</a> &amp;e, int precision=<a class="el" href="config_8h.html#a9c7b069fee3c8184e14a7de8e5da2dc6">PRECISION</a>)</td></tr>
 <tr class="separator:afa602708c6dc480ebdb8d05a7a7d367c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -117,8 +126,10 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a061e5066dffec79ea306546da919ddbf"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a061e5066dffec79ea306546da919ddbf">linear_solver</a> (const <a class="el" href="classEquation.html">Equation</a> *equ, <a class="el" href="classSolution.html">Solution</a> &amp;sol)</td></tr>
+<tr class="memdesc:a061e5066dffec79ea306546da919ddbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The solver for an <a class="el" href="classEquation.html" title="This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperpla...">Equation</a>.  <a href="#a061e5066dffec79ea306546da919ddbf">More...</a><br /></td></tr>
 <tr class="separator:a061e5066dffec79ea306546da919ddbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada446e2cdda9e86007ae08a4c0f6537a"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#ada446e2cdda9e86007ae08a4c0f6537a">calc</a> (<a class="el" href="classEquation.html">Equation</a> &amp;equ, double *sol)</td></tr>
+<tr class="memdesc:ada446e2cdda9e86007ae08a4c0f6537a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is used to get the position info for the given point against given equation.  <a href="#ada446e2cdda9e86007ae08a4c0f6537a">More...</a><br /></td></tr>
 <tr class="separator:ada446e2cdda9e86007ae08a4c0f6537a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -131,10 +142,11 @@ Data Fields</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:a63697c4e5c47b42ace2f45f59c923108"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a63697c4e5c47b42ace2f45f59c923108">operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="classEquation.html">Equation</a> &amp;equ)</td></tr>
+<tr class="memdesc:a63697c4e5c47b42ace2f45f59c923108"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output the equation in a readable format.  <a href="#a63697c4e5c47b42ace2f45f59c923108">More...</a><br /></td></tr>
 <tr class="separator:a63697c4e5c47b42ace2f45f59c923108"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This class defines an equation we use in this project. Which is regards as a hyperplane in math. It stores all the coefficiency of the <a class="el" href="classEquation.html">Equation</a>.</p>
+<div class="textblock"><p>This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperplane in math. </p>
 <p>$$ + [0] * x_0 + [1] * x_1 + ... + [VARS] * x_{VARS} &gt;= 0$$ </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a68511fc719250ed80f86c50de9136733"></a>
@@ -149,7 +161,8 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Default constructor. Set all its elements to value 0 </p>
+
+<p>Default constructor. Set all its elements to value 0. </p>
 
 </div>
 </div>
@@ -176,7 +189,8 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Most useful constructor Set its elements to the given values, order keeps The first element is Theta0 </p>
+
+<p>Most useful constructor Set its elements to the given values, order keeps The first element is Theta0. </p>
 
 </div>
 </div>
@@ -193,7 +207,14 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Copy constructor. No comments. </p>
+
+<p>Copy constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">equ</td><td>The equation to be copied. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -229,7 +250,17 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This method is used to get the position info for the given point against given equation It just substitute variants with the given point. </p>
+
+<p>This method is used to get the position info for the given point against given equation. </p>
+<p>It just substitute variants with the given point.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">equ</td><td>is the given equation, should not be NULL </td></tr>
+    <tr><td class="paramname">sol</td><td>is the tested solution, should not be NULL </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The distance/value of the solution to the given equation </dd></dl>
 
 </div>
 </div>
@@ -246,13 +277,16 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>imply method checks whether one equation can imply another one or not *this is default equation left side </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>This imply method checks whether this equation object can imply another one or not That is to say: *this ==&gt; e2 ?? *this is default equation left side. </p>
+<p>Currently, it is based on Z3 prover. And the default precision is set to E-8 (2.8f), which is changeable if need</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">e2</td><td>is the equation right side we check whether *this ==&gt; e2 ?? </td></tr>
+    <tr><td class="paramname">e2</td><td>is the equation right side </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if yes, false if no. Currently, it is based on Z3 prover. And the default precision is set to E-8 (2.8f), which is changeable if need </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>bool true if yes, false if no. </dd></dl>
 
 </div>
 </div>
@@ -309,7 +343,15 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>A shell on linear_solver(equ, sol) More understandable </p>
+
+<p>A shell on linear_solver(equ, sol) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sol</td><td>set by callee as a solution to given object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int 0 if no error. </dd></dl>
 
 </div>
 </div>
@@ -344,16 +386,20 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The real solver for an <a class="el" href="classEquation.html">Equation</a> This method calcuate the most informative points in space It return a points really on the margin or next to the margin </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>The solver for an <a class="el" href="classEquation.html" title="This class defines an equation by storeing all its coefficiencies. An equation is regarded a hyperpla...">Equation</a>. </p>
+<p>This method calcuate the most informative points in space It return a points really on the margin or next to the margin</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sol</td><td>contains the solution, integer format </td></tr>
+    <tr><td class="paramname">sol</td><td>is set by callee as a solution to given object contains the solution, integer format </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>int 0 if no error. </dd></dl>
 <p>equ == NULL means no equation is specified So we randomly generate points in given scope [minv, maxv]</p>
-<p>justify whether all the coefficients are zeros...</p>
-<p>&lt; pick store the dimension that should not generate randomly</p>
-<p>&lt; The algo is we generate numbers randomly, unless the picked dimension The picked dimension should be calcuate based on equation and other dimensions</p>
+<p>&lt; a flag to justify whether all the coefficients are zeros...</p>
+<p>If all the coefficients are zeros.... We just randomly pickup solutions to return</p>
+<p>&lt; pick store the dimension that should not generate randomly The algo is we generate numbers randomly, unless the picked dimension The picked dimension should be calcuate based on equation and other dimensions</p>
 <p>sometimes we can not get solution between given scope we try 10 times, if still no suitable solution, we pick the last one...</p>
 
 </div>
@@ -371,7 +417,15 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Overwrite = operator This is needed when we want to delete a equation in an equation list We copy the next equation to the current one, and repeat this process until tails </p>
+
+<p>Overwrite = operator. </p>
+<p>This is needed when we want to delete a equation in an equation list We copy the next equation to the current one, and repeat this process until tails</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>The right-hand-side equation of assignment </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -424,7 +478,15 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Output the equation in a readable format Example: 2{0} + 3{1} &gt;= 5 </p>
+
+<p>Output the equation in a readable format. </p>
+<p>Example: 2{0} + 3{1} &gt;= 5</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">equ</td><td>the equation to be ouput </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

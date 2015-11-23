@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['select_5fworking_5fset',['select_working_set',['../classSolver.html#a95fb4eaf33362558e1fc768f4db019d3',1,'Solver::select_working_set()'],['../classSolver__NU.html#a39577d8d09b1d04500c41a999dfd21e9',1,'Solver_NU::select_working_set()']]],
+  ['select_5fworking_5fset',['select_working_set',['../classSolver.html#a95fb4eaf33362558e1fc768f4db019d3',1,'Solver']]],
   ['set_5fconsole_5fcolor',['set_console_color',['../color_8h.html#a0665e13d18d97e69df7b6adf4ec3b2ad',1,'color.h']]],
   ['sigmoid_5fpredict',['sigmoid_predict',['../svm__core_8cpp.html#a681fcc7268133ceb472773fd30b97839',1,'svm_core.cpp']]],
   ['sigmoid_5ftrain',['sigmoid_train',['../svm__core_8cpp.html#a1da8eb99e9a14699eb36a30bc8f2bedb',1,'svm_core.cpp']]],

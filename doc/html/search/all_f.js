@@ -11,7 +11,7 @@ var searchData=
   ['max_5fiter',['max_iter',['../config_8h.html#a7a2c49f1d0b87e326420efb7e71cb89f',1,'config.h']]],
   ['max_5fiteration',['max_iteration',['../classIIF__svm__i__learn.html#a9beafc489be7aa975aef083ffb1cb270',1,'IIF_svm_i_learn::max_iteration()'],['../classIIF__svm__learn.html#a04b3b7f73edd164462d4923a74189670',1,'IIF_svm_learn::max_iteration()']]],
   ['max_5fline_5flen',['max_line_len',['../svm__core_8cpp.html#acad24c15bee67d2026f56bc94a1188c7',1,'svm_core.cpp']]],
-  ['max_5fsize',['max_size',['../classStates.html#a97d0d50850ab25e50914982341bba129',1,'States::max_size()'],['../classSVM.html#a0d910cf52a7891bec9d3f668cc819210',1,'SVM::max_size()']]],
+  ['max_5fsize',['max_size',['../classSVM.html#a0d910cf52a7891bec9d3f668cc819210',1,'SVM']]],
   ['maxv',['maxv',['../equation_8h.html#ab928cec994c1d232e72009cfa90ac963',1,'maxv():&#160;config.cpp'],['../iif_8h.html#ab928cec994c1d232e72009cfa90ac963',1,'maxv():&#160;config.cpp'],['../config_8cpp.html#ab928cec994c1d232e72009cfa90ac963',1,'maxv():&#160;config.cpp']]],
   ['min',['min',['../svm__core_8cpp.html#a348440c5435269ac7c60d2e2d8916f48',1,'svm_core.cpp']]],
   ['minv',['minv',['../equation_8h.html#a85cc72fa9528a0cf48804027b7e943ec',1,'minv():&#160;config.cpp'],['../iif_8h.html#a85cc72fa9528a0cf48804027b7e943ec',1,'minv():&#160;config.cpp'],['../config_8cpp.html#a85cc72fa9528a0cf48804027b7e943ec',1,'minv():&#160;config.cpp']]],

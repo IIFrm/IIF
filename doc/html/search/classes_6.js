@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ml_5falgo',['ML_Algo',['../classML__Algo.html',1,'']]]
+  ['one_5fclass_5fq',['ONE_CLASS_Q',['../classONE__CLASS__Q.html',1,'']]]
 ];

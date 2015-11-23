@@ -1,6 +1,12 @@
 var searchData=
 [
-  ['q',['Q',['../classSolver.html#a2d3461718f0570bdc47f5dfb31d61e0a',1,'Solver']]],
-  ['q_5fitems',['q_items',['../config_8h.html#a0e6919c94370d97d8d3644d68cc5d5ec',1,'config.h']]],
-  ['qd',['QD',['../classSolver.html#a7c7b7b1207983543855165e8eb249f2a',1,'Solver::QD()'],['../classSVC__Q.html#a635d129ea1d840296db2e8e1d4ada404',1,'SVC_Q::QD()'],['../classONE__CLASS__Q.html#a12994904e59c98ac7f7ec964ea23b7b4',1,'ONE_CLASS_Q::QD()'],['../classSVR__Q.html#aaa4a8b37dbc15610de7fe46df8874e25',1,'SVR_Q::QD()']]]
+  ['shrinking',['shrinking',['../structsvm__parameter.html#afdbccdf6a24be650d75804b783edc347',1,'svm_parameter']]],
+  ['sv',['SV',['../structsvm__model.html#a96da6fe173a7150dae95bf55d5539e45',1,'svm_model']]],
+  ['sv_5fcoef',['sv_coef',['../structsvm__model.html#a978084d722ac886100ffcc35fc931143',1,'svm_model']]],
+  ['sv_5findices',['sv_indices',['../structsvm__model.html#add7f649bf78428c38a282ed8776fa433',1,'svm_model']]],
+  ['svm',['svm',['../classIIF__svm__learn.html#a0b23f4e2e73ecbdd3755fde75f3c3bc9',1,'IIF_svm_learn']]],
+  ['svm_5fi',['svm_i',['../classIIF__svm__i__learn.html#ac9a29f27106b99d511d8ab8dee18831d',1,'IIF_svm_i_learn']]],
+  ['svm_5fprint_5fstring',['svm_print_string',['../svm__core_8cpp.html#a2a99d4c0ccec87e15ed9ebe19892712c',1,'svm_core.cpp']]],
+  ['svm_5ftype',['svm_type',['../structsvm__parameter.html#a3afb37272180a903df05f7b649b338f4',1,'svm_parameter']]],
+  ['svm_5ftype_5ftable',['svm_type_table',['../svm__core_8cpp.html#a3be459e452f7ebeaae824e941e766770',1,'svm_core.cpp']]]
 ];

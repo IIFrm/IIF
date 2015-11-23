@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['perceptron',['Perceptron',['../classPerceptron.html#aa2364f629d771f5e9bf4fc9f70a17cbc',1,'Perceptron']]],
-  ['perceptron_5ftrain',['perceptron_train',['../classPerceptron.html#a9424ff060e4f990038669c9629cfab58',1,'Perceptron']]],
+  ['perceptron',['Perceptron',['../classPerceptron.html#a74b79b672c7d5ac9d69c2f3f66ec09fa',1,'Perceptron']]],
   ['powi',['powi',['../svm__core_8cpp.html#a07a43a87f274795074408da4b34d46c4',1,'svm_core.cpp']]],
   ['predict',['predict',['../classML__Algo.html#a8c2a89155672a87131161c5dcdfa1c5a',1,'ML_Algo::predict()'],['../classPerceptron.html#a414600a1f189c4f44c858b87048ae655',1,'Perceptron::predict()'],['../classSVM.html#a972215d3c749ba550c85763c8871567f',1,'SVM::predict()'],['../classSVM__I.html#abe0a76aa6d31d18c2ee66002c35c813f',1,'SVM_I::predict()']]],
   ['predict_5fon_5ftraining_5fset',['predict_on_training_set',['../classML__Algo.html#a39dd640e7c910becf611b9265843ac77',1,'ML_Algo::predict_on_training_set()'],['../classPerceptron.html#ac9214d2cda4eeb9a06f6562bcb5df8ca',1,'Perceptron::predict_on_training_set()'],['../classSVM.html#af208fc653a382591f20c0fcf7a186362',1,'SVM::predict_on_training_set()'],['../classSVM__I.html#a643c2a6e58f8e70ab276ade9b1873bf6',1,'SVM_I::predict_on_training_set()']]],

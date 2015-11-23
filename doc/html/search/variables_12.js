@@ -1,15 +1,7 @@
 var searchData=
 [
-  ['shrinking',['shrinking',['../structsvm__parameter.html#afdbccdf6a24be650d75804b783edc347',1,'svm_parameter']]],
-  ['si',['si',['../classSolver__NU.html#ab4f51d421dfaec61482401ff5ef0d86c',1,'Solver_NU']]],
-  ['sign',['sign',['../classSVR__Q.html#a0255ad0a00ef589c69adc19a06527dfc',1,'SVR_Q']]],
-  ['size',['size',['../classCache.html#af50a89d0734a160cf812384df64599f9',1,'Cache']]],
-  ['sv',['SV',['../structsvm__model.html#a96da6fe173a7150dae95bf55d5539e45',1,'svm_model']]],
-  ['sv_5fcoef',['sv_coef',['../structsvm__model.html#a978084d722ac886100ffcc35fc931143',1,'svm_model']]],
-  ['sv_5findices',['sv_indices',['../structsvm__model.html#add7f649bf78428c38a282ed8776fa433',1,'svm_model']]],
-  ['svm',['svm',['../classIIF__svm__learn.html#a0b23f4e2e73ecbdd3755fde75f3c3bc9',1,'IIF_svm_learn']]],
-  ['svm_5fi',['svm_i',['../classIIF__svm__i__learn.html#ac9a29f27106b99d511d8ab8dee18831d',1,'IIF_svm_i_learn']]],
-  ['svm_5fprint_5fstring',['svm_print_string',['../svm__core_8cpp.html#a2a99d4c0ccec87e15ed9ebe19892712c',1,'svm_core.cpp']]],
-  ['svm_5ftype',['svm_type',['../structsvm__parameter.html#a3afb37272180a903df05f7b649b338f4',1,'svm_parameter']]],
-  ['svm_5ftype_5ftable',['svm_type_table',['../svm__core_8cpp.html#a3be459e452f7ebeaae824e941e766770',1,'svm_core.cpp']]]
+  ['unshrink',['unshrink',['../classSolver.html#a62ded1c184aeb28f8dee04eb4a10530a',1,'Solver']]],
+  ['upbound',['UPBOUND',['../equation_8cpp.html#a8f34fd4d81c27a57e768cc7d1d50835b',1,'equation.cpp']]],
+  ['upper_5fbound_5fn',['upper_bound_n',['../structSolver_1_1SolutionInfo.html#a07ab9dc3265855f483922988bdaaf986',1,'Solver::SolutionInfo']]],
+  ['upper_5fbound_5fp',['upper_bound_p',['../structSolver_1_1SolutionInfo.html#a94c4cb7f402752326cc975ec57a8688f',1,'Solver::SolutionInfo']]]
 ];
