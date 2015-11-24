@@ -62,17 +62,50 @@ int func4()
 	int S1 = 0;
 
 
-	assume(P1);		// Precondition: P1		P1 => Inv
-
-	while (B) {		// Loop Condition: B	(Inv /\ B) ~~Si~~> Inv
-		S1;			// Loop Body: Si...			 
+	assume(P1);		// Precondition:   P1		P1 => Inv
+	while (B) {		// Loop Condition: B		(Inv /\ B) ~~Si~~> Inv
+		S1;			// Loop Body: 	   Si...			 
 		S2;
 		...	
 	}			
-	assert(z > 0);	// Postcondition: P2	(Inv /\ !B) => P2
+	assert(z > 0);	// Postcondition:  P2		(Inv /\ !B) => P2
 
 
 }
+
+
+int func4()
+{
+
+
+	//x, y : int
+	assume(x + y > 0);
+	while (x >= 0) {
+		x = x - 1;
+		y = y + 1;
+	}
+	assert(y > 0);
+
+
+}
+
+int func5()
+{
+
+
+	//x, y : int
+	assume_print(x + y > 0);
+	while (x >= 0) {
+		print(x, y);
+		x = x - 1;
+		y = y + 1;
+	}
+	print(x, y);
+	assert_print(y > 0);
+
+
+}
+
 int func10()
 {
 
