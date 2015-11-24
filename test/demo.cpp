@@ -94,6 +94,7 @@ int func5()
 
 
 	//x, y : int
+	x = rand(), y = rand();
 	assume_print(x + y > 0);
 	while (x >= 0) {
 		print(x, y);
