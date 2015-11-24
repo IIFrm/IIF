@@ -10,13 +10,14 @@
 
 //#include "header.h"
 #include "config.h"
-
+#include "z3++.h"
 #include <cmath>
 #include <cfloat>
 #include <stdarg.h>
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
+using namespace z3;
 
 
 extern int maxv;
@@ -100,6 +101,17 @@ class Equation{
 		 */
 		friend std::ostream& operator << (std::ostream& out, const Equation& equ);
 
+		/** @brief This method converts *this equation object to z3 expr object.
+		 *
+		 *  Introducing this method help to simplify imlementation of imply method.
+		 *  
+		 *  @param name contains each variants names. 
+		 *				If NULL, the name would be "x_1", "x_2" form.
+		 *	@param c is z3::context, defines which context the return expr will be used.
+		 *	@return z3::expr
+		 */
+		z3::expr to_z3expr(char** name, z3::context& c) const;
+
 		/** @brief This imply method checks whether this equation object can imply another one or not
 		 *		   That is to say:  *this ==> e2 ??
 		 *		   *this is default equation left side
@@ -111,6 +123,7 @@ class Equation{
 		 *  @return bool true if yes, false if no.
 		 */
 		bool imply(const Equation& e2);
+		static bool multi_imply(const Equation* e1, int e1_num, const Equation& e2);
 
 		/** @brief A shell on linear_solver(equ, sol)
 		 * 

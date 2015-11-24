@@ -6,11 +6,11 @@
 //#include <cstring>
 #include <iostream>
 
-#ifdef linux
+//#ifdef linux
 //#include <stp/c_interface.h>
 #include "z3++.h"
 using namespace z3;
-#endif
+//#endif
 
 const double UPBOUND = pow(0.1, PRECISION);
 inline double _roundoff(double x)
@@ -88,8 +88,55 @@ std::ostream& operator << (std::ostream& out, const Equation& equ) {
 	out << std::setprecision(16) << equ.theta[0] << "{0}";
 	for (int j = 1; j < VARS; j++)
 		out << "  +  " << equ.theta[j] << "{" <<j << "}";
-	out << " >= " << -1 * equ.theta0;
+	if (equ.theta0 == 0)
+		out << " >= 0";
+	else 
+		out << " >= " << -1 * equ.theta0;
 	return out;
+}
+
+
+z3::expr Equation::to_z3expr(char** name , z3::context& c) const
+{
+	char** pname = name;
+	if (pname == NULL) {
+		pname = new char*[VARS];
+		for (int i = 0; i < VARS; i++) {
+			pname[i] = new char[8];
+			sprintf(pname[i], "x%d", i);
+		}
+	}
+
+	const Equation& e = *this;
+	std::vector<z3::expr> x;
+	std::vector<z3::expr> theta;
+
+	char real[65];
+	snprintf(real, 64, "%2.8f", e.theta0);
+	z3::expr expr = c.real_val(real);
+
+	for (int i = 0; i < VARS; i++) {
+		z3::expr tmp = c.real_const(pname[i]);
+		x.push_back(tmp);
+		
+		snprintf(real, 64, "%2.8f", e.theta[i]);
+		tmp = c.real_val(real);
+		theta.push_back(tmp);
+
+		expr = expr + theta[i] * x[i];
+	}
+
+	//std::cout << "expr1: " << expr1 << std::endl;
+	//std::cout << "expr2: " << expr2 << std::endl;
+
+	z3::expr hypo = expr >= 0;
+	if (name == NULL) {
+		for (int i = 0; i < VARS; i++) {
+			delete []pname[i];
+		}
+		delete []pname;
+	}
+	return hypo;
 }
 
 
@@ -158,7 +205,6 @@ int Equation::imply(const Equation& e2) {
 
 
 bool Equation::imply(const Equation& e2) {
-#ifdef linux
 #ifdef __PRT_QUERY
 	std::cout << "-------------Imply solving-------------\n";
 #endif
@@ -167,44 +213,18 @@ bool Equation::imply(const Equation& e2) {
 	cfg.set("auto_config", true);
 	z3::context c(cfg);
 	
-	std::vector<z3::expr> x;
-	std::vector<z3::expr> theta1;
-	std::vector<z3::expr> theta2;
-	char name[8];
-	char real[65];
-	for (int i = 0; i < VARS; i++) {
-		//sprintf(name, "%c", 'a' + i);
-		sprintf(name, "x%d", i);
-		z3::expr tmp = c.real_const(name);
-		x.push_back(tmp);
-		
-		snprintf(real, 64, "%2.8f", e1.theta[i]);
-		tmp = c.real_val(real);
-		theta1.push_back(tmp);
+	/*char** name = new char* [1];
+	name[0] = "asdfg";
+	z3::expr hypo = e1.to_z3expr(name, c);
+	z3::expr conc = e2.to_z3expr(name, c);
+	*/
+	z3::expr hypo = e1.to_z3expr(NULL, c);
+	z3::expr conc = e2.to_z3expr(NULL, c);
+#ifdef __PRT_QUERY
+	std::cout << "hypo: " << hypo << std::endl;
+	std::cout << "conc: " << conc << std::endl;
+#endif
 
-		snprintf(real, 64, "%2.8f", e2.theta[i]);
-		tmp = c.real_val(real);
-		theta2.push_back(tmp);
-	}
-
-	snprintf(real, 64, "%2.8f", e1.theta0);
-	z3::expr expr1 = c.real_val(real);
-	snprintf(real, 64, "%2.8f", e2.theta0);
-	z3::expr expr2 = c.real_val(real);
-	//std::cout << "expr1: " << expr1 << std::endl;
-	//std::cout << "expr2: " << expr2 << std::endl;
-
-	for (int i = 0; i < VARS; i++) {
-		expr1 = expr1 + theta1[i] * x[i];
-		expr2 = expr2 + theta2[i] * x[i];
-	}
-
-	z3::expr hypo = expr1 >= 0;
-	z3::expr conc = expr2 >= 0;
-	//std::cout << "hypo: " << hypo << std::endl;
-	//std::cout << "conc: " << conc << std::endl;
-	
-	//z3::expr final_expr = z3::implies((z3::expr)expr1, (z3::expr)expr2);
 	z3::expr query = implies(hypo, conc);
 #ifdef __PRT_QUERY
 	std::cout << "Query : " << query << std::endl; 
@@ -214,6 +234,43 @@ bool Equation::imply(const Equation& e2) {
 	z3::solver s(c);
 	s.add(!query);
 	z3::check_result ret = s.check();
+	if (ret == unsat) {
+		return true;
+	}
+	return false;
+}
+
+bool Equation::multi_imply(const Equation* e1, int e1_num, const Equation& e2) {
+#ifdef __PRT_QUERY
+	std::cout << "-------------Multi-Imply solving-------------\n";
+#endif
+
+	z3::config cfg;
+	cfg.set("auto_config", true);
+	z3::context c(cfg);
+	
+
+	z3::expr hypo = e1[0].to_z3expr(NULL, c);
+	for (int i = 1; i < e1_num; i++) {
+		hypo = hypo && e1[i].to_z3expr(NULL, c);;
+	}
+	
+	z3::expr conc = e2.to_z3expr(NULL, c);
+
+	//std::cout << "hypo: " << hypo << std::endl;
+	//std::cout << "conc: " << conc << std::endl;
+	
+	z3::expr query = implies(hypo, conc);
+#ifdef __PRT_QUERY
+	std::cout << "Query : " << query << std::endl; 
+	std::cout << "Answer: ";
+#endif
+	
+	z3::solver s(c);
+	s.add(!query);
+	z3::check_result ret = s.check();
+
+
 	if (ret == unsat) {
 #ifdef __PRT_QUERY
 		std::cout << "True" << std::endl;
@@ -225,10 +282,7 @@ bool Equation::imply(const Equation& e2) {
 #endif
 		return false;
 	}
-#endif
-	return false;
 }
-
 
 int Equation::is_similar(const Equation& e2, int precision) {
 	Equation& e1 = *this;
