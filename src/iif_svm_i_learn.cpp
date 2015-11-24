@@ -203,7 +203,7 @@ int IIF_svm_i_learn::learn()
 		for (int i = 1; i < equation_num; i++) {
 			std::cout << " \n\t |  /\\ " << equs[i];
 		}
-		std::cout << " \n\t ------------------------------------------------------";
+		std::cout << " \n\t ------------------------------------------------------\n";
 		unset_console_color(std::cout);
 		delete[]equs;
 	}

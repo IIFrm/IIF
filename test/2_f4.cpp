@@ -26,9 +26,11 @@ int main(int argc, char** argv)
 		return -1;
 	} 
 
+#ifdef linux
 	if (signal(SIGALRM, sig_alrm) == SIG_ERR)
 		exit(-1);
 	alarm(60);
+#endif
 	std::cout << "TRY SVM method ...\n";
 	IIF_svm_learn isl(gsets, target_program);
 	if (isl.learn() == 0) {  

@@ -2,7 +2,6 @@
 #include "iif.h"
 #include "instrumentation.h"
 #include <iostream>
-#include <unistd.h>
 #include <stdlib.h>
 
 extern int assume_times, assert_times;
