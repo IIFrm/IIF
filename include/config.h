@@ -51,7 +51,7 @@ const int max_items = 100000;
 /** @brief defines max number of states contains in one executionn. 
  *		   Better to be a number larger than 128 
  */
-const int max_states_in_one_trace = 1024;
+const int max_states_in_one_trace = 10240;
 
 /** @brief defines the number of tests runs initially. Should be a positive integer.
  */
