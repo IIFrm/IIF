@@ -3,9 +3,9 @@ set(VARS 1)
 
 project(InvariantInferenceFramework)
 set(PRECISION 3)
+
 add_definitions (-D__PRT)
-#add_definitions (-D__PRT_QUERY)
-option(PRINT_ALL "Print All Message" OFF)
+option(PRINT_ALL "Print All Message" ON)
 if(PRINT_ALL)
 	add_definitions (-D__PRT_SVM_I)
 	add_definitions (-D__PRT_QUERY)
