@@ -1,10 +1,12 @@
 var searchData=
 [
-  ['f1',['f1',['../2__f1_8cpp.html#ae250020c4457fb5d23063112bfb42eb0',1,'2_f1.cpp']]],
-  ['f2',['f2',['../2__f2_8cpp.html#a0b8f23322d10367f11c5dbe76f293e5a',1,'2_f2.cpp']]],
-  ['f3',['f3',['../3__f3_8cpp.html#ae7c36b221cea9b4666ff613a667b3a90',1,'3_f3.cpp']]],
-  ['free',['FREE',['../classSolver.html#a86c1a7637bc803ef8496c7dbf7f00b03a904f6af2170b6f900fbd3d46cd055c76',1,'Solver']]],
-  ['free_5fsv',['free_sv',['../structsvm__model.html#a2ae57ce1fa43497d151aff26c21a13a1',1,'svm_model']]],
-  ['fscanf',['FSCANF',['../svm__core_8cpp.html#aeba4ad0e39f319d353d955b419eebe31',1,'svm_core.cpp']]],
-  ['func',['func',['../classIIF__learn.html#a19119795c6b5360d2e8b3ed2073642d6',1,'IIF_learn']]]
+  ['eps',['eps',['../structsvm__parameter.html#a1feab5a4e0d5842a20e544f3f944f841',1,'svm_parameter::eps()'],['../classSolver.html#a718333cc2c1d40abf9c292a788cba1e5',1,'Solver::eps()']]],
+  ['epsilon_5fsvr',['EPSILON_SVR',['../svm__core_8h.html#a06fc87d81c62e9abb8790b6e5713c55bae8edabc208c6076619bdfb064b68815a',1,'svm_core.h']]],
+  ['equ_5fnum',['equ_num',['../classSVM__I.html#ab674468eec42010761332da3f9b2f69c',1,'SVM_I']]],
+  ['equation',['Equation',['../classEquation.html',1,'Equation'],['../classEquation.html#a68511fc719250ed80f86c50de9136733',1,'Equation::Equation()'],['../classEquation.html#a2899879892ff76b229b4f11c0ec1de78',1,'Equation::Equation(double a0,...)'],['../classEquation.html#a81aaa52692da38c62bb684186912d91c',1,'Equation::Equation(const Equation &amp;equ)']]],
+  ['equation_2ecpp',['equation.cpp',['../equation_8cpp.html',1,'']]],
+  ['equation_2eh',['equation.h',['../equation_8h.html',1,'']]],
+  ['equations',['equations',['../classSVM__I.html#af905b6378094007502fa5d81f018a11b',1,'SVM_I']]],
+  ['ex1',['ex1',['../2__ex1_8cpp.html#ae6912e02a8a0e8ba6d790d0cd57f121b',1,'2_ex1.cpp']]],
+  ['ex1_2ecpp',['ex1.cpp',['../ex1_8cpp.html',1,'']]]
 ];

@@ -8,7 +8,7 @@ Provide most configuration information for the whole project.
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \hyperlink{config_8h_a1d6565a8ececd15de44965eec4790919}{V\+A\+RS}~2
+\#define \hyperlink{config_8h_a1d6565a8ececd15de44965eec4790919}{V\+A\+RS}~1
 \begin{DoxyCompactList}\small\item\em defines the number of paramenters by a given loop,\textbackslash{} This also is the number of parameters we need to record for processing. This should be set in /\+C\+Make\+Lists.txt file If it is not set correctly, you may come across a runtime error \end{DoxyCompactList}\item 
 \#define \hyperlink{config_8h_a9c7b069fee3c8184e14a7de8e5da2dc6}{P\+R\+E\+C\+I\+S\+I\+ON}~3
 \begin{DoxyCompactList}\small\item\em is a integer, which defines precision as pow(10, -\/\+P\+R\+E\+C\+I\+S\+I\+ON) This should be set in /\+C\+Make\+Lists.txt file You\textquotesingle{}d better set this value in a scope \mbox{[}1, 12\mbox{]} \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -16,7 +16,9 @@ Provide most configuration information for the whole project.
 \begin{DoxyCompactItemize}
 \item 
 bool \hyperlink{config_8h_a8c5bae50d678b664c26f20fe2714b643}{register\+\_\+program} (int($\ast$func)(int $\ast$), const char $\ast$func\+\_\+name=0)
-\begin{DoxyCompactList}\small\item\em This function register the test program to the framework. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This function register the test program to the framework. \end{DoxyCompactList}\item 
+void \hyperlink{config_8h_af6266d6a86d10f14a6d2c1d395150a6a}{sig\+\_\+alrm} (int signo)
+\begin{DoxyCompactList}\small\item\em defines the timeout signal handler \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
@@ -56,7 +58,7 @@ is a integer, which defines precision as pow(10, -\/\+P\+R\+E\+C\+I\+S\+I\+ON) T
 
 \index{config.\+h@{config.\+h}!V\+A\+RS@{V\+A\+RS}}
 \index{V\+A\+RS@{V\+A\+RS}!config.\+h@{config.\+h}}
-\subsubsection[{V\+A\+RS}]{\setlength{\rightskip}{0pt plus 5cm}\#define V\+A\+RS~2}\hypertarget{config_8h_a1d6565a8ececd15de44965eec4790919}{}\label{config_8h_a1d6565a8ececd15de44965eec4790919}
+\subsubsection[{V\+A\+RS}]{\setlength{\rightskip}{0pt plus 5cm}\#define V\+A\+RS~1}\hypertarget{config_8h_a1d6565a8ececd15de44965eec4790919}{}\label{config_8h_a1d6565a8ececd15de44965eec4790919}
 
 
 defines the number of paramenters by a given loop,\textbackslash{} This also is the number of parameters we need to record for processing. This should be set in /\+C\+Make\+Lists.txt file If it is not set correctly, you may come across a runtime error 
@@ -86,6 +88,17 @@ This function register the test program to the framework.
 \begin{DoxyReturn}{Returns}
 a boolean value false only when the given function is not valid. 
 \end{DoxyReturn}
+\index{config.\+h@{config.\+h}!sig\+\_\+alrm@{sig\+\_\+alrm}}
+\index{sig\+\_\+alrm@{sig\+\_\+alrm}!config.\+h@{config.\+h}}
+\subsubsection[{sig\+\_\+alrm(int signo)}]{\setlength{\rightskip}{0pt plus 5cm}void sig\+\_\+alrm (
+\begin{DoxyParamCaption}
+\item[{int}]{signo}
+\end{DoxyParamCaption}
+)}\hypertarget{config_8h_af6266d6a86d10f14a6d2c1d395150a6a}{}\label{config_8h_af6266d6a86d10f14a6d2c1d395150a6a}
+
+
+defines the timeout signal handler 
+
 
 
 \subsection{Variable Documentation}

@@ -4,13 +4,17 @@
 {\ttfamily \#include \char`\"{}iif.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}instrumentation.\+h\char`\"{}}\\*
 {\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 bool \hyperlink{config_8cpp_adcbd1dcd583604441ce438418b6c5310}{check\+\_\+target\+\_\+program} (int($\ast$func)(int $\ast$))
 \item 
 bool \hyperlink{config_8cpp_a4c492df2fe48a09f71628e7e0f0c67fa}{register\+\_\+program} (int($\ast$func)(int $\ast$), const char $\ast$func\+\_\+name)
-\begin{DoxyCompactList}\small\item\em This function register the test program to the framework. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This function register the test program to the framework. \end{DoxyCompactList}\item 
+void \hyperlink{config_8cpp_af6266d6a86d10f14a6d2c1d395150a6a}{sig\+\_\+alrm} (int signo)
+\begin{DoxyCompactList}\small\item\em defines the timeout signal handler \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
@@ -56,6 +60,17 @@ This function register the test program to the framework.
 \begin{DoxyReturn}{Returns}
 a boolean value false only when the given function is not valid. 
 \end{DoxyReturn}
+\index{config.\+cpp@{config.\+cpp}!sig\+\_\+alrm@{sig\+\_\+alrm}}
+\index{sig\+\_\+alrm@{sig\+\_\+alrm}!config.\+cpp@{config.\+cpp}}
+\subsubsection[{sig\+\_\+alrm(int signo)}]{\setlength{\rightskip}{0pt plus 5cm}void sig\+\_\+alrm (
+\begin{DoxyParamCaption}
+\item[{int}]{signo}
+\end{DoxyParamCaption}
+)}\hypertarget{config_8cpp_af6266d6a86d10f14a6d2c1d395150a6a}{}\label{config_8cpp_af6266d6a86d10f14a6d2c1d395150a6a}
+
+
+defines the timeout signal handler 
+
 
 
 \subsection{Variable Documentation}

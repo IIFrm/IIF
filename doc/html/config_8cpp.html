@@ -96,6 +96,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &quot;<a class="el" href="iif_8h_source.html">iif.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="instrumentation_8h_source.html">instrumentation.h</a>&quot;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -104,6 +106,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a4c492df2fe48a09f71628e7e0f0c67fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8cpp.html#a4c492df2fe48a09f71628e7e0f0c67fa">register_program</a> (int(*func)(int *), const char *func_name)</td></tr>
 <tr class="memdesc:a4c492df2fe48a09f71628e7e0f0c67fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function register the test program to the framework.  <a href="#a4c492df2fe48a09f71628e7e0f0c67fa">More...</a><br /></td></tr>
 <tr class="separator:a4c492df2fe48a09f71628e7e0f0c67fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6266d6a86d10f14a6d2c1d395150a6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8cpp.html#af6266d6a86d10f14a6d2c1d395150a6a">sig_alrm</a> (int signo)</td></tr>
+<tr class="memdesc:af6266d6a86d10f14a6d2c1d395150a6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the timeout signal handler  <a href="#af6266d6a86d10f14a6d2c1d395150a6a">More...</a><br /></td></tr>
+<tr class="separator:af6266d6a86d10f14a6d2c1d395150a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -170,6 +175,24 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a boolean value false only when the given function is not valid. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af6266d6a86d10f14a6d2c1d395150a6a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sig_alrm </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>signo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>defines the timeout signal handler </p>
 
 </div>
 </div>

@@ -112,6 +112,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a114154c932768fbe0e3587c10c44071d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEquation.html">Equation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a114154c932768fbe0e3587c10c44071d">operator=</a> (const <a class="el" href="classEquation.html">Equation</a> &amp;rhs)</td></tr>
 <tr class="memdesc:a114154c932768fbe0e3587c10c44071d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overwrite = operator.  <a href="#a114154c932768fbe0e3587c10c44071d">More...</a><br /></td></tr>
 <tr class="separator:a114154c932768fbe0e3587c10c44071d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d0317b67dd6ae784f5792363a242568"><td class="memItemLeft" align="right" valign="top">z3::expr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a7d0317b67dd6ae784f5792363a242568">to_z3expr</a> (char **name, z3::context &amp;c) const </td></tr>
+<tr class="memdesc:a7d0317b67dd6ae784f5792363a242568"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method converts *this equation object to z3 expr object.  <a href="#a7d0317b67dd6ae784f5792363a242568">More...</a><br /></td></tr>
+<tr class="separator:a7d0317b67dd6ae784f5792363a242568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e6c0d52385361a604b5a8cab3d42e5e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a0e6c0d52385361a604b5a8cab3d42e5e">imply</a> (const <a class="el" href="classEquation.html">Equation</a> &amp;e2)</td></tr>
 <tr class="memdesc:a0e6c0d52385361a604b5a8cab3d42e5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This imply method checks whether this equation object can imply another one or not That is to say: *this ==&gt; e2 ?? *this is default equation left side.  <a href="#a0e6c0d52385361a604b5a8cab3d42e5e">More...</a><br /></td></tr>
 <tr class="separator:a0e6c0d52385361a604b5a8cab3d42e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,6 +130,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a1a53efa4ba6e185558de78f1065ab375"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a1a53efa4ba6e185558de78f1065ab375">multi_imply</a> (const <a class="el" href="classEquation.html">Equation</a> *e1, int e1_num, const <a class="el" href="classEquation.html">Equation</a> &amp;e2)</td></tr>
+<tr class="separator:a1a53efa4ba6e185558de78f1065ab375"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a061e5066dffec79ea306546da919ddbf"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEquation.html#a061e5066dffec79ea306546da919ddbf">linear_solver</a> (const <a class="el" href="classEquation.html">Equation</a> *equ, <a class="el" href="classSolution.html">Solution</a> &amp;sol)</td></tr>
 <tr class="memdesc:a061e5066dffec79ea306546da919ddbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The solver for an <a class="el" href="classEquation.html" title="This class defines an equation by storing all its coefficiencies. An equation is regarded a hyperplan...">Equation</a>.  <a href="#a061e5066dffec79ea306546da919ddbf">More...</a><br /></td></tr>
 <tr class="separator:a061e5066dffec79ea306546da919ddbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -408,6 +413,46 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a1a53efa4ba6e185558de78f1065ab375"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Equation::multi_imply </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classEquation.html">Equation</a> *&#160;</td>
+          <td class="paramname"><em>e1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>e1_num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classEquation.html">Equation</a> &amp;&#160;</td>
+          <td class="paramname"><em>e2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a114154c932768fbe0e3587c10c44071d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -457,6 +502,43 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int 0 if no error. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7d0317b67dd6ae784f5792363a242568"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">z3::expr Equation::to_z3expr </td>
+          <td>(</td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">z3::context &amp;&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method converts *this equation object to z3 expr object. </p>
+<p>Introducing this method help to simplify imlementation of imply method.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>contains each variants names. If NULL, the name would be "x_1", "x_2" form. </td></tr>
+    <tr><td class="paramname">c</td><td>is z3::context, defines which context the return expr will be used. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>z3::expr </dd></dl>
 
 </div>
 </div>

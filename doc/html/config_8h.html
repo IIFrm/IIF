@@ -101,7 +101,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a1d6565a8ececd15de44965eec4790919"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a1d6565a8ececd15de44965eec4790919">VARS</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memitem:a1d6565a8ececd15de44965eec4790919"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a1d6565a8ececd15de44965eec4790919">VARS</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memdesc:a1d6565a8ececd15de44965eec4790919"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the number of paramenters by a given loop,\ This also is the number of parameters we need to record for processing. This should be set in /CMakeLists.txt file If it is not set correctly, you may come across a runtime error  <a href="#a1d6565a8ececd15de44965eec4790919">More...</a><br /></td></tr>
 <tr class="separator:a1d6565a8ececd15de44965eec4790919"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c7b069fee3c8184e14a7de8e5da2dc6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a9c7b069fee3c8184e14a7de8e5da2dc6">PRECISION</a>&#160;&#160;&#160;3</td></tr>
@@ -113,6 +113,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a8c5bae50d678b664c26f20fe2714b643"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#a8c5bae50d678b664c26f20fe2714b643">register_program</a> (int(*func)(int *), const char *func_name=0)</td></tr>
 <tr class="memdesc:a8c5bae50d678b664c26f20fe2714b643"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function register the test program to the framework.  <a href="#a8c5bae50d678b664c26f20fe2714b643">More...</a><br /></td></tr>
 <tr class="separator:a8c5bae50d678b664c26f20fe2714b643"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6266d6a86d10f14a6d2c1d395150a6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8h.html#af6266d6a86d10f14a6d2c1d395150a6a">sig_alrm</a> (int signo)</td></tr>
+<tr class="memdesc:af6266d6a86d10f14a6d2c1d395150a6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">defines the timeout signal handler  <a href="#af6266d6a86d10f14a6d2c1d395150a6a">More...</a><br /></td></tr>
+<tr class="separator:af6266d6a86d10f14a6d2c1d395150a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -160,7 +163,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VARS&#160;&#160;&#160;2</td>
+          <td class="memname">#define VARS&#160;&#160;&#160;1</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -203,6 +206,24 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a boolean value false only when the given function is not valid. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af6266d6a86d10f14a6d2c1d395150a6a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sig_alrm </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>signo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>defines the timeout signal handler </p>
 
 </div>
 </div>

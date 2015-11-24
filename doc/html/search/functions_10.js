@@ -2,6 +2,7 @@ var searchData=
 [
   ['select_5fworking_5fset',['select_working_set',['../classSolver.html#a95fb4eaf33362558e1fc768f4db019d3',1,'Solver']]],
   ['set_5fconsole_5fcolor',['set_console_color',['../color_8h.html#a0665e13d18d97e69df7b6adf4ec3b2ad',1,'color.h']]],
+  ['sig_5falrm',['sig_alrm',['../config_8h.html#af6266d6a86d10f14a6d2c1d395150a6a',1,'sig_alrm(int signo):&#160;config.cpp'],['../config_8cpp.html#af6266d6a86d10f14a6d2c1d395150a6a',1,'sig_alrm(int signo):&#160;config.cpp']]],
   ['sigmoid_5fpredict',['sigmoid_predict',['../svm__core_8cpp.html#a681fcc7268133ceb472773fd30b97839',1,'svm_core.cpp']]],
   ['sigmoid_5ftrain',['sigmoid_train',['../svm__core_8cpp.html#a1da8eb99e9a14699eb36a30bc8f2bedb',1,'svm_core.cpp']]],
   ['size',['size',['../classML__Algo.html#a8650c3894c1992492f8bc86edf1b3ffd',1,'ML_Algo::size()'],['../classPerceptron.html#a50b1f76eb2760b540477135100dcbf49',1,'Perceptron::size()'],['../classStates.html#aff348a13a96c0699227f0dd49af5f51c',1,'States::size()'],['../classSVM.html#a4563cef982f6e1c67acf0c7b0ec8909b',1,'SVM::size()'],['../classSVM__I.html#a1b66cefe313cffaa77d4271dfb4b8474',1,'SVM_I::size()']]],
@@ -15,6 +16,7 @@ var searchData=
   ['solver',['Solver',['../classSolver.html#a9dfe7ae9ce617e8a6398be34284c907a',1,'Solver']]],
   ['solver_5fnu',['Solver_NU',['../classSolver__NU.html#a4f05e99c9939dcdf36840f27b1a9dde7',1,'Solver_NU']]],
   ['states',['States',['../classStates.html#a77357dcd7269296068b166a86c035a4b',1,'States']]],
+  ['substring1',['substring1',['../2__substring1_8cpp.html#a423ead3587835dfd235728d629260e8e',1,'2_substring1.cpp']]],
   ['svc_5fq',['SVC_Q',['../classSVC__Q.html#a23d7cf0b0606ccf2cb987205b94dddc7',1,'SVC_Q']]],
   ['svm',['SVM',['../classSVM.html#ad8716b6d07bd35810f62662856af3a09',1,'SVM']]],
   ['svm_5fbinary_5fsvc_5fprobability',['svm_binary_svc_probability',['../svm__core_8cpp.html#ae862a4ec5aef90b7ded1cd2a602271f6',1,'svm_core.cpp']]],

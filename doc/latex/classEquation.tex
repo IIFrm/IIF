@@ -20,6 +20,8 @@ This class defines an equation by storing all its coefficiencies. An equation is
 \begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
 \hyperlink{classEquation}{Equation} \& \hyperlink{classEquation_a114154c932768fbe0e3587c10c44071d}{operator=} (const \hyperlink{classEquation}{Equation} \&rhs)
 \begin{DoxyCompactList}\small\item\em Overwrite = operator. \end{DoxyCompactList}\item 
+z3\+::expr \hyperlink{classEquation_a7d0317b67dd6ae784f5792363a242568}{to\+\_\+z3expr} (char $\ast$$\ast$name, z3\+::context \&c) const 
+\begin{DoxyCompactList}\small\item\em This method converts $\ast$this equation object to z3 expr object. \end{DoxyCompactList}\item 
 bool \hyperlink{classEquation_a0e6c0d52385361a604b5a8cab3d42e5e}{imply} (const \hyperlink{classEquation}{Equation} \&e2)
 \begin{DoxyCompactList}\small\item\em This imply method checks whether this equation object can imply another one or not That is to say\+: $\ast$this ==$>$ e2 ?? $\ast$this is default equation left side. \end{DoxyCompactList}\item 
 int \hyperlink{classEquation_a9ce8d3263523f807d35592797e8efd1a}{linear\+\_\+solver} (\hyperlink{classSolution}{Solution} \&sol)
@@ -30,6 +32,8 @@ int \hyperlink{classEquation_a337d5e20578e86ac30257622e03b1fe4}{roundoff} (\hype
 \begin{DoxyCompactList}\small\item\em Do roundoff job for an equation. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{classEquation_a1a53efa4ba6e185558de78f1065ab375}{multi\+\_\+imply} (const \hyperlink{classEquation}{Equation} $\ast$e1, int e1\+\_\+num, const \hyperlink{classEquation}{Equation} \&e2)
 \item 
 static int \hyperlink{classEquation_a061e5066dffec79ea306546da919ddbf}{linear\+\_\+solver} (const \hyperlink{classEquation}{Equation} $\ast$equ, \hyperlink{classSolution}{Solution} \&sol)
 \begin{DoxyCompactList}\small\item\em The solver for an \hyperlink{classEquation}{Equation}. \end{DoxyCompactList}\item 
@@ -208,7 +212,16 @@ If all the coefficients are zeros.... We just randomly pickup solutions to retur
 
 $<$ pick store the dimension that should not generate randomly The algo is we generate numbers randomly, unless the picked dimension The picked dimension should be calcuate based on equation and other dimensions
 
-sometimes we can not get solution between given scope we try 10 times, if still no suitable solution, we pick the last one...\index{Equation@{Equation}!operator=@{operator=}}
+sometimes we can not get solution between given scope we try 10 times, if still no suitable solution, we pick the last one...\index{Equation@{Equation}!multi\+\_\+imply@{multi\+\_\+imply}}
+\index{multi\+\_\+imply@{multi\+\_\+imply}!Equation@{Equation}}
+\subsubsection[{multi\+\_\+imply(const Equation $\ast$e1, int e1\+\_\+num, const Equation \&e2)}]{\setlength{\rightskip}{0pt plus 5cm}bool Equation\+::multi\+\_\+imply (
+\begin{DoxyParamCaption}
+\item[{const {\bf Equation} $\ast$}]{e1, }
+\item[{int}]{e1\+\_\+num, }
+\item[{const {\bf Equation} \&}]{e2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classEquation_a1a53efa4ba6e185558de78f1065ab375}{}\label{classEquation_a1a53efa4ba6e185558de78f1065ab375}
+\index{Equation@{Equation}!operator=@{operator=}}
 \index{operator=@{operator=}!Equation@{Equation}}
 \subsubsection[{operator=(const Equation \&rhs)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Equation} \& Equation\+::operator= (
 \begin{DoxyParamCaption}
@@ -248,6 +261,30 @@ For example. 1.\+2345 x1 $>$= 2.\+4690 ==$>$ x1 $>$= 2 2 x1 $>$= 5.\+000001 ==$>
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 int 0 if no error. 
+\end{DoxyReturn}
+\index{Equation@{Equation}!to\+\_\+z3expr@{to\+\_\+z3expr}}
+\index{to\+\_\+z3expr@{to\+\_\+z3expr}!Equation@{Equation}}
+\subsubsection[{to\+\_\+z3expr(char $\ast$$\ast$name, z3\+::context \&c) const }]{\setlength{\rightskip}{0pt plus 5cm}z3\+::expr Equation\+::to\+\_\+z3expr (
+\begin{DoxyParamCaption}
+\item[{char $\ast$$\ast$}]{name, }
+\item[{z3\+::context \&}]{c}
+\end{DoxyParamCaption}
+) const}\hypertarget{classEquation_a7d0317b67dd6ae784f5792363a242568}{}\label{classEquation_a7d0317b67dd6ae784f5792363a242568}
+
+
+This method converts $\ast$this equation object to z3 expr object. 
+
+Introducing this method help to simplify imlementation of imply method.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & contains each variants names. If N\+U\+LL, the name would be \char`\"{}x\+\_\+1\char`\"{}, \char`\"{}x\+\_\+2\char`\"{} form. \\
+\hline
+{\em c} & is z3\+::context, defines which context the return expr will be used. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+z3\+::expr 
 \end{DoxyReturn}
 
 
