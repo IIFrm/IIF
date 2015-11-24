@@ -13,10 +13,11 @@ int assert_times = 0;
 char lt[4][10] =  { "Negative", "Question", "Positive", "Bugtrace"};
 char(*LabelTable)[10] = &lt[1];
 
-double temp_states[256][VARS];
+double temp_states[max_states_in_one_trace][VARS];
 int temp_index;
 
 
+#include "color.h"
 int add_state_int(int first ...)
 {
 	va_list ap;
@@ -27,6 +28,12 @@ int add_state_int(int first ...)
 	}
 	va_end(ap);
 	temp_index++;
+	if (temp_index >= max_states_in_one_trace) {
+		set_console_color(std::cout, RED);
+		std::cout << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n";
+		unset_console_color(std::cout);
+		exit(-1);
+	}
 	return 0;
 }
 
@@ -40,6 +47,12 @@ int add_state_double(double first, ...)
 	}
 	va_end(ap);
 	temp_index++;
+	if (temp_index >= max_states_in_one_trace) {
+		set_console_color(std::cout, RED);
+		std::cout << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n";
+		unset_console_color(std::cout);
+		exit(-1);
+	}
 	return 0;
 }
 

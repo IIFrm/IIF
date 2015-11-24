@@ -48,6 +48,11 @@ void sig_alrm(int signo);
  */
 const int max_items = 100000;
 
+/** @brief defines max number of states contains in one executionn. 
+ *		   Better to be a number larger than 128 
+ */
+const int max_states_in_one_trace = 1024;
+
 /** @brief defines the number of tests runs initially. Should be a positive integer.
  */
 const int init_exes = 6 * VARS;
