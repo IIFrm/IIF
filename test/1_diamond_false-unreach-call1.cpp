@@ -1,30 +1,20 @@
 #include "iif.h"
 #include <iostream>
 
-static int nondet() {
-	return rand() % 4;
-	return rand() % 20;
-}
-
-int conj(int* a)
+int test_template(int* a)
 {
-	int x;
-	x = a[0];
-	iif_assume((x >= 0) && (x <= 50));
-	while (nondet()) {
-		recordi(x);
-		if (x >= 50) {
-			x --;
-		}
-		else if (x <= 0) {
-			x ++;
-		}
-		else {
-			x += rand() %3 - 1;
-		}
+	int x = 0;
+	int y = a[0];
+	iif_assume(y >= 0);
+	while (x < 99) {
+		recordi(y);
+		if (y % 2 == 0)
+		    x++;
+		else 
+		    x += 2;
 	}
-	recordi(x);
-	iif_assert((x >= 0) && (x <= 50));
+	recordi(y);
+	iif_assert((x % 2) != (y % 2));
 	return 0;
 }
 
@@ -34,15 +24,13 @@ int main(int argc, char** argv)
 	States global_states_sets[4];
 	States* gsets = &global_states_sets[1];
 
-	if (register_program(conj, "conj") == false){ 
+	if (register_program(test_template, "temp_template") == false){ 
 		return -1;
 	} 
 
-#ifdef linux
 	if (signal(SIGALRM, sig_alrm) == SIG_ERR)
 		exit(-1);
 	alarm(60);
-#endif
 	std::cout << "TRY SVM method ...\n";
 	IIF_svm_learn isl(gsets, target_program);
 	if (isl.learn() == 0) {  
