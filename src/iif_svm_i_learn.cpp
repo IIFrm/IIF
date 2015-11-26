@@ -185,7 +185,6 @@ int IIF_svm_i_learn::learn()
 			previous_equations[i] = svm_i->equations[i];
 		}
 
-		std::cout << std::endl;
 	} // end of SVM_I training procedure
 
 
