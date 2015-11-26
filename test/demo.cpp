@@ -12,13 +12,18 @@
 #define assume(x) assert(x)
 
 int x = 0;
+int y = 0;
 int z = 0;
+int xa = 0;
+int ya = 0;
+
 int func1()
 {
 
 
 	//x, z : int
-	assume((x >= 0) && (x <= 10000));
+	assume((x >= 0) 
+		&& (x <= 10000));
 	z = x + 1;
 	assert(z > 0);
 
@@ -30,7 +35,8 @@ int func2()
 
 
 	//x, z : int
-	assume((x >= 0) && (x <= 10000));
+	assume((x >= 0) 
+		&& (x <= 10000));
 	if (x % 2)
 		z = x + 1;
 	else 
@@ -45,7 +51,8 @@ int func3()
 
 
 	//x, z : int
-	assume((x >= 0) && (z == 0));
+	assume((x >= 0) 
+		&& (z == 0));
 	while (x >= 0) {
 		z = z + 1;
 		x = x - 1;
@@ -68,13 +75,13 @@ int func4()
 		S2;
 		...	
 	}			
-	assert(z > 0);	// Postcondition:  P2		(Inv /\ !B) => P2
+	assert(P2);		// Postcondition:  P2		(Inv /\ !B) => P2
 
 
 }
 
 
-int func4()
+int func5()
 {
 
 
@@ -89,33 +96,118 @@ int func4()
 
 }
 
-int func5()
+int func6()
 {
 
 
 	//x, y : int
 	x = rand(), y = rand();
-	assume_print(x + y > 0);
+	assume(x + y > 0);
+	print(x + y > 0);
 	while (x >= 0) {
 		print(x, y);
 		x = x - 1;
 		y = y + 1;
 	}
 	print(x, y);
-	assert_print(y > 0);
+	assert(y > 0);
+	print(y > 0);
 
 
 }
 
+
+int func7()
+{
+
+
+	//x, y : int
+	//xa, ya : int
+	assume(xa + 2 * ya >= 0);
+	while (nondet()) {
+		x = xa + 2 * ya;
+		y = -2 * xa + ya;
+
+		x++;
+		if (nondet()) 
+			y = y + x;
+		else y = y - x;
+
+		xa = x - 2 * y;
+		ya = 2 * x + y;
+	}
+	assert(xa + 2 * ya >= 0);
+
+
+}
+
+int func8()
+{
+
+
+	//x, y : int
+	//xa, ya : int
+	xa = rand(), ya = rand();
+	assume(xa + 2 * ya >= 0);
+	print(xa + 2 * ya >= 0);
+	while (nondet()) {
+		print(xa, ya);
+		x = xa + 2 * ya;
+		y = -2 * xa + ya;
+
+		x++;
+		if (nondet()) 
+			y = y + x;
+		else y = y - x;
+
+		xa = x - 2 * y;
+		ya = 2 * x + y;
+	}
+	print(xa, ya);
+	assert(xa + 2 * ya >= 0);
+	print(xa + 2 * ya >= 0);
+
+
+
+}
+
+
+int func9()
+{
+
+
+	//x, y : int
+	//xa, ya : int
+	assume((xa + 2 * ya >= 0) 
+		&& (xa + 2 * ya <= 10000));
+	while (nondet() 
+		&& (xa + 2 * ya <= 10000)) {
+		x = xa + 2 * ya;
+		y = -2 * xa + ya;
+
+		x++;
+		if (nondet()) y = y + x;
+		else y = y - x;
+
+		xa = x - 2 * y;
+		ya = 2 * x + y;
+	}
+	assert(xa + 2 * ya >= 0);
+
+
+}
+
+
 int func10()
 {
 
-	//x, z : int
+	//x : int
 	assume((x>=0) && (x<=50));
 	while(rand()) {
 		if (x <= 0) x++;
 		if (x >= 50) x--;
-		if ((x>0) && (x<50)) x += rand()%3 - 1;
+		if ((x>0) && (x<50)) 
+			x += rand()%3 - 1;
 	}
 	assert((x>=0) && (x<=50))
 
