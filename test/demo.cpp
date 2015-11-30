@@ -117,6 +117,9 @@ int func6()
 }
 
 
+int looptimes = cin.get();
+int branch = 1;
+
 int func7()
 {
 
@@ -124,14 +127,15 @@ int func7()
 	//x, y : int
 	//xa, ya : int
 	assume(xa + 2 * ya >= 0);
-	while (nondet()) {
+	while (looptimes--) {
 		x = xa + 2 * ya;
 		y = -2 * xa + ya;
 
 		x++;
-		if (nondet()) 
+		if (branch) 
 			y = y + x;
 		else y = y - x;
+		branch = 1 - branch;
 
 		xa = x - 2 * y;
 		ya = 2 * x + y;
@@ -150,15 +154,16 @@ int func8()
 	xa = rand(), ya = rand();
 	assume(xa + 2 * ya >= 0);
 	print(xa + 2 * ya >= 0);
-	while (nondet()) {
+	while (looptimes--) {
 		print(xa, ya);
 		x = xa + 2 * ya;
 		y = -2 * xa + ya;
 
 		x++;
-		if (nondet()) 
+		if (branch) 
 			y = y + x;
 		else y = y - x;
+		branch = 1 - branch;
 
 		xa = x - 2 * y;
 		ya = 2 * x + y;
