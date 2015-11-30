@@ -8,8 +8,8 @@ int pldi08(int* a){
 	iif_assume (x < 0);
 	while (x < 0) {
 		recordi(x, y);
-     x = x + y;
-     y++;
+		x = x + y;
+		y++;
 	}
 
 	recordi(x, y);
@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 #ifdef linux
 	if (signal(SIGALRM, sig_alrm) == SIG_ERR)
 		exit(-1);
-	alarm(60);
+	alarm(120);
 #endif
 	std::cout << "TRY SVM method ...\n";
 	IIF_svm_learn isl(gsets, target_program);

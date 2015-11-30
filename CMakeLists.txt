@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.8)
-set(VARS 1)
+set(VARS 3)
 
 project(InvariantInferenceFramework)
 set(PRECISION 3)
@@ -9,7 +9,11 @@ option(PRINT_ALL "Print All Message" OFF)
 if(PRINT_ALL)
 	add_definitions (-D__PRT_SVM_I)
 	add_definitions (-D__PRT_QUERY)
+	add_definitions (-D__PRT_TRACE)
 endif(PRINT_ALL)
+#add_definitions (-D__PRT_SVM_I)
+#add_definitions (-D__PRT_QUERY)
+#add_definitions (-D__PRT_TRACE)
 
 
 if(UNIX)

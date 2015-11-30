@@ -12,7 +12,11 @@ int minv = -100, maxv = 100;
 
 bool check_target_program(int (*func)(int*))
 {
+    Solution sol;
+    Equation::linear_solver(NULL, sol);
 	int a[VARS];
+	for (int i = 0; i < VARS; i++)
+	    a[i] = sol.x[i];
 	assume_times = 0;
 	assert_times = 0;
 	func(a);
@@ -39,6 +43,6 @@ bool register_program(int (*func)(int*), const char* func_name)
 }
 
 void sig_alrm(int signo) {
-	std::cout << "\nTIMES UP!\n";
+	std::cout << "\nTIMEOUT!\n";
 	exit(-1);
 }

@@ -57,7 +57,7 @@ init_svm:
 #endif
 			for (int i = 0; i < init_exes + random_exes; i++) {
 				Equation::linear_solver(NULL, inputs);
-#ifdef __PRT
+#if (__PRT || __PRT_TRACE)
 				std::cout << inputs;
 				if (i < init_exes + random_exes - 1) std::cout << "|";
 #endif

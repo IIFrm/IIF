@@ -110,13 +110,13 @@ int IIF_svm_i_learn::learn()
 #endif
 
 		if (pass_rate < 1) {
-#ifdef __PRT
+//#ifdef __PRT
 			set_console_color(std::cout, RED);
 			std::cerr << "[FAIL] ..... Can not dividey by SVM_I." << std::endl;
 			//std::cerr << "[FAIL] ..... Reaching maximium num of equation supported by SVM_I." << std::endl;
 			//std::cerr << "You can increase the limit by modifying [classname::methodname]=SVM-I::SVM-I(..., int equ = **) " << std::endl;
 			unset_console_color(std::cout);
-#endif
+//#endif
 			break;	
 			//			b_svm_i = true;
 			//			break;

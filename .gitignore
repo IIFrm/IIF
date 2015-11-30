@@ -6,3 +6,4 @@ src/*.out
 data
 bin
 build
+tags
