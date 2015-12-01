@@ -10,8 +10,9 @@ int conj(int* a)
 {
 	int x;
 	x = a[0];
+	int loop_times = 10;
 	iif_assume((x >= 0) && (x <= 50));
-	while (nondet()) {
+	while (loop_times-- > 0) {
 		recordi(x);
 		if (x >= 50) {
 			x --;

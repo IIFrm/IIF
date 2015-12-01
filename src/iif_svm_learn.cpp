@@ -139,6 +139,7 @@ init_svm:
 			std::cout << " [FAIL] \n The problem is not linear separable.. Trying to solve is by SVM-I algo" << std::endl;
 #endif
 			//std::cerr << "*******************************USING SVM_I NOW******************************" << std::endl;
+			rnd++;
 			break;
 		}
 #ifdef __PRT
@@ -187,6 +188,7 @@ init_svm:
 				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
 #endif
 				b_converged = true;
+				rnd++;
 				break;
 			}
 #ifdef __PRT
@@ -210,7 +212,7 @@ init_svm:
 
 
 	std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
-	std::cout << "Finish running svm for " << rnd << " times." << std::endl;
+	std::cout << "Finish running svm for " << rnd - 1 << " times." << std::endl;
 
 	int ret = 0;
 	if ((b_converged) && (rnd <= max_iteration)) {

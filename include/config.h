@@ -14,7 +14,7 @@
  *		   This should be set in /CMakeLists.txt file
  *		   If it is not set correctly, you may come across a runtime error
  */
-#define VARS 3 
+#define VARS 1 
 
 
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  

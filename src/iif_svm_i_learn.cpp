@@ -86,7 +86,12 @@ int IIF_svm_i_learn::learn()
 #endif
 		int ret = svm_i->train();
 		if (ret == -1)
+		{
+			set_console_color(std::cout, RED);
+			std::cerr << "[FAIL] ..... Can not dividey by SVM_I." << std::endl;
+			unset_console_color(std::cout);
 			return -1;
+		}
 		//std::cout << svm_i->equ_num;
 		std::cout << "|-->> ";
 		set_console_color(std::cout);
@@ -110,16 +115,13 @@ int IIF_svm_i_learn::learn()
 #endif
 
 		if (pass_rate < 1) {
-//#ifdef __PRT
 			set_console_color(std::cout, RED);
 			std::cerr << "[FAIL] ..... Can not dividey by SVM_I." << std::endl;
 			//std::cerr << "[FAIL] ..... Reaching maximium num of equation supported by SVM_I." << std::endl;
 			//std::cerr << "You can increase the limit by modifying [classname::methodname]=SVM-I::SVM-I(..., int equ = **) " << std::endl;
 			unset_console_color(std::cout);
-//#endif
+			rnd++;
 			break;	
-			//			b_svm_i = true;
-			//			break;
 		}
 #ifdef __PRT
 		set_console_color(std::cout, GREEN);
@@ -160,6 +162,7 @@ int IIF_svm_i_learn::learn()
 				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
 #endif
 				b_converged = true;
+				rnd++;
 				break;
 			}
 #ifdef __PRT
@@ -189,7 +192,7 @@ int IIF_svm_i_learn::learn()
 
 
 	std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
-	std::cout << "Finish running svm_i for " << rnd << " times." << std::endl;
+	std::cout << "Finish running svm_i for " << rnd - 1 << " times." << std::endl;
 
 	int ret = 0;
 	if ((b_converged) && (rnd <= max_iteration)) {

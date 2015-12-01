@@ -56,15 +56,6 @@ int add_state_double(double first, ...)
 		temp_states[temp_index][i] = va_arg(ap, double);
 	}
 	va_end(ap);
-#ifdef __PRT_TRACE
-	set_console_color(std::cout, BLUE);
-	std::cout << "(" << temp_states[temp_index][0];
-	for (int i = 1; i < VARS; i++) {
-	    std::cout << "," << temp_states[temp_index][i];
-	}
-	std::cout << ")";
-	unset_console_color(std::cout);
-#endif
 	temp_index++;
 	if (temp_index >= max_states_in_one_trace) {
 		set_console_color(std::cout, RED);
@@ -104,7 +95,8 @@ int after_loop(States* gsets)
 		label = 2;
 	}
 
-	/*
+#ifdef __PRT_TRACE
+	set_console_color(std::cout, BLUE);
 	std::cout << "TRACE: ";
 	for (int i = 0; i < temp_index; i++) {
 		std::cout << "(" << temp_states[i][0];
@@ -113,13 +105,11 @@ int after_loop(States* gsets)
 		std::cout << ")->";
 	}
 	std::cout << "END[" << label << "]" << std::endl;
-	*/
+	unset_console_color(std::cout);
 
-	gsets[label].add_states(temp_states, temp_index);
 	//TS[label].addLoopTrace(LT);
-#ifdef __PRT_TRACE
-	std::cout << "\n";
 #endif
+	gsets[label].add_states(temp_states, temp_index);
 	return 0;
 }
 
