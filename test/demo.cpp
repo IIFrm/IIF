@@ -37,7 +37,7 @@ int func2()
 	//x, z : int
 	assume((x >= 0) 
 		&& (x <= 10000));
-	if (x % 2)
+	if (x == 0)
 		z = x + 1;
 	else 
 		z = x;
@@ -207,13 +207,36 @@ int func10()
 {
 
 	//x : int
+	//loop_times : uint
 	assume((x>=0) && (x<=50));
-	while(rand()) {
-		if (x <= 0) x++;
-		if (x >= 50) x--;
-		if ((x>0) && (x<50)) 
-			x += rand()%3 - 1;
+	while(loop_times-- > 0) {
+		if (x <= 0) 
+			x++;
+		else 
+			x--;
 	}
 	assert((x>=0) && (x<=50))
+
+}
+
+int func11()
+{
+
+	//x : int
+	//loop_times : uint
+	x = rand();
+	loop_times = rand();
+	assume((x>=0) && (x<=50));
+	print((x>=0) && (x<=50));
+	while(loop_times-- > 0) {
+		print(x, loop_times);
+		if (x <= 0) 
+			x++;
+		else 
+			x--;
+	}
+	print(x, loop_times);
+	assert((x>=0) && (x<=50))
+	print((x>=0) && (x<=50));
 
 }
