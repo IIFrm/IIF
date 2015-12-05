@@ -37,7 +37,7 @@ int func2()
 	//x, z : int
 	assume((x >= 0) 
 		&& (x <= 10000));
-	if (x % 2)
+	if (x == 0)
 		z = x + 1;
 	else 
 		z = x;
@@ -207,42 +207,36 @@ int func10()
 {
 
 	//x : int
+	//loop_times : uint
 	assume((x>=0) && (x<=50));
-	while(rand()) {
-		if (x <= 0) x++;
-		if (x >= 50) x--;
-		if ((x>0) && (x<50)) 
-			x += rand()%3 - 1;
+	while(loop_times-- > 0) {
+		if (x <= 0) 
+			x++;
+		else 
+			x--;
 	}
 	assert((x>=0) && (x<=50))
 
 }
-#include "iif.h"
-#include <iostream>
 
-static int nondet() {
-	return rand() % 4;
-	return rand() % 20;
-}
-
-int conj(int* a)
+int func11()
 {
-	int x = a[0];
-	int loop_times = a[1] % 10;
 
-	// x: int, loop_times: uint
-	assume((x >= 0) && (x <= 50));
-	while (loop_times-- > 0) {
-		if (x <= 0)
-		    x ++;
+	//x : int
+	//loop_times : uint
+	x = rand();
+	loop_times = rand();
+	assume((x>=0) && (x<=50));
+	print((x>=0) && (x<=50));
+	while(loop_times-- > 0) {
+		print(x, loop_times);
+		if (x <= 0) 
+			x++;
 		else 
-		    x--;
+			x--;
 	}
-	assert((x >= 0) && (x <= 50));
+	print(x, loop_times);
+	assert((x>=0) && (x<=50))
+	print((x>=0) && (x<=50));
 
-	recordi(x, loop_times);
-	assert((x >= 0) && (x <= 50));
-	return 0;
 }
-
-
