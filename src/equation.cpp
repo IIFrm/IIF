@@ -6,6 +6,7 @@
 //#include <cstring>
 #include <iostream>
 
+#include "color.h"
 //#ifdef linux
 //#include <stp/c_interface.h>
 #include "z3++.h"
@@ -19,6 +20,8 @@ inline double _roundoff(double x)
 	if ((inx >= x * (1 - UPBOUND) && inx <= x * (1 + UPBOUND))
 			|| (inx <= x * (1 - UPBOUND) && inx >= x * (1 + UPBOUND)))
 		return double(inx);
+	if (std::abs(x) <= UPBOUND)
+		return 0;
 	return x;
 }
 
@@ -328,15 +331,30 @@ int Equation::roundoff(Equation& e) {
 	//std::cout << "ROUND OFF " << *this << " --> ";
 	//double min = std::abs(theta0);
 	double min = DBL_MAX;
+	double second_min = min;
 	for (int i = 0; i < VARS; i++) {
 		if (theta[i] == 0) continue;
-		min = (std::abs(theta[i]) < min) ? std::abs(theta[i]) : min;
+		if (std::abs(theta[i]) < min) {
+			second_min = min;
+			min = std::abs(theta[i]);
+		}
 	}
 
 	if (min == DBL_MAX) min = 1;	// otherwise we will have */0 operation, return inf or nan...
 	if (min == 0) min = 1;	// otherwise we will have */0 operation, return inf or nan...
+	if (second_min == DBL_MAX) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
+	if (second_min == 0) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
 
-	if ((std::abs(theta0) < min) && (100 * std::abs(theta0) >= min))	
+#ifdef __PRT_EQUATION
+	set_console_color(std::cout, GREEN);
+	std::cout << "Before roundoff: " << *this;
+	//std::cout << "  [min=" << min << "]"; 
+	//std::cout << "  [min=" << min << "]"; 
+#endif
+	if (min / second_min <= UPBOUND) 
+		min = second_min;
+
+	if ((std::abs(theta0) < min) && (1000 * std::abs(theta0) >= min))	
 		// 100 * theta0 is to keep {0.999999x1 + 0.9999999x2 >= 1.32E-9} from converting to  {BIGNUM x1 + BIGNUM x1  >= 1}
 	//if ((std::abs(theta0) < min) && (std::abs(theta0) > 1.0E-4))	
 		min = std::abs(theta0);
@@ -346,6 +364,10 @@ int Equation::roundoff(Equation& e) {
 	for (int i = 0; i < VARS; i++)
 		e.theta[i] = _roundoff(theta[i] / min);
 	e.theta0 = _roundoff(theta0 / min);
+#ifdef __PRT_EQUATION
+	std::cout << "\tAfter roundoff: " << e << std::endl;
+	unset_console_color(std::cout);
+#endif
 	//std::cout << e << std::endl;
 	return 0;
 }

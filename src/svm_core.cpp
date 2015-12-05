@@ -3180,6 +3180,7 @@ int svm_model_visualization(const svm_model *model, Equation* equ)
 		theta0 -= temp;
 	}
 	equ->theta0 = theta0;
+	equ->roundoff(*equ);
 /*	info(" %.16g [0]", theta[0]);
 	for (int j = 1; j < vars; j++)
 		info ("  +  %.16g [%d]", theta[j], j);
