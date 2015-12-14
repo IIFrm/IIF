@@ -1,3 +1,12 @@
+/** @file iif_learn.h
+ *  @brief Provide base class for all iif learning algorithms.
+ *
+ *  This file contains the necessary function support for iif learning algorithms.
+ *  The function run_target is the most important function in this class for now. 
+ *
+ *  @author Li Jiaying
+ *  @bug no known bugs found.
+ */
 #ifndef _IIF_LEARN_
 #define _IIF_LEARN_
 
@@ -25,6 +34,10 @@ class IIF_learn{
 		}
 
 
+/** @brief This function runs the target_program with the given input
+ *
+ *  @param  input defines input values which are used to call target_program 
+ */
 		void run_target(Solution& input) {
 			assert(func != NULL);
 			assert(&input != NULL);
