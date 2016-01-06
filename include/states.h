@@ -20,6 +20,16 @@ class States{
 
 		friend std::ostream& operator << (std::ostream& out, const States& ss);
 
+		double* getState(int i) {
+			if (i >= size())
+				return NULL;
+			return values[i];
+		}
+
+		int getLabel() {
+			return label;
+		}
+
 	public:
 		double (*values)[VARS];
 		//vector<vector<double>> values; // (max_size, vector<double>(VARS));

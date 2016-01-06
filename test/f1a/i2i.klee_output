@@ -1,0 +1,8 @@
+KLEE: [L] main.cpp ->main() ->#1278:[NoLibc option.]
+KLEE: output directory is "/home/lijiaying/Research/GitHub/iif/test/f1a/klee-out-0"
+KLEE: ERROR: /home/lijiaying/Research/GitHub/iif/test/f1a/i2i.c:13: ASSERTION FAIL: x + y >= 0
+KLEE: NOTE: now ignoring this error at this location
+
+KLEE: done: total instructions = 29
+KLEE: done: completed paths = 2
+KLEE: done: generated tests = 2
