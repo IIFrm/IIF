@@ -17,6 +17,9 @@ IIF_disjunctive_svm_learn::IIF_disjunctive_svm_learn(States* gsets, int (*func)(
 	svm->main_equation = NULL;
 	this->max_iteration = max_iteration; 
 	this->K = K;
+	positive_group = new int[gsets[1].size()];
+	negative_group = new int[gsets[-1].size()];
+	checkset = new double[gsets[-1].size() + gsets[1].size()][VARS];
 }
 
 IIF_disjunctive_svm_learn::IIF_disjunctive_svm_learn() : IIF_learn() { 
@@ -24,6 +27,9 @@ IIF_disjunctive_svm_learn::IIF_disjunctive_svm_learn() : IIF_learn() {
 	svm->main_equation = NULL;
 	this->max_iteration = max_iter; 
 	this->K = 8;
+	positive_group = NULL;
+	negative_group = NULL;
+	checkset = NULL;
 }
 
 static double square_distance(double* a1, double* b1, int size)
@@ -35,18 +41,23 @@ static double square_distance(double* a1, double* b1, int size)
 }
 
 
-int IIF_disjunctive_svm_learn::k_means(States& s, int k)
+int IIF_disjunctive_svm_learn::k_means(int gset_index, int k)
 {
 	if (k > K)
 		return -1;
-	if (k >= s.size())
+	States& set = gsets[gset_index];
+	int size = set.size();
+	if (k >= size)
 		return 0;
-	double (*data)[VARS] = s.values;
-	int* label = new int[s.size()]; 
-	double** kmeans = new double*[s.size()];
+	double (*data)[VARS] = set.values;
+	int* label;  
+	if (gset_index == 1) label = positive_group;
+	else if (gset_index == -1) label = negative_group;
+	if (label == NULL)	label = new int [size]; 
+	double** kmeans = new double*[size];
 
 	// randomly choose points as the initial means to begin K-means algorithm
-	for (int seed, i = 0; i < s.size(); i++) {
+	for (int seed, i = 0; i < size; i++) {
 		seed = rand() % k;
 		kmeans[i] = new double[VARS];
 		for (int j = 0; j < VARS; j++)
@@ -61,7 +72,7 @@ int IIF_disjunctive_svm_learn::k_means(States& s, int k)
 	while (true) {	
 		// regroup according to square distance.
 		bool regrouped = false;
-		for (int i = 0; i < s.size(); i++) {
+		for (int i = 0; i < size; i++) {
 			int min_cand = 0;
 			for (int j = 0; j < k; j++) {
 				distance[j] = square_distance(kmeans[j], data[i], VARS);
@@ -77,12 +88,11 @@ int IIF_disjunctive_svm_learn::k_means(States& s, int k)
 		// recalculate means for each group
 		for (int i = 0; i < k; i++)
 			group_members[i] = 0;
-		for (int i = 0; i < s.size(); i++) {
+		for (int i = 0; i < size; i++) {
 			group_members[label[i]]++;
 			for (int j = 0; j < VARS; j++)
 				kmeans[label[i]][j] += data[i][j];
 		}
-
 	}
 
 	//for (int i = 0; i < s.size(); i++);
@@ -95,6 +105,24 @@ int IIF_disjunctive_svm_learn::k_means(States& s, int k)
 	delete []label;
 	return 0;
 }
+
+
+bool linear_separable(int positive_label, int negative_label)
+{
+	int index = 0;
+	// copy all the data which are labeled as given to the checkset
+	int positive_size = gsets[POSITIVE].size();
+	int negative_size = gsets[NEGATIVE].size();
+	for(int i = 0; i < positive_size; i++)
+		if (positive_group[i] == positive_label)
+			checkset[index++] = gsets[POSITIVE][i];
+	for(int i = 0; i < negative_size; i++)
+		if (negative_group[i] == negative_label)
+			checkset[index++] = gsets[POSITIVE][i];
+
+	return false;
+}
+
 
 
 int IIF_disjunctive_svm_learn::learn()
