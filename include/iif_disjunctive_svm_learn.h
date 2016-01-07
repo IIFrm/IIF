@@ -23,7 +23,7 @@ class IIF_disjunctive_svm_learn: public IIF_learn {
 	protected:
 
 		int k_means(int gset_index, int k);
-		bool linear_separable(int positive_label, int negative_label)
+		bool linear_separable(int positive_label, int negative_label);
 		int *positive_group, *negative_group;
 		double (*checkset)[VARS];
 

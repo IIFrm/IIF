@@ -17,9 +17,11 @@ IIF_disjunctive_svm_learn::IIF_disjunctive_svm_learn(States* gsets, int (*func)(
 	svm->main_equation = NULL;
 	this->max_iteration = max_iteration; 
 	this->K = K;
+	/*
 	positive_group = new int[gsets[1].size()];
 	negative_group = new int[gsets[-1].size()];
 	checkset = new double[gsets[-1].size() + gsets[1].size()][VARS];
+	*/
 }
 
 IIF_disjunctive_svm_learn::IIF_disjunctive_svm_learn() : IIF_learn() { 
@@ -27,9 +29,11 @@ IIF_disjunctive_svm_learn::IIF_disjunctive_svm_learn() : IIF_learn() {
 	svm->main_equation = NULL;
 	this->max_iteration = max_iter; 
 	this->K = 8;
+	/*
 	positive_group = NULL;
 	negative_group = NULL;
 	checkset = NULL;
+	*/
 }
 
 static double square_distance(double* a1, double* b1, int size)
@@ -43,6 +47,7 @@ static double square_distance(double* a1, double* b1, int size)
 
 int IIF_disjunctive_svm_learn::k_means(int gset_index, int k)
 {
+	/*
 	if (k > K)
 		return -1;
 	States& set = gsets[gset_index];
@@ -103,12 +108,14 @@ int IIF_disjunctive_svm_learn::k_means(int gset_index, int k)
 		delete []kmeans[i];
 	delete []kmeans;
 	delete []label;
+	*/
 	return 0;
 }
 
 
 bool linear_separable(int positive_label, int negative_label)
 {
+	/*
 	int index = 0;
 	// copy all the data which are labeled as given to the checkset
 	int positive_size = gsets[POSITIVE].size();
@@ -119,7 +126,7 @@ bool linear_separable(int positive_label, int negative_label)
 	for(int i = 0; i < negative_size; i++)
 		if (negative_group[i] == negative_label)
 			checkset[index++] = gsets[POSITIVE][i];
-
+*/
 	return false;
 }
 
