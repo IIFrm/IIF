@@ -22,13 +22,15 @@ int main(int argc, char** argv)
 
 	std::cout << "TRY SVM method ...\n";
 	LinearLearn ll(gsets);
-	if (ll.learn() == 0) { return 0;}
+	if (ll.learn() == 0) 
+		return shutdownSystem(gsets); 
 
 	std::cout << "TRY SVM-I method ...\n";
 	ConjunctiveLearn cl(gsets);
-	if (cl.learn() == 0) { return 0;}
+	if (cl.learn() == 0)
+		return shutdownSystem(gsets); 
 
 	//std::cout << "TRY other method again...\n";
 	shutdownSystem(gsets);
-	return 0;
+	return -1;
 }

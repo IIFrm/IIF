@@ -62,8 +62,9 @@ States* initSystem(int (*func)(int*), const char* func_name, int timeout)
 }
 
 
-void shutdownSystem(States* gsets)
+int shutdownSystem(States* gsets)
 {
 	States* ss = &gsets[-1];
 	delete []ss;
+	return 0;
 }
