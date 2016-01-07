@@ -38,16 +38,6 @@
 //#define conj target_program
 extern int minv, maxv;
 
-/*#define create_state_sets(gsets) do{\
-	States global_states_sets[4];\
-	gsets = &global_states_sets[1];\
-} while(0);
-
-#define delete_state_sets(gsets) do {\
-	States* p = &gsets[-1];\
-	delete []p;\
-} while(0);
-*/
 
 States* initSystem(int (*func)(int*), const char* func_name = "UserFunction", int timeout = 60);
 

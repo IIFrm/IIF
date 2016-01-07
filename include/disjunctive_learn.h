@@ -14,7 +14,7 @@
 
 class DisjunctiveLearn: public LearnBase {
 	public:
-		DisjunctiveLearn(States* gsets, int (*func)(int*), int max_iteration = max_iter, int K = 8);
+		DisjunctiveLearn(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter, int K = 8);
 
 		DisjunctiveLearn();
 

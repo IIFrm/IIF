@@ -14,7 +14,7 @@
 
 class ConjunctiveLearn: public LearnBase {
 	public:
-		ConjunctiveLearn(States* gsets, int (*func)(int*), int max_iteration = max_iter);
+		ConjunctiveLearn(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter);
 
 		ConjunctiveLearn();
 

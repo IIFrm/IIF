@@ -29,18 +29,6 @@
 extern int (*target_program) (int*);
 
 
-/** @brief This function register the test program to the framework.
- *
- *	@param func The function to be tested
- *		   It involves a small validation test on the given function.
- *  @param fun_name defines the function name, can be ignored, or set to NULL
- *  @return a boolean value false only when the given function is not valid.
- */
-bool register_program(int (*func)(int*), const char* func_name = 0);
-
-/** @brief defines the timeout signal handler 
- */
-void sig_alrm(int signo);
 
 /** @brief defines the initial max number items contains by states set. 
  *		   Better to be a number larger than 1000 
@@ -70,5 +58,20 @@ const int random_exes = 2;
  *		   Should be a positive integer. Usually set between 8-128
  */
 const int max_iter = 32;
+
+/** @brief This function register the test program to the framework.
+ *
+ *	@param func The function to be tested
+ *		   It involves a small validation test on the given function.
+ *  @param fun_name defines the function name, can be ignored, or set to NULL
+ *  @return a boolean value false only when the given function is not valid.
+ */
+// legacy function, can be removed after all the test modification
+bool register_program(int (*func)(int*), const char* func_name = 0);
+
+/** @brief defines the timeout signal handler 
+ */
+// legacy function, can be removed after all the test modification
+void sig_alrm(int signo);
 
 #endif

@@ -20,16 +20,12 @@ int main(int argc, char** argv)
 	States* gsets = initSystem(f1a, "f1a");
 
 	std::cout << "TRY SVM method ...\n";
-	LinearLearn isl(gsets, target_program);
-	if (isl.learn() == 0) {  
-		return 0;
-	}
+	LinearLearn ll(gsets);
+	if (ll.learn() == 0) { return 0;}
 
 	std::cout << "TRY SVM-I method ...\n";
-	ConjunctiveLearn isil(gsets, target_program);
-	if (isil.learn() == 0) {	
-		return 0;
-	}
+	ConjunctiveLearn cl(gsets);
+	if (cl.learn() == 0) { return 0;}
 
 	//std::cout << "TRY other method again...\n";
 	shutdownSystem(gsets);

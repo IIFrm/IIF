@@ -14,7 +14,7 @@
 
 class LinearLearn: public LearnBase {
 	public:
-		LinearLearn(States* gsets, int (*func)(int*), int max_iteration = max_iter);
+		LinearLearn(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter);
 
 		LinearLearn();
 
