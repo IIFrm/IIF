@@ -25,11 +25,6 @@ enum color {RED = 0, YELLOW, GREEN, BLUE, WHITE};
  *  @param  out  The ostream to be changed, defines which stream you want to set
  *  @param  color The Color to set. YELLOW by default. 
  */
-void set_console_color(std::ostream& out, int color = YELLOW); 
-
-/** @brief This function sets the console color back to origin setting, not the previous setting.
- *		   By origin, we mean black background, white foreground, no strong comparision
- */
-void unset_console_color(std::ostream& out);
+void setColor(std::ostream& out, int color = WHITE); 
 
 #endif

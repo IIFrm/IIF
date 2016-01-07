@@ -1,7 +1,7 @@
-#ifndef _IIF_SVM_LEARN_
-#define _IIF_SVM_LEARN_
+#ifndef _LINEAR_
+#define _LINEAR_
 #include "config.h"
-#include "iif_learn.h"
+#include "learn_base.h"
 #include "ml_algo.h"
 #include "svm.h"
 #include "color.h"
@@ -12,11 +12,11 @@
 #include <string.h>
 #include <assert.h>
 
-class IIF_svm_learn: public IIF_learn {
+class LinearLearn: public LearnBase {
 	public:
-		IIF_svm_learn(States* gsets, int (*func)(int*), int max_iteration = max_iter);
+		LinearLearn(States* gsets, int (*func)(int*), int max_iteration = max_iter);
 
-		IIF_svm_learn();
+		LinearLearn();
 
 		virtual int learn();
 

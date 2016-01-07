@@ -7,8 +7,8 @@
  *  @author Li Jiaying
  *  @bug no known bugs found.
  */
-#ifndef _IIF_LEARN_
-#define _IIF_LEARN_
+#ifndef _LEARN_BASE_
+#define _LEARN_BASE_
 
 #include "config.h"
 #include "states.h"
@@ -22,13 +22,13 @@
 #include <assert.h>
 
 
-class IIF_learn{
+class LearnBase{
 	public:
-		IIF_learn(States* gsets, int (*func)(int*)): gsets(gsets), func(func) {
+		LearnBase(States* gsets, int (*func)(int*)): gsets(gsets), func(func) {
 			init_gsets();
 		}
 
-		IIF_learn() {
+		LearnBase() {
 			gsets = NULL;
 			func = NULL;
 		}
@@ -41,7 +41,7 @@ class IIF_learn{
 		void run_target(Solution& input) {
 			assert(func != NULL);
 			assert(&input != NULL);
-			before_loop();
+			beforeLoop();
 
 			int a[VARS];
 			for (int i = 0; i < VARS; i++)
@@ -49,12 +49,12 @@ class IIF_learn{
 			//target_program
 			func(a);
 
-			after_loop(gsets);
+			afterLoop(gsets);
 			if (gsets[COUNTER_EXAMPLE].traces_num() > 0) {
-				set_console_color(std::cout, RED);
+				setColor(std::cout, RED);
 				std::cout << "}\nProgram BUG! Program have encountered a Counter-Example trace." << std::endl;
 				std::cout << gsets[COUNTER_EXAMPLE] << std::endl;
-				unset_console_color(std::cout);
+				setColor(std::cout);
 				exit(-1);
 			}
 		}

@@ -17,9 +17,10 @@
 #include "color.h"
 #include "equation.h"
 #include "states.h"
-#include "iif_learn.h"
-#include "iif_svm_learn.h"
-#include "iif_svm_i_learn.h"
+#include "learn_base.h"
+#include "linear_learn.h"
+#include "conjunctive_learn.h"
+#include "disjunctive_learn.h"
 #include "iif_assert.h"
 
 #include <iostream>

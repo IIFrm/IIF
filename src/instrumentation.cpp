@@ -18,7 +18,7 @@ int temp_index;
 
 
 #include "color.h"
-int add_state_int(int first ...)
+int addStateInt(int first ...)
 {
 	va_list ap;
 	va_start(ap, first);
@@ -29,25 +29,25 @@ int add_state_int(int first ...)
 	va_end(ap);
 
 #ifdef __PRT_TRACE
-	set_console_color(std::cout, BLUE);
+	setColor(std::cout, BLUE);
 	std::cout << "(" << temp_states[temp_index][0];
 	for (int i = 1; i < VARS; i++) {
 	    std::cout << "," << temp_states[temp_index][i];
 	}
 	std::cout << ")";
-	unset_console_color(std::cout);
+	setColor(std::cout);
 #endif
 	temp_index++;
 	if (temp_index >= max_states_in_one_trace) {
-		set_console_color(std::cout, RED);
+		setColor(std::cout, RED);
 		std::cout << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n";
-		unset_console_color(std::cout);
+		setColor(std::cout);
 		exit(-1);
 	}
 	return 0;
 }
 
-int add_state_double(double first, ...)
+int addStateDouble(double first, ...)
 {
 	va_list ap;
 	va_start(ap, first);
@@ -58,16 +58,16 @@ int add_state_double(double first, ...)
 	va_end(ap);
 	temp_index++;
 	if (temp_index >= max_states_in_one_trace) {
-		set_console_color(std::cout, RED);
+		setColor(std::cout, RED);
 		std::cout << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n";
-		unset_console_color(std::cout);
+		setColor(std::cout);
 		exit(-1);
 	}
 	return 0;
 }
 
 
-int before_loop()
+int beforeLoop()
 {
 	//std::cout << "---> before_loop";
 	temp_index = 0;
@@ -80,7 +80,7 @@ int before_loop()
 }
 
 
-int after_loop(States* gsets)
+int afterLoop(States* gsets)
 {
 	int label = 0;
 	assert(assume_times == 1);
@@ -96,7 +96,7 @@ int after_loop(States* gsets)
 	}
 
 #ifdef __PRT_TRACE
-	set_console_color(std::cout, BLUE);
+	setColor(std::cout, BLUE);
 	std::cout << "TRACE: ";
 	for (int i = 0; i < temp_index; i++) {
 		std::cout << "(" << temp_states[i][0];
@@ -105,21 +105,21 @@ int after_loop(States* gsets)
 		std::cout << ")->";
 	}
 	std::cout << "END[" << label << "]" << std::endl;
-	unset_console_color(std::cout);
+	setColor(std::cout);
 
 	//TS[label].addLoopTrace(LT);
 #endif
-	gsets[label].add_states(temp_states, temp_index);
+	gsets[label].addStates(temp_states, temp_index);
 	return 0;
 }
 
 
-int m_double(double* p)
+int mDouble(double* p)
 {
 	int a[VARS];
 	for (int i = 0; i < VARS; i++)
 		a[i] = static_cast<int>(p[i]);
-	return m_int(a);
+	return mInt(a);
 }
 
-int m_int(int* p) { return target_program(p); }
+int mInt(int* p) { return target_program(p); }

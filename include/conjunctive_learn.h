@@ -1,7 +1,7 @@
-#ifndef _IIF_SVM_I_LEARN_
-#define _IIF_SVM_I_LEARN_
+#ifndef _CONJUNCTIVE_
+#define _CONJUNCTIVE_
 #include "config.h"
-#include "iif_learn.h"
+#include "learn_base.h"
 #include "ml_algo.h"
 #include "svm_i.h"
 #include "color.h"
@@ -12,11 +12,13 @@
 #include <string.h>
 #include <assert.h>
 
-class IIF_svm_i_learn: public IIF_learn {
+class ConjunctiveLearn: public LearnBase {
 	public:
-		IIF_svm_i_learn(States* gsets, int (*func)(int*), int max_iteration = max_iter);
+		ConjunctiveLearn(States* gsets, int (*func)(int*), int max_iteration = max_iter);
 
-		IIF_svm_i_learn();
+		ConjunctiveLearn();
+
+		~ConjunctiveLearn();
 
 		virtual int learn();
 

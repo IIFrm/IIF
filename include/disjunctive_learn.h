@@ -1,7 +1,7 @@
-#ifndef _IIF_DISJUNCTIVE_SVM_LEARN_
-#define _IIF_DISJUNCTIVE_SVM_LEARN_
+#ifndef _DISJUNCTIVE_
+#define _DISJUNCTIVE_
 #include "config.h"
-#include "iif_learn.h"
+#include "learn_base.h"
 #include "ml_algo.h"
 #include "svm.h"
 #include "color.h"
@@ -12,11 +12,11 @@
 #include <string.h>
 #include <assert.h>
 
-class IIF_disjunctive_svm_learn: public IIF_learn {
+class DisjunctiveLearn: public LearnBase {
 	public:
-		IIF_disjunctive_svm_learn(States* gsets, int (*func)(int*), int max_iteration = max_iter, int K = 8);
+		DisjunctiveLearn(States* gsets, int (*func)(int*), int max_iteration = max_iter, int K = 8);
 
-		IIF_disjunctive_svm_learn();
+		DisjunctiveLearn();
 
 		virtual int learn();
 

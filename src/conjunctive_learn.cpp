@@ -3,8 +3,8 @@
 #include "svm.h"
 #include "color.h"
 #include "equation.h"
-#include "iif_learn.h"
-#include "iif_svm_i_learn.h"
+//#include "learn.h"
+#include "conjunctive_learn.h"
 
 #include <iostream>
 #include <float.h>
@@ -13,18 +13,22 @@
 
 static void print_null(const char *s) {}
 
-IIF_svm_i_learn::IIF_svm_i_learn(States* gsets, int (*func)(int*), int max_iteration) : IIF_learn(gsets, func) { 
+ConjunctiveLearn::ConjunctiveLearn(States* gsets, int (*func)(int*), int max_iteration) : LearnBase(gsets, func) { 
 	svm_i = new SVM_I(print_null);
 	this->max_iteration = max_iteration;
 }
 
-IIF_svm_i_learn::IIF_svm_i_learn() : IIF_learn() { 
+ConjunctiveLearn::ConjunctiveLearn() : LearnBase() { 
 	svm_i = new SVM_I(print_null);
 	this->max_iteration = max_iter;
 }
 
+ConjunctiveLearn::~ConjunctiveLearn() { 
+	if (svm_i != NULL)
+		delete svm_i;
+}
 
-int IIF_svm_i_learn::learn()
+int ConjunctiveLearn::learn()
 {
 	Solution inputs;
 	srand(time(NULL)); // initialize seed for rand() function
@@ -79,7 +83,7 @@ int IIF_svm_i_learn::learn()
 #ifdef __PRT
 		std::cout << "\t(2) prepare training data... ";
 #endif
-		svm_i->prepare_training_data(gsets, pre_positive_size, pre_negative_size);
+		svm_i->makeTrainingSet(gsets, pre_positive_size, pre_negative_size);
 
 #ifdef __PRT
 		std::cout << "\n\t(3) start training... ";
@@ -87,16 +91,16 @@ int IIF_svm_i_learn::learn()
 		int ret = svm_i->train();
 		if (ret == -1)
 		{
-			set_console_color(std::cout, RED);
+			setColor(std::cout, RED);
 			std::cerr << "[FAIL] ..... Can not dividey by SVM_I." << std::endl;
-			unset_console_color(std::cout);
+			setColor(std::cout);
 			return -1;
 		}
 		//std::cout << svm_i->equ_num;
 		std::cout << "|-->> ";
-		set_console_color(std::cout);
+		setColor(std::cout);
 		std::cout << *svm_i << std::endl;
-		unset_console_color(std::cout);
+		setColor(std::cout);
 
 		/*
 		 *	check on its own training data.
@@ -105,28 +109,28 @@ int IIF_svm_i_learn::learn()
 #ifdef __PRT
 		std::cout << "\t(4) checking training traces.";
 #endif
-		pass_rate = svm_i->predict_on_training_set();
+		pass_rate = svm_i->checkTrainingSet();
 
 #ifdef __PRT
-		if (pass_rate == 1) set_console_color(std::cout, GREEN);
-		else set_console_color(std::cout, RED);
+		if (pass_rate == 1) setColor(std::cout, GREEN);
+		else setColor(std::cout, RED);
 		std::cout << " [" << pass_rate * 100 << "%]";
-		unset_console_color(std::cout);
+		setColor(std::cout);
 #endif
 
 		if (pass_rate < 1) {
-			set_console_color(std::cout, RED);
+			setColor(std::cout, RED);
 			std::cerr << "[FAIL] ..... Can not dividey by SVM_I." << std::endl;
 			//std::cerr << "[FAIL] ..... Reaching maximium num of equation supported by SVM_I." << std::endl;
 			//std::cerr << "You can increase the limit by modifying [classname::methodname]=SVM-I::SVM-I(..., int equ = **) " << std::endl;
-			unset_console_color(std::cout);
+			setColor(std::cout);
 			rnd++;
 			break;	
 		}
 #ifdef __PRT
-		set_console_color(std::cout, GREEN);
+		setColor(std::cout, GREEN);
 		std::cout << " [PASS]" << std::endl;
-		unset_console_color(std::cout);
+		setColor(std::cout);
 #endif
 
 
@@ -134,10 +138,11 @@ int IIF_svm_i_learn::learn()
 		 *	Check on Question traces.
 		 *	There should not exists one traces, in which a negative state is behind a positive state.
 		 */
+		/*
 #ifdef __PRT
 		std::cout << "\t(5) checking question traces.";
 #endif
-		if (svm_i->check_question_set(gsets[QUESTION]) != 0) {
+		if (svm_i->checkQuestionSet(gsets[QUESTION]) != 0) {
 #ifdef __PRT
 			std::cout << std::endl << "check on question set return error." << std::endl;
 #endif
@@ -146,7 +151,7 @@ int IIF_svm_i_learn::learn()
 #ifdef __PRT
 		std::cout << std::endl;
 #endif
-
+*/
 
 		/*
 		 *	b_similar_last_time is used to store the convergence check return value for the last time.
@@ -154,9 +159,9 @@ int IIF_svm_i_learn::learn()
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
 #ifdef __PRT
-		std::cout << "\t(6) check convergence:        ";
+		std::cout << "\t(5) check convergence:        ";
 #endif
-		if (svm_i->get_converged(previous_equations, pre_equation_num) == 0) {
+		if (svm_i->converged(previous_equations, pre_equation_num) == 0) {
 			if (b_similar_last_time == true) {
 #ifdef __PRT
 				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
@@ -198,7 +203,7 @@ int IIF_svm_i_learn::learn()
 	if ((b_converged) && (rnd <= max_iteration)) {
 		int equation_num = -1;
 		Equation* equs = svm_i->roundoff(equation_num);
-		set_console_color(std::cout, YELLOW);
+		setColor(std::cout, YELLOW);
 		std::cout << "  Hypothesis Invairant(Converged): {";
 		std::cout << " \n\t ------------------------------------------------------";
 		std::cout << " \n\t |     " << equs[0];
@@ -206,19 +211,18 @@ int IIF_svm_i_learn::learn()
 			std::cout << " \n\t |  /\\ " << equs[i];
 		}
 		std::cout << " \n\t ------------------------------------------------------\n";
-		unset_console_color(std::cout);
+		setColor(std::cout);
 		delete[]equs;
 	}
 
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {
-		set_console_color(std::cout, RED);
+		setColor(std::cout, RED);
 		std::cout << "  Cannot divide by SVM_I perfectly.\n";
-		unset_console_color(std::cout);
+		setColor(std::cout);
 		ret = -1;
 	}
 
 	delete []previous_equations;
-	delete svm_i;
 
 	return ret;
 }

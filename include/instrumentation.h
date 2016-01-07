@@ -19,32 +19,25 @@
 enum trace_type{ NEGATIVE = -1, QUESTION, POSITIVE, COUNTER_EXAMPLE };	/* trace_type */
 
 
-int add_state_int(int first, ...);
-int add_state_double(double first, ...);
+int addStateInt(int first, ...);
+int addStateDouble(double first, ...);
 
 /// record furntions for each platform
-#ifdef WIN32  
-	#define recordi(first, ...) add_state_int(first, ##__VA_ARGS__)
-	#define recordd(first, ...) add_state_double(first, ##__VA_ARGS__)
-#endif
-
-#ifdef linux
-	#define recordi(first, args ...) add_state_int(first, ##args)
-	#define recordd(first, args ...) add_state_double(first, ##args)
-#endif
-
-#ifdef __MACH__ 
-	#define recordi(first, args ...) add_state_int(first, ##args)
-	#define recordd(first, args ...) add_state_double(first, ##args)
+#if WIN32  
+	#define recordi(first, ...) addStateInt(first, ##__VA_ARGS__)
+	#define recordd(first, ...) addStateDouble(first, ##__VA_ARGS__)
+#elif (linux ||__MACH__) 
+	#define recordi(first, args ...) addStateInt(first, ##args)
+	#define recordd(first, args ...) addStateDouble(first, ##args)
 #endif
 
 /** @brief function jump list, DONOT use it unless you know what you are doing
  */
-int m_int(int*);
+int mInt(int*);
 
 /** @brief function jump list, DONOT use it unless you know what you are doing
  */
-int m_double(double*);
+int mDouble(double*);
 
 
 /** @brief This function should be called each time before executing loop
@@ -52,13 +45,13 @@ int m_double(double*);
  * @param void
  * @return void
  */
-int before_loop();
+int beforeLoop();
 
 /** @brief This function should be called each time after executing loop
  *
  * @param void
  * @return void
  */
-int after_loop(States *);
+int afterLoop(States *);
 
 #endif

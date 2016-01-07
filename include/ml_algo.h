@@ -12,10 +12,10 @@
 #include "states.h"
 #include "equation.h"
 
-class ML_Algo 
+class MLalgo 
 {
 	public:
-		ML_Algo() {};
+		MLalgo() {};
 
 		/** @brief init training data method. This should be called before any training happens.
 		 *
@@ -31,7 +31,7 @@ class ML_Algo
 		 *							 Calls afterwards should pass the value set by last call.
 		 *	@return int 0 if no error
 		 */
-		virtual int prepare_training_data(States* gsets, int& pre_positive_size, int&pre_negative_size) = 0;
+		virtual int makeTrainingSet(States* gsets, int& pre_positive_size, int&pre_negative_size) = 0;
 
 		/** @brief The most important TRAIN method, which calls real training algorithm to do training
 		 *
@@ -43,7 +43,7 @@ class ML_Algo
 		 *
 		 * @return double Return precision we can get. Should be a value between 0 and 1.
 		 */
-		virtual double predict_on_training_set() = 0;
+		virtual double checkTrainingSet() = 0;
 
 		/** @brief test on question state sets to see if there is an invalidation 
 		 *
@@ -52,7 +52,7 @@ class ML_Algo
 		 * @param qset is a reference type to question states. 
 		 * @return int 0 if no error 
 		 */
-		virtual int check_question_set(States& qset) = 0;
+		virtual int checkQuestionSet(States& qset) = 0;
 
 		/** @brief check whether the training is converged or not 
 		 *
@@ -62,20 +62,20 @@ class ML_Algo
 		 * @param equation_num is the number of equations get from last training session 
 		 * @return int 0 if converged 
 		 */
-		virtual int get_converged(Equation* previous_equations, int equation_num) = 0;
+		virtual int converged(Equation* previous_equations, int equation_num) = 0;
 
 		/** @brief output the current trainig result of a ML_Algo
 		 *
 		 * @param mla the ml_algo object to be output
 		 * @return std::ostream
 		 */
-		friend std::ostream& operator << (std::ostream& out, const ML_Algo& mla) { return mla._print(out); }
+		friend std::ostream& operator << (std::ostream& out, const MLalgo& mla) { return mla._print(out); }
 
 		/** @brief This is the function really called to output this object.
 		 *		   We involve this as to support polymophism for operator <<
 		 */
 		virtual std::ostream& _print(std::ostream& out) const {
-			out << "ML-Algo: NULL";
+			out << "ML-algo: NULL";
 			return out;
 		};
 
@@ -84,7 +84,7 @@ class ML_Algo
 		 * 
 		 * @return int the size of problem
 		 */
-		virtual int size() = 0;
+		virtual int getProblemSize() = 0;
 
 
 		/** @brief Round off the whole training model.(equations)
@@ -100,10 +100,9 @@ class ML_Algo
 		/** @brief Predict sample x against the whole training model.(equations)
 		 *
 		 * @param x contains the sample to be tested. 
-		 * @param flag leave this to be ZERO...
 		 * @return The label of prediction 
 		 */
-		virtual int predict(double* x, int flag) = 0;
+		virtual int predict(double* x) = 0;
 	private:
 };
 

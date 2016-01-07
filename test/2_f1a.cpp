@@ -30,13 +30,13 @@ int main(int argc, char** argv)
 	alarm(60);
 #endif
 	std::cout << "TRY SVM method ...\n";
-	IIF_svm_learn isl(gsets, target_program);
+	LinearLearn isl(gsets, target_program);
 	if (isl.learn() == 0) {  
 		return 0;
 	}
 
 	std::cout << "TRY SVM-I method ...\n";
-	IIF_svm_i_learn isil(gsets, target_program);
+	ConjunctiveLearn isil(gsets, target_program);
 	if (isil.learn() == 0) {	
 		return 0;
 	}
