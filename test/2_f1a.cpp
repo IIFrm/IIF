@@ -17,18 +17,8 @@ int f1a(int* a) {
 
 int main(int argc, char** argv)
 {
-	States global_states_sets[4];
-	States* gsets = &global_states_sets[1];
+	States* gsets = initSystem(f1a, "f1a");
 
-	if (register_program(f1a, "f1a") == false) {
-		return -1;
-	} 
-
-#ifdef linux
-	if (signal(SIGALRM, sig_alrm) == SIG_ERR)
-		exit(-1);
-	alarm(60);
-#endif
 	std::cout << "TRY SVM method ...\n";
 	LinearLearn isl(gsets, target_program);
 	if (isl.learn() == 0) {  
@@ -42,5 +32,6 @@ int main(int argc, char** argv)
 	}
 
 	//std::cout << "TRY other method again...\n";
+	shutdownSystem(gsets);
 	return 0;
 }

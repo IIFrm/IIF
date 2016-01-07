@@ -38,7 +38,6 @@ extern int (*target_program) (int*);
  */
 bool register_program(int (*func)(int*), const char* func_name = 0);
 
-
 /** @brief defines the timeout signal handler 
  */
 void sig_alrm(int signo);

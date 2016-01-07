@@ -46,3 +46,25 @@ void sig_alrm(int signo) {
 	std::cout << "\nTIMEOUT!\n";
 	exit(-1);
 }
+
+
+States* initSystem(int (*func)(int*), const char* func_name, int timeout) 
+{
+	States* ss = new States[4];
+
+	register_program(func, func_name);
+#ifdef linux
+	if (signal(SIGALRM, sig_alrm) == SIG_ERR)
+		exit(-1);
+	alarm(timeout);
+#endif
+	
+	return &ss[1];
+}
+
+
+void shutdownSystem(States* gsets)
+{
+	States* ss = &gsets[-1];
+	delete []ss;
+}

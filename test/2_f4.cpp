@@ -19,30 +19,17 @@ int f2(int* a) {
 
 int main(int argc, char** argv)
 {
-	States global_states_sets[4];
-	States* gsets = &global_states_sets[1];
+	States* gsets = initSystem(f2, "f2");
 
-	if (register_program(f2, "f2") == false) { 
-		return -1;
-	} 
-
-#ifdef linux
-	if (signal(SIGALRM, sig_alrm) == SIG_ERR)
-		exit(-1);
-	alarm(60);
-#endif
 	std::cout << "TRY SVM method ...\n";
 	LinearLearn isl(gsets, target_program);
-	if (isl.learn() == 0) {  
-		return 0;
-	}
+	if (isl.learn() == 0) { return 0;}
 
 	std::cout << "TRY SVM-I method ...\n";
 	ConjunctiveLearn isil(gsets, target_program);
-	if (isil.learn() == 0) {	
-		return 0;
-	}
+	if (isil.learn() == 0) { return 0;}
 
 	//std::cout << "TRY other method again...\n";
+	shutdownSystem(gsets);
 	return 0;
 }

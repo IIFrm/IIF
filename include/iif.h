@@ -49,4 +49,8 @@ extern int minv, maxv;
 } while(0);
 */
 
+States* initSystem(int (*func)(int*), const char* func_name = "UserFunction", int timeout = 60);
+
+void shutdownSystem(States* gsets);
+
 #endif
