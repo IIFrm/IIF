@@ -1,11 +1,6 @@
 #include "iif.h"
 #include <iostream>
 
-static int nondet() {
-	return rand() % 4;
-	return rand() % 20;
-}
-
 int conj(int* a)
 {
 	int x;
@@ -14,14 +9,12 @@ int conj(int* a)
 	iif_assume((x >= 0) && (x <= 50));
 	while (loop_times-- > 0) {
 		recordi(x);
-		if (x >= 50) {
+		if (x == 50) {
 			x --;
-		}
-		else if (x <= 0) {
+		} else if (x == 0) {
 			x ++;
-		}
-		else {
-			x += rand() %3 - 1;
+		} else {
+			x += rand() % 3 - 1;
 		}
 	}
 	recordi(x);
