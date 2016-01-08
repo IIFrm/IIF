@@ -206,13 +206,13 @@ init_svm:
 
 	int ret = 0;
 	if ((converged) && (rnd <= max_iteration)) {
-		int equation_num = -1;
-		Equation* equs = svm->roundoff(equation_num);
-		assert(equation_num == 1);
+		int equ_num = -1;
+		Equation* equ = svm->roundoff(equ_num);
+		assert(equ_num == 1);
 		std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
-		std::cout << "\t\t" << GREEN << equs[0] << YELLOW << std::endl;
+		std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
 		std::cout << "  }" << WHITE << std::endl;
-		delete[]equs;
+		delete equ;
 	}
 
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {
@@ -220,8 +220,7 @@ init_svm:
 		ret = -1;
 	}
 
-	if (lastEquation)
-		delete lastEquation;
+	if (lastEquation) delete lastEquation;
 
 	return ret;
 }

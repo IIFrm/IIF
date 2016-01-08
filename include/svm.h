@@ -200,9 +200,9 @@ class SVM : public MLalgo
 
 		Equation* roundoff(int& num) {
 			num = 1;
-			Equation* equs = new Equation[1];
-			classifier->roundoff(equs[0]);
-			return equs;
+			Equation* equ = new Equation();
+			classifier->roundoff(*equ);
+			return equ;
 		}
 
 		int predict(double* v) {
