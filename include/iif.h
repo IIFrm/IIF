@@ -18,10 +18,10 @@
 #include "solution.h"
 #include "equation.h"
 #include "states.h"
-#include "learn_base.h"
-#include "linear_learn.h"
-#include "conjunctive_learn.h"
-#include "disjunctive_learn.h"
+#include "base_learner.h"
+#include "linear_learner.h"
+#include "conjunctive_learner.h"
+#include "disjunctive_learner.h"
 #include "iif_assert.h"
 
 #include <iostream>
@@ -42,6 +42,6 @@ extern int minv, maxv;
 
 States* initSystem(int (*func)(int*), const char* func_name = "UserFunction", int timeout = 60);
 
-int shutdownSystem(States* gsets);
+int destroySystem(States* gsets);
 
 #endif

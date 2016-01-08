@@ -32,18 +32,17 @@ int conj(int* a)
 
 int main(int argc, char** argv)
 {
-
 	States* gsets = initSystem(conj, "conj");
 
 	std::cout << "TRY SVM method ...\n";
-	LinearLearn isl(gsets, target_program);
-	if (isl.learn() == 0) { return 0;}
+	LinearLearner ll(gsets);
+	if (ll.learn() == 0) return destroySystem(gsets); 
 
 	std::cout << "TRY SVM-I method ...\n";
-	ConjunctiveLearn isil(gsets, target_program);
-	if (isil.learn() == 0) { return 0;}
+	ConjunctiveLearner cl(gsets);
+	if (cl.learn() == 0) return destroySystem(gsets); 
 
 	//std::cout << "TRY other method again...\n";
-	shutdownSystem(gsets);
-	return 0;
+	destroySystem(gsets);
+	return -1;
 }

@@ -1,7 +1,7 @@
 #include "config.h"
 #include "color.h"
 #include "equation.h"
-#include "linear_learn.h"
+#include "linear_learner.h"
 
 #include <iostream>
 //#include <float.h>
@@ -10,13 +10,13 @@
 
 static void print_null(const char *s) {}
 
-LinearLearn::LinearLearn(States* gsets, int (*func)(int*), int max_iteration) : LearnBase(gsets, func) { 
+LinearLearner::LinearLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
 	svm = new SVM(print_null);
 	this->max_iteration = max_iteration; 
 }
 
 
-LinearLearn::~LinearLearn() {
+LinearLearner::~LinearLearner() {
 	delete svm;
 }
 
@@ -25,7 +25,7 @@ LinearLearn::~LinearLearn() {
 //			   if paras == NULL, all are random points
 //			   if paras != NULL, selective sampling
 /// type > 0, paras contains type number of inputs.....
-int LinearLearn::programExecutor(int randn, int exen, int type, void* paras)
+int LinearLearner::programExecutor(int randn, int exen, int type, void* paras)
 {
 	if ((type != 0) && (exen > type))
 		randn += exen - type;
@@ -78,7 +78,7 @@ int LinearLearn::programExecutor(int randn, int exen, int type, void* paras)
 
 
 
-int LinearLearn::learn()
+int LinearLearner::learn()
 {
 	int rnd;
 	bool similarLast = false;
@@ -95,8 +95,9 @@ int LinearLearn::learn()
 		int exes = (rnd == 1)? init_exes : after_exes;
 init_svm:
 #ifdef __PRT
+		int step = 1;
 		std::cout << "SVM------------------------------------------------------------------------------------------------------------" << std::endl;
-		std::cout << "\t(1) execute programs... [" << exes + random_exes << "] ";
+		std::cout << "\t(" << step++ << ") execute programs... [" << exes + random_exes << "] ";
 #endif
 		programExecutor(random_exes, exes, 0, (void*)lastEquation );
 
@@ -109,13 +110,13 @@ init_svm:
 		}
 
 #ifdef __PRT
-		std::cout << "\n\t(2) prepare training data... ";
+		std::cout << "\t(" << step++ << ") prepare training data... ";
 #endif
 		svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
 
 
 #ifdef __PRT
-		std::cout << "\n\t(3) start training... ";
+		std::cout << "\n\t(" << step++ << ") start training... ";
 #endif
 		svm->train();
 		std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
@@ -127,7 +128,7 @@ init_svm:
 		 *	There should be no prediction errors.
 		 */
 #ifdef __PRT
-		std::cout << "\t(4) checking training traces.";
+		std::cout << "\t(" << step++ << ") checking training traces.";
 #endif
 		pass_rate = svm->checkTrainingSet();
 
@@ -145,7 +146,7 @@ init_svm:
 			break;
 		}
 #ifdef __PRT
-		std::cout << GREEN << " [PASS]" << WHITE << std::endl;
+		std::cout << GREEN << " [PASS]" << WHITE;
 #endif
 
 
@@ -153,9 +154,9 @@ init_svm:
 		 *	Check on Question traces.
 		 *	There should not exists one traces, in which a negative state is behind a positive state.
 		 */
-
+/*
 #ifdef __PRT
-		std::cout << "\t(5) checking question traces.";
+		std::cout << "\n\t(" << step++ << ") checking question traces.";
 #endif
 		if (svm->checkQuestionSet(gsets[QUESTION]) != 0) {
 #ifdef __PRT
@@ -163,7 +164,7 @@ init_svm:
 #endif
 			return -1;
 		}
-
+*/
 
 		/*
 		 *	similarLast is used to store the convergence check return value for the last time.
@@ -171,7 +172,7 @@ init_svm:
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
 #ifdef __PRT
-		std::cout << "\t(6) check convergence:        ";
+		std::cout << "\n\t(" << step++ << ") check convergence:        ";
 #endif
 		if (svm->converged(lastEquation, 1) == 0) {
 			if (similarLast == true) {

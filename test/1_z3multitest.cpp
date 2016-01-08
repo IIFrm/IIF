@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 	Equation e2(-2.0, 1.0526422);
 	std::cout << "---------------test1-----------------\n";
 	std::cout << "[" << e1[0] << " /\\ "<< e1[1] << "]\t==>\t[" << e2 << "]? ";
-	int ret = Equation::multi_imply(e1, 2, e2);
+	int ret = Equation::multiImply(e1, 2, e2);
 	switch(ret) {
 		case 0: std::cout << "False\n"; break;
 		case 1: std::cout << "True\n"; break;
@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 	Equation e4(-1.0, 1.0);
 	std::cout << "---------------test2-----------------\n";
 	std::cout << "[" << e3[0] << " /\\ "<< e3[1] << "]\t==>\t[" << e4 << "]? ";
-	ret = Equation::multi_imply(e3, 2, e4);
+	ret = Equation::multiImply(e3, 2, e4);
 	switch(ret) {
 		case 0: std::cout << "False\n"; break;
 		case 1: std::cout << "True\n"; break;
@@ -34,7 +34,7 @@ int main(int argc, char** argv)
 	Equation e6(-3.0, 1.0);
 	std::cout << "---------------test2-----------------\n";
 	std::cout << "[" << e5[0] << " /\\ "<< e5[1] << "]\t==>\t[" << e6 << "]? ";
-	ret = Equation::multi_imply(e5, 2, e6);
+	ret = Equation::multiImply(e5, 2, e6);
 	switch(ret) {
 		case 0: std::cout << "False\n"; break;
 		case 1: std::cout << "True\n"; break;

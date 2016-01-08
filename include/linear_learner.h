@@ -1,15 +1,15 @@
 #ifndef _LINEAR_
 #define _LINEAR_
 #include "config.h"
-#include "learn_base.h"
+#include "base_learner.h"
 #include "svm.h"
 
 
-class LinearLearn: public LearnBase {
+class LinearLearner: public BaseLearner {
 	public:
-		LinearLearn(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter);
+		LinearLearner(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter);
 
-		~LinearLearn();
+		~LinearLearner();
 
 		virtual int learn();
 

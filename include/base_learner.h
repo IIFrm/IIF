@@ -7,8 +7,8 @@
  *  @author Li Jiaying
  *  @bug no known bugs found.
  */
-#ifndef _LEARN_BASE_
-#define _LEARN_BASE_
+#ifndef _LEARNER_BASE_
+#define _LEARNER_BASE_
 
 #include "config.h"
 #include "states.h"
@@ -22,13 +22,13 @@
 #include <assert.h>
 
 
-class LearnBase{
+class BaseLearner{
 	public:
-		LearnBase(States* gsets, int (*func)(int*)): gsets(gsets), func(func) {
+		BaseLearner(States* gsets, int (*func)(int*)): gsets(gsets), func(func) {
 			init_gsets();
 		}
 
-		LearnBase() {
+		BaseLearner() {
 			gsets = NULL;
 			func = NULL;
 		}

@@ -1,7 +1,7 @@
 #ifndef _CONJUNCTIVE_
 #define _CONJUNCTIVE_
 #include "config.h"
-#include "learn_base.h"
+#include "base_learner.h"
 #include "ml_algo.h"
 #include "svm_i.h"
 #include "color.h"
@@ -12,13 +12,11 @@
 #include <string.h>
 #include <assert.h>
 
-class ConjunctiveLearn: public LearnBase {
+class ConjunctiveLearner: public BaseLearner {
 	public:
-		ConjunctiveLearn(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter);
+		ConjunctiveLearner(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter);
 
-		ConjunctiveLearn();
-
-		~ConjunctiveLearn();
+		~ConjunctiveLearner();
 
 		virtual int learn();
 

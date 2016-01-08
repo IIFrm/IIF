@@ -3,7 +3,7 @@
 #include "svm.h"
 #include "color.h"
 #include "equation.h"
-#include "disjunctive_learn.h"
+#include "disjunctive_learner.h"
 
 #include <iostream>
 #include <float.h>
@@ -12,7 +12,7 @@
 
 static void print_null(const char *s) {}
 
-DisjunctiveLearn::DisjunctiveLearn(States* gsets, int (*func)(int*), int max_iteration, int K) : LearnBase(gsets, func) { 
+DisjunctiveLearner::DisjunctiveLearner(States* gsets, int (*func)(int*), int max_iteration, int K) : BaseLearner(gsets, func) { 
 	svm = new SVM(print_null);
 	//svm->main_equation = NULL;
 	this->max_iteration = max_iteration; 
@@ -24,21 +24,9 @@ DisjunctiveLearn::DisjunctiveLearn(States* gsets, int (*func)(int*), int max_ite
 	*/
 }
 
-DisjunctiveLearn::DisjunctiveLearn() : LearnBase() { 
-	svm = new SVM(print_null);
-	//svm->main_equation = NULL;
-	this->max_iteration = max_iter; 
-	this->K = 8;
-	/*
-	positive_group = NULL;
-	negative_group = NULL;
-	checkset = NULL;
-	*/
-}
 
 
-
-int DisjunctiveLearn::k_means(int gset_index, int k)
+int DisjunctiveLearner::k_means(int gset_index, int k)
 {
 	/*
 	if (k > K)
@@ -125,7 +113,7 @@ bool linear_separable(int positive_label, int negative_label)
 
 
 
-int DisjunctiveLearn::learn()
+int DisjunctiveLearner::learn()
 {
 	return 0;
 }

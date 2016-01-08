@@ -11,9 +11,12 @@ class SVM : public MLalgo
 		svm_problem problem;
 		svm_model* model;
 		Equation* classifier;
+		int max_size;
+
+		double* label; // [max_items * 2];
+		double** data; // [max_items * 2];
 
 	protected:
-		int max_size;
 		int enlargeSize(int new_size) {
 			assert (new_size >= max_size);
 			int valid_size = problem.l;
@@ -35,9 +38,6 @@ class SVM : public MLalgo
 
 
 	public:
-		double* label; // [max_items * 2];
-		double** data; // [max_items * 2];
-
 		inline Equation* getClassifier() {
 			return classifier;
 		}
@@ -64,7 +64,8 @@ class SVM : public MLalgo
 		}
 
 		~SVM() {
-			if (model != NULL) delete model;
+			//if (model != NULL) delete model;
+			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (classifier != NULL) delete classifier;
 			if (data != NULL) delete []data;
 			if (label != NULL) delete label;
@@ -78,13 +79,9 @@ class SVM : public MLalgo
 				enlargeSize(cur_psize + cur_nsize);
 			
 #ifdef __PRT
-			std::cout << "+[";
-			std::cout << cur_psize - pre_psize << "|";
-			std::cout << cur_nsize - pre_nsize << "";
-			std::cout << "] ==> [";
-			std::cout << cur_psize << "+|";
-			std::cout << cur_nsize << "-";
-			std::cout << "]";
+			std::cout << "+[" << cur_psize - pre_psize << "|"
+				<< cur_nsize - pre_nsize  << "] ==> ["
+				<< cur_psize << "+|" << cur_nsize << "-]";
 #endif
 
 			// prepare new training data set
@@ -120,6 +117,7 @@ class SVM : public MLalgo
 			if (classifier == NULL) classifier = new Equation();
 			svm_model_visualization(model, *classifier);
 			svm_free_and_destroy_model(&model);
+			model = NULL;
 			return 0;
 		}
 

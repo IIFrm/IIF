@@ -1,7 +1,7 @@
 #ifndef _DISJUNCTIVE_
 #define _DISJUNCTIVE_
 #include "config.h"
-#include "learn_base.h"
+#include "base_learner.h"
 #include "ml_algo.h"
 #include "svm.h"
 #include "color.h"
@@ -12,11 +12,11 @@
 #include <string.h>
 #include <assert.h>
 
-class DisjunctiveLearn: public LearnBase {
+class DisjunctiveLearner: public BaseLearner {
 	public:
-		DisjunctiveLearn(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter, int K = 8);
+		DisjunctiveLearner(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter, int K = 8);
 
-		DisjunctiveLearn();
+		//~DisjunctiveLearner();
 
 		virtual int learn();
 

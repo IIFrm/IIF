@@ -3,8 +3,7 @@
 #include "svm.h"
 #include "color.h"
 #include "equation.h"
-//#include "learn.h"
-#include "conjunctive_learn.h"
+#include "conjunctive_learner.h"
 
 #include <iostream>
 #include <float.h>
@@ -13,22 +12,18 @@
 
 static void print_null(const char *s) {}
 
-ConjunctiveLearn::ConjunctiveLearn(States* gsets, int (*func)(int*), int max_iteration) : LearnBase(gsets, func) { 
+ConjunctiveLearner::ConjunctiveLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
 	svm_i = new SVM_I(print_null);
 	this->max_iteration = max_iteration;
 }
 
-ConjunctiveLearn::ConjunctiveLearn() : LearnBase() { 
-	svm_i = new SVM_I(print_null);
-	this->max_iteration = max_iter;
-}
 
-ConjunctiveLearn::~ConjunctiveLearn() { 
+ConjunctiveLearner::~ConjunctiveLearner() { 
 	if (svm_i != NULL)
 		delete svm_i;
 }
 
-int ConjunctiveLearn::learn()
+int ConjunctiveLearner::learn()
 {
 	Solution inputs;
 	srand(time(NULL)); // initialize seed for rand() function
@@ -36,11 +31,11 @@ int ConjunctiveLearn::learn()
 	int rnd;
 	bool b_similar_last_time = false;
 	bool b_converged = false;
-	Equation* previous_equations;
+	Equation* pre_classifiers;
+	int pre_csf_num = 0;
+
 	int pre_positive_size = 0, pre_negative_size = 0; // , pre_question_size = 0;
 
-	previous_equations = new Equation[1];
-	int pre_equation_num = 0;
 	double pass_rate = 1;
 
 
@@ -51,9 +46,9 @@ int ConjunctiveLearn::learn()
 		std::cout << "SVM-I---------------------------------------------" << "-------------------------------------------------------------" << std::endl;
 #endif
 		if (rnd != 1) {
-			int exes_each_equation = (after_exes + pre_equation_num - 1) / pre_equation_num;
+			int exes_each_equation = (after_exes + pre_csf_num - 1) / pre_csf_num;
 #ifdef __PRT
-			std::cout << "\t(1) execute programs...[" <<  (exes_each_equation * pre_equation_num + random_exes) << "] {Random";
+			std::cout << "\t(1) execute programs...[" <<  (exes_each_equation * pre_csf_num + random_exes) << "] {Random";
 #endif
 			for (int i = 0; i < random_exes; i++) {
 				Equation::linear_solver(NULL, inputs);
@@ -63,9 +58,9 @@ int ConjunctiveLearn::learn()
 				run_target(inputs);
 			}
 
-			for (int i = 0; i < svm_i->equ_num; i++) {
+			for (int i = 0; i < svm_i->getClassifierNum(); i++) {
 				for (int j = 0; j < exes_each_equation; j++) {
-					Equation::linear_solver(&previous_equations[i], inputs);
+					Equation::linear_solver(&pre_classifiers[i], inputs);
 #ifdef __PRT
 					std::cout << " | " << inputs;
 #endif
@@ -161,7 +156,7 @@ int ConjunctiveLearn::learn()
 #ifdef __PRT
 		std::cout << "\t(5) check convergence:        ";
 #endif
-		if (svm_i->converged(previous_equations, pre_equation_num) == 0) {
+		if (svm_i->converged(pre_classifiers, pre_csf_num) == 0) {
 			if (b_similar_last_time == true) {
 #ifdef __PRT
 				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
@@ -186,13 +181,8 @@ int ConjunctiveLearn::learn()
 #endif
 
 
-		pre_equation_num = svm_i->equ_num;
-		delete[]previous_equations;
-		previous_equations = new Equation[pre_equation_num];
-		for (int i = 0; i < svm_i->equ_num; i++) {
-			previous_equations[i] = svm_i->equations[i];
-		}
-
+		if (pre_classifiers != NULL) delete[]pre_classifiers;
+		pre_classifiers = svm_i->saveClassifier();
 	} // end of SVM_I training procedure
 
 
@@ -203,26 +193,21 @@ int ConjunctiveLearn::learn()
 	if ((b_converged) && (rnd <= max_iteration)) {
 		int equation_num = -1;
 		Equation* equs = svm_i->roundoff(equation_num);
-		setColor(std::cout, YELLOW);
-		std::cout << "  Hypothesis Invairant(Converged): {";
+		std::cout << YELLOW << "  Hypothesis Invairant(Converged): {";
 		std::cout << " \n\t ------------------------------------------------------";
-		std::cout << " \n\t |     " << equs[0];
+		std::cout << GREEN << " \n\t |     " << equs[0];
 		for (int i = 1; i < equation_num; i++) {
 			std::cout << " \n\t |  /\\ " << equs[i];
 		}
-		std::cout << " \n\t ------------------------------------------------------\n";
-		setColor(std::cout);
+		std::cout << YELLOW << " \n\t ------------------------------------------------------\n" << WHITE;
 		delete[]equs;
 	}
 
+	if (pre_classifiers != NULL) delete[]pre_classifiers;
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {
-		setColor(std::cout, RED);
-		std::cout << "  Cannot divide by SVM_I perfectly.\n";
-		setColor(std::cout);
+		std::cout << RED << "  Cannot divide by SVM_I perfectly.\n" << WHITE;
 		ret = -1;
 	}
-
-	delete []previous_equations;
 
 	return ret;
 }
