@@ -10,7 +10,6 @@
 
 //#include "header.h"
 #include "config.h"
-#include "z3++.h"
 #include <cmath>
 #include <cfloat>
 #include <stdarg.h>
@@ -22,11 +21,10 @@
 #include <string.h>
 #include "color.h"
 #include "solution.h"
-//#ifdef linux
-//#include <stp/c_interface.h>
+#ifdef linux
 #include "z3++.h"
 using namespace z3;
-//#endif
+#endif
 
 
 extern int maxv;
@@ -136,6 +134,7 @@ class Equation{
 		 *	@param c is z3::context, defines which context the return expr will be used.
 		 *	@return z3::expr
 		 */
+#ifdef linux
 		z3::expr toZ3expr (char** name, z3::context& c) const
 		{
 			char** pname = name;
@@ -178,6 +177,7 @@ class Equation{
 			}
 			return hypo;
 		}
+#endif
 
 		/** @brief This imply method checks whether this equation object can imply another one or not
 		 *		   That is to say:  *this ==> e2 ??
@@ -190,6 +190,7 @@ class Equation{
 		 *  @return bool true if yes, false if no.
 		 */
 		bool imply(const Equation& e2) {
+#ifdef linux
 #ifdef __PRT_QUERY
 			std::cout << "-------------Imply solving-------------\n";
 #endif
@@ -222,10 +223,12 @@ class Equation{
 			if (ret == unsat) {
 				return true;
 			}
+#endif
 			return false;
 		}
 
 		static bool multiImply(const Equation* e1, int e1_num, const Equation& e2) {
+#ifdef linux
 #ifdef __PRT_QUERY
 			std::cout << "-------------Multi-Imply solving-------------\n";
 #endif
@@ -267,6 +270,8 @@ class Equation{
 #endif
 				return false;
 			}
+#endif
+			return false;
 		}
 
 		/** @brief A shell on linear_solver(equ, sol)
