@@ -261,7 +261,8 @@ class SVM_I : public MLalgo //SVM
 			return 0;
 		}
 
-		virtual int converged(Equation* previous_equations, int previous_equation_num) {
+		virtual int converged(void* pre_model, int previous_equation_num) {
+			Equation* previous_equations = (Equation*)pre_model;
 			//std::cout << "\n\tPrevious\t\t\t Current\n";
 			//std::cout << "\t" << previous_equation_num << "\t\t\t\t\t" << equ_num << "\n";
 

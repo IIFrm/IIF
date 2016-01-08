@@ -47,3 +47,8 @@ void setColor(std::ostream& out, int choice) {
 }
 #endif
 
+std::ostream& operator << (std::ostream& out, Color c) {
+	setColor(out, c);
+	return out;
+}
+

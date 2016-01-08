@@ -14,7 +14,7 @@ static void print_null(const char *s) {}
 
 DisjunctiveLearn::DisjunctiveLearn(States* gsets, int (*func)(int*), int max_iteration, int K) : LearnBase(gsets, func) { 
 	svm = new SVM(print_null);
-	svm->main_equation = NULL;
+	//svm->main_equation = NULL;
 	this->max_iteration = max_iteration; 
 	this->K = K;
 	/*
@@ -26,7 +26,7 @@ DisjunctiveLearn::DisjunctiveLearn(States* gsets, int (*func)(int*), int max_ite
 
 DisjunctiveLearn::DisjunctiveLearn() : LearnBase() { 
 	svm = new SVM(print_null);
-	svm->main_equation = NULL;
+	//svm->main_equation = NULL;
 	this->max_iteration = max_iter; 
 	this->K = 8;
 	/*

@@ -16,6 +16,7 @@ class MLalgo
 {
 	public:
 		MLalgo() {};
+		virtual ~MLalgo() {};
 
 		/** @brief init training data method. This should be called before any training happens.
 		 *
@@ -58,11 +59,11 @@ class MLalgo
 		 *
 		 * current_training_equations ~= previous_trainig_equations ???
 		 * 
-		 * @param previous_equations contains all the equation we get from last trainig session. 
-		 * @param equation_num is the number of equations get from last training session 
+		 * @param pre_model contains all the equation we get from last trainig session. 
+		 * @param num is the number of equations get from last training session 
 		 * @return int 0 if converged 
 		 */
-		virtual int converged(Equation* previous_equations, int equation_num) = 0;
+		virtual int converged(void* pre_model, int num) = 0;
 
 		/** @brief output the current trainig result of a ML_Algo
 		 *

@@ -50,6 +50,7 @@ void sig_alrm(int signo) {
 States* initSystem(int (*func)(int*), const char* func_name, int timeout) 
 {
 	States* ss = new States[4];
+	srand(time(NULL)); // initialize seed for rand() function
 
 	register_program(func, func_name);
 #ifdef linux
