@@ -162,7 +162,7 @@ class SVM_I : public MLalgo //SVM
 #endif			
 
 				model = svm_train(&problem, &param);
-				svm_model_visualization(model, &equations[equ_num]);
+				svm_model_visualization(model, equations[equ_num]);
 
 #ifdef __PRT_SVM_I
 				std::cout << equations[equ_num];

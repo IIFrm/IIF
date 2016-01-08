@@ -15,6 +15,7 @@
 #include "svm.h"
 #include "svm_i.h"
 #include "color.h"
+#include "solution.h"
 #include "equation.h"
 #include "states.h"
 #include "learn_base.h"

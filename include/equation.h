@@ -21,6 +21,7 @@
 #include <vector>
 #include <string.h>
 #include "color.h"
+#include "solution.h"
 //#ifdef linux
 //#include <stp/c_interface.h>
 #include "z3++.h"
@@ -33,7 +34,7 @@ extern int minv;
 //extern char variable_name[VARS][8];
 
 const double UPBOUND = pow(0.1, PRECISION);
-inline double _roundoff(double x)
+static double _roundoff(double x)
 {
 	int inx = nearbyint(x);
 	if ((inx >= x * (1 - UPBOUND) && inx <= x * (1 + UPBOUND))
@@ -43,60 +44,6 @@ inline double _roundoff(double x)
 		return 0;
 	return x;
 }
-
-
-//inline double _roundoff(double x);
-
-
-/** \class Solution
- *  @brief This class defines the format of a valid solution to an equation.
- *
- *  It contains values to each variants in an equation
- */
-class Solution{
-	public:
-		/** @brief Default constructor.
-		 *		   Set all its elements to value 0
-		 */
-		Solution() {
-			x[0] = 0;
-			for (int i = 1; i < VARS; i++) {
-				x[i] = 0;
-			}
-		}
-
-		/** @brief Most useful constructor
-		 *		   Set its elements to the given values, order keeps
-		 *		   
-		 *	@param a0... each element values for a solution
-		 */
-		Solution(double a0, ...) {
-			va_list ap;
-			va_start(ap, a0);
-			x[0] = a0;
-
-			for (int i = 1; i < VARS; i++) {
-				x[i] = va_arg(ap, double);
-			}
-			va_end(ap);
-		}
-
-		/** @brief support << operator
-		 *		   simply output its elements as a tuple
-		 *
-		 *	@param sol The solution object to be output
-		 */
-		friend std::ostream& operator << (std::ostream& out, const Solution& sol) {
-			out << "(" << sol.x[0];
-			for (int j = 1; j < VARS; j++)
-				out << "," << sol.x[j];
-			out << ")";
-			return out;
-		}
-
-		/// The data field of Solution, stores all the values as a solution to an Equation 
-		double x[VARS];
-};
 
 
 /** \class Equation
@@ -121,8 +68,7 @@ class Equation{
 		 *		   Set its elements to the given values, order keeps
 		 *		   The first element is Theta0
 		 */
-		Equation(double a0, ...)
-		{
+		Equation(double a0, ...) {
 			va_list ap;
 			va_start(ap, a0);
 			theta0 = a0;
@@ -190,7 +136,7 @@ class Equation{
 		 *	@param c is z3::context, defines which context the return expr will be used.
 		 *	@return z3::expr
 		 */
-		z3::expr to_z3expr(char** name, z3::context& c) const
+		z3::expr toZ3expr (char** name, z3::context& c) const
 		{
 			char** pname = name;
 			if (pname == NULL) {
@@ -257,8 +203,8 @@ class Equation{
 			  z3::expr hypo = e1.to_z3expr(name, c);
 			  z3::expr conc = e2.to_z3expr(name, c);
 			  */
-			z3::expr hypo = e1.to_z3expr(NULL, c);
-			z3::expr conc = e2.to_z3expr(NULL, c);
+			z3::expr hypo = e1.toZ3expr(NULL, c);
+			z3::expr conc = e2.toZ3expr(NULL, c);
 #ifdef __PRT_QUERY
 			std::cout << "hypo: " << hypo << std::endl;
 			std::cout << "conc: " << conc << std::endl;
@@ -278,7 +224,8 @@ class Equation{
 			}
 			return false;
 		}
-		static bool multi_imply(const Equation* e1, int e1_num, const Equation& e2) {
+
+		static bool multiImply(const Equation* e1, int e1_num, const Equation& e2) {
 #ifdef __PRT_QUERY
 			std::cout << "-------------Multi-Imply solving-------------\n";
 #endif
@@ -288,12 +235,12 @@ class Equation{
 			z3::context c(cfg);
 
 
-			z3::expr hypo = e1[0].to_z3expr(NULL, c);
+			z3::expr hypo = e1[0].toZ3expr(NULL, c);
 			for (int i = 1; i < e1_num; i++) {
-				hypo = hypo && e1[i].to_z3expr(NULL, c);;
+				hypo = hypo && e1[i].toZ3expr(NULL, c);;
 			}
 
-			z3::expr conc = e2.to_z3expr(NULL, c);
+			z3::expr conc = e2.toZ3expr(NULL, c);
 
 			//std::cout << "hypo: " << hypo << std::endl;
 			//std::cout << "conc: " << conc << std::endl;
@@ -347,7 +294,7 @@ class Equation{
 				 * So we randomly generate points in given scope [minv, maxv]
 				 */
 				for (int i = 0; i < VARS; i++)
-					sol.x[i] = rand() % (maxv - minv + 1) + minv;
+					sol.setVal(i, rand() % (maxv - minv + 1) + minv);
 				return 0;
 			}
 
@@ -361,7 +308,7 @@ class Equation{
 			/// We just randomly pickup solutions to return
 			if (j == VARS) {
 				for (int i = 0; i < VARS; i++) {
-					sol.x[i] = rand() % (maxv - minv + 1) + minv;
+					sol.setVal(i, rand() % (maxv - minv + 1) + minv);
 				}
 				return 0;
 			}
@@ -379,12 +326,12 @@ solve:
 				pick = (pick + 1) % VARS;
 			reminder = - equ->theta0;
 			for (int i = 0; i < VARS; i++) {
-				sol.x[i] = rand() % (maxv - minv + 1) + minv;
+				sol.setVal(i, rand() % (maxv - minv + 1) + minv);
 				if (i != pick)
-					reminder -= sol.x[i] * equ->theta[i];
+					reminder -= sol.getVal(i) * equ->theta[i];
 			}
-			sol.x[pick] = int(reminder / equ->theta[pick]) + rand() % 2;
-			if (sol.x[pick] > maxv || sol.x[pick] < minv) {
+			sol.setVal(pick, int(reminder / equ->theta[pick]) + rand() % 2);
+			if (sol.getVal(pick) > maxv || sol.getVal(pick) < minv) {
 				if (++times > 10) 
 					/** sometimes we can not get solution between given scope
 					 *	we try 10 times, if still no suitable solution, we pick the last one...
@@ -405,7 +352,7 @@ solve:
 		 */
 		static double calc(Equation& equ, double* sol) {
 			if (sol == NULL) return -1;
-			if (&equ == NULL) return -1;
+			//if (&equ == NULL) return -1;
 			double res = equ.theta0;
 			for (int i = 0; i < VARS; i++) {
 				res += equ.theta[i] * sol[i];
@@ -422,7 +369,7 @@ solve:
 		 */
 		int is_similar(const Equation& e2, int precision = PRECISION) {
 			Equation& e1 = *this;
-			if (&e2 == NULL) return -1;
+			//if (&e2 == NULL) return -1;
 			double ratio = 0;
 			if ((e1.theta0 != 0) && (e2.theta0 != 0)) {
 				ratio = e1.theta0 / e2.theta0;
@@ -519,10 +466,30 @@ solve:
 			return 0;
 		}
 
+		int roundoff() {
+			return roundoff(*this);
+		}
 
+		inline double getTheta0() { return theta0;}
+		inline int setTheta0(double value) { theta0 = value; return 0;}
+		inline double getTheta(int i) { 
+			assert((i < VARS) || "parameter for getTheta is out of boundary.");
+			return theta[i];
+		}
+		inline int setTheta0(int i, double value) { 
+			assert((i < VARS) || "parameter for getTheta is out of boundary.");
+			theta[i] = value; 
+			return 0;
+		}
+		inline int setTheta(double* values) {
+			for (int i = 0; i < VARS; i++)
+				theta[i] = values[i];
+			return 0;
+		}
+
+	private:
 		double theta0;
 		double theta[VARS];
-	private:
 };
 
 #endif

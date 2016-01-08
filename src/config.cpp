@@ -15,7 +15,7 @@ bool check_target_program(int (*func)(int*))
     Equation::linear_solver(NULL, sol);
 	int a[VARS];
 	for (int i = 0; i < VARS; i++)
-	    a[i] = sol.x[i];
+	    a[i] = sol.getVal(i);
 	assume_times = 0;
 	assert_times = 0;
 	func(a);

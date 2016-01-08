@@ -45,7 +45,7 @@ class LearnBase{
 
 			int a[VARS];
 			for (int i = 0; i < VARS; i++)
-				a[i] = static_cast<int>(input.x[i]);
+				a[i] = static_cast<int>(input.getVal(i));
 			//target_program
 			func(a);
 

@@ -36,13 +36,6 @@ DisjunctiveLearn::DisjunctiveLearn() : LearnBase() {
 	*/
 }
 
-static double square_distance(double* a1, double* b1, int size)
-{
-	double distance = 0;
-	for (int i = 0; i < size; i++)
-		distance += (a1[i] - b1[i]) * (a1[i] - b1[i]);
-	return distance;
-}
 
 
 int DisjunctiveLearn::k_means(int gset_index, int k)

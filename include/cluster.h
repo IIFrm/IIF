@@ -1,10 +1,101 @@
-#ifndef _SVM_H_
-#define _SVM_H_
+#ifndef _CLUSTER_H_
+#define _CLUSTER_H_
 #include "ml_algo.h"
 #include "svm_core.h"
 #include "string.h"
 
-class SVM : public MLalgo
+static double square_distance(double* a1, double* b1, int size)
+{
+	double distance = 0;
+	for (int i = 0; i < size; i++)
+		distance += (a1[i] - b1[i]) * (a1[i] - b1[i]);
+	return distance;
+}
+
+bool linear_separable(int positive_label, int negative_label)
+{
+	/*
+	int index = 0;
+	// copy all the data which are labeled as given to the checkset
+	int positive_size = gsets[POSITIVE].size();
+	int negative_size = gsets[NEGATIVE].size();
+	for(int i = 0; i < positive_size; i++)
+		if (positive_group[i] == positive_label)
+			checkset[index++] = gsets[POSITIVE][i];
+	for(int i = 0; i < negative_size; i++)
+		if (negative_group[i] == negative_label)
+			checkset[index++] = gsets[POSITIVE][i];
+*/
+	return false;
+}
+int k_means(int gset_index, int k)
+{
+	/*
+	if (k > K)
+		return -1;
+	States& set = gsets[gset_index];
+	int size = set.size();
+	if (k >= size)
+		return 0;
+	double (*data)[VARS] = set.values;
+	int* label;  
+	if (gset_index == 1) label = positive_group;
+	else if (gset_index == -1) label = negative_group;
+	if (label == NULL)	label = new int [size]; 
+	double** kmeans = new double*[size];
+
+	// randomly choose points as the initial means to begin K-means algorithm
+	for (int seed, i = 0; i < size; i++) {
+		seed = rand() % k;
+		kmeans[i] = new double[VARS];
+		for (int j = 0; j < VARS; j++)
+			kmeans[i][j] = data[seed][j];
+	}
+
+
+	double* distance = new double[k];
+	int* group_members = new int[k];
+	double total_distance = DBL_MAX;
+
+	while (true) {	
+		// regroup according to square distance.
+		bool regrouped = false;
+		for (int i = 0; i < size; i++) {
+			int min_cand = 0;
+			for (int j = 0; j < k; j++) {
+				distance[j] = square_distance(kmeans[j], data[i], VARS);
+				if (distance[j] < distance[min_cand])
+					min_cand = j;
+			}
+			if (!regrouped && label[i] != min_cand)
+				regrouped = true;
+		}
+		if (regrouped == false)
+			break;
+
+		// recalculate means for each group
+		for (int i = 0; i < k; i++)
+			group_members[i] = 0;
+		for (int i = 0; i < size; i++) {
+			group_members[label[i]]++;
+			for (int j = 0; j < VARS; j++)
+				kmeans[label[i]][j] += data[i][j];
+		}
+	}
+
+	//for (int i = 0; i < s.size(); i++);
+
+	delete []group_members;
+	delete []distance;
+	for (int i = 0; i < k; i++)
+		delete []kmeans[i];
+	delete []kmeans;
+	delete []label;
+	*/
+	return 0;
+}
+
+class Cluster: public MLalgo
 {
 	public:
 		svm_model* model;
@@ -14,7 +105,7 @@ class SVM : public MLalgo
 		double* training_label; // [max_items * 2];
 		double** training_set; // [max_items * 2];
 
-		SVM(void (*f) (const char*) = NULL, int size = 10000) : max_size(size) {
+		Cluster(void (*f) (const char*) = NULL, int size = 10000) : max_size(size) {
 			problem.l = 0;
 			training_set = new double*[max_size];
 			training_label = new double[max_size];
@@ -32,7 +123,7 @@ class SVM : public MLalgo
 			problem.y = training_label;
 		}
 
-		virtual ~SVM() {
+		virtual ~Cluster() {
 			if (model != NULL)
 				delete model;
 			//if (problem.y != NULL)
