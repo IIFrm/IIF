@@ -88,7 +88,7 @@ class SVM_I : public MLalgo //SVM
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (classifiers != NULL) delete []classifiers;
 			if (data != NULL) delete []data;
-			if (label != NULL) delete label;
+			if (label != NULL) delete []label;
 		}
 
 		int makeTrainingSet(States* gsets, int& pre_psize, int& pre_nsize) {
