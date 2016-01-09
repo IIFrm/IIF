@@ -28,10 +28,7 @@ class BaseLearner{
 			init_gsets();
 		}
 
-		BaseLearner() {
-			gsets = NULL;
-			func = NULL;
-		}
+		virtual ~BaseLearner() {} 
 
 
 /** @brief This function runs the target_program with the given input

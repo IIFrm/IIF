@@ -124,6 +124,14 @@ init_svm_i:
 #endif
 		selectiveSampling(random_exes, exes, -pre_csf_num, pre_classifiers);
 
+		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
+#ifdef __PRT
+			if (gsets[POSITIVE].traces_num() == 0) std::cout << "[0] Positive trace, execute program again." << std::endl;
+			if (gsets[NEGATIVE].traces_num() == 0) std::cout << "[0] Negative trace, execute program again." << std::endl;
+#endif
+			goto init_svm_i;
+		}
+
 #ifdef __PRT
 		std::cout << "\t(" << step++ << ") prepare training data... ";
 #endif

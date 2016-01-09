@@ -14,7 +14,7 @@
  *		   This should be set in /CMakeLists.txt file
  *		   If it is not set correctly, you may come across a runtime error
  */
-#define VARS 1 
+#define VARS 2 
 
 
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  
@@ -72,6 +72,6 @@ bool register_program(int (*func)(int*), const char* func_name = 0);
 /** @brief defines the timeout signal handler 
  */
 // legacy function, can be removed after all the test modification
-void sig_alrm(int signo);
+//void sig_alrm(int signo);
 
 #endif

@@ -15,8 +15,8 @@ class SVM_I : public MLalgo //SVM
 		Equation* classifiers;
 		int csf_num;
 
-		int max_csf;
 		int max_size;
+		int max_csf;
 
 		double* label; // [max_items * 2];
 		double** data; // [max_items * 2];

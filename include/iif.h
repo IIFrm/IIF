@@ -22,6 +22,7 @@
 #include "linear_learner.h"
 #include "conjunctive_learner.h"
 #include "disjunctive_learner.h"
+#include "learner_pipeline.h"
 #include "iif_assert.h"
 
 #include <iostream>
@@ -30,18 +31,19 @@
 #include <assert.h>
 #include <iostream>
 #include <cstdlib>
+/*
 #include <signal.h>
 #ifdef linux
 #include <sys/time.h>
 #include <unistd.h>
 #endif
-
+*/
 //#define conj target_program
 extern int minv, maxv;
 
 
-States* initSystem(int (*func)(int*), const char* func_name = "UserFunction", int timeout = 60);
+/*States* initSystem(int (*func)(int*), const char* func_name = "UserFunction", int timeout = 60);
 
 int destroySystem(States* gsets);
-
+*/
 #endif

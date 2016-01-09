@@ -41,6 +41,7 @@ bool register_program(int (*func)(int*), const char* func_name)
 	return true;
 }
 
+/*
 void sig_alrm(int signo) {
 	std::cout << "\nTIMEOUT!\n";
 	exit(-1);
@@ -69,3 +70,4 @@ int destroySystem(States* gsets)
 	delete []ss;
 	return 0;
 }
+*/

@@ -17,17 +17,7 @@ int f1a(int* a) {
 
 int main(int argc, char** argv)
 {
-	States* gsets = initSystem(f1a, "f1a");
-
-	std::cout << "TRY SVM method ...\n";
-	LinearLearner ll(gsets);
-	if (ll.learn() == 0) return destroySystem(gsets); 
-
-	std::cout << "TRY SVM-I method ...\n";
-	ConjunctiveLearner cl(gsets);
-	if (cl.learn() == 0) return destroySystem(gsets); 
-
-	//std::cout << "TRY other method again...\n";
-	destroySystem(gsets);
-	return -1;
+	LearnerPipeline lp(f1a, "f1a");
+	lp.addLearner("linear").addLearner("conjunctive");
+	return lp.learn();
 }

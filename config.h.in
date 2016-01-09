@@ -72,6 +72,6 @@ bool register_program(int (*func)(int*), const char* func_name = 0);
 /** @brief defines the timeout signal handler 
  */
 // legacy function, can be removed after all the test modification
-void sig_alrm(int signo);
+//void sig_alrm(int signo);
 
 #endif
