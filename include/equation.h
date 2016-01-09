@@ -21,7 +21,7 @@
 #include <string.h>
 #include "color.h"
 #include "solution.h"
-#ifdef linux
+#if (linux || __MACH__)
 #include "z3++.h"
 using namespace z3;
 #endif
@@ -134,7 +134,8 @@ class Equation{
 		 *	@param c is z3::context, defines which context the return expr will be used.
 		 *	@return z3::expr
 		 */
-#ifdef linux
+//#ifdef linux
+#if (linux || __MACH__)
 		z3::expr toZ3expr (char** name, z3::context& c) const
 		{
 			char** pname = name;
@@ -190,7 +191,8 @@ class Equation{
 		 *  @return bool true if yes, false if no.
 		 */
 		bool imply(const Equation& e2) {
-#ifdef linux
+//#ifdef linux
+#if (linux || __MACH__)
 #ifdef __PRT_QUERY
 			std::cout << "-------------Imply solving-------------\n";
 #endif
@@ -228,7 +230,8 @@ class Equation{
 		}
 
 		static bool multiImply(const Equation* e1, int e1_num, const Equation& e2) {
-#ifdef linux
+//#ifdef linux
+#if (linux || __MACH__)
 #ifdef __PRT_QUERY
 			std::cout << "-------------Multi-Imply solving-------------\n";
 #endif
