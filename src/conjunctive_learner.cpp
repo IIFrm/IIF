@@ -26,12 +26,28 @@ ConjunctiveLearner::~ConjunctiveLearner() {
 
 /// type == 0, solve equations defined by paras....
 //			   if paras == NULL, all are random points
-//			   if paras != NULL, selective sampling
-/// type > 0, paras contains type number of inputs.....
-int ConjunctiveLearner::programExecutor(int randn, int exen, int type, void* paras)
+/// type > 0, params contains type number of inputs.....
+/// type < 0, params contains the CLassifiers obtained last time.
+//			   if params != NULL, selective sampling
+//			   -type specifies the number of equations
+int ConjunctiveLearner::selectiveSampling(int randn, int exen, int type, void* params)
 {
-	if ((type != 0) && (exen > type))
+	if (type == 0) {
+		randn += exen;
+		exen = 0;
+	} else if ((type > 0) && (exen > type)) {
 		randn += exen - type;
+		exen = type;
+	} else if (type < 0) {
+		if (exen + type > 0) {
+			randn += exen % (-type);
+			exen = exen / (-type) * (-type);
+		} else {
+			randn += exen + type;
+			exen = -type;
+		}
+	}
+	
 #ifdef __PRT
 	std::cout << "{";
 #endif
@@ -41,7 +57,7 @@ int ConjunctiveLearner::programExecutor(int randn, int exen, int type, void* par
 #ifdef __PRT
 		std::cout << input << "|";
 #endif
-		run_target(input);
+		runTarget(input);
 	}
 	if (exen == 0) {
 #ifdef __PRT
@@ -54,22 +70,27 @@ int ConjunctiveLearner::programExecutor(int randn, int exen, int type, void* par
 	std::cout << "+|";
 #endif
 
-	if (type == 0) {
-		for (int i = 0; i < exen; i++) {
-			Equation::linear_solver((Equation*)paras, input);
+	if (type < 0) {
+		int nclassifier = -type;
+		int neach = exen / nclassifier;
+		Equation* p = (Equation*)params;
+		for (int i = 0; i < nclassifier; i++) {
+			for (int j = 0; j < neach; j++) {
+				Equation::linear_solver(&p[i], input);
 #ifdef __PRT
-			std::cout << input << "|";
+				std::cout << input << "|";
 #endif
-			run_target(input);
+				runTarget(input);
+			}
 		}
 	} else if (type > 0) {
-		Solution* p = (Solution*)paras;
+		Solution* p = (Solution*)params;
 		for (int i = 0; i < type; i++) {
 #ifdef __PRT
 			std::cout << p[i] << "|";
 #endif
-			run_target(p[i]);
-			//run_target(*(((Solution*)paras)+i));
+			runTarget(p[i]);
+			//runTarget(*(((Solution*)paras)+i));
 		}
 	}
 #ifdef __PRT
@@ -89,9 +110,7 @@ int ConjunctiveLearner::learn()
 	bool converged = false;
 	Equation* pre_classifiers = NULL;
 	int pre_csf_num = 0;
-
 	int pre_psize = 0, pre_nsize = 0; // , pre_question_size = 0;
-
 	double pass_rate = 1;
 
 
@@ -103,35 +122,7 @@ init_svm_i:
 		int step = 1;
 		std::cout << "SVM-I----------------------------------------------------------------------------------------------------------" << std::endl;
 #endif
-		if (rnd != 1) {
-			int exes_each_equation = (after_exes + pre_csf_num - 1) / pre_csf_num;
-#ifdef __PRT
-			std::cout << "\t(" << step++ <<") execute programs...[" <<  (exes_each_equation * pre_csf_num + random_exes) << "] {Random";
-#endif
-			for (int i = 0; i < random_exes; i++) {
-				Equation::linear_solver(NULL, inputs);
-#ifdef __PRT
-				std::cout << inputs << "|";
-#endif
-				run_target(inputs);
-			}
-
-			for (int i = 0; i < svm_i->getClassifierNum(); i++) {
-				for (int j = 0; j < exes_each_equation; j++) {
-					Equation::linear_solver(&pre_classifiers[i], inputs);
-#ifdef __PRT
-					std::cout << " | " << inputs;
-#endif
-					run_target(inputs);
-				}
-			}
-#ifdef __PRT
-			std::cout << "}" << std::endl;
-#endif
-		} else {
-			pre_psize = 0;
-			pre_nsize = 0;
-		}
+		selectiveSampling(random_exes, exes, -pre_csf_num, pre_classifiers);
 
 #ifdef __PRT
 		std::cout << "\t(" << step++ << ") prepare training data... ";
@@ -233,12 +224,12 @@ init_svm_i:
 
 	int ret = 0;
 	if ((converged) && (rnd <= max_iteration)) {
-		int equation_num = -1;
-		Equation* equs = svm_i->roundoff(equation_num);
+		int equ_num = -1;
+		Equation* equs = svm_i->roundoff(equ_num);
 		std::cout << YELLOW << "  Hypothesis Invairant(Converged): {";
 		std::cout << " \n\t ------------------------------------------------------";
 		std::cout << YELLOW << " \n\t |     " << GREEN <<  equs[0];
-		for (int i = 1; i < equation_num; i++) {
+		for (int i = 1; i < equ_num; i++) {
 			std::cout << YELLOW << " \n\t |  " << GREEN << "/\\ " << equs[i];
 		}
 		std::cout << YELLOW << " \n\t ------------------------------------------------------\n" << WHITE;

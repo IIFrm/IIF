@@ -25,6 +25,39 @@ DisjunctiveLearner::DisjunctiveLearner(States* gsets, int (*func)(int*), int max
 }
 
 
+/// type == 0, solve equations defined by paras....
+//			   if paras == NULL, all are random points
+//			   if paras != NULL, selective sampling
+/// type > 0, params contains type number of inputs.....
+/// type < 0, params contains the CLassifiers obtained last time.
+int DisjunctiveLearner::selectiveSampling(int randn, int exen, int type, void* paras)
+{
+	if ((type != 0) && (exen > type))
+		randn += exen - type;
+#ifdef __PRT
+	std::cout << "{";
+#endif
+	Solution input;
+	for (int i = 0; i < randn; i++) {
+		Equation::linear_solver(NULL, input);
+#ifdef __PRT
+		std::cout << input << "|";
+#endif
+		runTarget(input);
+	}
+	if (exen == 0) {
+#ifdef __PRT
+		std::cout << "}" << std::endl;
+#endif
+		return randn + exen;
+	}
+
+#ifdef __PRT
+	std::cout << "+|";
+#endif
+	return randn + exen;
+}
+
 
 int DisjunctiveLearner::k_means(int gset_index, int k)
 {

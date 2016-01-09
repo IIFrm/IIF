@@ -13,8 +13,9 @@ class LinearLearner: public BaseLearner {
 
 		virtual int learn();
 
+		int selectiveSampling(int randn, int exen, int type = 0, void* params = NULL);
+
 	protected:
-		int programExecutor(int randn, int exen, int type = 0, void* paras = NULL);
 		SVM* svm;
 		int max_iteration;
 };

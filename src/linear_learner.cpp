@@ -22,10 +22,10 @@ LinearLearner::~LinearLearner() {
 
 
 /// type == 0, solve equations defined by paras....
-//			   if paras == NULL, all are random points
-//			   if paras != NULL, selective sampling
-/// type > 0, paras contains type number of inputs.....
-int LinearLearner::programExecutor(int randn, int exen, int type, void* paras)
+//			   if params == NULL, all are random points
+//			   if params != NULL, selective sampling
+/// type > 0, params contains type number of inputs.....
+int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params)
 {
 	if ((type != 0) && (exen > type))
 		randn += exen - type;
@@ -38,7 +38,7 @@ int LinearLearner::programExecutor(int randn, int exen, int type, void* paras)
 #ifdef __PRT
 		std::cout << input << "|";
 #endif
-		run_target(input);
+		runTarget(input);
 	}
 	if (exen == 0) {
 #ifdef __PRT
@@ -53,19 +53,19 @@ int LinearLearner::programExecutor(int randn, int exen, int type, void* paras)
 
 	if (type == 0) {
 		for (int i = 0; i < exen; i++) {
-			Equation::linear_solver((Equation*)paras, input);
+			Equation::linear_solver((Equation*)params, input);
 #ifdef __PRT
 			std::cout << input << "|";
 #endif
-			run_target(input);
+			runTarget(input);
 		}
 	} else if (type > 0) {
-		Solution* p = (Solution*)paras;
+		Solution* p = (Solution*)params;
 		for (int i = 0; i < type; i++) {
 #ifdef __PRT
 			std::cout << p[i] << "|";
 #endif
-			run_target(p[i]);
+			runTarget(p[i]);
 			//run_target(*(((Solution*)paras)+i));
 		}
 	}
@@ -74,8 +74,6 @@ int LinearLearner::programExecutor(int randn, int exen, int type, void* paras)
 #endif
 	return randn + exen;
 }
-
-
 
 
 int LinearLearner::learn()
@@ -99,7 +97,7 @@ init_svm:
 		std::cout << "SVM------------------------------------------------------------------------------------------------------------" << std::endl;
 		std::cout << "\t(" << step++ << ") execute programs... [" << exes + random_exes << "] ";
 #endif
-		programExecutor(random_exes, exes, 0, (void*)lastEquation );
+		selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
 #ifdef __PRT

@@ -20,6 +20,8 @@ class DisjunctiveLearner: public BaseLearner {
 
 		virtual int learn();
 
+		int selectiveSampling(int randn, int exen, int type, void* params);
+
 	protected:
 
 		int k_means(int gset_index, int k);

@@ -38,7 +38,7 @@ class BaseLearner{
  *
  *  @param  input defines input values which are used to call target_program 
  */
-		void run_target(Solution& input) {
+		void runTarget(Solution& input) {
 			assert(func != NULL);
 			assert(&input != NULL);
 			beforeLoop();
@@ -60,6 +60,8 @@ class BaseLearner{
 		}
 
 		virtual int learn() = 0;
+
+		virtual int selectiveSampling(int randn, int exen, int type, void* params) = 0;
 
 	protected:
 		void init_gsets() {

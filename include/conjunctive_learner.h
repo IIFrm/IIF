@@ -20,8 +20,9 @@ class ConjunctiveLearner: public BaseLearner {
 
 		virtual int learn();
 
+		int selectiveSampling(int randn, int exen, int type, void* params);
+
 	protected:
-		int programExecutor(int randn, int exen, int type, void* paras);
 		SVM_I* svm_i;
 		int max_iteration;
 };
