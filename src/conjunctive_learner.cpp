@@ -121,6 +121,7 @@ init_svm_i:
 #ifdef __PRT
 		int step = 1;
 		std::cout << "SVM-I----------------------------------------------------------------------------------------------------------" << std::endl;
+		std::cout << "\t(" << step++ << ") execute programs... [" << exes + random_exes << "] ";
 #endif
 		selectiveSampling(random_exes, exes, -pre_csf_num, pre_classifiers);
 

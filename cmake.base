@@ -1,16 +1,13 @@
-cmake_minimum_required (VERSION 2.8)
-set(VARS 1)
-
 project(InvariantInferenceFramework)
 set(PRECISION 3)
 
-add_definitions (-D__PRT)
+#add_definitions (-D__PRT)
 #add_definitions (-D__PRT_TRACE)
 #add_definitions (-D__PRT_EQUATION)
 #add_definitions (-D__PRT_SVM_I)
 #add_definitions (-D__PRT_QUERY)
 #option(PRINT_ALL "Print All Message" ON)
-#option(PRINT_ALL "Print All Message" OFF)
+option(PRINT_ALL "Print All Message" OFF)
 if(PRINT_ALL)
 	add_definitions (-D__PRT_SVM_I)
 	add_definitions (-D__PRT_QUERY)
@@ -82,11 +79,6 @@ include_directories(${Z3_INCLUDE_DIR})
 
 
 
-
-
-
-
-
 file(GLOB HEADER "include/*.h")
 source_group("Header Files" FILES ${HEADERS}) 
 
@@ -100,18 +92,3 @@ include_directories (include)
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 AUX_SOURCE_DIRECTORY(test DIR_TEST)
 
-# genearte executable for each test...
-foreach(test_src ${TEST})
-	#string(REGEX REPLACE ".*/(.*).cpp" "/1" test_obj ${test_src})
-	string(REGEX REPLACE ".cpp" "" tmp_obj ${test_src})
-	string(REGEX REPLACE ".*/" "" tmp2_obj ${tmp_obj})
-	string(REGEX REPLACE "[0-9]+_" "" test_obj ${tmp2_obj})
-	string(REGEX REPLACE "_.*" "" Vars ${tmp2_obj})
-	#message(${tmp_obj} "\t" ${test_obj} "\t" ${Vars})
-	if (Vars EQUAL VARS)
-		add_executable(${test_obj} ${test_src} ${DIR_SRCS} ${HEADER})
-		#if(UNIX)
-		target_link_libraries(${test_obj} ${Z3_LIBRARY})
-		#endif(UNIX)
-	endif(Vars EQUAL VARS)
-endforeach(test_src)
