@@ -22,6 +22,8 @@ class DisjunctiveLearner: public BaseLearner {
 
 		int selectiveSampling(int randn, int exen, int type, void* params);
 
+		virtual std::string invariant();
+
 	protected:
 
 		int k_means(int gset_index, int k);

@@ -22,6 +22,8 @@ class ConjunctiveLearner: public BaseLearner {
 
 		int selectiveSampling(int randn, int exen, int type, void* params);
 
+		virtual std::string invariant();
+
 	protected:
 		SVM_I* svm_i;
 		int max_iteration;

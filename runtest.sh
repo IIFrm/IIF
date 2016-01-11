@@ -11,12 +11,14 @@ filename=$1
 cfgname=$filename".cfg"
 cppname=$filename".cpp"
 logname=$filename".log"
+invname=$filename".inv"
 cfgfile="test/"$cfgname
 cppfile="test/"$cppname
 logfile="test/"$logname
+invfile="test/"$invname
 
 g++ cfg2cpp.cpp -o cfg2cpp
-./cfg2cpp $cfgfile $cppfile $logfile
+./cfg2cpp $cfgfile $cppfile $logfile $invfile
 VARS=$?
 rm ./cfg2cpp
 #exit $VARS
@@ -35,6 +37,8 @@ cmake ..
 make $filename
 ./$filename
 cd ..
+echo -n "invariant file is located at "
+echo $invfile
 
 rm $cmakefile
 exit $VARS

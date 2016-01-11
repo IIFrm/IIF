@@ -17,7 +17,8 @@
 #include <iomanip>
 #include <cstdlib>
 #include <vector>
-#include <string.h>
+#include <string>
+#include <sstream>
 #include "color.h"
 #include "solution.h"
 #if (linux || __MACH__)
@@ -103,6 +104,21 @@ class Equation{
 			return *this;
 		}
 
+		std::string toString() {
+			std::ostringstream stm;
+			stm << theta[0];
+			stm << " * " << variables[0];
+			for (int j = 1; j < VARS; j++) {
+				stm << "  +  ";
+				stm << theta[j] << " * " << variables[j];
+			}
+			if (theta0 == 0)
+				stm << " >= 0";
+			else 
+				stm << " >= " << -1 * theta0;
+			return stm.str();
+		}
+
 		/** @brief Output the equation in a readable format
 		 * 
 		 *	Example:
@@ -111,14 +127,12 @@ class Equation{
 		 *  @param equ the equation to be ouput
 		 */
 		friend std::ostream& operator << (std::ostream& out, const Equation& equ) {
-			out << std::setprecision(16) << equ.theta[0] ;//<< "{0}";
-			/*if (variable_name[0][0] != '\0') out << " * " << variable_name[0];
-			else*/ //out << "{0}";
+			out << std::setprecision(16) << equ.theta[0];
+			//out << "{0}";
 			out << " * " << variables[0];
 			for (int j = 1; j < VARS; j++) {
 				out << "  +  " << equ.theta[j]; 
-				/*if (variable_name[j][0] != '\0') out << " * " << variable_name[j];
-				else*/ //out << "{" <<j << "}";
+				//out << "{" <<j << "}";
 				out << " * " << variables[j];
 			}
 			if (equ.theta0 == 0)

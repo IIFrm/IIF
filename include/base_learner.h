@@ -60,6 +60,8 @@ class BaseLearner{
 
 		virtual int selectiveSampling(int randn, int exen, int type, void* params) = 0;
 
+		virtual std::string invariant() = 0;
+
 	protected:
 		void init_gsets() {
 			gsets[NEGATIVE].label = -1;

@@ -50,7 +50,6 @@ extern int vnum;
   */
 
 namespace iif{
-
 	class LearnerNode {
 		public:
 			LearnerNode() {
@@ -136,7 +135,7 @@ namespace iif{
 				return *this;
 			}
 
-			int learn() {
+			int learn(const char* invfilename = ".inv") {
 #ifdef linux
 				if (signal(SIGALRM, sig_alrm) == SIG_ERR)
 					exit(-1);
@@ -144,8 +143,11 @@ namespace iif{
 #endif
 				LearnerNode* p = first;
 				while (p) {
-					if (p->learner->learn() == 0)
+					if (p->learner->learn() == 0) {
+						std::ofstream invFile(invfilename);
+						invFile << p->learner->invariant();
 						return 0;
+					}
 					else
 						p = p->next;
 				}

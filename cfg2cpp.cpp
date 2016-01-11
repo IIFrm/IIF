@@ -45,6 +45,8 @@ class Config {
 		bool toCppStatement() {
 			//cout << "processing <" + key + ", " + value + ">......\n";
 			if (key == "precondition") { cppstatement = "iif_assume(" + value + ");";
+			} else if (key == "beforeloop") { cppstatement = value;
+			} else if (key == "loop") { cppstatement = value;
 			} else if (key == "loopcondition") { cppstatement = "while(" + value + ")";
 			} else if (key == "loop") { cppstatement = value;
 			} else if (key == "postcondition") { 
@@ -58,18 +60,20 @@ class Config {
 
 class FileHelper {
 	public:
-		FileHelper(const char* cfgfilename, const char* cppfilename, const char* logfilename) {
+		FileHelper(const char* cfgfilename, const char* cppfilename, const char* logfilename, const char* invfilename) {
 			this->cfgfilename = cfgfilename;
 			this->cppfilename = cppfilename;
 			this->logfilename = logfilename;
-			confignum = 6;
+			this->invfilename = invfilename;
+			confignum = 7;
 			cs = new Config[confignum];
 			cs[0].key = "num";
 			cs[1].key = "names";
 			cs[2].key = "precondition";
-			cs[3].key = "loopcondition";
-			cs[4].key = "loop";
-			cs[5].key = "postcondition";
+			cs[3].key = "beforeloop";
+			cs[4].key = "loopcondition";
+			cs[5].key = "loop";
+			cs[6].key = "postcondition";
 			variables = NULL;
 			vnum = 0;
 		}
@@ -159,6 +163,19 @@ class FileHelper {
 			return true;
 		}
 
+		bool writeInvFile() {
+			ofstream logFile(logfilename);
+			if( !logFile.is_open()) {
+				cout<<"can not open cpp file!"<<endl;
+				return false;
+			}
+			logFile << vnum << endl;
+			for (int i = 0; i< vnum; i++)
+				logFile << variables[i] << endl;
+			logFile.close();
+			return true;
+		}
+
 	private:
 		inline bool writeRecordi(ofstream& cppFile) {
 			cppFile << "recordi(" << variables[0];
@@ -191,7 +208,7 @@ class FileHelper {
 			cppFile << "int main(int argc, char** argv)\n {\n" 
 				<< "iifContext context(\"../" << logfilename <<"\", loopFunction, \"loopFunction\");\n"
 				<< "context.addLearner(\"linear\").addLearner(\"conjunctive\");\n"
-				<< "return context.learn();\n}" << endl;
+				<< "return context.learn(\"../" << invfilename << "\");\n}" << endl;
 			return true;
 		}
 
@@ -199,6 +216,7 @@ class FileHelper {
 		const char* cfgfilename;
 		const char* cppfilename;
 		const char* logfilename;
+		const char* invfilename;
 		Config* cs;
 		int confignum;
 		string* variables;
@@ -211,12 +229,15 @@ int main(int argc, char** argv)
 	const char* cfgfilename = "inputcfg.cfg";
 	const char* cppfilename = "inputcfg.cpp";
 	const char* logfilename = "inputcfg.log";
+	const char* invfilename = "inputcfg.inv";
 	if (argc >= 2) cfgfilename = argv[1];
 	if (argc >= 3) cppfilename = argv[2];
 	if (argc >= 4) logfilename = argv[3];
-	FileHelper fh(cfgfilename, cppfilename, logfilename);
+	if (argc >= 5) invfilename = argv[4];
+	FileHelper fh(cfgfilename, cppfilename, logfilename, invfilename);
 	fh.readConfigFile();
 	fh.writeCppFile();
 	fh.writeLogFile();
+	fh.writeInvFile();
 	return fh.getVnum();
 }

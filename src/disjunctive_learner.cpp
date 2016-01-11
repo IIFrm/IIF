@@ -151,3 +151,7 @@ int DisjunctiveLearner::learn()
 	return 0;
 }
 
+std::string DisjunctiveLearner::invariant()
+{
+	return std::string("");
+}

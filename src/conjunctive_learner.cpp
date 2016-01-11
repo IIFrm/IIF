@@ -47,7 +47,7 @@ int ConjunctiveLearner::selectiveSampling(int randn, int exen, int type, void* p
 			exen = -type;
 		}
 	}
-	
+
 #ifdef __PRT
 	std::cout << "{";
 #endif
@@ -178,16 +178,16 @@ init_svm_i:
 		 */
 		/*
 #ifdef __PRT
-		std::cout << "\t(5) checking question traces.";
+std::cout << "\t(5) checking question traces.";
 #endif
-		if (svm_i->checkQuestionSet(gsets[QUESTION]) != 0) {
+if (svm_i->checkQuestionSet(gsets[QUESTION]) != 0) {
 #ifdef __PRT
-			std::cout << std::endl << "check on question set return error." << std::endl;
+std::cout << std::endl << "check on question set return error." << std::endl;
 #endif
-			return -1;
-		}
+return -1;
+}
 #ifdef __PRT
-		std::cout << std::endl;
+std::cout << std::endl;
 #endif
 */
 
@@ -219,37 +219,49 @@ init_svm_i:
 			lastSimilar = false;
 		}
 #ifdef __PRT
-		std::cout << "  [FAIL] neXt round " << std::endl;
+std::cout << "  [FAIL] neXt round " << std::endl;
 #endif
 
-		pre_csf_num = svm_i->getClassifierNum();
-		if (pre_classifiers != NULL) delete[]pre_classifiers;
-		pre_classifiers = svm_i->saveClassifier();
-	} // end of SVM_I training procedure
+pre_csf_num = svm_i->getClassifierNum();
+if (pre_classifiers != NULL) delete[]pre_classifiers;
+pre_classifiers = svm_i->saveClassifier();
+} // end of SVM_I training procedure
 
 
-	std::cout << "--------------------------------------------------------------------------------------------------------------------" << std::endl;
-	std::cout << "Finish running svm_i for " << rnd - 1 << " times." << std::endl;
+std::cout << "--------------------------------------------------------------------------------------------------------------------" << std::endl;
+std::cout << "Finish running svm_i for " << rnd - 1 << " times." << std::endl;
 
-	int ret = 0;
-	if ((converged) && (rnd <= max_iteration)) {
-		int equ_num = -1;
-		Equation* equs = svm_i->roundoff(equ_num);
-		std::cout << YELLOW << "  Hypothesis Invairant(Converged): {";
-		std::cout << " \n\t ------------------------------------------------------";
-		std::cout << YELLOW << " \n\t |     " << GREEN <<  equs[0];
-		for (int i = 1; i < equ_num; i++) {
-			std::cout << YELLOW << " \n\t |  " << GREEN << "/\\ " << equs[i];
-		}
-		std::cout << YELLOW << " \n\t ------------------------------------------------------\n" << WHITE;
-		delete[]equs;
+int ret = 0;
+if ((converged) && (rnd <= max_iteration)) {
+	int equ_num = -1;
+	Equation* equs = svm_i->roundoff(equ_num);
+	std::cout << YELLOW << "  Hypothesis Invairant(Converged): {";
+	std::cout << " \n\t ------------------------------------------------------";
+	std::cout << YELLOW << " \n\t |     " << GREEN <<  equs[0];
+	for (int i = 1; i < equ_num; i++) {
+		std::cout << YELLOW << " \n\t |  " << GREEN << "/\\ " << equs[i];
 	}
+	std::cout << YELLOW << " \n\t ------------------------------------------------------\n" << WHITE;
+	delete[]equs;
+}
 
-	if (pre_classifiers != NULL) delete[]pre_classifiers;
-	if ((pass_rate < 1) || (rnd >= max_iteration)) {
-		std::cout << RED << "  Cannot divide by SVM_I perfectly.\n" << WHITE;
-		ret = -1;
+if (pre_classifiers != NULL) delete[]pre_classifiers;
+if ((pass_rate < 1) || (rnd >= max_iteration)) {
+	std::cout << RED << "  Cannot divide by SVM_I perfectly.\n" << WHITE;
+	ret = -1;
+}
+
+return ret;
+}
+
+
+std::string ConjunctiveLearner::invariant() {
+	int equ_num = -1;
+	Equation* equs = svm_i->roundoff(equ_num);
+	std::string s = "(" + equs[0].toString() + ")";
+	for (int i = 1; i < equ_num; i++) {
+		s += " && (" + equs[i].toString() + ")";
 	}
-
-	return ret;
+	delete equs;
+	return s;
 }

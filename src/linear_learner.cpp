@@ -152,16 +152,16 @@ init_svm:
 		 *	Check on Question traces.
 		 *	There should not exists one traces, in which a negative state is behind a positive state.
 		 */
-/*
+		/*
 #ifdef __PRT
-		std::cout << "\n\t(" << step++ << ") checking question traces.";
+std::cout << "\n\t(" << step++ << ") checking question traces.";
 #endif
-		if (svm->checkQuestionSet(gsets[QUESTION]) != 0) {
+if (svm->checkQuestionSet(gsets[QUESTION]) != 0) {
 #ifdef __PRT
-			std::cout << std::endl << RED << "check on question set return error." << std::endl << WHITE;
+std::cout << std::endl << RED << "check on question set return error." << std::endl << WHITE;
 #endif
-			return -1;
-		}
+return -1;
+}
 */
 
 		/*
@@ -192,35 +192,43 @@ init_svm:
 			similarLast = false;
 		}
 #ifdef __PRT
-		std::cout << "  [FAIL] neXt round " << std::endl;
+std::cout << "  [FAIL] neXt round " << std::endl;
 #endif
 
-		if (lastEquation == NULL) lastEquation = new Equation[1];
-		lastEquation[0] = *(svm->getClassifier());
-	} // end of SVM training procedure
+if (lastEquation == NULL) lastEquation = new Equation[1];
+lastEquation[0] = *(svm->getClassifier());
+} // end of SVM training procedure
 
 
-	std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
-	std::cout << "Finish running svm for " << rnd - 1 << " times." << std::endl;
+std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
+std::cout << "Finish running svm for " << rnd - 1 << " times." << std::endl;
 
-	int ret = 0;
-	if ((converged) && (rnd <= max_iteration)) {
-		int equ_num = -1;
-		Equation* equ = svm->roundoff(equ_num);
-		assert(equ_num == 1);
-		std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
-		std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
-		std::cout << "  }" << WHITE << std::endl;
-		delete equ;
-	}
-
-	if ((pass_rate < 1) || (rnd >= max_iteration)) {
-		std::cout << RED << "  Cannot divide by SVM perfectly.\n" << WHITE;
-		ret = -1;
-	}
-
-	if (lastEquation) delete lastEquation;
-
-	return ret;
+int ret = 0;
+if ((converged) && (rnd <= max_iteration)) {
+	int equ_num = -1;
+	Equation* equ = svm->roundoff(equ_num);
+	assert(equ_num == 1);
+	std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
+	std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
+	std::cout << "  }" << WHITE << std::endl;
+	delete equ;
 }
 
+if ((pass_rate < 1) || (rnd >= max_iteration)) {
+	std::cout << RED << "  Cannot divide by SVM perfectly.\n" << WHITE;
+	ret = -1;
+}
+
+if (lastEquation) delete lastEquation;
+
+return ret;
+}
+
+std::string LinearLearner::invariant() {
+	int equ_num = -1;
+	Equation* equ = svm->roundoff(equ_num);
+	assert(equ_num == 1);
+	std::string s = equ->toString();
+	delete equ;
+	return s;
+}
