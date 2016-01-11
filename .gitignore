@@ -2,6 +2,7 @@
 dev/*.out
 bin/*.out
 src/*.out
+test/*.inv
 
 data
 bin
