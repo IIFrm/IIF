@@ -8,7 +8,6 @@
 #ifndef _EQUATION_H_
 #define _EQUATION_H_
 
-//#include "header.h"
 #include "config.h"
 #include <cmath>
 #include <cfloat>
@@ -29,6 +28,8 @@ using namespace z3;
 
 extern int maxv;
 extern int minv;
+extern std::string* variables;
+extern int vnum;
 //extern char variable_name[VARS][8];
 
 const double UPBOUND = pow(0.1, PRECISION);
@@ -112,11 +113,13 @@ class Equation{
 		friend std::ostream& operator << (std::ostream& out, const Equation& equ) {
 			out << std::setprecision(16) << equ.theta[0] ;//<< "{0}";
 			/*if (variable_name[0][0] != '\0') out << " * " << variable_name[0];
-			else*/ out << "{0}";
+			else*/ //out << "{0}";
+			out << " * " << variables[0];
 			for (int j = 1; j < VARS; j++) {
 				out << "  +  " << equ.theta[j]; 
 				/*if (variable_name[j][0] != '\0') out << " * " << variable_name[j];
-				else*/ out << "{" <<j << "}";
+				else*/ //out << "{" <<j << "}";
+				out << " * " << variables[j];
 			}
 			if (equ.theta0 == 0)
 				out << " >= 0";

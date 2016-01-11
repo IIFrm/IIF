@@ -8,6 +8,8 @@ extern int assume_times, assert_times;
 int(*target_program)(int*) = NULL;
 
 int minv = -100, maxv = 100;
+std::string* variables;
+int vnum;
 
 bool check_target_program(int (*func)(int*))
 {

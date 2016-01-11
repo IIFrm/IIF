@@ -58,9 +58,10 @@ class Config {
 
 class FileHelper {
 	public:
-		FileHelper(const char* cfgfilename, const char* cppfilename) {
+		FileHelper(const char* cfgfilename, const char* cppfilename, const char* logfilename) {
 			this->cfgfilename = cfgfilename;
 			this->cppfilename = cppfilename;
+			this->logfilename = logfilename;
 			confignum = 6;
 			cs = new Config[confignum];
 			cs[0].key = "num";
@@ -144,6 +145,20 @@ class FileHelper {
 		inline int getVnum() {
 			return vnum;
 		}
+
+		bool writeLogFile() {
+			ofstream logFile(logfilename);
+			if( !logFile.is_open()) {
+				cout<<"can not open cpp file!"<<endl;
+				return false;
+			}
+			logFile << vnum << endl;
+			for (int i = 0; i< vnum; i++)
+				logFile << variables[i] << endl;
+			logFile.close();
+			return true;
+		}
+
 	private:
 		inline bool writeRecordi(ofstream& cppFile) {
 			cppFile << "recordi(" << variables[0];
@@ -155,7 +170,8 @@ class FileHelper {
 
 		inline bool writeCppHeader(ofstream& cppFile) {
 			cppFile << "#include \"iif.h\"\n"
-				<< "#include <iostream>\n" << endl;
+				<< "#include <iostream>\n" 
+				<< "using namespace iif;\n"<< endl;
 			return true;
 		}
 
@@ -173,15 +189,16 @@ class FileHelper {
 
 		inline bool writeCppMain(ofstream& cppFile) {
 			cppFile << "int main(int argc, char** argv)\n {\n" 
-				<< "LearnerPipeline lp(loopFunction, \"loopFunction\");\n"
-				<< "lp.addLearner(\"linear\").addLearner(\"conjunctive\");\n"
-				<< "return lp.learn();\n}" << endl;
+				<< "iifContext context(\"../" << logfilename <<"\", loopFunction, \"loopFunction\");\n"
+				<< "context.addLearner(\"linear\").addLearner(\"conjunctive\");\n"
+				<< "return context.learn();\n}" << endl;
 			return true;
 		}
 
 	private:
 		const char* cfgfilename;
 		const char* cppfilename;
+		const char* logfilename;
 		Config* cs;
 		int confignum;
 		string* variables;
@@ -191,12 +208,15 @@ class FileHelper {
 
 int main(int argc, char** argv) 
 {
-	const char* cfgfilename = "test.cfg";
-	const char* cppfilename = "outputtest.cpp";
+	const char* cfgfilename = "inputcfg.cfg";
+	const char* cppfilename = "inputcfg.cpp";
+	const char* logfilename = "inputcfg.log";
 	if (argc >= 2) cfgfilename = argv[1];
 	if (argc >= 3) cppfilename = argv[2];
-	FileHelper fh(cfgfilename, cppfilename);
+	if (argc >= 4) logfilename = argv[3];
+	FileHelper fh(cfgfilename, cppfilename, logfilename);
 	fh.readConfigFile();
 	fh.writeCppFile();
+	fh.writeLogFile();
 	return fh.getVnum();
 }

@@ -1,5 +1,6 @@
 #include "iif.h"
 #include <iostream>
+using namespace iif;
 
 int loopFunction(int a[]) {
 int xa = a[0];
@@ -20,7 +21,7 @@ return 0;
 
 int main(int argc, char** argv)
  {
-LearnerPipeline lp(loopFunction, "loopFunction");
-lp.addLearner("linear").addLearner("conjunctive");
-return lp.learn();
+iifContext context("../test/test.log", loopFunction, "loopFunction");
+context.addLearner("linear").addLearner("conjunctive");
+return context.learn();
 }

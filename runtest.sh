@@ -10,13 +10,17 @@ fi
 filename=$1
 cfgname=$filename".cfg"
 cppname=$filename".cpp"
-cfgfile="./test/"$cfgname
-cppfile="./test/"$cppname
+logname=$filename".log"
+cfgfile="test/"$cfgname
+cppfile="test/"$cppname
+logfile="test/"$logname
 
 g++ cfg2cpp.cpp -o cfg2cpp
-./cfg2cpp $cfgfile $cppfile
+./cfg2cpp $cfgfile $cppfile $logfile
 VARS=$?
 rm ./cfg2cpp
+#exit $VARS
+
 
 cmakefile="./CMakeLists.txt"
 echo "cmake_minimum_required (VERSION 2.8)" > $cmakefile
