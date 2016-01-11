@@ -1,10 +1,3 @@
-/***************************************************************
- *  @file cfgReader.cpp
- *  @brief           
- *             
- *  @author Li Jiaying
- *  @bug no known bugs
- ***************************************************************/
 /*
  *  parameter: cfgfilepath 文件的绝对路径名如: /user/home/my.cfg
  *  key         文本中的变量名
@@ -13,6 +6,8 @@
  */
 #include <string>
 #include <sstream>
+
+enum category {NUM=0, NAME, BEFL, PREC, LOOPC, LOOP, POSTC, AFTL, INV};
 
 namespace patch
 {
@@ -27,6 +22,7 @@ namespace patch
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <cstring>
 using namespace std;
 using namespace patch;
 
@@ -39,6 +35,7 @@ class Config {
 
 		friend std::ostream& operator << (std::ostream& out, const Config& c) {
 			out << c.key << " = " << c.value;
+			//out << c.cppstatement;
 			return out;
 		}
 
@@ -52,6 +49,7 @@ class Config {
 			} else if (key == "postcondition") { 
 				cppstatement = "iif_assert(" + value + ");\n"; 
 				cppstatement += "return 0;\n}";
+			} else if (key == "afterloop") { cppstatement = value;
 			}
 			return true;
 		}
@@ -60,20 +58,26 @@ class Config {
 
 class FileHelper {
 	public:
-		FileHelper(const char* cfgfilename, const char* cppfilename, const char* logfilename, const char* invfilename) {
-			this->cfgfilename = cfgfilename;
-			this->cppfilename = cppfilename;
-			this->logfilename = logfilename;
-			this->invfilename = invfilename;
-			confignum = 7;
+		FileHelper(const char* cfgfname, const char* cppfname) {
+			this->cfgfilename = cfgfname;
+
+			int len = strlen(cppfname);
+			cppfilename = new char[len + 10];
+			strcpy(cppfilename, cppfname);
+			cppfilename[len-2] = '\0';
+			strcat(cppfilename, "_klee0.c");
+
+			confignum = 9;
 			cs = new Config[confignum];
 			cs[0].key = "num";
 			cs[1].key = "names";
-			cs[2].key = "precondition";
-			cs[3].key = "beforeloop";
+			cs[2].key = "beforeloop";
+			cs[3].key = "precondition";
 			cs[4].key = "loopcondition";
 			cs[5].key = "loop";
 			cs[6].key = "postcondition";
+			cs[7].key = "afterloop";
+			cs[8].key = "invariant";
 			variables = NULL;
 			vnum = 0;
 		}
@@ -130,19 +134,27 @@ class FileHelper {
 			return true;
 		}
 
-		bool writeCppFile() {
-			for (int i = 0; i < confignum; i++)
-				cs[i].toCppStatement();
-			ofstream cppFile(cppfilename);
-			if( !cppFile.is_open()) {
-				cout<<"can not open cpp file!"<<endl;
-				return false;
+		bool writeCFile() {
+			//for (int i = 0; i < confignum; i++)
+			//	cs[i].toCppStatement();
+
+			//for (int i = 0; i < confignum; i++)
+			//	std::cout << cs[i] << endl;
+			int len = strlen(cppfilename);
+			cppfilename[len-3] = '0';
+
+			for (int choice = 1; choice <= 3; choice++) {
+				cppfilename[len-3] += 1;
+				//std::cout << "choice" << choice << " : " << cppfilename << std::endl;
+				std::ofstream cppFile(cppfilename);
+				if(!cppFile.is_open()) {
+					cout<<"can not open cpp file!"<<endl;
+					return false;
+				}
+				writeHeader(cppFile);
+				writeMain(cppFile, choice);
+				cppFile.close();
 			}
-			writeCppHeader(cppFile);
-			writeCppLoopFunction(cppFile);
-			cppFile << endl;
-			writeCppMain(cppFile);
-			cppFile.close();
 			return true;
 		}
 
@@ -150,73 +162,47 @@ class FileHelper {
 			return vnum;
 		}
 
-		bool writeLogFile() {
-			ofstream logFile(logfilename);
-			if( !logFile.is_open()) {
-				cout<<"can not open cpp file!"<<endl;
-				return false;
-			}
-			logFile << vnum << endl;
-			for (int i = 0; i< vnum; i++)
-				logFile << variables[i] << endl;
-			logFile.close();
-			return true;
-		}
-
-		bool writeInvFile() {
-			ofstream logFile(logfilename);
-			if( !logFile.is_open()) {
-				cout<<"can not open cpp file!"<<endl;
-				return false;
-			}
-			logFile << vnum << endl;
-			for (int i = 0; i< vnum; i++)
-				logFile << variables[i] << endl;
-			logFile.close();
-			return true;
-		}
 
 	private:
-		inline bool writeRecordi(ofstream& cppFile) {
-			cppFile << "recordi(" << variables[0];
-			for (int i = 1; i < vnum; i++)
-				cppFile << ", " << variables[i];
-			cppFile << ");\n";
+		inline bool writeHeader(ofstream& cppFile) {
+			cppFile << "#include <klee/klee.h>\n" << endl;
 			return true;
 		}
 
-		inline bool writeCppHeader(ofstream& cppFile) {
-			cppFile << "#include \"iif.h\"\n"
-				<< "#include <iostream>\n" 
-				<< "using namespace iif;\n"<< endl;
-			return true;
-		}
-
-		bool writeCppLoopFunction(ofstream& cppFile) {
-			cppFile <<"int loopFunction(int a[]) {\n";
+		inline bool writeMain(ofstream& cppFile, int choice) {
+			cppFile << "int main()\n {\n"; 
 			for (int i = 0; i < vnum; i++) 
-				cppFile << "int " + variables[i] + " = a[" + to_string(i) + "];\n";
-			for (int i = 0; i < confignum; i++) {
-				if (cs[i].key == "loop") { cppFile << "{\n"; writeRecordi(cppFile); }
-				cppFile << cs[i].cppstatement << endl;
-				if (cs[i].key == "loop") { cppFile << "}\n"; writeRecordi(cppFile); }
-			}
-			return true;
-		}
+				cppFile << "int " + variables[i] + ";\n";
+			for (int i = 0; i < vnum; i++) 
+				cppFile << "klee_make_symbolic(&" << variables[i] <<", sizeof(int), \"" << variables[i] << "\");\n";
 
-		inline bool writeCppMain(ofstream& cppFile) {
-			cppFile << "int main(int argc, char** argv)\n {\n" 
-				<< "iifContext context(\"../" << logfilename <<"\", loopFunction, \"loopFunction\");\n"
-				<< "context.addLearner(\"linear\").addLearner(\"conjunctive\");\n"
-				<< "return context.learn(\"../" << invfilename << "\");\n}" << endl;
+			// before loop statements;
+			cppFile << cs[BEFL].value << std::endl;
+
+			switch (choice) {
+				case 1:
+					cppFile << "klee_assume(" << cs[PREC].value <<");\n"; 
+					cppFile << "klee_assert(" << cs[INV].value <<");\n"; 
+					break;
+				case 2:
+					cppFile << "klee_assume(" << cs[LOOPC].value <<");\n"; 
+					cppFile << "klee_assume(" << cs[INV].value <<");\n"; 
+					cppFile << cs[LOOP].value << "\n";
+					cppFile << "klee_assert(" << cs[INV].value <<");\n"; 
+					break;
+				case 3:
+					cppFile << "klee_assume(!(" << cs[LOOPC].value <<"));\n"; 
+					cppFile << "klee_assume(" << cs[INV].value <<");\n"; 
+					cppFile << "klee_assert(" << cs[POSTC].value <<");\n"; 
+					break;
+			}
+			cppFile << "return 0;\n}" << endl;
 			return true;
 		}
 
 	private:
 		const char* cfgfilename;
-		const char* cppfilename;
-		const char* logfilename;
-		const char* invfilename;
+		char* cppfilename;
 		Config* cs;
 		int confignum;
 		string* variables;
@@ -227,17 +213,11 @@ class FileHelper {
 int main(int argc, char** argv) 
 {
 	const char* cfgfilename = "inputcfg.cfg";
-	const char* cppfilename = "inputcfg.cpp";
-	const char* logfilename = "inputcfg.log";
-	const char* invfilename = "inputcfg.inv";
+	const char* cppfilename = "inputcfg.c";
 	if (argc >= 2) cfgfilename = argv[1];
 	if (argc >= 3) cppfilename = argv[2];
-	if (argc >= 4) logfilename = argv[3];
-	if (argc >= 5) invfilename = argv[4];
-	FileHelper fh(cfgfilename, cppfilename, logfilename, invfilename);
+	FileHelper fh(cfgfilename, cppfilename);
 	fh.readConfigFile();
-	fh.writeCppFile();
-	fh.writeLogFile();
-	fh.writeInvFile();
+	fh.writeCFile();
 	return fh.getVnum();
 }

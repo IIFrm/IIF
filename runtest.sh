@@ -8,19 +8,20 @@ then
 fi
 
 filename=$1
+mkdir -p tmp
 cfgname=$filename".cfg"
 cppname=$filename".cpp"
-logname=$filename".log"
+varname=$filename".var"
 invname=$filename".inv"
-cfgfile="test/"$cfgname
+cfgfile="cfg/"$cfgname
 cppfile="test/"$cppname
-logfile="test/"$logname
-invfile="test/"$invname
+varfile="tmp/"$varname
+invfile="tmp/"$invname
 
-g++ cfg2cpp.cpp -o cfg2cpp
-./cfg2cpp $cfgfile $cppfile $logfile $invfile
+g++ cfg2test.cpp -o cfg2test
+./cfg2test $cfgfile $cppfile $varfile $invfile
 VARS=$?
-rm ./cfg2cpp
+rm ./cfg2test
 #exit $VARS
 
 
@@ -37,10 +38,48 @@ cmake ..
 make $filename
 ./$filename
 cd ..
-echo -n "invariant file is located at "
-echo $invfile
+echo "invariant file is located at "$invfile
 
+
+tmpcfg="tmp/tmp.cfg"
+cp $cfgfile $tmpcfg
+echo -n "invariant=" >> $tmpcfg
+cat $invfile >> $tmpcfg
+
+
+
+verfname=$filename".c"
+verffile="tmp/"$verfname
+g++ cfg2verf.cpp -o cfg2verf
+./cfg2verf $tmpcfg $verffile
+rm ./cfg2verf
+
+verfc1=$filename"_klee1.c"
+verfc2=$filename"_klee2.c"
+verfc3=$filename"_klee3.c"
+verfo1=$filename"_klee1.o"
+verfo2=$filename"_klee2.o"
+verfo3=$filename"_klee3.o"
+cd tmp
+rm -rf klee-*
+llvm-gcc --emit-llvm -c -g $verfc1
+klee $verfo1 
+llvm-gcc --emit-llvm -c -g $verfc2
+klee $verfo2 
+llvm-gcc --emit-llvm -c -g $verfc3
+klee $verfo3 
+
+# more analysis here...
+
+#rm $verfc1 $verfc2 $verfc3
+#rm $verfo1 $verfo2 $verfo3
+cd ..
+
+
+#rm $tmpcfg
 rm $cmakefile
+#rm $varfile
+#rm $invfile
 exit $VARS
 
 

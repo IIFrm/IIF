@@ -23,9 +23,10 @@ return 0;
 }
 
 
+
 int main(int argc, char** argv)
  {
-iifContext context("../tmp/conj.var", loopFunction, "loopFunction");
+iifContext context("../test/conj.log", loopFunction, "loopFunction");
 context.addLearner("linear").addLearner("conjunctive");
-return context.learn("../tmp/conj.inv");
+return context.learn("../test/conj.inv");
 }

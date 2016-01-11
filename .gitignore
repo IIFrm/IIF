@@ -3,6 +3,7 @@ dev/*.out
 bin/*.out
 src/*.out
 test/*.inv
+tmp/
 
 data
 bin
