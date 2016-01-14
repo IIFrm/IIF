@@ -7,24 +7,24 @@ white="\033[0m"
 
 function findSMT4Z3(){
 	#echo "in findSMT4Z3 funtion..."
-	filename="failAssert0000";
+	smtname="failAssert0000";
 	n=9
 	i=1
 	tmpfile="result"
 	while [ $i -lt $n ]; do
-		echo -n "processing "$filename""$i".smt2 --> "
-		if [ ! -f $filename""$i".smt2" ]; then
-			echo  "No such file."
+		if [ ! -f $smtname""$i".smt2" ]; then
+			#echo  "No such file."
 			return 0
 		fi
-		#echo -n "processing "$filename""$i".smt2-->"
-		z3 $filename""$i".smt2" > $tmpfile""$i
+		echo -n "processing "$smtname""$i".smt2 --> "
+		z3 $smtname""$i".smt2" > $tmpfile""$i
 		read result < $tmpfile""$i
+		rm $tmpfile""$i
 		if [ $result == "unsat" ]; then
-			echo -e $green$result
+			echo -e $green$result$white
 			i=$(($i+1))
 		else
-			echo -e $red$result
+			echo -e $red$result$white
 			return 255
 		fi
 	done
@@ -128,6 +128,14 @@ verfo3=$filename"_klee3.o"
 
 
 cd tmp
+
+mkdir -p $filename"_klee1" $filename"_klee2" $filename"_klee3"
+mv $verfc1 $filename"_klee1"
+mv $verfc2 $filename"_klee2"
+mv $verfc3 $filename"_klee3"
+
+
+cd $filename"_klee1" 
 rm -rf klee-*
 echo -e $blue"Compiling the C files and Run KLEE..."$white
 echo -e $blue"Compiling the C files and Run KLEE...1"$white
@@ -141,8 +149,11 @@ if [ $ret -ne 0 ]; then
 	echo -e "Reason: Property I (precondition ==> invariant) FAILED. stop here..."$white
 	exit $ret
 fi
+cd ..
 
 
+cd $filename"_klee2" 
+rm -rf klee-*
 echo -e $blue"Compiling the C files and Run KLEE...2"$white
 llvm-gcc --emit-llvm -c -g $verfc2
 klee -write-smt2s $verfo2 
@@ -154,8 +165,11 @@ if [ $ret -ne 0 ]; then
 	echo -e "Reason: Property II (invariant && loopcondition =S=> invariant) FAILED. stop here..."$white
 	exit $ret
 fi
+cd ..
 
 
+cd $filename"_klee3" 
+rm -rf klee-*
 echo -e $blue"Compiling the C files and Run KLEE...3"$white
 llvm-gcc --emit-llvm -c -g $verfc3
 klee -write-smt2s $verfo3 
@@ -167,6 +181,7 @@ if [ $ret -ne 0 ]; then
 	echo -e "Reason: Property III (invariant && ~loopcondition ==> postcondition) FAILED. stop here..."$white
 	exit $ret
 fi
+cd ..
 #if [ $ret -ne 2 ]
 #then
 #	echo "POST COUNTER EXAMPLE..."
@@ -178,7 +193,7 @@ fi
 
 #rm $verfc1 $verfc2 $verfc3
 #rm $verfo1 $verfo2 $verfo3
-echo -e $blue"[DONE]"$white
+echo -e $yellow"[DONE]"$white
 cd ..
 
 
@@ -186,36 +201,9 @@ cd ..
 rm $cmakefile
 #rm $varfile
 #rm $invfile
-echo -e $blue"END HERE..."$white
+echo -e $yellow"END HERE..."$white
 exit $VARS
 
 
-#K=1 
-#TESTLOOP=60
-#rm ./data/test
-#touch ./data/test
-
-#while [ "$K" -lt $TESTLOOP ]; do
-#	random=$RANDOM
-#	echo "running test case $K "
-#	./exe_instrument $random  >> ./data/test
-#	K=$(($K+1))
-#done
 
 
-
-
-cd ./data/
-echo "************* start to run svm with default parameters on orignal sets************"
-svm-train -t 0 -c $DOUBLE_MAX train
-svm-predict train train.model train.predict
-echo "************ finish running svm with default parameters on orignal sets***********"
-
-#echo "************* start to run svm with default parameters on scaled sets*************"
-#svm-scale -l -1 -u 1 train > train.scale
-#svm-scale -l -1 -u 1 test > test.scale
-#svm-train -t 0 train.scale
-#svm-predict train.scale train.scale.model train.scale.predict
-#echo "************ finish running svm with default parameters on scaled  sets***********"
-cd ..
-svm2plane -m data/train.model -t data/train

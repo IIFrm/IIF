@@ -5,7 +5,6 @@ using namespace iif;
 int loopFunction(int a[]) {
 int x = a[0];
 
-
 iif_assume((x>=0) && (x<=50));
 int loop_times = 10;
 while(loop_times-- > 0)

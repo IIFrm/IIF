@@ -42,6 +42,7 @@ static double _roundoff(double x)
 		return double(inx);
 	if (std::abs(x) <= UPBOUND)
 		return 0;
+	return double(inx);
 	return x;
 }
 

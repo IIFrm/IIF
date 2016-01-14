@@ -15,7 +15,7 @@ xa--;
 ya++;
 }
 recordi(xa, ya);
-iif_assert(ya > 0);
+iif_assert(ya >= 0);
 return 0;
 }
 
