@@ -11,15 +11,16 @@ function findSMT4Z3(){
 			echo  "No such file."
 			return $((Si-1))
 		fi
-		echo -n "processing "$filename""$i".smt2-->"
+		#echo -n "processing "$filename""$i".smt2-->"
 		z3 $filename""$i".smt2" > $tmpfile""$i
-		cat $tmpfile""$i | read result
+		read result < $tmpfile""$i
 		echo "result=="$result
-		if [ -ne $result "unsat" ]; then
+		if [ $result == "unsat" ]; then
+			i=$(($i+1))
+		else
 			echo "NOT A VALID INVARIVANT..."
 			return 255
 		fi
-		i=$(($i+1))
 	done
 	return 0
 }
@@ -130,7 +131,11 @@ llvm-gcc --emit-llvm -c -g $verfc1
 klee -write-smt2s $verfo1 
 ret=$?
 findSMT4Z3
-echo $?
+ret=$?
+if [ $ret -ne 0 ]; then
+	echo "PRECONDITION. stop here..."
+	exit $ret
+fi
 
 
 echo -e $blue"Compiling the C files and Run KLEE...2"$white
@@ -138,7 +143,11 @@ llvm-gcc --emit-llvm -c -g $verfc2
 klee -write-smt2s $verfo2 
 ret=$?
 findSMT4Z3
-echo $?
+ret=$?
+if [ $ret -ne 0 ]; then
+	echo "INDUCTIVE FAILED. stop here..."
+	exit $ret
+fi
 
 
 echo -e $blue"Compiling the C files and Run KLEE...3"$white
@@ -146,7 +155,11 @@ llvm-gcc --emit-llvm -c -g $verfc3
 klee -write-smt2s $verfo3 
 ret=$?
 findSMT4Z3
-echo $?
+ret=$?
+if [ $ret -ne 0 ]; then
+	echo "POSTCONDITION FAILED. stop here..."
+	exit $ret
+fi
 #if [ $ret -ne 2 ]
 #then
 #	echo "POST COUNTER EXAMPLE..."
