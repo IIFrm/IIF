@@ -1,34 +1,9 @@
-/***************************************************************
- *  @file cfgReader.cpp
- *  @brief           
- *             
- *  @author Li Jiaying
- *  @bug no known bugs
- ***************************************************************/
-/*
- *  parameter: cfgfilepath 文件的绝对路径名如: /user/home/my.cfg
- *  key         文本中的变量名
- *  value       对应变量的值，用于保存
- *  
- */
-#include <string>
 #include <sstream>
-
-namespace patch
-{
-	template < typename T > std::string to_string( const T& n )
-	{
-		std::ostringstream stm ;
-		stm << n ;
-		return stm.str() ;
-	}
-}
-
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 using namespace std;
-using namespace patch;
 
 
 class Config {
@@ -65,8 +40,16 @@ class FileHelper {
 			this->cppfilename = cppfilename;
 			this->varfilename = varfilename;
 			this->invfilename = invfilename;
-			confignum = 8;
+			confignum = 7;
 			cs = new Config[confignum];
+			cs[0].key = "names";
+			cs[1].key = "precondition";
+			cs[2].key = "beforeloop";
+			cs[3].key = "loopcondition";
+			cs[4].key = "loop";
+			cs[5].key = "postcondition";
+			cs[6].key = "afterloop";
+			/*
 			cs[0].key = "num";
 			cs[1].key = "names";
 			cs[2].key = "precondition";
@@ -75,15 +58,15 @@ class FileHelper {
 			cs[5].key = "loop";
 			cs[6].key = "postcondition";
 			cs[7].key = "afterloop";
-			variables = NULL;
+			*/
+			//variables = NULL;
 			vnum = 0;
 		}
 
 		~FileHelper() {
 			if (cs != NULL)
 				delete []cs;
-			if (variables != NULL)
-				delete []variables;
+			variables.clear();
 		}
 
 		bool readConfigFile() {
@@ -113,7 +96,26 @@ class FileHelper {
 
 			cfgFile.close();
 
+			//cout << cs[0] << endl;
 			//cs[0].value >> vnum;
+			size_t start = 0;
+			size_t end = cs[0].value.find(' ');
+			while (end == start) {
+				end = cs[0].value.find(' ', end+1);
+				start++;
+			}
+			for (int i = 0; end != std::string::npos; i++) {
+				variables.push_back(cs[0].value.substr(start, end-start));
+				start = end + 1;
+				end = cs[0].value.find(' ', start);
+			}
+			variables.push_back(cs[0].value.substr(start, end-start));
+			vnum = variables.size();
+
+
+			/*for (int i = 0; i < vnum; i++)
+				cout << "var[" << i << "] = " << variables[i] << endl;
+			
 			std::istringstream ss(cs[0].value);
 			ss >> vnum;
 			variables = new string[vnum];
@@ -128,6 +130,7 @@ class FileHelper {
 				start = end + 1;
 				end = cs[1].value.find(' ', start);
 			}
+			*/
 			return true;
 		}
 
@@ -196,8 +199,10 @@ class FileHelper {
 
 		bool writeCppLoopFunction(ofstream& cppFile) {
 			cppFile <<"int loopFunction(int a[]) {\n";
-			for (int i = 0; i < vnum; i++) 
-				cppFile << "int " + variables[i] + " = a[" + to_string(i) + "];\n";
+			for (int i = 0; i < vnum; i++) {
+				cppFile << "int " << variables[i] << " = a[" << i << "];\n";
+				//cppFile << "int " + variables[i] + " = a[" + to_string(i) + "];\n";
+			}
 			for (int i = 0; i < confignum; i++) {
 				if (cs[i].key == "loop") { cppFile << "{\n"; writeRecordi(cppFile); }
 				cppFile << cs[i].cppstatement << endl;
@@ -221,7 +226,7 @@ class FileHelper {
 		const char* invfilename;
 		Config* cs;
 		int confignum;
-		string* variables;
+		vector<string> variables;
 		int vnum;
 };
 
@@ -237,9 +242,13 @@ int main(int argc, char** argv)
 	if (argc >= 4) varfilename = argv[3];
 	if (argc >= 5) invfilename = argv[4];
 	FileHelper fh(cfgfilename, cppfilename, varfilename, invfilename);
+	//cout << "after construct...\n";
 	fh.readConfigFile();
+	//cout << "after read config file...\n";
 	fh.writeCppFile();
+	//cout << "after write cpp file...\n";
 	fh.writeVarFile();
+	//cout << "after write var file...\n";
 	//fh.writeInvFile();
 	return fh.getVnum();
 }

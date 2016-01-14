@@ -4,28 +4,15 @@
  *  value       对应变量的值，用于保存
  *  
  */
-#include <string>
 #include <sstream>
-
-enum category {NUM=0, NAME, BEFL, PREC, LOOPC, LOOP, POSTC, AFTL, INV};
-
-namespace patch
-{
-	template < typename T > std::string to_string( const T& n )
-	{
-		std::ostringstream stm ;
-		stm << n ;
-		return stm.str() ;
-	}
-}
-
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <cstring>
+#include <vector>
 using namespace std;
-using namespace patch;
 
+enum category {NAME=0, BEFL, PREC, LOOPC, LOOP, POSTC, AFTL, INV};
 
 class Config {
 	public:
@@ -35,7 +22,6 @@ class Config {
 
 		friend std::ostream& operator << (std::ostream& out, const Config& c) {
 			out << c.key << " = " << c.value;
-			//out << c.cppstatement;
 			return out;
 		}
 
@@ -67,26 +53,24 @@ class FileHelper {
 			cppfilename[len-2] = '\0';
 			strcat(cppfilename, "_klee0.c");
 
-			confignum = 9;
+			confignum = 8;
 			cs = new Config[confignum];
-			cs[0].key = "num";
-			cs[1].key = "names";
-			cs[2].key = "beforeloop";
-			cs[3].key = "precondition";
-			cs[4].key = "loopcondition";
-			cs[5].key = "loop";
-			cs[6].key = "postcondition";
-			cs[7].key = "afterloop";
-			cs[8].key = "invariant";
-			variables = NULL;
+			cs[0].key = "names";
+			cs[1].key = "beforeloop";
+			cs[2].key = "precondition";
+			cs[3].key = "loopcondition";
+			cs[4].key = "loop";
+			cs[5].key = "postcondition";
+			cs[6].key = "afterloop";
+			cs[7].key = "invariant";
+			//variables = NULL;
 			vnum = 0;
 		}
 
 		~FileHelper() {
 			if (cs != NULL)
 				delete []cs;
-			if (variables != NULL)
-				delete []variables;
+			variables.clear();
 		}
 
 		bool readConfigFile() {
@@ -116,27 +100,24 @@ class FileHelper {
 
 			cfgFile.close();
 
-			//cs[0].value >> vnum;
-			std::istringstream ss(cs[0].value);
-			ss >> vnum;
-			variables = new string[vnum];
 			size_t start = 0;
-			size_t end = cs[1].value.find(' ');
+			size_t end = cs[NAME].value.find(' ');
 			while (end == start) {
-				end = cs[1].value.find(' ', end+1);
+				end = cs[NAME].value.find(' ', end+1);
 				start++;
 			}
-			for (int i = 0; i < vnum; i++) {
-				variables[i] = cs[1].value.substr(start, end-start);
+			for (int i = 0; end != std::string::npos; i++) {
+				variables.push_back(cs[NAME].value.substr(start, end-start));
 				start = end + 1;
-				end = cs[1].value.find(' ', start);
+				end = cs[NAME].value.find(' ', start);
 			}
+			variables.push_back(cs[NAME].value.substr(start, end-start));
+			vnum = variables.size();
+
 			return true;
 		}
 
 		bool writeCFile() {
-			//for (int i = 0; i < confignum; i++)
-			//	cs[i].toCppStatement();
 
 			//for (int i = 0; i < confignum; i++)
 			//	std::cout << cs[i] << endl;
@@ -205,7 +186,7 @@ class FileHelper {
 		char* cppfilename;
 		Config* cs;
 		int confignum;
-		string* variables;
+		vector<string> variables;
 		int vnum;
 };
 

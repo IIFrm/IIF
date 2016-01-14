@@ -1,24 +1,30 @@
 #!/bin/bash
+red="\033[33;\x1b[31m"
+green="\033[33;\x1b[32m"
+yellow="\033[33;\x1b[33m"
+blue="\033[33;\x1b[34m"
+white="\033[0m"
+
 function findSMT4Z3(){
-	echo "in findSMT4Z3 funtion..."
+	#echo "in findSMT4Z3 funtion..."
 	filename="failAssert0000";
 	n=9
 	i=1
 	tmpfile="result"
 	while [ $i -lt $n ]; do
-		echo -n "processing "$filename""$i".smt2-->"
+		echo -n "processing "$filename""$i".smt2 --> "
 		if [ ! -f $filename""$i".smt2" ]; then
 			echo  "No such file."
-			return $((Si-1))
+			return 0
 		fi
 		#echo -n "processing "$filename""$i".smt2-->"
 		z3 $filename""$i".smt2" > $tmpfile""$i
 		read result < $tmpfile""$i
-		echo "result=="$result
 		if [ $result == "unsat" ]; then
+			echo -e $green$result
 			i=$(($i+1))
 		else
-			echo "NOT A VALID INVARIVANT..."
+			echo -e $red$result
 			return 255
 		fi
 	done
@@ -34,8 +40,6 @@ then
 	exit 1
 fi
 
-blue="\033[33;\x1b[34m"
-white="\033[0m"
 
 filename=$1
 mkdir -p tmp
@@ -133,7 +137,8 @@ ret=$?
 findSMT4Z3
 ret=$?
 if [ $ret -ne 0 ]; then
-	echo "PRECONDITION. stop here..."
+	echo -n -e $red">>>NOT A VALID INVARIVANT..."
+	echo -e "Reason: Property I (precondition ==> invariant) FAILED. stop here..."$white
 	exit $ret
 fi
 
@@ -145,7 +150,8 @@ ret=$?
 findSMT4Z3
 ret=$?
 if [ $ret -ne 0 ]; then
-	echo "INDUCTIVE FAILED. stop here..."
+	echo -n -e $red">>>NOT A VALID INVARIVANT..."
+	echo -e "Reason: Property II (invariant && loopcondition =S=> invariant) FAILED. stop here..."$white
 	exit $ret
 fi
 
@@ -157,7 +163,8 @@ ret=$?
 findSMT4Z3
 ret=$?
 if [ $ret -ne 0 ]; then
-	echo "POSTCONDITION FAILED. stop here..."
+	echo -n -e $red">>>NOT A VALID INVARIVANT..."
+	echo -e "Reason: Property III (invariant && ~loopcondition ==> postcondition) FAILED. stop here..."$white
 	exit $ret
 fi
 #if [ $ret -ne 2 ]

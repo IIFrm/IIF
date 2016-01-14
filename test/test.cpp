@@ -6,7 +6,6 @@ int loopFunction(int a[]) {
 int xa = a[0];
 int ya = a[1];
 
-
 iif_assume(xa + ya > 0);
 
 while(xa > 0)
