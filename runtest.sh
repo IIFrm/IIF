@@ -1,22 +1,26 @@
 #!/bin/bash
 function findSMT4Z3(){
-	#echo "in findSMT4Z3 funtion..."
-	n=$1
-	filename="test00000";
-	cd klee-last;
+	echo "in findSMT4Z3 funtion..."
+	filename="failAssert0000";
+	n=9
 	i=1
-	while [ $i -le $n ]; do
+	tmpfile="result"
+	while [ $i -lt $n ]; do
 		echo -n "processing "$filename""$i".smt2-->"
-		z3 $filename""$i".smt2"
-		ret=$?
-		if [ $ret -ne 0 ]
-		then
-			cd ..
-			return $ret
+		if [ ! -f $filename""$i".smt2" ]; then
+			echo  "No such file."
+			return $((Si-1))
+		fi
+		echo -n "processing "$filename""$i".smt2-->"
+		z3 $filename""$i".smt2" > $tmpfile""$i
+		cat $tmpfile""$i | read result
+		echo "result=="$result
+		if [ -ne $result "unsat" ]; then
+			echo "NOT A VALID INVARIVANT..."
+			return 255
 		fi
 		i=$(($i+1))
 	done
-	cd ..
 	return 0
 }
 
@@ -125,33 +129,23 @@ echo -e $blue"Compiling the C files and Run KLEE...1"$white
 llvm-gcc --emit-llvm -c -g $verfc1
 klee -write-smt2s $verfo1 
 ret=$?
-findSMT4Z3 $ret
+findSMT4Z3
 echo $?
-#if [ $ret -ne 2 ]
-#then
-#	echo "PRE COUNTER EXAMPLE..."
-#	exit $ret
-#fi
 
 
 echo -e $blue"Compiling the C files and Run KLEE...2"$white
 llvm-gcc --emit-llvm -c -g $verfc2
 klee -write-smt2s $verfo2 
 ret=$?
-findSMT4Z3 $ret
+findSMT4Z3
 echo $?
-#if [ $ret -ne 2 ]
-#then
-#	echo "INV COUNTER EXAMPLE..."
-#	exit $ret
-#fi
 
 
 echo -e $blue"Compiling the C files and Run KLEE...3"$white
 llvm-gcc --emit-llvm -c -g $verfc3
 klee -write-smt2s $verfo3 
 ret=$?
-findSMT4Z3 $ret
+findSMT4Z3
 echo $?
 #if [ $ret -ne 2 ]
 #then

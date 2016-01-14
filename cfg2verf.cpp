@@ -182,18 +182,18 @@ class FileHelper {
 			switch (choice) {
 				case 1:
 					cppFile << "klee_assume(" << cs[PREC].value <<");\n"; 
-					cppFile << "klee_assert(" << cs[INV].value <<");\n"; 
+					cppFile << "klee_Massert(" << cs[INV].value <<");\n"; 
 					break;
 				case 2:
 					cppFile << "klee_assume(" << cs[LOOPC].value <<");\n"; 
 					cppFile << "klee_assume(" << cs[INV].value <<");\n"; 
 					cppFile << cs[LOOP].value << "\n";
-					cppFile << "klee_assert(" << cs[INV].value <<");\n"; 
+					cppFile << "klee_Massert(" << cs[INV].value <<");\n"; 
 					break;
 				case 3:
 					cppFile << "klee_assume(!(" << cs[LOOPC].value <<"));\n"; 
 					cppFile << "klee_assume(" << cs[INV].value <<");\n"; 
-					cppFile << "klee_assert(" << cs[POSTC].value <<");\n"; 
+					cppFile << "klee_Massert(" << cs[POSTC].value <<");\n"; 
 					break;
 			}
 			cppFile << "return 0;\n}" << endl;
