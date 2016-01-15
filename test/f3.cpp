@@ -13,7 +13,8 @@ while(z > 0)
 {
 recordi(x, y, z);
 x++; 
-y++;z-=2;
+y++;
+z-=2;
 }
 recordi(x, y, z);
 iif_assert(x + y >= 0);

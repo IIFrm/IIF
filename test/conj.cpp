@@ -12,8 +12,10 @@ while(loop_times-- > 0)
 recordi(x);
  if (x == 50) {
 			x --;
+		} else if (x == 0) {
 			x ++;
 		} else {
+			x += rand() % 3 - 1;
 		}
 }
 recordi(x);

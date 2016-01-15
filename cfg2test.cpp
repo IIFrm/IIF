@@ -79,19 +79,26 @@ class FileHelper {
 			int lastidx = -1;
 			while(getline(cfgFile, line)) {
 				size_t pos = line.find('=');
-				if(pos == string::npos) {
+				/*if(pos == string::npos) {
 					if (lastidx >= 0) 
 						cs[lastidx].value += "\n" + line;
 					continue;
 				}
+				*/
 				string key = line.substr(0,pos);
+				bool get_record = false;
 				for (int i = 0; i < confignum; i++) {
 					if(cs[i].key == key) {
+						get_record = true;
 						cs[i].value += line.substr(pos+1);
 						lastidx = i;
-						continue;
+						break;
 					}
 				}
+				if (get_record == true)
+					continue;
+				else 
+					cs[lastidx].value += "\n" + line;
 			}
 
 			cfgFile.close();
