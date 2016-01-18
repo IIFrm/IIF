@@ -4,7 +4,7 @@
 #include "svm_core.h"
 #include "string.h"
 
-static double sqrDistance(double* a1, double* b1, int size)
+static inline double sqrDistance(double* a1, double* b1, int size)
 {
 	double distance = 0;
 	for (int i = 0; i < size; i++)
@@ -13,99 +13,126 @@ static double sqrDistance(double* a1, double* b1, int size)
 }
 
 
+static bool labelRandomization(int* plabel, int* nlabel, int pfirst, int nfirst, int psize, int nsize)
+{
+	if (pfirst >= psize) return false;
+	if (nfirst >= nsize) return false;
+	/*if (plabel[pfirst] == 0) {
+		for (int i = pfirst + 1; i < psize; i++)
+			plabel[i] = -1;
+		plabel[pfirst] = 1;
+	} else {
+	*/
+	//for (int i = psize - 1; i > pfirst; i++)
+	return true;
 
-class Cluster: public MLalgo
+}
+
+
+class Cluster
 {
 	private:
+		double (*pdata)[VARS];
+		double (*ndata)[VARS];
+		//double* label;
+		int* pgid; //group label
+		int* ngid; //group label
+
 		svm_parameter param;
 		svm_problem problem;
 		svm_model* model;
-		Equation* classifiers;
-		int csf_num;
 
-		int max_size;
-		int max_csf;
-
-		double** data; // [max_items * 2];
-		double* label; // [max_items * 2];
-		int* gid; // group label
-
-		int p_num;
-		int n_num;
+		int psize;
+		int nsize;
 		int size;
-
-		int K;
-		int k;
+		int pncluster;
+		int nncluster;
+		int max_size;
+		int max_ncluster; // max k value
 
 	public:
-		inline int getClassifierNum() {
-			return csf_num;
-		}
-
-		inline Equation* getClassifier() {
-			return classifiers;
-		}
-
-		inline Equation* getClassifier(int idx) {
-			if (idx >= csf_num) return NULL;
-			return &classifiers[idx];
-		}
-
-		inline Equation* saveClassifier() {
-			Equation* es = new Equation[csf_num];
-			for (int i = 0; i < csf_num; i++)
-				es[i] = classifiers[i];
-			return es;
-		}
-
-		Cluster(void(*f) (const char*) = NULL, int size = 10000, int csf = 16) : max_size(size), max_csf(csf) {
-			prepare_linear_parameters(param);
-			if (f != NULL)
-				svm_set_print_string_function(f);
-			model = NULL;
-			classifiers = new Equation[max_csf];
-
-			data = new double*[max_size];
-			label = new double[max_size];
-			gid = new int[max_size];
-			for (int i = 0; i < max_size; i++)
-				label[i] = -1;
+		Cluster(double (*pdata)[VARS], double (*ndata)[VARS], int psize, int nsize){
+			this->pdata = pdata;
+			this->ndata = ndata;
+			pgid = new int[psize];
+			ngid = new int[nsize];
+			this->psize = psize;
+			this->nsize = nsize;
+			size = psize + nsize;
 			problem.l = 0;
-			problem.x = (svm_node**)(data);
-			problem.y = label;
-
-			//negatives = NULL;
-			csf_num = 0;
+			//problem.x = (svm_node**)(data);
+			//problem.y = label;
+			prepare_linear_parameters(param);
+			model = NULL;
 		}
 
 		~Cluster() {
 			if (model != NULL) svm_free_and_destroy_model(&model);
-			if (classifiers != NULL) delete []classifiers;
-			if (data != NULL) delete []data;
-			if (label != NULL) delete []label;
-			if (gid != NULL) delete []gid;
+			if (pgid != NULL) delete []pgid;
+			if (ngid != NULL) delete []ngid;
 		}
 
 
-		virtual int makeTrainingSet(States* gsets, int& pre_positive_size, int& pre_negative_size) {
-			return 0;
+		bool doClustering() {
+			pncluster = 0;
+			nncluster = 0;
+			int k;
+			for(k = 1; k <= max_ncluster; k++) {
+				if (kClustering(k) == true) {
+					pncluster = k;
+					nncluster = k;
+					break;
+				}
+			}
+			if (k > max_ncluster)
+				return false;
+
+			bool merged = true;
+			while (merged) {
+				merged = false;
+				for (int i = 0; i < pncluster; i++) {
+					for (int j = i; j < pncluster; j++) {
+						if (pairSetLinearSeparable(true, i, j) == true) {
+							mergeByGroupID(true, i, j);
+							pncluster--;
+							merged = true;
+							j--;
+						}
+					}
+				}
+				for (int i = 0; i < nncluster; i++) {
+					for (int j = i; j < nncluster; j++) {
+						if (pairSetLinearSeparable(false, i, j) == true) {
+							mergeByGroupID(false, i, j);
+							nncluster--;
+							merged = true;
+							j--;
+						}
+					}
+				}
+			}
+
+			return true;
 		}
 
-		int train() {
-			return 0;
-		}
 
-		double checkTrainingSet() {
-			return 0;
-		}
+		void mergeByGroupID(bool positive, int i1, int i2) {
+			int* gid = pgid;
+			int cursize = psize;
+			int curcluster = pncluster;
+			if (!positive) {
+				gid = ngid;
+				cursize = nsize;
+				curcluster = nncluster;
+			}
+			for (int m = 0; m < cursize; m++) {
+				if (gid[m] == i2)
+					gid[m] = i1;
+				else if (gid[m] == curcluster)
+					gid[m] = i2;
+			}
+		}	
 
-		int checkQuestionSet(States& qset) {
-			return 0;
-		}
-
-		int converged (Equation* previous_equation, int equation_num) {
-			return 0;
-		}
 
 		friend std::ostream& operator << (std::ostream& out, const SVM& svm) {
 			return svm._print(out);
@@ -119,23 +146,37 @@ class Cluster: public MLalgo
 			return problem.l;
 		}
 
-		Equation* roundoff(int& num) {
-			num = 1;
-			return NULL;
-		}
-
 		virtual int predict(double* v) {
 			if (v == NULL) return -2;
 			return -1;
 		}
 
 	private:
-		int k_means(double (*data)[VARS], double* gid, int size, int k)
+		bool kClustering(int k) {
+			kmeans(k, true);
+			kmeans(k, false);
+			for (int i = 0; i < k; i++) {
+				for (int j = 0; j < k; j++) {
+					if (pairLinearSeparable(i, j) == false)
+						return false;
+				}
+			}
+			return true;
+		}
+
+		int kmeans(int k, bool positive)
 		{
-			if (k > K)
-				return -1;
-			if (k > size)
-				return -1;
+			double (*data)[VARS];
+			int* gid;
+			if (positive) {
+				data = pdata;
+				gid = pgid;
+			} else {
+				data = ndata;
+				gid = ngid;
+			}
+			if (k > max_size) return -1;
+			if (k > size) return -1;
 			if (k == size) {
 				for (int i = 0; i < k; i++)
 					gid[i] = i;
@@ -143,6 +184,8 @@ class Cluster: public MLalgo
 			}
 
 			double** center = new double*[k];
+			for (int i = 0; i < k; i++)
+				center[i] = new double[VARS];
 			double* distance = new double[k];
 			int* g_members = new int[k];
 
@@ -150,7 +193,8 @@ class Cluster: public MLalgo
 			int duration = size / k;
 			for (int last = 0, i = 0; i < k; i++) {
 				last += rand() % duration + 1;
-				center[i] = data[last];
+				for (int j = 0; j < VARS; j++)
+					center[i][j] = data[last][j];
 			}
 
 			while (true) {	
@@ -189,26 +233,28 @@ class Cluster: public MLalgo
 			}
 
 
+			for (int i = 0; i < k; i++)
+				delete []center[i];
 			delete []g_members;
 			delete []distance;
 			delete []center;
 			return 0;
 		}
 
-		bool linearSeparable(int p_gid, int n_gid)
+		bool pairLinearSeparable(int p_gid, int n_gid)
 		{
 			double** train_data = new double*[size];
 			double* train_label = new double[size];
 			int idx = 0;
-			for(int i = 0; i < p_num; i++) {
-				if (gid[i] == p_gid) {
-					train_data[idx] = data[i];
+			for(int i = 0; i < psize; i++) {
+				if (pgid[i] == p_gid) {
+					train_data[idx] = pdata[i];
 					train_label[idx++] = 1;
 				}
 			}
-			for(int i = p_num; i < size; i++) {
-				if (gid[i] == n_gid) {
-					train_data[idx] = data[i];
+			for(int i = 0; i < nsize; i++) {
+				if (ngid[i] == n_gid) {
+					train_data[idx] = ndata[i];
 					train_label[idx++] = -1;
 				}
 			}
@@ -223,13 +269,13 @@ class Cluster: public MLalgo
 			}
 
 			model = svm_train(&problem, &param);
-			Equation* cur_csf = new Equation();
-			svm_model_visualization(model, *cur_csf);
+			Equation* equation = new Equation();
+			svm_model_visualization(model, *equation);
 			svm_free_and_destroy_model(&model);
 
 			int pass = 0;
 			for (int i = 0; i < problem.l; i++) {
-				pass += (Equation::calc(*cur_csf, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
+				pass += (Equation::calc(*equation, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
 			}
 
 			delete []train_data;
@@ -238,8 +284,65 @@ class Cluster: public MLalgo
 				return false;
 			return true;
 		}
-	protected:
-		int max_size;
+
+		bool pairSetLinearSeparable(bool positive, int i1, int i2)
+		{
+			double** train_data = new double*[size];
+			double* train_label = new double[size];
+			int idx = 0;
+			double (*pair_data)[VARS] = pdata;
+			int *pair_gid = pgid;
+			int pair_label = 1;
+			int pair_size = psize;
+			double (*set_data)[VARS] = ndata;
+			int set_label = -1;
+			int set_size = nsize;
+			if (!positive) {
+				pair_data = ndata;
+				pair_gid = ngid;
+				pair_label = -1;
+				pair_size = nsize;
+				set_data = pdata;
+				set_label = 1;
+				set_size = psize;
+			}
+
+			for(int i = 0; i < pair_size; i++) {
+				if ((pair_gid[i] == i1) || (pair_gid[i] == i2)) {
+					train_data[idx] = pair_data[i];
+					train_label[idx++] = pair_label;
+				}
+			}
+			for(int i = 0; i < set_size; i++) {
+				train_data[idx] = ndata[i];
+				train_label[idx++] = set_label;
+			}
+			problem.l = idx;
+			problem.x = (svm_node**)train_data;
+			problem.y = train_label;
+
+			const char* error_msg = svm_check_parameter(&problem, &param);
+			if (error_msg) { 
+				std::cout << "ERROR: " << error_msg << std::endl; 
+				return -1; 
+			}
+
+			model = svm_train(&problem, &param);
+			Equation* equation = new Equation();
+			svm_model_visualization(model, *equation);
+			svm_free_and_destroy_model(&model);
+
+			int pass = 0;
+			for (int i = 0; i < problem.l; i++) {
+				pass += (Equation::calc(*equation, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
+			}
+
+			delete []train_data;
+			delete []train_label;
+			if (pass < problem.l)
+				return false;
+			return true;
+		}
 };
 
 #endif /* _SVM_H */
