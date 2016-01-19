@@ -3,6 +3,7 @@
 #include "ml_algo.h"
 #include "svm_core.h"
 #include "string.h"
+#include <cmath>
 
 static inline double sqrDistance(double* a1, double* b1, int size)
 {
@@ -17,6 +18,7 @@ static bool groupLabelRandomization(int* pglabel, int* nglabel, int pfirst, int 
 {
 	if (pfirst >= psize) return false;
 	if (nfirst >= nsize) return false;
+	if (place >= pow(2, psize + nsize - pfirst - nfirst)) return false; // already reaches the last one element....
 	for (int i = nsize - 1; i > nfirst; i--) {
 		if (place >> (nsize - 1 - i) & 1)
 			nglabel[i] = -1;
@@ -68,26 +70,82 @@ class Cluster
 
 
 	public:
-		Equation* classify()
+		bool classify(std::vector<Equation>& X)
 		{
-			Equation* X = new Equation[16];
 			if (pgid == NULL) pgid = new int[pncluster];
 			if (ngid == NULL) ngid = new int[nncluster];
+			double** train_data = new double*[psize + nsize];
+			double* train_label = new double[psize + nsize];
+			int idx = 0;
+			for(int i = 0; i < psize; i++) {
+				train_data[idx++] = pdata[i];
+			}
+			for(int i = 0; i < nsize; i++) {
+				train_data[idx++] = ndata[i];
+			}
+			problem.l = idx;
+			problem.x = (svm_node**)train_data;
+			problem.y = train_label;
+			Equation* equation = new Equation();
+
 			for (int pi = 0; pi < pncluster; pi++) {
 				for (int ni = 0; ni < nncluster; ni++) {
 					int current_place = 0;
 					// pi, ni is the first element to keep current label in groups
+					// compose label info for data in all groups
 					while (groupLabelRandomization(pgid, ngid, pi, ni, pncluster, nncluster, current_place)) {
-						// compose label info for data in all groups
-						// do SVM
+						current_place++;
+						for (int i = 0; i < psize; i++) {
+							train_label[i] = pgid[pg[i]];
+						}
+						for (int i = 0; i < nsize; i++) {
+							train_label[i+psize] = ngid[ng[i]];
+						}
+
+						// do SVM learning
+						model = svm_train(&problem, &param);
+						svm_model_visualization(model, *equation);
+						svm_free_and_destroy_model(&model);
+
 						// check perfectly classify or not...
+						int pass = 0;
+						for (int i = 0; i < problem.l; i++) {
+							pass += (Equation::calc(*equation, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
+						}
+
+						// can not classify perfectly
+						if (pass < problem.l)
+							continue;
+
 						// if pass check, add classify to X set.
 						// break;
-						current_place++;
+						X.push_back(*equation);
+						int nclassify = 0;
+						for (int ppi = 0; ppi < pncluster; ppi++) {
+							for (int nni = 0; nni < nncluster; nni++) {
+								bool bcanclassify = false;
+								for (int i = 0; i < (int)X.size(); i++) {
+									if(pairSeparableByEquation(ppi, nni, X[i]) == true) {
+										bcanclassify = true;
+										nclassify++;
+										break;
+									}
+								}
+								if (bcanclassify == true) continue;
+								// find a pair ppi and nni, which can not be classified currently....
+								if (bcanclassify == false) break;
+							}
+							if (nclassify < ppi * nncluster) break;
+						}
+						if (nclassify < pncluster * nncluster) continue;
+						break;
 					}
 				}
 			}
-			return X;
+			delete equation;
+			delete []train_data;
+			delete []train_label;
+			return true;
 		}
 
 		Cluster(double (*pdata)[VARS], double (*ndata)[VARS], int psize, int nsize){
@@ -111,6 +169,8 @@ class Cluster
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (pg != NULL) delete []pg;
 			if (ng != NULL) delete []ng;
+			if (pgid != NULL) delete []pgid;
+			if (ngid != NULL) delete []ngid;
 		}
 
 
@@ -282,6 +342,24 @@ class Cluster
 			return 0;
 		}
 
+		bool pairSeparableByEquation(int p_gid, int n_gid, Equation& eq)
+		{
+			for(int i = 0; i < psize; i++) {
+				if (pg[i] == p_gid) {
+					if(Equation::calc(eq, (double*)pdata[i]) * 1 < 0)
+						return false;
+				}
+			}
+			for(int i = 0; i < nsize; i++) {
+				if (ng[i] == n_gid) {
+					if(Equation::calc(eq, (double*)ndata[i]) * (01) < 0)
+						return false;
+				}
+			}
+
+			return true;
+		}
+
 		bool pairLinearSeparable(int p_gid, int n_gid)
 		{
 			double** train_data = new double*[size];
@@ -303,12 +381,6 @@ class Cluster
 			problem.x = (svm_node**)train_data;
 			problem.y = train_label;
 
-			const char* error_msg = svm_check_parameter(&problem, &param);
-			if (error_msg) { 
-				std::cout << "ERROR: " << error_msg << std::endl; 
-				return -1; 
-			}
-
 			model = svm_train(&problem, &param);
 			Equation* equation = new Equation();
 			svm_model_visualization(model, *equation);
@@ -319,6 +391,7 @@ class Cluster
 				pass += (Equation::calc(*equation, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
 			}
 
+			delete equation;
 			delete []train_data;
 			delete []train_label;
 			if (pass < problem.l)
@@ -362,12 +435,6 @@ class Cluster
 			problem.x = (svm_node**)train_data;
 			problem.y = train_label;
 
-			const char* error_msg = svm_check_parameter(&problem, &param);
-			if (error_msg) { 
-				std::cout << "ERROR: " << error_msg << std::endl; 
-				return -1; 
-			}
-
 			model = svm_train(&problem, &param);
 			Equation* equation = new Equation();
 			svm_model_visualization(model, *equation);
@@ -378,6 +445,7 @@ class Cluster
 				pass += (Equation::calc(*equation, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
 			}
 
+			delete equation;
 			delete []train_data;
 			delete []train_label;
 			if (pass < problem.l)
