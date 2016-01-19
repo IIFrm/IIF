@@ -13,19 +13,33 @@ static inline double sqrDistance(double* a1, double* b1, int size)
 }
 
 
-static bool labelRandomization(int* plabel, int* nlabel, int pfirst, int nfirst, int psize, int nsize)
+static bool groupLabelRandomization(int* pglabel, int* nglabel, int pfirst, int nfirst, int psize, int nsize, const unsigned int place)
 {
 	if (pfirst >= psize) return false;
 	if (nfirst >= nsize) return false;
-	/*if (plabel[pfirst] == 0) {
-		for (int i = pfirst + 1; i < psize; i++)
-			plabel[i] = -1;
-		plabel[pfirst] = 1;
-	} else {
-	*/
-	//for (int i = psize - 1; i > pfirst; i++)
-	return true;
+	for (int i = nsize - 1; i > nfirst; i--) {
+		if (place >> (nsize - 1 - i) & 1)
+			nglabel[i] = -1;
+		else
+			nglabel[i] = 1;
+	}
+	nglabel[nfirst] = -1;
+	for (int i = nfirst - 1; i >= 0; i--) {
+		nglabel[i] = 1;
+	}
 
+	int nlength = nsize - nfirst;
+	for (int i = psize - 1; i > pfirst; i--) {
+		if (place >> (psize - 1 - i + nlength) & 1)
+			pglabel[i] = 1;
+		else
+			pglabel[i] = -1;
+	}
+	pglabel[pfirst] = 1;
+	for (int i = nfirst - 1; i >= 0; i--) {
+		pglabel[i] = -1;
+	}
+	return true;
 }
 
 
@@ -35,8 +49,10 @@ class Cluster
 		double (*pdata)[VARS];
 		double (*ndata)[VARS];
 		//double* label;
-		int* pgid; //group label
-		int* ngid; //group label
+		int* pg; //group No. for each elements
+		int* ng; //group No. for each elements
+		int* pgid;
+		int* ngid;
 
 		svm_parameter param;
 		svm_problem problem;
@@ -50,12 +66,37 @@ class Cluster
 		int max_size;
 		int max_ncluster; // max k value
 
+
 	public:
+		Equation* classify()
+		{
+			Equation* X = new Equation[16];
+			if (pgid == NULL) pgid = new int[pncluster];
+			if (ngid == NULL) ngid = new int[nncluster];
+			for (int pi = 0; pi < pncluster; pi++) {
+				for (int ni = 0; ni < nncluster; ni++) {
+					int current_place = 0;
+					// pi, ni is the first element to keep current label in groups
+					while (groupLabelRandomization(pgid, ngid, pi, ni, pncluster, nncluster, current_place)) {
+						// compose label info for data in all groups
+						// do SVM
+						// check perfectly classify or not...
+						// if pass check, add classify to X set.
+						// break;
+						current_place++;
+					}
+				}
+			}
+			return X;
+		}
+
 		Cluster(double (*pdata)[VARS], double (*ndata)[VARS], int psize, int nsize){
 			this->pdata = pdata;
 			this->ndata = ndata;
-			pgid = new int[psize];
-			ngid = new int[nsize];
+			pg = new int[psize];
+			ng = new int[nsize];
+			pgid = NULL;
+			ngid = NULL;
 			this->psize = psize;
 			this->nsize = nsize;
 			size = psize + nsize;
@@ -68,8 +109,8 @@ class Cluster
 
 		~Cluster() {
 			if (model != NULL) svm_free_and_destroy_model(&model);
-			if (pgid != NULL) delete []pgid;
-			if (ngid != NULL) delete []ngid;
+			if (pg != NULL) delete []pg;
+			if (ng != NULL) delete []ng;
 		}
 
 
@@ -117,19 +158,19 @@ class Cluster
 
 
 		void mergeByGroupID(bool positive, int i1, int i2) {
-			int* gid = pgid;
+			int* g = pg;
 			int cursize = psize;
 			int curcluster = pncluster;
 			if (!positive) {
-				gid = ngid;
+				g = ng;
 				cursize = nsize;
 				curcluster = nncluster;
 			}
 			for (int m = 0; m < cursize; m++) {
-				if (gid[m] == i2)
-					gid[m] = i1;
-				else if (gid[m] == curcluster)
-					gid[m] = i2;
+				if (g[m] == i2)
+					g[m] = i1;
+				else if (g[m] == curcluster)
+					g[m] = i2;
 			}
 		}	
 
@@ -167,19 +208,19 @@ class Cluster
 		int kmeans(int k, bool positive)
 		{
 			double (*data)[VARS];
-			int* gid;
+			int* g;
 			if (positive) {
 				data = pdata;
-				gid = pgid;
+				g = pg;
 			} else {
 				data = ndata;
-				gid = ngid;
+				g = ng;
 			}
 			if (k > max_size) return -1;
 			if (k > size) return -1;
 			if (k == size) {
 				for (int i = 0; i < k; i++)
-					gid[i] = i;
+					g[i] = i;
 				return 0;
 			}
 
@@ -211,9 +252,9 @@ class Cluster
 						}
 					}
 
-					if (gid[i] != min_center) {
+					if (g[i] != min_center) {
 						regrouped = true;
-						gid[i] = min_center;
+						g[i] = min_center;
 					}
 				}
 				if (regrouped == false)
@@ -223,9 +264,9 @@ class Cluster
 				for (int i = 0; i < k; i++)
 					g_members[i] = 0;
 				for (int i = 0; i < size; i++) {
-					g_members[gid[i]]++;
+					g_members[g[i]]++;
 					for (int j = 0; j < VARS; j++)
-						center[gid[i]][j] += data[i][j];
+						center[g[i]][j] += data[i][j];
 				}
 				for (int i = 0; i < k; i++)
 					for (int j = 0; j < VARS; j++)
@@ -247,13 +288,13 @@ class Cluster
 			double* train_label = new double[size];
 			int idx = 0;
 			for(int i = 0; i < psize; i++) {
-				if (pgid[i] == p_gid) {
+				if (pg[i] == p_gid) {
 					train_data[idx] = pdata[i];
 					train_label[idx++] = 1;
 				}
 			}
 			for(int i = 0; i < nsize; i++) {
-				if (ngid[i] == n_gid) {
+				if (ng[i] == n_gid) {
 					train_data[idx] = ndata[i];
 					train_label[idx++] = -1;
 				}
@@ -291,7 +332,7 @@ class Cluster
 			double* train_label = new double[size];
 			int idx = 0;
 			double (*pair_data)[VARS] = pdata;
-			int *pair_gid = pgid;
+			int *pair_gid = pg;
 			int pair_label = 1;
 			int pair_size = psize;
 			double (*set_data)[VARS] = ndata;
@@ -299,7 +340,7 @@ class Cluster
 			int set_size = nsize;
 			if (!positive) {
 				pair_data = ndata;
-				pair_gid = ngid;
+				pair_gid = ng;
 				pair_label = -1;
 				pair_size = nsize;
 				set_data = pdata;
