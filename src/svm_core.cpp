@@ -524,6 +524,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 
 	int iter = 0;
 	int max_iter = max(10000000, l>INT_MAX/100 ? INT_MAX : 100*l);
+	max_iter/=100; 
 	int counter = min(l,1000)+1;
 
 	while(iter < max_iter)
@@ -1679,7 +1680,7 @@ static void sigmoid_train(
 		if (labels[i] > 0) prior1+=1;
 		else prior0+=1;
 
-	int max_iter=10;	// Maximal number of iterations
+	int max_iter=4;	// Maximal number of iterations
 	double min_step=1e-10;	// Minimal step taken in line search
 	double sigma=1e-12;	// For numerically strict PD of Hessian
 	double eps=1e-5;
@@ -3196,6 +3197,7 @@ struct svm_model *svm_I_train(const struct svm_problem *prob, const struct svm_p
 	return svm_train(prob, param);
 }
 
+void my_print_func(const char* str) {}
 
 void prepare_linear_parameters(struct svm_parameter& param)
 {
@@ -3216,4 +3218,6 @@ void prepare_linear_parameters(struct svm_parameter& param)
 	param.nr_weight = 0;
 	param.weight_label = NULL;
 	param.weight = NULL;
+	param.shrinking = 0;
+	svm_set_print_string_function(my_print_func);
 }
