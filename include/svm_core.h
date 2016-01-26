@@ -6,6 +6,8 @@
 #include "config.h"
 #include "instrumentation.h"
 #include "color.h"
+#include "solution.h"
+#include "equation.h"
 
 #include <iostream>
 #define LIBSVM_VERSION 320
@@ -64,6 +66,7 @@ struct svm_parameter
 	double p;	/* for EPSILON_SVR */
 	int shrinking;	/* use the shrinking heuristics */
 	int probability; /* do probability estimates */
+
 };
 
 //
@@ -89,7 +92,26 @@ struct svm_model
 	/* XXX */
 	int free_sv;		/* 1 if svm_model is created by svm_load_model*/
 	/* 0 if svm_model is created by svm_train */
+
+	friend std::ostream& operator << (std::ostream& out, const svm_model& m) {
+		out << "[nr_class=" << m.nr_class;
+		out << ", total#SV=" << m.l;
+		out << ", rho=" << *(m.rho) << "]";
+
+		/*
+		for (int i = 0; i < m.l; i++) {
+			out << sp.y[i] << "(" << (sp.x[i][0]).value;
+			for (int j = 1; j < VARS; j++)
+				out << ", " << (sp.x[i][j]).value;
+			out << ") ";
+		}
+		*/
+		return out;
+	}
 };
+
+bool model_converged(struct svm_model *m1, struct svm_model *m2);
+int model_solver(const svm_model* m, Solution& sol);
 
 void prepare_linear_parameters(struct svm_parameter& param);
 

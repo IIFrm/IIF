@@ -34,7 +34,8 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 #endif
 	Solution input;
 	for (int i = 0; i < randn; i++) {
-		Equation::linear_solver(NULL, input);
+		//Equation::linear_solver(NULL, input);
+		model_solver(NULL, input);
 #ifdef __PRT
 		std::cout << input << "|";
 #endif
@@ -53,7 +54,8 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 
 	if (type == 0) {
 		for (int i = 0; i < exen; i++) {
-			Equation::linear_solver((Equation*)params, input);
+			//Equation::linear_solver((Equation*)params, input);
+			model_solver((svm_model*)params, input);
 #ifdef __PRT
 			std::cout << input << "|";
 #endif
@@ -82,6 +84,7 @@ int LinearLearner::learn()
 	bool similarLast = false;
 	bool converged = false;
 	Equation* lastEquation = NULL;
+	svm_model* lastModel = NULL;
 	int pre_psize = 0, pre_nsize = 0; // , pre_question_size = 0;
 
 	// lastEquation = new Equation[1];
@@ -97,7 +100,8 @@ init_svm:
 		std::cout << "SVM------------------------------------------------------------------------------------------------------------" << std::endl;
 		std::cout << "\t(" << step++ << ") execute programs... [" << exes + random_exes << "] ";
 #endif
-		selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
+		//selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
+		selectiveSampling(random_exes, exes, 0, (void*)lastModel);
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
 #ifdef __PRT
@@ -172,7 +176,8 @@ return -1;
 #ifdef __PRT
 		std::cout << "\n\t(" << step++ << ") check convergence:        ";
 #endif
-		if (svm->converged(lastEquation, 1) == 0) {
+		//if (svm->converged(lastEquation, 1) == 0) {
+		if (svm->converged_model() == true) {
 			if (similarLast == true) {
 #ifdef __PRT
 				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;

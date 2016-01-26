@@ -9,6 +9,7 @@ class SVM : public MLalgo
 	private:
 		svm_parameter param;
 		svm_problem problem;
+		svm_model* pre_model;
 		svm_model* model;
 		Equation* classifier;
 		int max_size;
@@ -61,11 +62,14 @@ class SVM : public MLalgo
 			problem.l = 0;
 			problem.x = (svm_node**)(data);
 			problem.y = label;
+			model = NULL;
+			pre_model = NULL;
 		}
 
 		~SVM() {
 			//if (model != NULL) delete model;
 			if (model != NULL) svm_free_and_destroy_model(&model);
+			if (pre_model != NULL) svm_free_and_destroy_model(&pre_model);
 			if (classifier != NULL) delete classifier;
 			if (data != NULL) delete []data;
 			if (label != NULL) delete label;
@@ -113,11 +117,16 @@ class SVM : public MLalgo
 				return -1; 
 			}
 
+			if (model != NULL) {
+				if (pre_model != NULL)
+					svm_free_and_destroy_model(&pre_model);
+				pre_model = model;
+			}
 			model = svm_train(&problem, &param);
 			if (classifier == NULL) classifier = new Equation();
 			svm_model_visualization(model, *classifier);
-			svm_free_and_destroy_model(&model);
-			model = NULL;
+			//svm_free_and_destroy_model(&model);
+			//model = NULL;
 			return 0;
 		}
 
@@ -180,6 +189,10 @@ class SVM : public MLalgo
 			if (pre_model == NULL) return 1;
 			Equation* pre_classifier = (Equation*)pre_model;
 			return classifier->is_similar(*pre_classifier);
+		}
+
+		bool converged_model () {
+			return model_converged(model, pre_model);
 		}
 
 		friend std::ostream& operator << (std::ostream& out, const SVM& svm) {

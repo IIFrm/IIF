@@ -3221,3 +3221,76 @@ void prepare_linear_parameters(struct svm_parameter& param)
 	param.shrinking = 0;
 	svm_set_print_string_function(my_print_func);
 }
+
+bool node_equal(svm_node* n1, svm_node* n2)
+{
+	for (int i = 0; i < VARS; i++)
+		if (n1[i].value != n2[i].value)
+			return false;
+	return true;
+}
+
+bool model_converged(struct svm_model *m1, struct svm_model *m2)
+{
+	if ((m1 == NULL) || (m2 == NULL)) return false;
+	std::cout << "first model:"<< *m1;
+	std::cout << "second model:"<< *m2;
+	if (m1->nr_class != m2->nr_class) return false;
+	if (m1->l != m2->l) return false;
+	if (fabs(*(m1->rho) - *(m2->rho)) > 0.001) return false;
+	int l = m1->l;
+	for (int j = 0; j < l; j++) {
+		if (m1->sv_coef[0][j] != m2->sv_coef[0][j]) 
+			return false;
+		if (node_equal(m1->SV[j], m2->SV[j]) == false) 
+			return false;
+	}
+			
+	/*for (int i = 0; i < l; i++) {
+		bool getpair = false;
+		for (int j = 0; j < l; j++) {
+			if (node_equal(m1->SV[i], m2->SV[j])) {
+				getpair = true;
+				break;
+			}
+		}
+		if (getpair == false)
+			return false;
+	}*/
+
+	return true;
+}
+
+int model_solver(const svm_model* m, Solution& sol)
+{
+	if (m == NULL) {
+		for (int i = 0; i < VARS; i++)
+			sol.setVal(i, rand() % (maxv - minv + 1) + minv);
+		return 0;
+	}
+	assert(m->nr_class == 2);
+	int pn = m->nSV[0], nn = m->nSV[1];
+	int pick_p = rand() % pn;
+	int pick_n = rand() % nn;
+	double* label = m->sv_coef[0];
+	int indexp = 0, indexn = 0;
+	int p_index = 0, n_index = 0;
+	for (int i = 0; i < pn + nn; i++) {
+		if (label[i] >= 0) {
+			if (++p_index == pick_p)
+				indexp = i;
+		}
+		if (label[i] < 0) {
+			if (++n_index == pick_n)
+				indexn = i;
+		}
+		if (indexp + indexn == 0)
+			break;
+	}
+	svm_node* nodes[2];
+	nodes[0] = m->SV[indexp];
+	nodes[1] = m->SV[indexn];
+	for (int i = 0; i < VARS; i++)
+		sol.setVal(i, int((nodes[0][i].value + nodes[1][i].value)/2));
+	return 0;
+}
