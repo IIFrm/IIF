@@ -97,15 +97,16 @@ struct svm_model
 		out << "[nr_class=" << m.nr_class;
 		out << ", total#SV=" << m.l;
 		out << ", rho=" << *(m.rho) << "]";
+		out << "\n\tSV & coef={\n";
 
-		/*
 		for (int i = 0; i < m.l; i++) {
-			out << sp.y[i] << "(" << (sp.x[i][0]).value;
+			out << "\t\t" << m.sv_coef[0][i] << "(" << (m.SV[i][0]).value;
 			for (int j = 1; j < VARS; j++)
-				out << ", " << (sp.x[i][j]).value;
-			out << ") ";
+				out << ", " << (m.SV[i][j]).value;
+			out << ") \n";
 		}
-		*/
+		out << "\t\t}\n";
+	
 		return out;
 	}
 };

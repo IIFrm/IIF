@@ -10,12 +10,14 @@ class SVM : public MLalgo
 		svm_parameter param;
 		svm_problem problem;
 		svm_model* pre_model;
-		svm_model* model;
 		Equation* classifier;
 		int max_size;
 
 		double* label; // [max_items * 2];
 		double** data; // [max_items * 2];
+
+	public:
+		svm_model* model;
 
 	protected:
 		int enlargeSize(int new_size) {
@@ -41,6 +43,10 @@ class SVM : public MLalgo
 	public:
 		inline Equation* getClassifier() {
 			return classifier;
+		}
+
+		inline svm_model* getModel() {
+			return model;
 		}
 
 		inline int setClassifier(Equation* e) {
@@ -217,6 +223,15 @@ class SVM : public MLalgo
 		}
 
 		int predict(double* v) {
+			if (model == NULL) return -2;
+			if (v == NULL) return -2;
+			double res = svm_predict(model, (svm_node*)v); 
+
+			if (res >= 0) return 1;
+			else return -1;
+		}
+
+		/*int predict(double* v) {
 			if (classifier == NULL) return -2;
 			if (v == NULL) return -2;
 			double res = Equation::calc(*classifier, v);
@@ -224,6 +239,8 @@ class SVM : public MLalgo
 			if (res >= 0) return 1;
 			else return -1;
 		}
+		*/
+
 
 };
 

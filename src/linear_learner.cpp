@@ -101,7 +101,7 @@ init_svm:
 		std::cout << "\t(" << step++ << ") execute programs... [" << exes + random_exes << "] ";
 #endif
 		//selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
-		selectiveSampling(random_exes, exes, 0, (void*)lastModel);
+		selectiveSampling(random_exes, exes, 0, lastModel);
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
 #ifdef __PRT
@@ -202,6 +202,8 @@ std::cout << "  [FAIL] neXt round " << std::endl;
 
 if (lastEquation == NULL) lastEquation = new Equation[1];
 lastEquation[0] = *(svm->getClassifier());
+//lastModel = svm->getModel();
+lastModel = svm->model;
 } // end of SVM training procedure
 
 

@@ -8,6 +8,7 @@
 #include <limits.h>
 #include <locale.h>
 #include "svm.h"
+#include "color.h"
 
 int libsvm_version = LIBSVM_VERSION;
 typedef float Qfloat;
@@ -3233,20 +3234,21 @@ bool node_equal(svm_node* n1, svm_node* n2)
 bool model_converged(struct svm_model *m1, struct svm_model *m2)
 {
 	if ((m1 == NULL) || (m2 == NULL)) return false;
-	std::cout << "first model:"<< *m1;
-	std::cout << "second model:"<< *m2;
+	//std::cout << "\tfirst model:"<< *m1;
+	//std::cout << "\tsecond model:"<< *m2;
 	if (m1->nr_class != m2->nr_class) return false;
 	if (m1->l != m2->l) return false;
 	if (fabs(*(m1->rho) - *(m2->rho)) > 0.001) return false;
 	int l = m1->l;
+	/*
 	for (int j = 0; j < l; j++) {
-		if (m1->sv_coef[0][j] != m2->sv_coef[0][j]) 
-			return false;
-		if (node_equal(m1->SV[j], m2->SV[j]) == false) 
-			return false;
+		//if (m1->sv_coef[0][j] != m2->sv_coef[0][j]) return false;
+		if (fabs(m1->sv_coef[0][j] - m2->sv_coef[0][j]) > 0.001) return false;
+		if (node_equal(m1->SV[j], m2->SV[j]) == false) return false;
 	}
+	*/
 			
-	/*for (int i = 0; i < l; i++) {
+	for (int i = 0; i < l; i++) {
 		bool getpair = false;
 		for (int j = 0; j < l; j++) {
 			if (node_equal(m1->SV[i], m2->SV[j])) {
@@ -3256,41 +3258,100 @@ bool model_converged(struct svm_model *m1, struct svm_model *m2)
 		}
 		if (getpair == false)
 			return false;
-	}*/
+	}
 
 	return true;
 }
 
-int model_solver(const svm_model* m, Solution& sol)
+static inline double sqrDistance(svm_node* a1, svm_node* b1, int size=VARS)
 {
+	double distance = 0;
+	for (int i = 0; i < size; i++)
+		distance += (a1[i].value - b1[i].value) * (a1[i].value - b1[i].value);
+	return distance;
+}
+
+/*int model_solver(const svm_model* m, Solution& sol)
+{
+	std::cout << "\n>>>model_solver ";
 	if (m == NULL) {
+	std::cout << "NULL ";
 		for (int i = 0; i < VARS; i++)
 			sol.setVal(i, rand() % (maxv - minv + 1) + minv);
 		return 0;
 	}
-	assert(m->nr_class == 2);
+	std::cout << "Not NULL ";
+	//assert(m->nr_class == 2);
 	int pn = m->nSV[0], nn = m->nSV[1];
 	int pick_p = rand() % pn;
-	int pick_n = rand() % nn;
 	double* label = m->sv_coef[0];
 	int indexp = 0, indexn = 0;
-	int p_index = 0, n_index = 0;
+	int p_index = 0;
 	for (int i = 0; i < pn + nn; i++) {
 		if (label[i] >= 0) {
-			if (++p_index == pick_p)
+			if (++p_index == pick_p) {
 				indexp = i;
+				break;
+			}
 		}
-		if (label[i] < 0) {
-			if (++n_index == pick_n)
-				indexn = i;
-		}
-		if (indexp + indexn == 0)
-			break;
 	}
+
+	double min_dist = DBL_MAX;
+	int min_index = 0;
+	for (int i = 0; i < pn + nn; i++) {
+		if (label[i] < 0) {
+			double distance = sqrDistance(m->SV[indexp], m->SV[i]);
+			if (distance < min_dist) {
+				min_dist = distance;
+				min_index = i;
+			}
+		}
+	}
+	std::cout << BLUE << "<" << indexp << "," << indexn <<">" << WHITE;
+	indexn = min_index;
 	svm_node* nodes[2];
 	nodes[0] = m->SV[indexp];
 	nodes[1] = m->SV[indexn];
 	for (int i = 0; i < VARS; i++)
 		sol.setVal(i, int((nodes[0][i].value + nodes[1][i].value)/2));
 	return 0;
-}
+}*/
+
+int model_solver(const svm_model* m, Solution& sol)
+{
+	//std::cout << "\n-->>>model_solver ";
+	if (m == NULL) {
+		for (int i = 0; i < VARS; i++)
+			sol.setVal(i, rand() % (maxv - minv + 1) + minv);
+		return 0;
+	}
+	//assert(m->nr_class == 2);
+	int pn = m->nSV[0], nn = m->nSV[1];
+	int pick_p = rand() % pn;
+	int pick_n = rand() % nn;
+	double* label = m->sv_coef[0];
+	int indexp = -1, indexn = -1;
+	int p_num = 0, n_num = 0;
+	for (int i = 0; i < pn + nn; i++) {
+		if (label[i] >= 0) {
+			if (p_num++ == pick_p)
+				indexp = i;
+		}
+		if (label[i] < 0) {
+			if (n_num++ == pick_n)
+				indexn = i;
+		}
+		if ((indexp != -1) && (indexn != -1))
+			break;
+	}
+	//std::cout << GREEN << pn << "," << nn << "<" << pick_p << "," << pick_n <<">" << WHITE;
+	//std::cout << BLUE << "<" << indexp << "," << indexn <<">" << WHITE;
+	int pieces = rand() % 6 + VARS;
+	double u  = (rand() % (pieces-1) + 1.0) / pieces;
+	//std::cout << "u=" << u;
+	for (int i = 0; i < VARS; i++) {
+		double value =  int(m->SV[indexp][i].value + (m->SV[indexn][i].value - m->SV[indexp][i].value) * u);
+		sol.setVal(i, value);
+	}
+	return 0;
+} 
