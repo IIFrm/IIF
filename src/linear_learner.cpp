@@ -218,6 +218,10 @@ if ((converged) && (rnd <= max_iteration)) {
 	std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
 	std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
 	std::cout << "  }" << WHITE << std::endl;
+	std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
+	bool sat = svm_model_z3(lastModel);
+	if (sat == true) std::cout << "TRUE" << std::endl;
+	else std::cout << "FALSE" << std::endl;
 	delete equ;
 }
 

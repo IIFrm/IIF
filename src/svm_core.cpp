@@ -9,6 +9,10 @@
 #include <locale.h>
 #include "svm.h"
 #include "color.h"
+#if (linux || __MACH__)
+#include "z3++.h"
+using namespace z3;
+#endif
 
 int libsvm_version = LIBSVM_VERSION;
 typedef float Qfloat;
@@ -3145,6 +3149,46 @@ void print_svm_samples(const svm_problem *sp)
 void print_svm_samples(const svm_problem *sp){}
 #endif
 
+bool svm_model_z3(const svm_model *m) //, Equation& equ)
+{
+	if (m == NULL)
+		return -1;
+
+	double* label = m->sv_coef[0];
+	struct svm_node** data = m->SV;
+
+	z3::config cfg;
+	cfg.set("auto_config", true);
+	z3::context c(cfg);
+	z3::solver s(c);
+
+	std::vector<z3::expr> A;
+	std::vector<z3::expr> X;
+	char pname[4];
+	for (int i = 0; i < VARS + 1; i++) {
+		sprintf(pname, "a%d", i);
+		z3::expr tmp = c.int_const(pname);
+		A.push_back(tmp);
+	}
+
+	char xvalue[33];
+	int l = m->l;
+	for (int k = 0; k < l; k++) {
+		z3::expr expr = A[VARS];
+		for (int i = 0; i < VARS; i++) {
+			snprintf(xvalue, 32, "%d", int(data[k][i].value));
+			z3::expr tmp = c.int_val(xvalue);
+			expr = expr + tmp * A[i];
+		}
+		if (label[k] >= 0) expr = expr >= 0;
+		else expr = expr < 0;
+		s.add(expr);
+	}
+	std::cout << s << std::endl;
+	z3::check_result ret = s.check();
+	if (ret == sat) return true;
+	return false;
+}
 
 int svm_model_visualization(const svm_model *model, Equation& equ)
 {
@@ -3241,13 +3285,13 @@ bool model_converged(struct svm_model *m1, struct svm_model *m2)
 	if (fabs(*(m1->rho) - *(m2->rho)) > 0.001) return false;
 	int l = m1->l;
 	/*
-	for (int j = 0; j < l; j++) {
-		//if (m1->sv_coef[0][j] != m2->sv_coef[0][j]) return false;
-		if (fabs(m1->sv_coef[0][j] - m2->sv_coef[0][j]) > 0.001) return false;
-		if (node_equal(m1->SV[j], m2->SV[j]) == false) return false;
+	   for (int j = 0; j < l; j++) {
+	//if (m1->sv_coef[0][j] != m2->sv_coef[0][j]) return false;
+	if (fabs(m1->sv_coef[0][j] - m2->sv_coef[0][j]) > 0.001) return false;
+	if (node_equal(m1->SV[j], m2->SV[j]) == false) return false;
 	}
 	*/
-			
+
 	for (int i = 0; i < l; i++) {
 		bool getpair = false;
 		for (int j = 0; j < l; j++) {
@@ -3272,49 +3316,49 @@ static inline double sqrDistance(svm_node* a1, svm_node* b1, int size=VARS)
 }
 
 /*int model_solver(const svm_model* m, Solution& sol)
-{
-	std::cout << "\n>>>model_solver ";
-	if (m == NULL) {
-	std::cout << "NULL ";
-		for (int i = 0; i < VARS; i++)
-			sol.setVal(i, rand() % (maxv - minv + 1) + minv);
-		return 0;
-	}
-	std::cout << "Not NULL ";
-	//assert(m->nr_class == 2);
-	int pn = m->nSV[0], nn = m->nSV[1];
-	int pick_p = rand() % pn;
-	double* label = m->sv_coef[0];
-	int indexp = 0, indexn = 0;
-	int p_index = 0;
-	for (int i = 0; i < pn + nn; i++) {
-		if (label[i] >= 0) {
-			if (++p_index == pick_p) {
-				indexp = i;
-				break;
-			}
-		}
-	}
+  {
+  std::cout << "\n>>>model_solver ";
+  if (m == NULL) {
+  std::cout << "NULL ";
+  for (int i = 0; i < VARS; i++)
+  sol.setVal(i, rand() % (maxv - minv + 1) + minv);
+  return 0;
+  }
+  std::cout << "Not NULL ";
+//assert(m->nr_class == 2);
+int pn = m->nSV[0], nn = m->nSV[1];
+int pick_p = rand() % pn;
+double* label = m->sv_coef[0];
+int indexp = 0, indexn = 0;
+int p_index = 0;
+for (int i = 0; i < pn + nn; i++) {
+if (label[i] >= 0) {
+if (++p_index == pick_p) {
+indexp = i;
+break;
+}
+}
+}
 
-	double min_dist = DBL_MAX;
-	int min_index = 0;
-	for (int i = 0; i < pn + nn; i++) {
-		if (label[i] < 0) {
-			double distance = sqrDistance(m->SV[indexp], m->SV[i]);
-			if (distance < min_dist) {
-				min_dist = distance;
-				min_index = i;
-			}
-		}
-	}
-	std::cout << BLUE << "<" << indexp << "," << indexn <<">" << WHITE;
-	indexn = min_index;
-	svm_node* nodes[2];
-	nodes[0] = m->SV[indexp];
-	nodes[1] = m->SV[indexn];
-	for (int i = 0; i < VARS; i++)
-		sol.setVal(i, int((nodes[0][i].value + nodes[1][i].value)/2));
-	return 0;
+double min_dist = DBL_MAX;
+int min_index = 0;
+for (int i = 0; i < pn + nn; i++) {
+if (label[i] < 0) {
+double distance = sqrDistance(m->SV[indexp], m->SV[i]);
+if (distance < min_dist) {
+min_dist = distance;
+min_index = i;
+}
+}
+}
+std::cout << BLUE << "<" << indexp << "," << indexn <<">" << WHITE;
+indexn = min_index;
+svm_node* nodes[2];
+nodes[0] = m->SV[indexp];
+nodes[1] = m->SV[indexn];
+for (int i = 0; i < VARS; i++)
+sol.setVal(i, int((nodes[0][i].value + nodes[1][i].value)/2));
+return 0;
 }*/
 
 int model_solver(const svm_model* m, Solution& sol)
