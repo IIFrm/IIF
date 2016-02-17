@@ -114,7 +114,7 @@ struct svm_model
 bool model_converged(struct svm_model *m1, struct svm_model *m2);
 int model_solver(const svm_model* m, Solution& sol);
 
-void prepare_linear_parameters(struct svm_parameter& param);
+void prepare_svm_parameters(struct svm_parameter& param, bool linear = true);
 
 struct svm_model *svm_train(const struct svm_problem *prob, const struct svm_parameter *param);
 void svm_cross_validation(const struct svm_problem *prob, const struct svm_parameter *param, int nr_fold, double *target);
@@ -142,7 +142,7 @@ int svm_check_probability_model(const struct svm_model *model);
 
 void svm_set_print_string_function(void (*print_func)(const char *));
 
-bool svm_model_z3(const svm_model *m); 
+bool svm_model_z3(const svm_model *m, Equation* e = NULL); 
 
 int svm_model_visualization(const svm_model *model, Equation& equ);
 

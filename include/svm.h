@@ -54,8 +54,8 @@ class SVM : public MLalgo
 			return 0;
 		}
 
-		SVM(void (*f) (const char*) = NULL, int size = 10000) : max_size(size) {
-			prepare_linear_parameters(param);
+		SVM(bool linear = true, void (*f) (const char*) = NULL, int size = 10000) : max_size(size) {
+			prepare_svm_parameters(param, linear);
 			if (f != NULL)
 				svm_set_print_string_function(f);
 			model = NULL;
@@ -206,8 +206,9 @@ class SVM : public MLalgo
 		}
 
 		std::ostream& _print(std::ostream& out) const {
-			out << "SVM: ";
-			out << *classifier; // << std::endl;
+			out << "SVM-model: ";
+			out << *model; // << std::endl;
+			//out << *classifier; // << std::endl;
 			return out;
 		}
 

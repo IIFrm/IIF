@@ -23,6 +23,6 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/test.var", loopFunction, "loopFunction");
-context.addLearner("linear").addLearner("conjunctive");
+context.addLearner("kernel");
 return context.learn("../tmp/test.inv");
 }

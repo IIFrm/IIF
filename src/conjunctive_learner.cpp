@@ -13,7 +13,7 @@
 static void print_null(const char *s) {}
 
 ConjunctiveLearner::ConjunctiveLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
-	svm_i = new SVM_I(print_null);
+	svm_i = new SVM_I(true, print_null);
 	this->max_iteration = max_iteration;
 }
 

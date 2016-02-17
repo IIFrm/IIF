@@ -4,6 +4,7 @@ project(InvariantInferenceFramework)
 set(PRECISION 3)
 
 add_definitions (-D__PRT)
+#add_definitions (-D__PRT_Z3SOLVE)
 #add_definitions (-D__PRT_TRACE)
 #add_definitions (-D__PRT_EQUATION)
 #add_definitions (-D__PRT_SVM_I)

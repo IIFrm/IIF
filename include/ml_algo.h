@@ -64,6 +64,7 @@ class MLalgo
 		 * @return int 0 if converged 
 		 */
 		virtual int converged(void* pre_model, int num) = 0;
+		virtual bool converged_model() = 0;
 
 		/** @brief output the current trainig result of a ML_Algo
 		 *

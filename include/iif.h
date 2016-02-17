@@ -20,6 +20,7 @@
 #include "states.h"
 #include "base_learner.h"
 #include "linear_learner.h"
+#include "kernel_learner.h"
 #include "conjunctive_learner.h"
 #include "disjunctive_learner.h"
 //#include "learner_pipeline.h"
@@ -119,6 +120,8 @@ namespace iif{
 				BaseLearner* newLearner = NULL;
 				if (strcmp(learnerName, "linear") == 0)
 					newLearner = new LinearLearner(gsets);
+				else if (strcmp(learnerName, "kernel") == 0)
+					newLearner = new KernelLearner(gsets);
 				else if (strcmp(learnerName, "conjunctive") == 0)
 					newLearner = new ConjunctiveLearner(gsets);
 				else if (strcmp(learnerName, "disjunctive") == 0)

@@ -13,7 +13,7 @@
 static void print_null(const char *s) {}
 
 DisjunctiveLearner::DisjunctiveLearner(States* gsets, int (*func)(int*), int max_iteration, int K) : BaseLearner(gsets, func) { 
-	svm = new SVM(print_null);
+	svm = new SVM(true, print_null);
 	//svm->main_equation = NULL;
 	this->max_iteration = max_iteration; 
 	this->K = K;

@@ -221,9 +221,14 @@ class FileHelper {
 		inline bool writeCppMain(ofstream& cppFile) {
 			cppFile << "int main(int argc, char** argv)\n {\n" 
 				<< "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n"
-				<< "context.addLearner(\"linear\").addLearner(\"conjunctive\");\n"
+				<< "context.addLearner(\"kernel\");\n"
 				<< "return context.learn(\"../" << invfilename << "\");\n}" << endl;
 			return true;
+			cppFile << "int main(int argc, char** argv)\n {\n" 
+				<< "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n"
+				<< "context.addLearner(\"linear\").addLearner(\"kernel\");\n"
+				<< "context.addLearner(\"linear\").addLearner(\"conjunctive\");\n"
+				<< "return context.learn(\"../" << invfilename << "\");\n}" << endl;
 		}
 
 	private:

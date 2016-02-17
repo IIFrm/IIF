@@ -65,6 +65,14 @@ class Equation{
 			}
 		}
 
+		bool reset(int* values) {
+			for (int i = 0; i < VARS; i++) {
+				theta[i] = values[i]; 
+			}
+			theta0 = values[VARS];
+			return true;
+		}
+
 		/** @brief Most useful constructor
 		 *		   Set its elements to the given values, order keeps
 		 *		   The first element is Theta0

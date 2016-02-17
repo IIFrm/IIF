@@ -64,8 +64,8 @@ class SVM_I : public MLalgo //SVM
 			return es;
 		}
 
-		SVM_I(void(*f) (const char*) = NULL, int size = 10000, int csf = 16) : max_size(size), max_csf(csf) {
-			prepare_linear_parameters(param);
+		SVM_I(bool linear = true, void(*f) (const char*) = NULL, int size = 10000, int csf = 16) : max_size(size), max_csf(csf) {
+			prepare_svm_parameters(param, linear);
 			if (f != NULL)
 				svm_set_print_string_function(f);
 			model = NULL;
@@ -309,6 +309,11 @@ class SVM_I : public MLalgo //SVM
 			similar_vector.clear();
 			return 0;
 		}
+
+		bool converged_model() {
+			return false;
+		}
+
 
 		friend std::ostream& operator << (std::ostream& out, const SVM_I& svm_i) {
 			return svm_i._print(out);

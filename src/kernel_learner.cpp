@@ -1,7 +1,7 @@
 #include "config.h"
 #include "color.h"
 #include "equation.h"
-#include "linear_learner.h"
+#include "kernel_learner.h"
 
 #include <iostream>
 //#include <float.h>
@@ -10,13 +10,13 @@
 
 static void print_null(const char *s) {}
 
-LinearLearner::LinearLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
-	svm = new SVM(true, print_null);
+KernelLearner::KernelLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
+	svm = new SVM(false, print_null);
 	this->max_iteration = max_iteration; 
 }
 
 
-LinearLearner::~LinearLearner() {
+KernelLearner::~KernelLearner() {
 	delete svm;
 }
 
@@ -25,7 +25,7 @@ LinearLearner::~LinearLearner() {
 //			   if params == NULL, all are random points
 //			   if params != NULL, selective sampling
 /// type > 0, params contains type number of inputs.....
-int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params)
+int KernelLearner::selectiveSampling(int randn, int exen, int type, void* params)
 {
 	if ((type != 0) && (exen > type))
 		randn += exen - type;
@@ -78,7 +78,7 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 }
 
 
-int LinearLearner::learn()
+int KernelLearner::learn()
 {
 	int rnd;
 	bool similarLast = false;
@@ -97,7 +97,7 @@ int LinearLearner::learn()
 init_svm:
 #ifdef __PRT
 		int step = 1;
-		std::cout << "SVM------------------------------------------------------------------------------------------------------------" << std::endl;
+		std::cout << "Kernel---------------------------------------------------------------------------------------------------------" << std::endl;
 		std::cout << "\t(" << step++ << ") execute programs... [" << exes + random_exes << "] ";
 #endif
 		//selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
@@ -121,7 +121,8 @@ init_svm:
 		std::cout << "\n\t(" << step++ << ") start training... ";
 #endif
 		svm->train();
-		std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
+		//std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
+		std::cout << "|-->> " << std::endl;
 
 
 
@@ -141,7 +142,7 @@ init_svm:
 
 		if (pass_rate < 1) {
 #ifdef __PRT
-			std::cout << " [FAIL] \n The problem is not linear separable.. Trying to solve is by SVM-I algo" << std::endl;
+			std::cout << " [FAIL] \n The problem is not KERNEL separable.. " << std::endl;
 #endif
 			//std::cerr << "*******************************USING SVM_I NOW******************************" << std::endl;
 			rnd++;
@@ -150,23 +151,6 @@ init_svm:
 #ifdef __PRT
 		std::cout << GREEN << " [PASS]" << WHITE;
 #endif
-
-
-		/*
-		 *	Check on Question traces.
-		 *	There should not exists one traces, in which a negative state is behind a positive state.
-		 */
-		/*
-#ifdef __PRT
-std::cout << "\n\t(" << step++ << ") checking question traces.";
-#endif
-if (svm->checkQuestionSet(gsets[QUESTION]) != 0) {
-#ifdef __PRT
-std::cout << std::endl << RED << "check on question set return error." << std::endl << WHITE;
-#endif
-return -1;
-}
-*/
 
 		/*
 		 *	similarLast is used to store the convergence check return value for the last time.
@@ -208,7 +192,7 @@ lastModel = svm->model;
 
 
 std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
-std::cout << "Finish running svm for " << rnd - 1 << " times." << std::endl;
+std::cout << "Finish running kernel svm for " << rnd - 1 << " times." << std::endl;
 
 int ret = 0;
 if ((converged) && (rnd <= max_iteration)) {
@@ -216,11 +200,6 @@ if ((converged) && (rnd <= max_iteration)) {
 	bool sat = svm_model_z3(lastModel, equ);
 	/*if (sat == true) std::cout << "TRUE" << std::endl;
 	else std::cout << "FALSE" << std::endl;
-	*/
-	/*
-	int equ_num = -1;
-	Equation* equ = svm->roundoff(equ_num);
-	assert(equ_num == 1);
 	*/
 	std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
 	std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
@@ -239,7 +218,7 @@ if (lastEquation) delete lastEquation;
 return ret;
 }
 
-std::string LinearLearner::invariant() {
+std::string KernelLearner::invariant() {
 	Equation *equ = new Equation();
 	bool sat = svm_model_z3(svm->getModel(), equ);
 	std::string s = equ->toString();

@@ -7,7 +7,8 @@
 #include <stdarg.h>
 #include <limits.h>
 #include <locale.h>
-#include "svm.h"
+//#include "svm.h"
+#include "svm_core.h"
 #include "color.h"
 #if (linux || __MACH__)
 #include "z3++.h"
@@ -529,7 +530,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 
 	int iter = 0;
 	int max_iter = max(10000000, l>INT_MAX/100 ? INT_MAX : 100*l);
-	max_iter/=100; 
+	//max_iter/=100; 
 	int counter = min(l,1000)+1;
 
 	while(iter < max_iter)
@@ -3149,7 +3150,7 @@ void print_svm_samples(const svm_problem *sp)
 void print_svm_samples(const svm_problem *sp){}
 #endif
 
-bool svm_model_z3(const svm_model *m) //, Equation& equ)
+bool svm_model_z3(const svm_model *m, Equation* e) //, Equation& equ)
 {
 	if (m == NULL)
 		return -1;
@@ -3165,11 +3166,14 @@ bool svm_model_z3(const svm_model *m) //, Equation& equ)
 	std::vector<z3::expr> A;
 	std::vector<z3::expr> X;
 	char pname[4];
+	// form: a0 * x0 + a1 * x1 + a2 * x2 + a3 >= 0
+	// parameters: a0 a1 a2 a3 --> integer
 	for (int i = 0; i < VARS + 1; i++) {
 		sprintf(pname, "a%d", i);
 		z3::expr tmp = c.int_const(pname);
 		A.push_back(tmp);
 	}
+
 
 	char xvalue[33];
 	int l = m->l;
@@ -3178,16 +3182,53 @@ bool svm_model_z3(const svm_model *m) //, Equation& equ)
 		for (int i = 0; i < VARS; i++) {
 			snprintf(xvalue, 32, "%d", int(data[k][i].value));
 			z3::expr tmp = c.int_val(xvalue);
+			// equation = equation + ai * xi
 			expr = expr + tmp * A[i];
 		}
 		if (label[k] >= 0) expr = expr >= 0;
 		else expr = expr < 0;
 		s.add(expr);
 	}
+#ifdef __PRT_Z3SOLVE
 	std::cout << s << std::endl;
+#endif
 	z3::check_result ret = s.check();
-	if (ret == sat) return true;
-	return false;
+	if (ret == unsat) return false;
+
+	z3::model z3m = s.get_model();
+	//std::cout << z3m << "\n";
+
+	int avalue[VARS+1];
+	int index = -1;
+	// traversing the model
+	for (unsigned i = 0; i < z3m.size(); i++) {
+		func_decl v = z3m[i];
+		// this problem contains only constants
+		//assert(v.arity() == 0); 
+		//std::cout << v.name() << " = " << z3m.get_const_interp(v);
+		sscanf(v.name().str().c_str(), "a%d", &index);
+		//std::cout << "\t index=" << index << "\n";
+		assert(z3m.get_const_interp(v).is_int() == true);
+		if(Z3_get_numeral_int(c, z3m.get_const_interp(v), &avalue[index]) != Z3_TRUE)
+			return false;
+	}
+
+	if (e != NULL) {
+		e->reset(avalue);
+//#ifdef __PRT_Z3SOLVE
+//		std::cout << *e << std::endl;
+		e->roundoff();
+//		std::cout << *e << std::endl;
+//#endif
+	}
+#ifdef __PRT_Z3SOLVE
+	std::cout << "[";
+	for (int i = 0; i < VARS + 1; i++)
+		std::cout << "a" << i << "=" << avalue[i] << ", ";
+	std::cout << "]\n";
+#endif
+
+	return true;
 }
 
 int svm_model_visualization(const svm_model *model, Equation& equ)
@@ -3244,10 +3285,15 @@ struct svm_model *svm_I_train(const struct svm_problem *prob, const struct svm_p
 
 void my_print_func(const char* str) {}
 
-void prepare_linear_parameters(struct svm_parameter& param)
+void prepare_svm_parameters(struct svm_parameter& param, bool linear)
 {
 	param.svm_type = C_SVC;
-	param.kernel_type = LINEAR;
+	if (linear == true)
+		param.kernel_type = LINEAR;
+	else {
+		std::cout << "Using RBF kernel...\n";
+		param.kernel_type = RBF;
+	}
 	param.degree = 3;
 	param.gamma = 0;	// 1/num_features
 	param.coef0 = 0;
@@ -3275,6 +3321,8 @@ bool node_equal(svm_node* n1, svm_node* n2)
 	return true;
 }
 
+// justify convergence by svm model
+// compare all the supported vectors and other parameters
 bool model_converged(struct svm_model *m1, struct svm_model *m2)
 {
 	if ((m1 == NULL) || (m2 == NULL)) return false;
@@ -3285,7 +3333,7 @@ bool model_converged(struct svm_model *m1, struct svm_model *m2)
 	if (fabs(*(m1->rho) - *(m2->rho)) > 0.001) return false;
 	int l = m1->l;
 	/*
-	   for (int j = 0; j < l; j++) {
+	for (int j = 0; j < l; j++) {
 	//if (m1->sv_coef[0][j] != m2->sv_coef[0][j]) return false;
 	if (fabs(m1->sv_coef[0][j] - m2->sv_coef[0][j]) > 0.001) return false;
 	if (node_equal(m1->SV[j], m2->SV[j]) == false) return false;
