@@ -140,7 +140,8 @@ class SVM : public MLalgo
 			if (problem.l <= 0) return 0;
 			int pass = 0;
 			for (int i = 0; i < problem.l; i++) {
-				pass += (Equation::calc(*classifier, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
+				//pass += (Equation::calc(*classifier, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
+				pass += (predict((double*)problem.x[i]) * problem.y[i] >= 0) ? 1 : 0;
 			}
 			return static_cast<double>(pass) / problem.l;
 		}

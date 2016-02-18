@@ -99,11 +99,15 @@ struct svm_model
 		out << ", rho=" << *(m.rho) << "]";
 		out << "\n\tSV & coef={\n";
 
+		out << "\t\t";
 		for (int i = 0; i < m.l; i++) {
-			out << "\t\t" << m.sv_coef[0][i] << "(" << (m.SV[i][0]).value;
+			out << m.sv_coef[0][i] << "(" << (m.SV[i][0]).value;
 			for (int j = 1; j < VARS; j++)
-				out << ", " << (m.SV[i][j]).value;
-			out << ") \n";
+				out << "," << (m.SV[i][j]).value;
+			if (i % 9 == 8)
+				out << ") \n\t\t";
+			else
+				out << ")   ";
 		}
 		out << "\t\t}\n";
 	

@@ -84,6 +84,14 @@ cmake ..
 make $filename
 echo -e $blue"Running the project to generate invariant candidiate..."$white
 ./$filename
+ret=$?
+if [ $ret -ne 0 ]
+then
+	echo "can not separate using default paramater"
+	echo "try more parameters to get a perfect classifier"
+	exit 1
+fi
+
 cd ..
 echo -e $blue"Invariant file is located at "$invfile""$white
 cat $invfile

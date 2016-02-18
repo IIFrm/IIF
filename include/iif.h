@@ -82,7 +82,7 @@ namespace iif{
 				vnum = 0;
 			}
 
-			iifContext (const char* vfilename, int (*func)(int*), const char* func_name = "Unknown", int timeout = 60) 
+			iifContext (const char* vfilename, int (*func)(int*), const char* func_name = "Unknown", int timeout = 180) 
 			{
 				std::ifstream vfile(vfilename);
 				vfile >> vnum;

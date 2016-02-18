@@ -709,7 +709,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 			active_size = l;
 			info("*");
 		}
-		fprintf(stderr,"\nWARNING: reaching max number of iterations\n");
+		fprintf(stderr,"\nWARNING: $$reaching max number of iterations\n");
 	}
 
 	// calculate rho
@@ -1686,7 +1686,8 @@ static void sigmoid_train(
 		if (labels[i] > 0) prior1+=1;
 		else prior0+=1;
 
-	int max_iter=4;	// Maximal number of iterations
+	int max_iter=100;	// Maximal number of iterations
+	//std::cout << "comming into sigmoid train function.\n";
 	double min_step=1e-10;	// Minimal step taken in line search
 	double sigma=1e-12;	// For numerically strict PD of Hessian
 	double eps=1e-5;
@@ -3288,19 +3289,20 @@ void my_print_func(const char* str) {}
 void prepare_svm_parameters(struct svm_parameter& param, bool linear)
 {
 	param.svm_type = C_SVC;
+	param.gamma = 0;	// 1/num_features
 	if (linear == true)
 		param.kernel_type = LINEAR;
 	else {
 		std::cout << "Using RBF kernel...\n";
 		param.kernel_type = RBF;
+		param.gamma = 1; ///VARS; //0;	// 1/num_features
 	}
 	param.degree = 3;
-	param.gamma = 0;	// 1/num_features
 	param.coef0 = 0;
 	param.nu = 0.5;
 	param.cache_size = 100;
-	//	param.C = 1;
-	param.C = DBL_MAX;
+	param.C = 10000;
+	//param.C = DBL_MAX;
 	//param.C = 1000;
 	param.eps = 1e-3;
 	param.p = 0.1;
@@ -3426,16 +3428,40 @@ int model_solver(const svm_model* m, Solution& sol)
 	int p_num = 0, n_num = 0;
 	for (int i = 0; i < pn + nn; i++) {
 		if (label[i] >= 0) {
-			if (p_num++ == pick_p)
+			if (p_num++ == pick_p) {
 				indexp = i;
+				break;
+			}
 		}
-		if (label[i] < 0) {
+		/*if (label[i] < 0) {
 			if (n_num++ == pick_n)
 				indexn = i;
 		}
 		if ((indexp != -1) && (indexn != -1))
 			break;
+			*/
 	}
+	double min_dist = DBL_MAX;
+	int min_index = 0;
+	for (int i = 0; i < pn + nn; i++) {
+		if (label[i] < 0) {
+			double distance = sqrDistance(m->SV[indexp], m->SV[i]);
+			if (distance < min_dist) {
+				min_dist = distance;
+				min_index = i;
+			}
+		}
+	}
+	indexn = min_index;
+	std::cout << "<";
+	for (int i = 0; i < VARS; i++) {
+		std::cout << m->SV[indexp][i] << ",";
+	}
+	std::cout << ">==<";
+	for (int i = 0; i < VARS; i++) {
+		std::cout << m->SV[indexn][i] << ",";
+	}
+	std::cout << ">  ";
 	//std::cout << GREEN << pn << "," << nn << "<" << pick_p << "," << pick_n <<">" << WHITE;
 	//std::cout << BLUE << "<" << indexp << "," << indexn <<">" << WHITE;
 	int pieces = rand() % 6 + VARS;
