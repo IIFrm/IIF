@@ -147,6 +147,7 @@ int svm_check_probability_model(const struct svm_model *model);
 void svm_set_print_string_function(void (*print_func)(const char *));
 
 bool svm_model_z3(const svm_model *m, Equation* e = NULL); 
+bool svm_model_z3_conjunctive(const svm_model *m, Equation* e = NULL); 
 
 int svm_model_visualization(const svm_model *model, Equation& equ);
 

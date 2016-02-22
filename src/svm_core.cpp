@@ -3156,11 +3156,106 @@ void print_svm_samples(const svm_problem *sp)
 void print_svm_samples(const svm_problem *sp){}
 #endif
 
+bool svm_model_z3_conjunctive(const svm_model *m, Equation* es) //, Equation& equ)
+{
+	if (m == NULL)
+		return false;
+
+#if (linux || __MACH__)
+	double* label = m->sv_coef[0];
+	struct svm_node** data = m->SV;
+
+	z3::config cfg;
+	cfg.set("auto_config", true);
+	z3::context c(cfg);
+	z3::solver s(c);
+
+	std::vector<z3::expr> A1;
+	std::vector<z3::expr> A2;
+	std::vector<z3::expr> X;
+	char pname[4];
+	// form: a0 * x0 + a1 * x1 + a2 * x2 + a3 >= 0
+	// parameters: a0 a1 a2 a3 --> integer
+	for (int i = 0; i < VARS + 1; i++) {
+		sprintf(pname, "a0_%d", i);
+		z3::expr tmp0 = c.int_const(pname);
+		A1.push_back(tmp0);
+		sprintf(pname, "a1_%d", i);
+		z3::expr tmp1 = c.int_const(pname);
+		A2.push_back(tmp1);
+	}
+
+
+	char xvalue[33];
+	int l = m->l;
+	for (int k = 0; k < l; k++) {
+		z3::expr expr = A1[VARS];
+		for (int i = 0; i < VARS; i++) {
+			snprintf(xvalue, 32, "%d", int(data[k][i].value));
+			z3::expr tmp = c.int_val(xvalue);
+			// equation = equation + ai * xi
+			expr = expr + tmp * A1[i];
+		}
+		if (label[k] >= 0) expr = expr >= 0;
+		else expr = expr < 0;
+		s.add(expr);
+	}
+	for (int k = 0; k < l; k++) {
+		z3::expr expr = A2[VARS];
+		for (int i = 0; i < VARS; i++) {
+			snprintf(xvalue, 32, "%d", int(data[k][i].value));
+			z3::expr tmp = c.int_val(xvalue);
+			// equation = equation + ai * xi
+			expr = expr + tmp * A2[i];
+		}
+		if (label[k] >= 0) expr = expr >= 0;
+		else expr = expr < 0;
+		s.add(expr);
+	}
+#ifdef __PRT_Z3SOLVE
+	std::cout << s << std::endl;
+#endif
+	z3::check_result ret = s.check();
+	if (ret == unsat) return false;
+
+	z3::model z3m = s.get_model();
+	//std::cout << z3m << "\n";
+
+	int avalue[2][VARS+1];
+	int index1 = -1;
+	int index2 = -1;
+	// traversing the model
+	for (unsigned i = 0; i < z3m.size(); i++) {
+		func_decl v = z3m[i];
+		// this problem contains only constants
+		//assert(v.arity() == 0); 
+		//std::cout << v.name() << " = " << z3m.get_const_interp(v);
+		sscanf(v.name().str().c_str(), "a%d_%d", &index1, &index2);
+		//std::cout << "\t index=" << index << "\n";
+		assert(z3m.get_const_interp(v).is_int() == true);
+		if(Z3_get_numeral_int(c, z3m.get_const_interp(v), &avalue[index1][index2]) != Z3_TRUE)
+			return false;
+	}
+
+	if (es != NULL) {
+		es[0].reset(avalue[0]);
+		es[1].reset(avalue[1]);
+	}
+#ifdef __PRT_Z3SOLVE
+	std::cout << "[";
+	for (int i = 0; i < 2; i++)
+		for (int j = 0; j < VARS + 1; j++)
+			std::cout << "a" << i << "_" << j << "=" << avalue[i][j] << ", ";
+	std::cout << "]\n";
+#endif
+#endif
+	return true;
+}
+
 bool svm_model_z3(const svm_model *m, Equation* e) //, Equation& equ)
 {
 	if (m == NULL)
-		return -1;
-
+		return false;
 
 #if (linux || __MACH__)
 	double* label = m->sv_coef[0];
@@ -3225,7 +3320,7 @@ bool svm_model_z3(const svm_model *m, Equation* e) //, Equation& equ)
 		e->reset(avalue);
 //#ifdef __PRT_Z3SOLVE
 //		std::cout << *e << std::endl;
-		e->roundoff();
+//		e->roundoff();
 //		std::cout << *e << std::endl;
 //#endif
 	}
@@ -3358,8 +3453,8 @@ bool node_equal(svm_node* n1, svm_node* n2)
 bool model_converged(struct svm_model *m1, struct svm_model *m2)
 {
 	if ((m1 == NULL) || (m2 == NULL)) return false;
-	//std::cout << "\n\tfirst model:"<< *m1 << std::endl;
-	//std::cout << "\tsecond model:"<< *m2 << std::endl;
+	//std::cout << "\n" << BLUE << "\tfirst model:"<< *m1 << std::endl;
+	//std::cout << "\tsecond model:"<< *m2 << WHITE << std::endl;
 	if (m1->nr_class != m2->nr_class) return false;
 	if (m1->l != m2->l) return false;
 	if (fabs(*(m1->rho) - *(m2->rho)) > 0.001) return false;
@@ -3460,15 +3555,16 @@ int model_solver(const svm_model* m, Solution& sol)
 		if (label[i] >= 0) {
 			if (p_num++ == pick_p) {
 				indexp = i;
-				//break;
+				break;
 			}
 		}
-		if (label[i] < 0) {
+		/* if (label[i] < 0) {
 			if (n_num++ == pick_n)
 				indexn = i;
 		}
 		if ((indexp != -1) && (indexn != -1))
 			break;
+		*/
 	}
 	double min_dist = DBL_MAX;
 	int min_index = -1;
@@ -3482,7 +3578,7 @@ int model_solver(const svm_model* m, Solution& sol)
 		}
 	}
 	assert(min_index != -1);
-	//indexn = min_index;
+	indexn = min_index;
 	/*
 	std::cout << "{";
 	for (int i = 0; i < VARS; i++) {

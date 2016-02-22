@@ -196,16 +196,22 @@ std::cout << "Finish running rbf kernel svm for " << rnd - 1 << " times." << std
 
 int ret = 0;
 if ((converged) && (rnd <= max_iteration)) {
-	Equation *equ = new Equation();
-	/*bool sat =*/ svm_model_z3(lastModel, equ);
+	/*Equation *equ = new Equation();
+	svm_model_z3(lastModel, equ);
+	*/
+	Equation *equ = new Equation[2];
+	svm_model_z3_conjunctive(lastModel, equ);
 	/*if (sat == true) std::cout << "TRUE" << std::endl;
 	else std::cout << "FALSE" << std::endl;
 	*/
 	std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
 	std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
-	std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
+	//std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
+	std::cout << "\t\t" << GREEN << equ[0] << YELLOW << std::endl;
+	std::cout << "\t/\\    " << GREEN << equ[1] << YELLOW << std::endl;
 	std::cout << "  }" << WHITE << std::endl;
-	delete equ;
+	delete []equ;
+	//delete equ;
 }
 
 if ((pass_rate < 1) || (rnd >= max_iteration)) {
