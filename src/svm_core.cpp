@@ -530,7 +530,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 
 	int iter = 0;
 	//std::cout << "oprimization step 1.\n";
-	int max_iter = max(10000000, l>INT_MAX/100 ? INT_MAX : 1000*l);
+	int max_iter = max(10000000, l>INT_MAX/100 ? INT_MAX : 100*l);
 	//max_iter/=5; 
 	int counter = min(l,1000)+1;
 	//std::cout << "oprimization step 2.\n";
@@ -3326,7 +3326,7 @@ void prepare_svm_parameters(struct svm_parameter& param, int type, int degree)
 	} else if (type == 2){
 		std::cout << "Using RBF kernel...\n";
 		param.kernel_type = RBF;
-		param.gamma = 1; ///VARS; //0;	// 1/num_features
+		param.gamma = 20; ///VARS; //0;	// 1/num_features
 	}
 	param.coef0 = 0;
 	param.nu = 0.5;
@@ -3358,8 +3358,8 @@ bool node_equal(svm_node* n1, svm_node* n2)
 bool model_converged(struct svm_model *m1, struct svm_model *m2)
 {
 	if ((m1 == NULL) || (m2 == NULL)) return false;
-	std::cout << "\tfirst model:"<< *m1 << std::endl;
-	std::cout << "\tsecond model:"<< *m2 << std::endl;
+	//std::cout << "\n\tfirst model:"<< *m1 << std::endl;
+	//std::cout << "\tsecond model:"<< *m2 << std::endl;
 	if (m1->nr_class != m2->nr_class) return false;
 	if (m1->l != m2->l) return false;
 	if (fabs(*(m1->rho) - *(m2->rho)) > 0.001) return false;
