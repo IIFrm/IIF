@@ -33,7 +33,7 @@ extern int (*target_program) (int*);
 /** @brief defines the initial max number items contains by states set. 
  *		   Better to be a number larger than 1000 
  */
-const int max_items = 100000;
+const int max_items = 10000000;
 
 /** @brief defines max number of states contains in one executionn. 
  *		   Better to be a number larger than 128 
@@ -57,7 +57,7 @@ const int random_exes = 2;
 /** @brief defines the max number of iterations tried by machine learning algorithm, 
  *		   Should be a positive integer. Usually set between 8-128
  */
-const int max_iter = 32;
+const int max_iter = 512;
 
 /** @brief This function register the test program to the framework.
  *

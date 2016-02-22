@@ -97,9 +97,9 @@ struct svm_model
 		out << "[nr_class=" << m.nr_class;
 		out << ", total#SV=" << m.l;
 		out << ", rho=" << *(m.rho) << "]";
-		out << "\n\tSV & coef={\n";
+		///*
+		out << "\n\t\tSV & coef={  ";
 
-		out << "\t\t";
 		for (int i = 0; i < m.l; i++) {
 			out << m.sv_coef[0][i] << "(" << (m.SV[i][0]).value;
 			for (int j = 1; j < VARS; j++)
@@ -107,10 +107,10 @@ struct svm_model
 			if (i % 9 == 8)
 				out << ") \n\t\t";
 			else
-				out << ")   ";
+				out << ")  ";
 		}
-		out << "\t\t}\n";
-	
+		out << " }";
+		//*/
 		return out;
 	}
 };
@@ -118,7 +118,7 @@ struct svm_model
 bool model_converged(struct svm_model *m1, struct svm_model *m2);
 int model_solver(const svm_model* m, Solution& sol);
 
-void prepare_svm_parameters(struct svm_parameter& param, bool linear = true);
+void prepare_svm_parameters(struct svm_parameter& param, int type = 0, int degree = 3);
 
 struct svm_model *svm_train(const struct svm_problem *prob, const struct svm_parameter *param);
 void svm_cross_validation(const struct svm_problem *prob, const struct svm_parameter *param, int nr_fold, double *target);

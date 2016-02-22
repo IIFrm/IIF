@@ -11,7 +11,7 @@
 static void print_null(const char *s) {}
 
 LinearLearner::LinearLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
-	svm = new SVM(true, print_null);
+	svm = new SVM(0, print_null);
 	this->max_iteration = max_iteration; 
 }
 
@@ -97,7 +97,7 @@ int LinearLearner::learn()
 init_svm:
 #ifdef __PRT
 		int step = 1;
-		std::cout << "SVM------------------------------------------------------------------------------------------------------------" << std::endl;
+		std::cout << "Linear SVM------------------------------------------------------------------------------------------------------------" << std::endl;
 		std::cout << "\t(" << step++ << ") execute programs... [" << exes + random_exes << "] ";
 #endif
 		//selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
@@ -213,7 +213,7 @@ std::cout << "Finish running svm for " << rnd - 1 << " times." << std::endl;
 int ret = 0;
 if ((converged) && (rnd <= max_iteration)) {
 	Equation *equ = new Equation();
-	bool sat = svm_model_z3(lastModel, equ);
+	/*bool sat =*/ svm_model_z3(lastModel, equ);
 	/*if (sat == true) std::cout << "TRUE" << std::endl;
 	else std::cout << "FALSE" << std::endl;
 	*/

@@ -115,11 +115,14 @@ class Equation{
 
 		std::string toString() {
 			std::ostringstream stm;
-			stm << theta[0];
-			stm << " * " << variables[0];
+			if (theta[0] != 1) 
+				stm << theta[0] << " * ";
+			stm << variables[0];
 			for (int j = 1; j < VARS; j++) {
 				stm << "  +  ";
-				stm << theta[j] << " * " << variables[j];
+				if (theta[0] != 1) 
+					stm << theta[j] << " * ";
+				stm << variables[j];
 			}
 			if (theta0 == 0)
 				stm << " >= 0";
@@ -136,19 +139,40 @@ class Equation{
 		 *  @param equ the equation to be ouput
 		 */
 		friend std::ostream& operator << (std::ostream& out, const Equation& equ) {
-			out << std::setprecision(16) << equ.theta[0];
+			out << std::setprecision(16);
+			if (equ.theta[0] != 1) 
+				out << equ.theta[0] << " * ";
 			//out << "{0}";
-			out << " * " << variables[0];
+			out << variables[0];
 			for (int j = 1; j < VARS; j++) {
-				out << "  +  " << equ.theta[j]; 
+				out << "  +  "; 
+				if (equ.theta[j] != 1) 
+					out << equ.theta[j] << " * "; 
 				//out << "{" <<j << "}";
-				out << " * " << variables[j];
+				out  << variables[j];
 			}
 			if (equ.theta0 == 0)
 				out << " >= 0";
 			else 
 				out << " >= " << -1 * equ.theta0;
 			return out;
+		}
+
+		void printInside() {
+			std::cout << std::setprecision(16);
+			if (theta[0] != 1) 
+				std::cout << theta[0] << " * ";
+			std::cout << variables[0];
+			for (int j = 1; j < VARS; j++) {
+				std::cout << "  +  "; 
+				if (theta[j] != 1) 
+					std::cout << theta[j] << " * "; 
+				std::cout  << variables[j];
+			}
+			if (theta0 < 0)
+				std::cout << " - " << -theta0;
+			else
+				std::cout << " + " << theta0;
 		}
 
 		/** @brief This method converts *this equation object to z3 expr object.

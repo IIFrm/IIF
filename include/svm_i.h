@@ -64,8 +64,8 @@ class SVM_I : public MLalgo //SVM
 			return es;
 		}
 
-		SVM_I(bool linear = true, void(*f) (const char*) = NULL, int size = 10000, int csf = 16) : max_size(size), max_csf(csf) {
-			prepare_svm_parameters(param, linear);
+		SVM_I(int type = 0, void(*f) (const char*) = NULL, int size = 10000, int csf = 16) : max_size(size), max_csf(csf) {
+			prepare_svm_parameters(param, type);
 			if (f != NULL)
 				svm_set_print_string_function(f);
 			model = NULL;

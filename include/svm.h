@@ -54,8 +54,8 @@ class SVM : public MLalgo
 			return 0;
 		}
 
-		SVM(bool linear = true, void (*f) (const char*) = NULL, int size = 10000) : max_size(size) {
-			prepare_svm_parameters(param, linear);
+		SVM(int type = 0, void (*f) (const char*) = NULL, int size = 1000000) : max_size(size) {
+			prepare_svm_parameters(param, type);
 			if (f != NULL)
 				svm_set_print_string_function(f);
 			model = NULL;
@@ -79,6 +79,11 @@ class SVM : public MLalgo
 			if (classifier != NULL) delete classifier;
 			if (data != NULL) delete []data;
 			if (label != NULL) delete label;
+		}
+
+		void setDegree(int degree) {
+			if (degree <= 0) return;
+			param.degree = degree;
 		}
 
 
@@ -128,9 +133,13 @@ class SVM : public MLalgo
 					svm_free_and_destroy_model(&pre_model);
 				pre_model = model;
 			}
+			std::cout << "checking point 1\n";
+			//std::cout << problem << std::endl;
 			model = svm_train(&problem, &param);
-			if (classifier == NULL) classifier = new Equation();
-			svm_model_visualization(model, *classifier);
+			std::cout << "checking point 2\n";
+			/* if (classifier == NULL) classifier = new Equation();
+			 svm_model_visualization(model, *classifier);
+			*/
 			//svm_free_and_destroy_model(&model);
 			//model = NULL;
 			return 0;
@@ -208,7 +217,8 @@ class SVM : public MLalgo
 
 		std::ostream& _print(std::ostream& out) const {
 			out << "SVM-model: ";
-			out << *model; // << std::endl;
+			out << *model << std::endl;
+			//svm_model_visualization(model, *classifier);
 			//out << *classifier; // << std::endl;
 			return out;
 		}

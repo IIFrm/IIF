@@ -1,7 +1,7 @@
 #include "config.h"
 #include "color.h"
 #include "equation.h"
-#include "kernel_learner.h"
+#include "poly_learner.h"
 
 #include <iostream>
 //#include <float.h>
@@ -10,13 +10,13 @@
 
 static void print_null(const char *s) {}
 
-KernelLearner::KernelLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
-	svm = new SVM(2, print_null);
+PolyLearner::PolyLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
+	svm = new SVM(1, print_null);
 	this->max_iteration = max_iteration; 
 }
 
 
-KernelLearner::~KernelLearner() {
+PolyLearner::~PolyLearner() {
 	delete svm;
 }
 
@@ -25,7 +25,7 @@ KernelLearner::~KernelLearner() {
 //			   if params == NULL, all are random points
 //			   if params != NULL, selective sampling
 /// type > 0, params contains type number of inputs.....
-int KernelLearner::selectiveSampling(int randn, int exen, int type, void* params)
+int PolyLearner::selectiveSampling(int randn, int exen, int type, void* params)
 {
 	if ((type != 0) && (exen > type))
 		randn += exen - type;
@@ -78,7 +78,7 @@ int KernelLearner::selectiveSampling(int randn, int exen, int type, void* params
 }
 
 
-int KernelLearner::learn()
+int PolyLearner::learn()
 {
 	int rnd;
 	bool similarLast = false;
@@ -89,15 +89,17 @@ int KernelLearner::learn()
 
 	// lastEquation = new Equation[1];
 	double pass_rate = 1;
+	int degree = 1;
 
 
-	for (rnd = 1; ((rnd <= max_iteration) && (pass_rate >= 1)); rnd++) {
+	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
+		svm->setDegree(degree);
 		std::cout << "[" << rnd << "]";
 		int exes = (rnd == 1)? init_exes : after_exes;
 init_svm:
 #ifdef __PRT
 		int step = 1;
-		std::cout << "RBF Kernel---------------------------------------------------------------------------------------------------------" << std::endl;
+		std::cout << "Poly Kernel----------------with D=" << degree <<  "-----------------------------------------------------------------------------------" << std::endl;
 		std::cout << "\t(" << step++ << ") execute programs... [" << exes + random_exes << "] ";
 #endif
 		//selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
@@ -122,7 +124,7 @@ init_svm:
 #endif
 		svm->train();
 		//std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
-		std::cout << "|-->> " << std::endl;
+		//std::cout << "|-->> " << std::endl;
 
 
 
@@ -142,15 +144,20 @@ init_svm:
 
 		if (pass_rate < 1) {
 #ifdef __PRT
-			std::cout << " [FAIL] \n The problem is not KERNEL separable.. " << std::endl;
+			std::cout << " [FAIL] \n The problem is not poly separable with degree " << degree << ".. " << std::endl;
+			std::cout << " Increase degree and retry..." << std::endl;
 #endif
+			degree++;
+			if (degree > 32) {
+				std::cout << "Degree is too big, GIVE UP..." << std::endl;
+				break;
+			}
 			//std::cerr << "*******************************USING SVM_I NOW******************************" << std::endl;
-			rnd++;
-			break;
-		}
+		} else {
 #ifdef __PRT
-		std::cout << GREEN << " [PASS]" << WHITE;
+			std::cout << GREEN << " [PASS]" << WHITE;
 #endif
+		}
 
 		/*
 		 *	similarLast is used to store the convergence check return value for the last time.
@@ -160,65 +167,70 @@ init_svm:
 #ifdef __PRT
 		std::cout << "\n\t(" << step++ << ") check convergence:        ";
 #endif
-		//if (svm->converged(lastEquation, 1) == 0) {
-		if (svm->converged_model() == true) {
-			if (similarLast == true) {
+		if (pass_rate < 1) {
 #ifdef __PRT
-				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
+			std::cout << "SKIP this step" << std::endl;
 #endif
-				converged = true;
-				rnd++;
-				break;
+		} else {
+			//if (svm->converged(lastEquation, 1) == 0) {
+			if (svm->converged_model() == true) {
+				if (similarLast == true) {
+#ifdef __PRT
+					std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
+#endif
+					converged = true;
+					break;
+				}
+#ifdef __PRT
+				std::cout << "[FT]";
+#endif
+				similarLast = true;
+			} else {
+#ifdef __PRT
+				std::cout << ((similarLast == true) ? "[T" : "[F") << "F] ";
+#endif
+				similarLast = false;
 			}
 #ifdef __PRT
-			std::cout << "[FT]";
+			std::cout << "  [FAIL] neXt round " << std::endl;
 #endif
-			similarLast = true;
-		} else {
-#ifdef __PRT
-			std::cout << ((similarLast == true) ? "[T" : "[F") << "F] ";
-#endif
-			similarLast = false;
 		}
-#ifdef __PRT
-std::cout << "  [FAIL] neXt round " << std::endl;
-#endif
 
-if (lastEquation == NULL) lastEquation = new Equation[1];
-lastEquation[0] = *(svm->getClassifier());
-//lastModel = svm->getModel();
-lastModel = svm->model;
-} // end of SVM training procedure
+		/* if (lastEquation == NULL) lastEquation = new Equation[1];
+		lastEquation[0] = *(svm->getClassifier());
+		*/
+		//lastModel = svm->getModel();
+		lastModel = svm->model;
+	} // end of SVM training procedure
 
 
-std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
-std::cout << "Finish running kernel svm for " << rnd - 1 << " times." << std::endl;
+	std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
+	std::cout << "Finish running poly kernel svm for " << rnd - 1 << " times." << std::endl;
 
-int ret = 0;
-if ((converged) && (rnd <= max_iteration)) {
-	Equation *equ = new Equation();
-	/*bool sat =*/ svm_model_z3(lastModel, equ);
-	/*if (sat == true) std::cout << "TRUE" << std::endl;
-	else std::cout << "FALSE" << std::endl;
-	*/
-	std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
-	std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
-	std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
-	std::cout << "  }" << WHITE << std::endl;
-	delete equ;
+	int ret = 0;
+	if ((converged) && (rnd <= max_iteration)) {
+		Equation *equ = new Equation();
+		/*bool sat =*/ svm_model_z3(lastModel, equ);
+		/*if (sat == true) std::cout << "TRUE" << std::endl;
+		  else std::cout << "FALSE" << std::endl;
+		  */
+		std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
+		std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
+		std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
+		std::cout << "  }" << WHITE << std::endl;
+		delete equ;
+	}
+
+	if ((pass_rate < 1) || (rnd >= max_iteration)) {
+		std::cout << RED << "  Cannot divide by SVM perfectly.\n" << WHITE;
+		ret = -1;
+	}
+
+	if (lastEquation) delete lastEquation;
+		return ret;
 }
 
-if ((pass_rate < 1) || (rnd >= max_iteration)) {
-	std::cout << RED << "  Cannot divide by SVM perfectly.\n" << WHITE;
-	ret = -1;
-}
-
-if (lastEquation) delete lastEquation;
-
-return ret;
-}
-
-std::string KernelLearner::invariant() {
+std::string PolyLearner::invariant() {
 	Equation *equ = new Equation();
 	bool sat = svm_model_z3(svm->getModel(), equ);
 	std::string s = equ->toString();

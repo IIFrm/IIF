@@ -529,9 +529,11 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 	// optimization step
 
 	int iter = 0;
+	std::cout << "oprimization step 1.\n";
 	int max_iter = max(10000000, l>INT_MAX/100 ? INT_MAX : 100*l);
-	//max_iter/=100; 
+	max_iter/=50; 
 	int counter = min(l,1000)+1;
+	std::cout << "oprimization step 2.\n";
 
 	while(iter < max_iter)
 	{
@@ -699,6 +701,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 			}
 		}
 	}
+	std::cout << "oprimization step 3.\n";
 
 	if(iter >= max_iter)
 	{
@@ -743,6 +746,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 	si->upper_bound_p = Cp;
 	si->upper_bound_n = Cn;
 
+	std::cout << "oprimization step 4.\n";
 	info("\noptimization finished, #iter = %d\n",iter);
 
 	delete[] p;
@@ -752,6 +756,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 	delete[] active_set;
 	delete[] G;
 	delete[] G_bar;
+	std::cout << "oprimization step 5.\n";
 }
 
 // return 1 if already optimal, return 0 otherwise
@@ -3236,10 +3241,13 @@ int svm_model_visualization(const svm_model *model, Equation& equ)
 {
 	if (model == NULL)
 		return -1;
+	if (model->param.kernel_type == RBF)
+		return -1;
+	/*
 	if (model->param.kernel_type != LINEAR) {
 		info("Can not visualize hyperplane for kernel %s\n", kernel_type_table[model->param.kernel_type]);
 		return -1;
-	}
+	}*/
 
 	int l = model->l;
 	const double * const *sv_coef = model->sv_coef;
@@ -3269,7 +3277,22 @@ int svm_model_visualization(const svm_model *model, Equation& equ)
 	}
 	equ.setTheta0(theta0);
 	equ.setTheta(theta);
+	/* if (model->param.kernel_type == LINEAR) {
+		std::cout << "After visualization: " << YELLOW << equ << WHITE << std::endl;
+	} else if (model->param.kernel_type == POLY) {
+		std::cout << "After visualization: " << YELLOW << "(" << model->param.gamma << " * (";
+		equ.printInside();
+		std::cout << ") + " << model->param.coef0 << ") ^ " << model->param.degree << " >= 0"<< WHITE << std::endl;
+	}
+	*/
 	equ.roundoff();
+	if (model->param.kernel_type == LINEAR) {
+		std::cout << "After visualization: " << YELLOW << equ << WHITE << std::endl;
+	} /* else if (model->param.kernel_type == POLY) {
+		std::cout << "After visualization: " << YELLOW << "(" << model->param.gamma << " * (";
+		equ.printInside();
+		std::cout << ") + " << model->param.coef0 << ") ^ " << model->param.degree << " >= 0"<< WHITE << std::endl;
+	} */
 	/*	info(" %.16g [0]", theta[0]);
 		for (int j = 1; j < vars; j++)
 		info ("  +  %.16g [%d]", theta[j], j);
@@ -3286,18 +3309,23 @@ struct svm_model *svm_I_train(const struct svm_problem *prob, const struct svm_p
 
 void my_print_func(const char* str) {}
 
-void prepare_svm_parameters(struct svm_parameter& param, bool linear)
+void prepare_svm_parameters(struct svm_parameter& param, int type, int degree)
 {
 	param.svm_type = C_SVC;
+	param.degree = degree;
 	param.gamma = 0;	// 1/num_features
-	if (linear == true)
+	if (type == 0) {
+		std::cout << "Using LINEAR kernel...\n";
 		param.kernel_type = LINEAR;
-	else {
+	} else if (type == 1){
+		std::cout << "Using POLY kernel...\n";
+		param.kernel_type = POLY;
+		param.gamma = 1.0/VARS;	// 1/num_features
+	} else if (type == 2){
 		std::cout << "Using RBF kernel...\n";
 		param.kernel_type = RBF;
 		param.gamma = 1; ///VARS; //0;	// 1/num_features
 	}
-	param.degree = 3;
 	param.coef0 = 0;
 	param.nu = 0.5;
 	param.cache_size = 100;
@@ -3328,8 +3356,8 @@ bool node_equal(svm_node* n1, svm_node* n2)
 bool model_converged(struct svm_model *m1, struct svm_model *m2)
 {
 	if ((m1 == NULL) || (m2 == NULL)) return false;
-	//std::cout << "\tfirst model:"<< *m1;
-	//std::cout << "\tsecond model:"<< *m2;
+	std::cout << "\tfirst model:"<< *m1 << std::endl;
+	std::cout << "\tsecond model:"<< *m2 << std::endl;
 	if (m1->nr_class != m2->nr_class) return false;
 	if (m1->l != m2->l) return false;
 	if (fabs(*(m1->rho) - *(m2->rho)) > 0.001) return false;
@@ -3430,19 +3458,18 @@ int model_solver(const svm_model* m, Solution& sol)
 		if (label[i] >= 0) {
 			if (p_num++ == pick_p) {
 				indexp = i;
-				break;
+				//break;
 			}
 		}
-		/*if (label[i] < 0) {
+		if (label[i] < 0) {
 			if (n_num++ == pick_n)
 				indexn = i;
 		}
 		if ((indexp != -1) && (indexn != -1))
 			break;
-			*/
 	}
 	double min_dist = DBL_MAX;
-	int min_index = 0;
+	int min_index = -1;
 	for (int i = 0; i < pn + nn; i++) {
 		if (label[i] < 0) {
 			double distance = sqrDistance(m->SV[indexp], m->SV[i]);
@@ -3452,23 +3479,26 @@ int model_solver(const svm_model* m, Solution& sol)
 			}
 		}
 	}
-	indexn = min_index;
-	std::cout << "<";
+	assert(min_index != -1);
+	//indexn = min_index;
+	/*
+	std::cout << "{";
 	for (int i = 0; i < VARS; i++) {
 		std::cout << m->SV[indexp][i] << ",";
 	}
-	std::cout << ">==<";
+	std::cout << "}{";
 	for (int i = 0; i < VARS; i++) {
 		std::cout << m->SV[indexn][i] << ",";
 	}
-	std::cout << ">  ";
+	std::cout << "}==>";
+	*/
 	//std::cout << GREEN << pn << "," << nn << "<" << pick_p << "," << pick_n <<">" << WHITE;
 	//std::cout << BLUE << "<" << indexp << "," << indexn <<">" << WHITE;
-	int pieces = rand() % 6 + VARS;
+	int pieces = rand() % 6 + VARS + 1;
 	double u  = (rand() % (pieces-1) + 1.0) / pieces;
 	//std::cout << "u=" << u;
 	for (int i = 0; i < VARS; i++) {
-		double value =  int(m->SV[indexp][i].value + (m->SV[indexn][i].value - m->SV[indexp][i].value) * u);
+		double value =  nearbyint(m->SV[indexp][i].value + (m->SV[indexn][i].value - m->SV[indexp][i].value) * u);
 		sol.setVal(i, value);
 	}
 	return 0;
