@@ -184,8 +184,8 @@ init_svm:
 std::cout << "  [FAIL] neXt round " << std::endl;
 #endif
 
-if (lastEquation == NULL) lastEquation = new Equation[1];
-lastEquation[0] = *(svm->getClassifier());
+//if (lastEquation == NULL) lastEquation = new Equation[1];
+//lastEquation[0] = *(svm->getClassifier());
 //lastModel = svm->getModel();
 lastModel = svm->model;
 } // end of SVM training procedure
