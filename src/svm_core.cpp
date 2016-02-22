@@ -529,11 +529,11 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 	// optimization step
 
 	int iter = 0;
-	std::cout << "oprimization step 1.\n";
-	int max_iter = max(10000000, l>INT_MAX/100 ? INT_MAX : 100*l);
-	max_iter/=50; 
+	//std::cout << "oprimization step 1.\n";
+	int max_iter = max(10000000, l>INT_MAX/100 ? INT_MAX : 1000*l);
+	//max_iter/=5; 
 	int counter = min(l,1000)+1;
-	std::cout << "oprimization step 2.\n";
+	//std::cout << "oprimization step 2.\n";
 
 	while(iter < max_iter)
 	{
@@ -701,7 +701,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 			}
 		}
 	}
-	std::cout << "oprimization step 3.\n";
+	//std::cout << "oprimization step 3.\n";
 
 	if(iter >= max_iter)
 	{
@@ -746,7 +746,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 	si->upper_bound_p = Cp;
 	si->upper_bound_n = Cn;
 
-	std::cout << "oprimization step 4.\n";
+	//std::cout << "oprimization step 4.\n";
 	info("\noptimization finished, #iter = %d\n",iter);
 
 	delete[] p;
@@ -756,7 +756,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 	delete[] active_set;
 	delete[] G;
 	delete[] G_bar;
-	std::cout << "oprimization step 5.\n";
+	//std::cout << "oprimization step 5.\n";
 }
 
 // return 1 if already optimal, return 0 otherwise
@@ -3161,6 +3161,8 @@ bool svm_model_z3(const svm_model *m, Equation* e) //, Equation& equ)
 	if (m == NULL)
 		return -1;
 
+
+#if (linux || __MACH__)
 	double* label = m->sv_coef[0];
 	struct svm_node** data = m->SV;
 
@@ -3233,7 +3235,7 @@ bool svm_model_z3(const svm_model *m, Equation* e) //, Equation& equ)
 		std::cout << "a" << i << "=" << avalue[i] << ", ";
 	std::cout << "]\n";
 #endif
-
+#endif
 	return true;
 }
 

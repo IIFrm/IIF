@@ -133,10 +133,10 @@ class SVM : public MLalgo
 					svm_free_and_destroy_model(&pre_model);
 				pre_model = model;
 			}
-			std::cout << "checking point 1\n";
+			//std::cout << "checking point 1\n";
 			//std::cout << problem << std::endl;
 			model = svm_train(&problem, &param);
-			std::cout << "checking point 2\n";
+			//std::cout << "checking point 2\n";
 			/* if (classifier == NULL) classifier = new Equation();
 			 svm_model_visualization(model, *classifier);
 			*/
