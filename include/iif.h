@@ -21,10 +21,9 @@
 #include "base_learner.h"
 #include "linear_learner.h"
 #include "poly_learner.h"
-#include "kernel_learner.h"
+#include "rbf_learner.h"
 #include "conjunctive_learner.h"
 #include "disjunctive_learner.h"
-//#include "learner_pipeline.h"
 #include "iif_assert.h"
 
 #include <iostream>
@@ -123,8 +122,8 @@ namespace iif{
 					newLearner = new LinearLearner(gsets);
 				else if (strcmp(learnerName, "poly") == 0)
 					newLearner = new PolyLearner(gsets);
-				else if (strcmp(learnerName, "kernel") == 0)
-					newLearner = new KernelLearner(gsets);
+				else if (strcmp(learnerName, "rbf") == 0)
+					newLearner = new RbfLearner(gsets);
 				else if (strcmp(learnerName, "conjunctive") == 0)
 					newLearner = new ConjunctiveLearner(gsets);
 				else if (strcmp(learnerName, "disjunctive") == 0)

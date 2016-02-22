@@ -1,15 +1,15 @@
-#ifndef _KERNEL_
-#define _KERNEL_
+#ifndef _RBF_
+#define _RBF_
 #include "config.h"
 #include "base_learner.h"
 #include "svm.h"
 
 
-class KernelLearner: public BaseLearner {
+class RbfLearner: public BaseLearner {
 	public:
-		KernelLearner(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter);
+		RbfLearner(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter);
 
-		~KernelLearner();
+		~RbfLearner();
 
 		virtual int learn();
 

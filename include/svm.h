@@ -136,7 +136,7 @@ class SVM : public MLalgo
 			//std::cout << "checking point 1\n";
 			//std::cout << problem << std::endl;
 			model = svm_train(&problem, &param);
-			std::cout << "model --> " << *model << std::endl;
+			//std::cout << "model --> " << *model << std::endl;
 			//std::cout << "checking point 2\n";
 			/* if (classifier == NULL) classifier = new Equation();
 			 svm_model_visualization(model, *classifier);

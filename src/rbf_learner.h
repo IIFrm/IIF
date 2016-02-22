@@ -1,7 +1,7 @@
 #include "config.h"
 #include "color.h"
 #include "equation.h"
-#include "kernel_learner.h"
+#include "rbf_learner.h"
 
 #include <iostream>
 //#include <float.h>
@@ -10,13 +10,13 @@
 
 static void print_null(const char *s) {}
 
-KernelLearner::KernelLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
+RbfLearner::RbfLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
 	svm = new SVM(2, print_null);
 	this->max_iteration = max_iteration; 
 }
 
 
-KernelLearner::~KernelLearner() {
+RbfLearner::~RbfLearner() {
 	delete svm;
 }
 
@@ -25,7 +25,7 @@ KernelLearner::~KernelLearner() {
 //			   if params == NULL, all are random points
 //			   if params != NULL, selective sampling
 /// type > 0, params contains type number of inputs.....
-int KernelLearner::selectiveSampling(int randn, int exen, int type, void* params)
+int RbfLearner::selectiveSampling(int randn, int exen, int type, void* params)
 {
 	if ((type != 0) && (exen > type))
 		randn += exen - type;
@@ -78,7 +78,7 @@ int KernelLearner::selectiveSampling(int randn, int exen, int type, void* params
 }
 
 
-int KernelLearner::learn()
+int RbfLearner::learn()
 {
 	int rnd;
 	bool similarLast = false;
@@ -142,7 +142,7 @@ init_svm:
 
 		if (pass_rate < 1) {
 #ifdef __PRT
-			std::cout << " [FAIL] \n The problem is not KERNEL separable.. " << std::endl;
+			std::cout << " [FAIL] \n The problem is not rbf KERNEL separable.. " << std::endl;
 #endif
 			//std::cerr << "*******************************USING SVM_I NOW******************************" << std::endl;
 			rnd++;
@@ -192,7 +192,7 @@ lastModel = svm->model;
 
 
 std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
-std::cout << "Finish running kernel svm for " << rnd - 1 << " times." << std::endl;
+std::cout << "Finish running rbf kernel svm for " << rnd - 1 << " times." << std::endl;
 
 int ret = 0;
 if ((converged) && (rnd <= max_iteration)) {
@@ -218,7 +218,7 @@ if (lastEquation) delete lastEquation;
 return ret;
 }
 
-std::string KernelLearner::invariant() {
+std::string RbfLearner::invariant() {
 	Equation *equ = new Equation();
 	bool sat = svm_model_z3(svm->getModel(), equ);
 	std::string s = equ->toString();
