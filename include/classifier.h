@@ -16,7 +16,6 @@
 #include <float.h>
 #include <string.h>
 #include <assert.h>
-using namespace std;
 
 class Classifier{
 	protected:
@@ -58,7 +57,7 @@ class Classifier{
 			return ++size;
 		}
 		
-		string toString() {
+		std::string toString() {
 			std::ostringstream stm;
 			if (size <= 0) {
 				stm << "";
@@ -70,15 +69,15 @@ class Classifier{
 			return stm.str();
 		}
 
-	friend ostream& operator << (ostream& out, const Classifier& cs) {
+	friend std::ostream& operator << (std::ostream& out, const Classifier& cs) {
 		int size = cs.size;
 		if (size <= 0) {
 			out << "EMPTY classifier..\n";
 			return out;
 		}
-		out << cs.eqs[0] << endl;
+		out << cs.eqs[0] << std::endl;
 		for (int i = 0; i < size; i++) 
-			out << cs.cts[i] << cs.eqs[i] << endl;
+			out << cs.cts[i] << cs.eqs[i] << std::endl;
 		return out;
 	}
 };

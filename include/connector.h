@@ -13,7 +13,7 @@
 #include <float.h>
 #include <string.h>
 #include <assert.h>
-using namespace std;
+
 enum { UNUSED, DISJUNCT, CONJUNCT };
 
 class Connector{
@@ -39,7 +39,7 @@ class Connector{
 			return *this;
 		}
 
-	friend ostream& operator << (ostream& out, const Connector& c) {
+	friend std::ostream& operator << (std::ostream& out, const Connector& c) {
 		switch (c.type) {
 			case DISJUNCT:
 				out << " \\/ ";
