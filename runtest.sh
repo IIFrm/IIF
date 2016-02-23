@@ -206,7 +206,7 @@ cd ..
 
 
 #rm $tmpcfg
-rm $cmakefile
+#rm $cmakefile
 #rm $varfile
 #rm $invfile
 echo -e $yellow"END HERE..."$white
