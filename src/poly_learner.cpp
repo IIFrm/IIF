@@ -135,12 +135,15 @@ init_svm:
 		 *	There should be no prediction errors.
 		 */
 #ifdef __PRT
-		std::cout << "\t(" << step++ << ") checking training traces.";
+		std::cout << "\n\t(" << step++ << ") checking training traces.";
 #endif
 		pass_rate = svm->checkTrainingSet();
 
 #ifdef __PRT
-		if (pass_rate == 1) std::cout << GREEN << " [" << pass_rate * 100 << "%]" << WHITE;
+		if (pass_rate == 1) {
+			std::cout << GREEN << " [" << pass_rate * 100 << "%]" << WHITE;
+			std::cout << *svm << std::endl;
+		}
 		else std::cout <<  RED << " [" << pass_rate * 100 << "%]" << WHITE;
 #endif
 

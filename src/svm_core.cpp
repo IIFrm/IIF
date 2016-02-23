@@ -3435,7 +3435,7 @@ void prepare_svm_parameters(struct svm_parameter& param, int type, int degree)
 	} else if (type == 1){
 		std::cout << "Using POLY kernel...\n";
 		param.kernel_type = POLY;
-		param.gamma = 1.0/VARS;	// 1/num_features
+		param.gamma = 20;//1.0/VARS;	// 1/num_features
 	} else if (type == 2){
 		std::cout << "Using RBF kernel...\n";
 		param.kernel_type = RBF;
@@ -3471,6 +3471,7 @@ bool node_equal(svm_node* n1, svm_node* n2)
 bool model_converged(struct svm_model *m1, struct svm_model *m2)
 {
 	if ((m1 == NULL) || (m2 == NULL)) return false;
+	std::cout << " sv[" << m1->l << "," << m2->l <<"] ";
 	//std::cout << "\n" << BLUE << "\tfirst model:"<< *m1 << std::endl;
 	//std::cout << "\tsecond model:"<< *m2 << WHITE << std::endl;
 	if (m1->nr_class != m2->nr_class) return false;

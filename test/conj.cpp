@@ -27,6 +27,7 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/conj.var", loopFunction, "loopFunction");
+context.addLearner("poly");
 context.addLearner("rbf");
 return context.learn("../tmp/conj.inv");
 }

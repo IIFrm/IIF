@@ -82,6 +82,12 @@ cd build
 #rm -rf *
 cmake ..
 make $filename
+if [ $? -ne 0 ]
+then
+	echo "make error, contact developer to fix project source code first..."
+	exit 1
+fi
+
 echo -e $blue"Running the project to generate invariant candidiate..."$white
 ./$filename
 ret=$?

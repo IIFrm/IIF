@@ -221,6 +221,7 @@ class FileHelper {
 		inline bool writeCppMain(ofstream& cppFile) {
 			cppFile << "int main(int argc, char** argv)\n {\n" 
 				<< "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n"
+				<< "context.addLearner(\"poly\");\n"
 				<< "context.addLearner(\"rbf\");\n"
 				<< "return context.learn(\"../" << invfilename << "\");\n}" << endl;
 			return true;

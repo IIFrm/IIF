@@ -58,12 +58,31 @@ class States{
 				memcpy(t_index, previous_t_index, previous_max_size * sizeof(int));
 			}
 
+			int addLength = 0;
+			for (int i = 0; i < len; i++) {
+				// try to insert state st[i]
+				bool skip = false;
+				for (int j = 0; j < size; j++) {
+					if (stateCmp(values[j], st[i]) == true) {
+						skip = true;
+						break;
+					}
+				}
+				if (skip) continue;
+				stateCpy(&values[size], &st[i]);
+				addLength++;
+				size++;
+			}
+			/*
 			memcpy(values[size], st, sizeof(double) * VARS * len);
-			//memmove(values[index[p_index]], st, sizeof(double) * vars * len);
 			t_index[p_index + 1] = t_index[p_index] + len;
 			p_index++;
 			size = size + len;
 			return len;
+			*/
+			t_index[p_index + 1] = t_index[p_index] + addLength;
+			p_index++;
+			return addLength;
 		}
 
 		inline int getTraceSize() {
@@ -139,6 +158,16 @@ class States{
 		int p_index;
 
 	private:
+		static bool stateCmp(const State& s1, const State& s2) {
+		for (int i = 0; i < VARS; i++) {
+			if (s1[i] != s2[i])
+				return false;
+			}
+			return true;
+		}
+		static inline void stateCpy(State* dst, State* src, int length = 1) {
+			memcpy(dst, src, sizeof(State) * length);
+		}
 		int max_size;
 };
 

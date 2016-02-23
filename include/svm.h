@@ -115,9 +115,10 @@ class SVM : public MLalgo
 				data[cur_psize + i] = gsets[NEGATIVE].values[i];
 			}
 			problem.l = cur_psize + cur_nsize;
+			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
-			return 0;
+			return ret;
 		}
 
 		int train() {

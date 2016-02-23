@@ -72,12 +72,12 @@ class Classifier{
 	friend std::ostream& operator << (std::ostream& out, const Classifier& cs) {
 		int size = cs.size;
 		if (size <= 0) {
-			out << "EMPTY classifier..\n";
+			out << "EMPTY classifier..";
 			return out;
 		}
-		out << cs.eqs[0] << std::endl;
+		out << " (" << cs.eqs[0] << ") ";
 		for (int i = 1; i < size; i++) 
-			out << cs.cts[i] << cs.eqs[i] << std::endl;
+			out << cs.cts[i] << " (" << cs.eqs[i] << ") ";
 		return out;
 	}
 };

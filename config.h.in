@@ -46,13 +46,13 @@ const int init_exes = 16 * VARS;
 
 /** @brief defines the number of tests runs after the first time. Should be a positive integer.
  */
-const int after_exes = 20 * VARS;
+const int after_exes = 16 * VARS;
 
 /** @brief defines the number of random tests runs each time, 
  *		   which is used to avoid bias caused by tests picking chioce. 
  *		   Should be a non-negative integer.
  */
-const int random_exes = 2;
+const int random_exes = 4 * VARS;
 
 /** @brief defines the max number of iterations tried by machine learning algorithm, 
  *		   Should be a positive integer. Usually set between 8-128
