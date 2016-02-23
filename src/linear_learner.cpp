@@ -1,6 +1,7 @@
 #include "config.h"
 #include "color.h"
 #include "equation.h"
+#include "classifier.h"
 #include "linear_learner.h"
 
 #include <iostream>
@@ -13,6 +14,7 @@ static void print_null(const char *s) {}
 LinearLearner::LinearLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
 	svm = new SVM(0, print_null);
 	this->max_iteration = max_iteration; 
+	cl = new Classifier();
 }
 
 
@@ -212,8 +214,7 @@ std::cout << "Finish running svm for " << rnd - 1 << " times." << std::endl;
 
 int ret = 0;
 if ((converged) && (rnd <= max_iteration)) {
-	Equation *equ = new Equation();
-	/*bool sat =*/ svm_model_z3(lastModel, equ);
+	/*bool sat =*/ svm_model_z3(lastModel, cl);
 	/*if (sat == true) std::cout << "TRUE" << std::endl;
 	else std::cout << "FALSE" << std::endl;
 	*/
@@ -224,9 +225,9 @@ if ((converged) && (rnd <= max_iteration)) {
 	*/
 	std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
 	std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
-	std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
+	std::cout << "\t\t" << GREEN << *cl << YELLOW << std::endl;
 	std::cout << "  }" << WHITE << std::endl;
-	delete equ;
+	//delete equ;
 }
 
 if ((pass_rate < 1) || (rnd >= max_iteration)) {
@@ -240,9 +241,10 @@ return ret;
 }
 
 std::string LinearLearner::invariant() {
-	Equation *equ = new Equation();
+	return cl->toString();
+	/*Equation *equ = new Equation();
 	bool sat = svm_model_z3(svm->getModel(), equ);
 	std::string s = equ->toString();
 	delete equ;
-	return s;
+	return s;*/
 }

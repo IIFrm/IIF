@@ -3156,10 +3156,13 @@ void print_svm_samples(const svm_problem *sp)
 void print_svm_samples(const svm_problem *sp){}
 #endif
 
-bool svm_model_z3_conjunctive(const svm_model *m, Equation* es) //, Equation& equ)
+bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& equ)
 {
 	if (m == NULL)
 		return false;
+	if (cl == NULL)
+		return false;
+	std::cout << *m << std::endl;
 
 #if (linux || __MACH__)
 	double* label = m->sv_coef[0];
@@ -3170,8 +3173,8 @@ bool svm_model_z3_conjunctive(const svm_model *m, Equation* es) //, Equation& eq
 	z3::context c(cfg);
 	z3::solver s(c);
 
+	std::vector<z3::expr> A0;
 	std::vector<z3::expr> A1;
-	std::vector<z3::expr> A2;
 	std::vector<z3::expr> X;
 	char pname[4];
 	// form: a0 * x0 + a1 * x1 + a2 * x2 + a3 >= 0
@@ -3179,47 +3182,58 @@ bool svm_model_z3_conjunctive(const svm_model *m, Equation* es) //, Equation& eq
 	for (int i = 0; i < VARS + 1; i++) {
 		sprintf(pname, "a0_%d", i);
 		z3::expr tmp0 = c.int_const(pname);
-		A1.push_back(tmp0);
+		A0.push_back(tmp0);
 		sprintf(pname, "a1_%d", i);
 		z3::expr tmp1 = c.int_const(pname);
-		A2.push_back(tmp1);
+		A1.push_back(tmp1);
 	}
 
 
 	char xvalue[33];
 	int l = m->l;
 	for (int k = 0; k < l; k++) {
-		z3::expr expr = A1[VARS];
+		z3::expr expr0 = A0[VARS];
+		z3::expr expr1 = A1[VARS];
 		for (int i = 0; i < VARS; i++) {
 			snprintf(xvalue, 32, "%d", int(data[k][i].value));
-			z3::expr tmp = c.int_val(xvalue);
+			z3::expr xi = c.int_val(xvalue);
 			// equation = equation + ai * xi
-			expr = expr + tmp * A1[i];
+			expr0 = expr0 + xi * A0[i];
+			expr1 = expr1 + xi * A1[i];
 		}
-		if (label[k] >= 0) expr = expr >= 0;
-		else expr = expr < 0;
-		s.add(expr);
-	}
-	for (int k = 0; k < l; k++) {
-		z3::expr expr = A2[VARS];
-		for (int i = 0; i < VARS; i++) {
-			snprintf(xvalue, 32, "%d", int(data[k][i].value));
-			z3::expr tmp = c.int_val(xvalue);
-			// equation = equation + ai * xi
-			expr = expr + tmp * A2[i];
+		if (label[k] >= 0) {
+			expr0 = expr0 >= 0;
+			expr1 = expr1 >= 0;
+			s.add(expr0 && expr1);
+		} else {
+			expr0 = expr0 < 0;
+			expr1 = expr1 < 0;
+			s.add(expr0 || expr1);
 		}
-		if (label[k] >= 0) expr = expr >= 0;
-		else expr = expr < 0;
-		s.add(expr);
+		//s.add(expr0 || expr1);
+		//s.add(expr0);
+		//s.add(expr1);
 	}
 #ifdef __PRT_Z3SOLVE
 	std::cout << s << std::endl;
 #endif
+	std::cout << s << std::endl;
 	z3::check_result ret = s.check();
-	if (ret == unsat) return false;
+	if (ret == unsat) {
+		std::cout << "UNSAT. can not get Z3 MODEL.\n";
+		/* z3::expr_vector core = s.unsat_core();
+		std::cout << "unsat core: " << core << std::endl;
+		std::cout << GREEN;
+		std::cout << "size = " << core.size() << std::endl;
+		for (int i = 0; i < core.size(); i++)
+			std::cout << "\t" << core[i] << std::endl;
+		std::cout << WHITE;
+		*/
+		return false;
+	}
 
 	z3::model z3m = s.get_model();
-	//std::cout << z3m << "\n";
+	std::cout << "Z3 MODEL: "<< RED << z3m << "\n";
 
 	int avalue[2][VARS+1];
 	int index1 = -1;
@@ -3237,9 +3251,12 @@ bool svm_model_z3_conjunctive(const svm_model *m, Equation* es) //, Equation& eq
 			return false;
 	}
 
-	if (es != NULL) {
-		es[0].reset(avalue[0]);
-		es[1].reset(avalue[1]);
+	Equation eq;
+	if (cl != NULL) {
+		eq.reset(avalue[0]);
+		cl.add(&eq, CONJUNCT);
+		eq.reset(avalue[1]);
+		cl.add(&eq, CONJUNCT);
 	}
 #ifdef __PRT_Z3SOLVE
 	std::cout << "[";
@@ -3252,7 +3269,7 @@ bool svm_model_z3_conjunctive(const svm_model *m, Equation* es) //, Equation& eq
 	return true;
 }
 
-bool svm_model_z3(const svm_model *m, Equation* e) //, Equation& equ)
+bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 {
 	if (m == NULL)
 		return false;
@@ -3316,8 +3333,10 @@ bool svm_model_z3(const svm_model *m, Equation* e) //, Equation& equ)
 			return false;
 	}
 
-	if (e != NULL) {
-		e->reset(avalue);
+	Equation eq;
+	if (cl != NULL) {
+		eq.reset(avalue);
+		cl.add(&eq);
 //#ifdef __PRT_Z3SOLVE
 //		std::cout << *e << std::endl;
 //		e->roundoff();

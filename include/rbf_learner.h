@@ -3,6 +3,7 @@
 #include "config.h"
 #include "base_learner.h"
 #include "svm.h"
+#include "classifier.h"
 
 
 class RbfLearner: public BaseLearner {
@@ -20,6 +21,7 @@ class RbfLearner: public BaseLearner {
 	protected:
 		SVM* svm;
 		int max_iteration;
+		Classifier* cl;
 };
 
 #endif

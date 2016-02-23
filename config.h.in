@@ -42,11 +42,11 @@ const int max_states_in_one_trace = 10240;
 
 /** @brief defines the number of tests runs initially. Should be a positive integer.
  */
-const int init_exes = 6 * VARS;
+const int init_exes = 16 * VARS;
 
 /** @brief defines the number of tests runs after the first time. Should be a positive integer.
  */
-const int after_exes = 4 * VARS;
+const int after_exes = 20 * VARS;
 
 /** @brief defines the number of random tests runs each time, 
  *		   which is used to avoid bias caused by tests picking chioce. 

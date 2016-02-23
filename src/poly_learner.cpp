@@ -1,6 +1,7 @@
 #include "config.h"
 #include "color.h"
 #include "equation.h"
+#include "classifier.h"
 #include "poly_learner.h"
 
 #include <iostream>
@@ -13,6 +14,7 @@ static void print_null(const char *s) {}
 PolyLearner::PolyLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
 	svm = new SVM(1, print_null);
 	this->max_iteration = max_iteration; 
+	cl = new Classifier();
 }
 
 
@@ -209,16 +211,15 @@ init_svm:
 
 	int ret = 0;
 	if ((converged) && (rnd <= max_iteration)) {
-		Equation *equ = new Equation();
-		/*bool sat =*/ svm_model_z3(lastModel, equ);
+		svm_model_z3(lastModel, cl);
 		/*if (sat == true) std::cout << "TRUE" << std::endl;
 		  else std::cout << "FALSE" << std::endl;
 		  */
 		std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
 		std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
-		std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
+		std::cout << "\t\t" << GREEN << *cl << YELLOW << std::endl;
 		std::cout << "  }" << WHITE << std::endl;
-		delete equ;
+		//delete equ;
 	}
 
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {
@@ -231,9 +232,5 @@ init_svm:
 }
 
 std::string PolyLearner::invariant() {
-	Equation *equ = new Equation();
-	bool sat = svm_model_z3(svm->getModel(), equ);
-	std::string s = equ->toString();
-	delete equ;
-	return s;
+	return cl->toString();
 }

@@ -17,6 +17,8 @@
 #include "color.h"
 #include "solution.h"
 #include "equation.h"
+#include "connector.h"
+#include "classifier.h"
 #include "states.h"
 #include "base_learner.h"
 #include "linear_learner.h"

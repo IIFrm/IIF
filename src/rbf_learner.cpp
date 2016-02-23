@@ -13,11 +13,13 @@ static void print_null(const char *s) {}
 RbfLearner::RbfLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
 	svm = new SVM(2, print_null);
 	this->max_iteration = max_iteration; 
+	cl = new Classifier();
 }
 
 
 RbfLearner::~RbfLearner() {
 	delete svm;
+	delete cl;
 }
 
 
@@ -199,23 +201,28 @@ if ((converged) && (rnd <= max_iteration)) {
 	/*Equation *equ = new Equation();
 	svm_model_z3(lastModel, equ);
 	*/
-	Equation *equ = new Equation[2];
-	svm_model_z3_conjunctive(lastModel, equ);
+	if (svm_model_z3_conjunctive(lastModel, cl) == false) {
+		std::cout << RED << "  Cannot construct conjunctive classifier...\n" << WHITE;
+		if (lastEquation) delete lastEquation;
+		return -1;
+	}
 	/*if (sat == true) std::cout << "TRUE" << std::endl;
 	else std::cout << "FALSE" << std::endl;
 	*/
-	std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
+	//std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
 	std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
 	//std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
+	std::cout << "\t\t" << GREEN << *cl << YELLOW << std::endl;
+	/*
 	std::cout << "\t\t" << GREEN << equ[0] << YELLOW << std::endl;
 	std::cout << "\t/\\    " << GREEN << equ[1] << YELLOW << std::endl;
 	std::cout << "  }" << WHITE << std::endl;
-	delete []equ;
+	*/
 	//delete equ;
 }
 
 if ((pass_rate < 1) || (rnd >= max_iteration)) {
-	std::cout << RED << "  Cannot divide by SVM perfectly.\n" << WHITE;
+	std::cout << RED << "  Cannot divide by rbf SVM perfectly.\n" << WHITE;
 	ret = -1;
 }
 
@@ -225,9 +232,10 @@ return ret;
 }
 
 std::string RbfLearner::invariant() {
-	Equation *equ = new Equation();
+	return cl->toString();
+	/*Equation *equ = new Equation();
 	bool sat = svm_model_z3(svm->getModel(), equ);
 	std::string s = equ->toString();
 	delete equ;
-	return s;
+	return s;*/
 }
