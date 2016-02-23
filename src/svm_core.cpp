@@ -3217,7 +3217,6 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 #ifdef __PRT_Z3SOLVE
 	std::cout << s << std::endl;
 #endif
-	std::cout << s << std::endl;
 	z3::check_result ret = s.check();
 	if (ret == unsat) {
 		std::cout << "UNSAT. can not get Z3 MODEL.\n";
@@ -3233,7 +3232,7 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 	}
 
 	z3::model z3m = s.get_model();
-	std::cout << "Z3 MODEL: "<< RED << z3m << "\n";
+	//std::cout << "Z3 MODEL: "<< RED << z3m << "\n";
 
 	int avalue[2][VARS+1];
 	int index1 = -1;
@@ -3254,9 +3253,9 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 	Equation eq;
 	if (cl != NULL) {
 		eq.reset(avalue[0]);
-		cl.add(&eq, CONJUNCT);
+		cl->add(&eq, CONJUNCT);
 		eq.reset(avalue[1]);
-		cl.add(&eq, CONJUNCT);
+		cl->add(&eq, CONJUNCT);
 	}
 #ifdef __PRT_Z3SOLVE
 	std::cout << "[";
@@ -3336,7 +3335,7 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 	Equation eq;
 	if (cl != NULL) {
 		eq.reset(avalue);
-		cl.add(&eq);
+		cl->add(&eq);
 //#ifdef __PRT_Z3SOLVE
 //		std::cout << *e << std::endl;
 //		e->roundoff();

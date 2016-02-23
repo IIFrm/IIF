@@ -63,9 +63,9 @@ class Classifier{
 				stm << "";
 				return stm.str();
 			}
-			stm << eqs[0] << " ";
-			for (int i = 0; i < size; i++) 
-				stm << cts[i] << " " << eqs[i] << " ";
+			stm << "(" << eqs[0] << ") ";
+			for (int i = 1; i < size; i++) 
+				stm << cts[i] << " (" << eqs[i] << ") ";
 			return stm.str();
 		}
 
@@ -76,7 +76,7 @@ class Classifier{
 			return out;
 		}
 		out << cs.eqs[0] << std::endl;
-		for (int i = 0; i < size; i++) 
+		for (int i = 1; i < size; i++) 
 			out << cs.cts[i] << cs.eqs[i] << std::endl;
 		return out;
 	}

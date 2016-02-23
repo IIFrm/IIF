@@ -42,10 +42,12 @@ class Connector{
 	friend std::ostream& operator << (std::ostream& out, const Connector& c) {
 		switch (c.type) {
 			case DISJUNCT:
-				out << " \\/ ";
+				out << " || ";
+				//out << " \\/ ";
 				break;
 			case CONJUNCT:
-				out << " /\\ ";
+				out << " && ";
+				//out << " /\\ ";
 				break;
 			default:
 				out << " UNKNOWN CONNECTOR ";

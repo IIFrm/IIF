@@ -227,7 +227,6 @@ if ((pass_rate < 1) || (rnd >= max_iteration)) {
 }
 
 if (lastEquation) delete lastEquation;
-
 return ret;
 }
 
