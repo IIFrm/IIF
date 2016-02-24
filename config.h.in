@@ -15,6 +15,7 @@
  *		   If it is not set correctly, you may come across a runtime error
  */
 #define VARS ${VARS} 
+#define D (VARS + VARS * (VARS + 1) / 2)
 
 
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  

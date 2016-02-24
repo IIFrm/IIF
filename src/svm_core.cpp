@@ -3435,7 +3435,7 @@ void prepare_svm_parameters(struct svm_parameter& param, int type, int degree)
 	} else if (type == 1){
 		std::cout << "Using POLY kernel...\n";
 		param.kernel_type = POLY;
-		param.gamma = 20;//1.0/VARS;	// 1/num_features
+		param.gamma = 8;//1.0/VARS;	// 1/num_features
 	} else if (type == 2){
 		std::cout << "Using RBF kernel...\n";
 		param.kernel_type = RBF;

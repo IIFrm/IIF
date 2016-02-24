@@ -116,14 +116,14 @@ init_svm:
 #ifdef __PRT
 		std::cout << "\t(" << step++ << ") prepare training data... ";
 #endif
-		/*
+		///*
 		if (svm->makeTrainingSet(gsets, pre_psize, pre_nsize) == 0) {
 			std::cout << std::endl;
 			rnd--;
 			continue;
 		}
-		*/
-		svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
+		//*/
+		//svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
 
 
 #ifdef __PRT

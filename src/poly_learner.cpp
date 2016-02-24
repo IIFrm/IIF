@@ -142,7 +142,7 @@ init_svm:
 #ifdef __PRT
 		if (pass_rate == 1) {
 			std::cout << GREEN << " [" << pass_rate * 100 << "%]" << WHITE;
-			std::cout << *svm << std::endl;
+			//std::cout << *svm << std::endl;
 		}
 		else std::cout <<  RED << " [" << pass_rate * 100 << "%]" << WHITE;
 #endif
