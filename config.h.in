@@ -14,8 +14,9 @@
  *		   This should be set in ${project_root}/CMakeLists.txt file
  *		   If it is not set correctly, you may come across a runtime error
  */
-#define VARS ${VARS} 
-#define D (VARS + VARS * (VARS + 1) / 2)
+//#define VARS ${VARS} 
+#define D ${VARS} 
+#define VARS (D + D * (D + 1) / 2)
 
 
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  

@@ -19,6 +19,11 @@
 enum trace_type{ NEGATIVE = -1, QUESTION, POSITIVE, COUNTER_EXAMPLE };	/* trace_type */
 
 
+double* stateMapping(double* src, double* dst); // src is of VARS dimension, while dst is of D dimension
+double* stateReverseMapping(double* src, double* dst); // src is of VARS dimension, while dst is of D dimension
+int* stateReverseMapping(int* src, int* dst); // src is of VARS dimension, while dst is of D dimension
+
+
 int addStateInt(int first, ...);
 int addStateDouble(double first, ...);
 

@@ -122,7 +122,10 @@ class Equation{
 				stm << "  +  ";
 				if (theta[0] != 1) 
 					stm << theta[j] << " * ";
-				stm << variables[j];
+				if (j >= D)
+					stm << "$X$";
+				else
+					stm << variables[j];
 			}
 			if (theta0 == 0)
 				stm << " >= 0";
@@ -149,7 +152,10 @@ class Equation{
 				if (equ.theta[j] != 1) 
 					out << equ.theta[j] << " * "; 
 				//out << "{" <<j << "}";
-				out  << variables[j];
+				if (j >= D)
+					out << "$X$";
+				else
+					out  << variables[j];
 			}
 			if (equ.theta0 == 0)
 				out << " >= 0";
@@ -167,7 +173,10 @@ class Equation{
 				std::cout << "  +  "; 
 				if (theta[j] != 1) 
 					std::cout << theta[j] << " * "; 
-				std::cout  << variables[j];
+				if (j >= D)
+					std::cout << "$X$";
+				else
+					std::cout  << variables[j];
 			}
 			if (theta0 < 0)
 				std::cout << " - " << -theta0;

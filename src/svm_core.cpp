@@ -3315,7 +3315,6 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 	if (ret == unsat) return false;
 
 	z3::model z3m = s.get_model();
-	//std::cout << z3m << "\n";
 
 	int avalue[VARS+1];
 	int index = -1;
@@ -3335,6 +3334,7 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 	Equation eq;
 	if (cl != NULL) {
 		eq.reset(avalue);
+		std::cout << "Equation: \n" << eq << std::endl;
 		cl->add(&eq);
 //#ifdef __PRT_Z3SOLVE
 //		std::cout << *e << std::endl;
