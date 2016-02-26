@@ -18,6 +18,12 @@ int state_index;
 
 double* stateMapping(double* src, double* dst) // src is of D dimension, while dst is of VARS dimension
 {
+	if (D == VARS) {
+		for (int i = 0; i < D; i++) {
+			dst[i] = src[i];
+		}
+		return dst;
+	}
 	switch (D) {
 		case 1:
 			// mapping rule: (x) --> (x, x^2)

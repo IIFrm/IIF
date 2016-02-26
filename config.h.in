@@ -16,7 +16,8 @@
  */
 //#define VARS ${VARS} 
 #define D ${VARS} 
-#define VARS (D + D * (D + 1) / 2)
+//#define VARS (D + D * (D + 1) / 2)
+#define VARS (D)
 
 
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  

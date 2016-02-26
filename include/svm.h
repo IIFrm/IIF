@@ -15,6 +15,10 @@ class SVM : public MLalgo
 
 		double* label; // [max_items * 2];
 		double** data; // [max_items * 2];
+		double** pdata; // [max_items * 2];
+
+		int mapping_type;
+		int mapping_dimension;
 
 	public:
 		svm_model* model;
@@ -62,14 +66,18 @@ class SVM : public MLalgo
 			classifier = NULL;
 
 			data = new double*[max_size];
+			pdata = new double*[max_size];
 			label = new double[max_size];
 			for (int i = 0; i < max_size; i++)
 				label[i] = -1;
 			problem.l = 0;
-			problem.x = (svm_node**)(data);
+			problem.x = (svm_node**)(pdata);
 			problem.y = label;
 			model = NULL;
 			pre_model = NULL;
+			pdata = NULL;
+			mapping_type = 0;
+			mapping_dimension = 0;
 		}
 
 		~SVM() {
@@ -119,6 +127,80 @@ class SVM : public MLalgo
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
 			return ret;
+		}
+
+		void setMapping(int type) {
+			if ((type < 1) || (type > 4))
+				std::cout << "warning: mapping type is out of bounds.\n";
+			mapping_type = type;
+		}
+
+		bool mappingDataSet(){
+			if (mapping_type < 1) return false;
+			if (mapping_type > 4) return false;
+			mapping_dimension = 0;
+			switch (mapping_type) {
+				case 4:
+					mapping_dimension += VARS * (VARS + 1) / 2 * VARS * (VARS + 1) / 2; 
+				case 3:
+					mapping_dimension += VARS * (VARS + 1) * (2 * VARS + 1) / 6; 
+				case 2:
+					mapping_dimension += VARS * (VARS + 1) / 2;
+				case 1:
+					mapping_dimension += VARS;
+				default:
+					break;
+			}
+				
+			for (int i = 0; i < problem.l; i++) {
+				pdata[i] = new double[mapping_dimension];
+				//assign value to pdata[i] 
+				if (mappingData(data[i], pdata[i], mapping_type) == false)
+					return false;
+			}
+					
+			return true;
+		}
+
+		bool mappingData(double* src, double* dst, int mp_type) {
+			int index = 0;
+			if (mp_type >= 1) {
+				for (int i = 0; i < VARS; i++) {
+					dst[index++] = src[i];
+				}
+			}
+			if (mp_type >= 2) {
+				for (int i = 0; i < VARS; i++) {
+					for (int j = i; j < VARS; j++) {
+						dst[index++] = src[i] * src[j];
+					}
+				}
+			}
+			if (mp_type >= 3) {
+				for (int i = 0; i < VARS; i++) {
+					for (int j = i; j < VARS; j++) {
+						for (int k = j; k < VARS; k++) {
+							dst[index++] = src[i] * src[j] * src[k];
+						}
+					}
+				}
+			}
+			if (mp_type >= 4) {
+				for (int i = 0; i < VARS; i++) {
+					for (int j = i; j < VARS; j++) {
+						for (int k = j; k < VARS; k++) {
+							for (int l = k; l < VARS; l++) {
+								dst[index++] = src[i] * src[j] * src[k] * src[l];
+							}
+						}
+					}
+				}
+			}
+			if (mp_type >= 5) {
+				std::cout << "Unsupported for 5 dimension up.\n";
+				return false;
+			}
+			return true;
 		}
 
 		int train() {

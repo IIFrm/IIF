@@ -91,6 +91,7 @@ int LinearLearner::learn()
 
 	// lastEquation = new Equation[1];
 	double pass_rate = 1;
+	int mapping_type = 1;
 
 
 	for (rnd = 1; ((rnd <= max_iteration) && (pass_rate >= 1)); rnd++) {
@@ -117,6 +118,7 @@ init_svm:
 		std::cout << "\t(" << step++ << ") prepare training data... ";
 #endif
 		svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
+		svm->setMapping(mapping_type);
 
 
 #ifdef __PRT
@@ -143,11 +145,14 @@ init_svm:
 
 		if (pass_rate < 1) {
 #ifdef __PRT
-			std::cout << " [FAIL] \n The problem is not linear separable.. Trying to solve is by SVM-I algo" << std::endl;
+			std::cout << " [FAIL] \n The problem is not linear separable by mapping " << mapping_type << ".. Trying to project to a higher space " << std::endl;
 #endif
 			//std::cerr << "*******************************USING SVM_I NOW******************************" << std::endl;
-			rnd++;
-			break;
+			mapping_type++;
+			if (mapping_type > 4) {
+				rnd++;
+				break;
+			}
 		}
 #ifdef __PRT
 		std::cout << GREEN << " [PASS]" << WHITE;

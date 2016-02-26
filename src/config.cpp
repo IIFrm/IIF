@@ -7,7 +7,7 @@
 extern int assume_times, assert_times;
 int(*target_program)(int*) = NULL;
 
-int minv = -1000, maxv = 1000;
+int minv = -100, maxv = 100;
 std::string* variables;
 int vnum;
 
