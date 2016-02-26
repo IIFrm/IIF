@@ -14,8 +14,8 @@
  *		   This should be set in /CMakeLists.txt file
  *		   If it is not set correctly, you may come across a runtime error
  */
-//#define VARS 2 
-#define D 2 
+//#define VARS 1 
+#define D 1 
 //#define VARS (D + D * (D + 1) / 2)
 #define VARS (D)
 
