@@ -125,7 +125,7 @@ class SVM : public MLalgo
 
 			// add new positive states at OFFSET: [pre_positive_size]
 			int cur_index = pre_psize + pre_nsize;
-			for (int i = 0 ; i < cur_psize; i++) {
+			for (int i = 0 ; i < cur_psize - pre_psize; i++) {
 				mappingData(gsets[POSITIVE].values[i], pdata[cur_index + i], 4);
 				data[pre_psize + i] = pdata[cur_index + i];
 				label[pre_psize + i] = 1;
@@ -138,7 +138,7 @@ class SVM : public MLalgo
 			*/
 			// add new negative states at OFFSET: [cur_positive_size + pre_negative_size]
 			cur_index = cur_psize + pre_nsize;
-			for (int i = 0 ; i < cur_nsize; i++) {
+			for (int i = 0 ; i < cur_nsize - pre_nsize; i++) {
 				mappingData(gsets[NEGATIVE].values[i], pdata[cur_index + i], 4);
 				data[cur_index + i] = pdata[cur_index + i];
 				label[cur_index + i] = -1;
@@ -153,7 +153,8 @@ class SVM : public MLalgo
 			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
-			mappingDataSet();
+			//mappingDataSet();
+			std::cout << BLUE << problem << WHITE << std::endl;
 			return ret;
 		}
 
