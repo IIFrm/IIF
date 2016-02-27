@@ -37,7 +37,7 @@ class BaseLearner{
  */
 		void runTarget(Solution& input) {
 			assert(func != NULL);
-			assert(&input != NULL);
+			//assert(&input != NULL);
 			beforeLoop();
 
 			int a[VARS];

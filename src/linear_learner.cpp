@@ -100,7 +100,7 @@ int LinearLearner::learn()
 init_svm:
 #ifdef __PRT
 		int step = 1;
-		std::cout << "Linear SVM------------------------------------------------------------------------------------------------------------" << std::endl;
+		std::cout << "Linear SVM------------------------------mapping dimension[" << mapping_type << "]------------------------------------------------------------------------------" << std::endl;
 		std::cout << "\t(" << step++ << ") execute programs... [" << exes + random_exes << "] ";
 #endif
 		//selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
@@ -108,8 +108,8 @@ init_svm:
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
 #ifdef __PRT
-			if (gsets[POSITIVE].traces_num() == 0) std::cout << "[0] Positive trace, execute program again." << std::endl;
-			if (gsets[NEGATIVE].traces_num() == 0) std::cout << "[0] Negative trace, execute program again." << std::endl;
+			if (gsets[POSITIVE].traces_num() == 0) std::cout << RED << "\t[0] Positive trace, execute program again." << std::endl;
+			if (gsets[NEGATIVE].traces_num() == 0) std::cout << RED << "\t[0] Negative trace, execute program again." << std::endl;
 #endif
 			goto init_svm;
 		}
