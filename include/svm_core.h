@@ -13,7 +13,9 @@
 #define LIBSVM_VERSION 320
 
 extern int libsvm_version;
+extern int DIMENSION;
 
+int setDimension(int d);
 
 struct svm_node
 {
@@ -34,7 +36,7 @@ struct svm_problem
 	friend std::ostream& operator << (std::ostream& out, const svm_problem& sp) {
 		for (int i = 0; i < sp.l; i++) {
 			out << sp.y[i] << "(" << (sp.x[i][0]).value;
-			for (int j = 1; j < VARS; j++)
+			for (int j = 1; j < DIMENSION; j++)
 				out << ", " << (sp.x[i][j]).value;
 			out << ") ";
 		}
@@ -102,7 +104,7 @@ struct svm_model
 
 		for (int i = 0; i < m.l; i++) {
 			out << m.sv_coef[0][i] << "(" << (m.SV[i][0]).value;
-			for (int j = 1; j < VARS; j++)
+			for (int j = 1; j < DIMENSION; j++)
 				out << "," << (m.SV[i][j]).value;
 			if (i % 9 == 8)
 				out << ") \n\t\t";

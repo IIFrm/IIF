@@ -16,6 +16,7 @@ using namespace z3;
 #endif
 
 int libsvm_version = LIBSVM_VERSION;
+int DIMENSION = VARS;
 typedef float Qfloat;
 typedef signed char schar;
 #ifndef min
@@ -303,7 +304,7 @@ Kernel::~Kernel()
 double Kernel::dot(const svm_node *px, const svm_node *py)
 {
 	double sum = 0;
-	for (int i = 0; i < VARS; i++)
+	for (int i = 0; i < DIMENSION; i++)
 	{
 		sum += px->value * py->value;
 		++px;
@@ -324,7 +325,7 @@ double Kernel::k_function(const svm_node *x, const svm_node *y,
 		case RBF:
 			{
 				double sum = 0;
-				for (int i = 0; i < VARS; i++)
+				for (int i = 0; i < DIMENSION; i++)
 				{
 					double d = x->value - y->value;
 					sum += d*d;
@@ -2696,7 +2697,7 @@ int svm_save_model(const char *model_file_name, const svm_model *model)
 		if(param.kernel_type == PRECOMPUTED)
 			fprintf(fp,"0:%d ",(int)(p->value));
 		else
-			for (int i = 0; i < VARS; i++)
+			for (int i = 0; i < DIMENSION; i++)
 			{
 				fprintf(fp,"%d:%.8g ",i,p->value);
 				p++;
@@ -3179,7 +3180,7 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 	char pname[4];
 	// form: a0 * x0 + a1 * x1 + a2 * x2 + a3 >= 0
 	// parameters: a0 a1 a2 a3 --> integer
-	for (int i = 0; i < VARS + 1; i++) {
+	for (int i = 0; i < DIMENSION + 1; i++) {
 		sprintf(pname, "a0_%d", i);
 		z3::expr tmp0 = c.int_const(pname);
 		A0.push_back(tmp0);
@@ -3192,9 +3193,9 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 	char xvalue[33];
 	int l = m->l;
 	for (int k = 0; k < l; k++) {
-		z3::expr expr0 = A0[VARS];
-		z3::expr expr1 = A1[VARS];
-		for (int i = 0; i < VARS; i++) {
+		z3::expr expr0 = A0[DIMENSION];
+		z3::expr expr1 = A1[DIMENSION];
+		for (int i = 0; i < DIMENSION; i++) {
 			snprintf(xvalue, 32, "%d", int(data[k][i].value));
 			z3::expr xi = c.int_val(xvalue);
 			// equation = equation + ai * xi
@@ -3234,7 +3235,7 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 	z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: "<< RED << z3m << "\n";
 
-	int avalue[2][VARS+1];
+	int avalue[2][DIMENSION+1];
 	int index1 = -1;
 	int index2 = -1;
 	// traversing the model
@@ -3260,7 +3261,7 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 #ifdef __PRT_Z3SOLVE
 	std::cout << "[";
 	for (int i = 0; i < 2; i++)
-		for (int j = 0; j < VARS + 1; j++)
+		for (int j = 0; j < DIMENSION + 1; j++)
 			std::cout << "a" << i << "_" << j << "=" << avalue[i][j] << ", ";
 	std::cout << "]\n";
 #endif
@@ -3287,7 +3288,7 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 	char pname[4];
 	// form: a0 * x0 + a1 * x1 + a2 * x2 + a3 >= 0
 	// parameters: a0 a1 a2 a3 --> integer
-	for (int i = 0; i < VARS + 1; i++) {
+	for (int i = 0; i < DIMENSION + 1; i++) {
 		sprintf(pname, "a%d", i);
 		z3::expr tmp = c.int_const(pname);
 		A.push_back(tmp);
@@ -3297,8 +3298,8 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 	char xvalue[33];
 	int l = m->l;
 	for (int k = 0; k < l; k++) {
-		z3::expr expr = A[VARS];
-		for (int i = 0; i < VARS; i++) {
+		z3::expr expr = A[DIMENSION];
+		for (int i = 0; i < DIMENSION; i++) {
 			snprintf(xvalue, 32, "%d", int(data[k][i].value));
 			z3::expr tmp = c.int_val(xvalue);
 			// equation = equation + ai * xi
@@ -3316,7 +3317,7 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 
 	z3::model z3m = s.get_model();
 
-	int avalue[VARS+1];
+	int avalue[DIMENSION+1];
 	int index = -1;
 	// traversing the model
 	for (unsigned i = 0; i < z3m.size(); i++) {
@@ -3344,7 +3345,7 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 	}
 #ifdef __PRT_Z3SOLVE
 	std::cout << "[";
-	for (int i = 0; i < VARS + 1; i++)
+	for (int i = 0; i < DIMENSION + 1; i++)
 		std::cout << "a" << i << "=" << avalue[i] << ", ";
 	std::cout << "]\n";
 #endif
@@ -3368,9 +3369,9 @@ int svm_model_visualization(const svm_model *model, Equation& equ)
 	const double * const *sv_coef = model->sv_coef;
 	const svm_node * const *SV = model->SV;
 
-	double theta[VARS];// = equ->theta;
+	double theta[DIMENSION];// = equ->theta;
 	double theta0 = sv_coef[0][0] > 0? 1 : -1;
-	for (int i = 0; i < VARS; i++)
+	for (int i = 0; i < DIMENSION; i++)
 		theta[i] = 0;
 
 	for(int i=0;i<l;i++)
@@ -3379,7 +3380,7 @@ int svm_model_visualization(const svm_model *model, Equation& equ)
 		//		double label[i] = sv_coef[0][i];
 		double temp = 0;
 		const svm_node *p = SV[i];
-		for (int j = 0; j < VARS; j++)
+		for (int j = 0; j < DIMENSION; j++)
 		{
 			//			double x[i][j] = p->value;
 			theta[j] += sv_coef[0][i] * p->value;
@@ -3435,11 +3436,11 @@ void prepare_svm_parameters(struct svm_parameter& param, int type, int degree)
 	} else if (type == 1){
 		std::cout << "Using POLY kernel...\n";
 		param.kernel_type = POLY;
-		param.gamma = 8;//1.0/VARS;	// 1/num_features
+		param.gamma = 8;//1.0/DIMENSION;	// 1/num_features
 	} else if (type == 2){
 		std::cout << "Using RBF kernel...\n";
 		param.kernel_type = RBF;
-		param.gamma = 20; ///VARS; //0;	// 1/num_features
+		param.gamma = 20; ///DIMENSION; //0;	// 1/num_features
 	}
 	param.coef0 = 0;
 	param.nu = 0.5;
@@ -3460,7 +3461,7 @@ void prepare_svm_parameters(struct svm_parameter& param, int type, int degree)
 
 bool node_equal(svm_node* n1, svm_node* n2)
 {
-	for (int i = 0; i < VARS; i++)
+	for (int i = 0; i < DIMENSION; i++)
 		if (n1[i].value != n2[i].value)
 			return false;
 	return true;
@@ -3501,7 +3502,7 @@ bool model_converged(struct svm_model *m1, struct svm_model *m2)
 	return true;
 }
 
-static inline double sqrDistance(svm_node* a1, svm_node* b1, int size=VARS)
+static inline double sqrDistance(svm_node* a1, svm_node* b1, int size=DIMENSION)
 {
 	double distance = 0;
 	for (int i = 0; i < size; i++)
@@ -3514,7 +3515,7 @@ static inline double sqrDistance(svm_node* a1, svm_node* b1, int size=VARS)
   std::cout << "\n>>>model_solver ";
   if (m == NULL) {
   std::cout << "NULL ";
-  for (int i = 0; i < VARS; i++)
+  for (int i = 0; i < DIMENSION; i++)
   sol.setVal(i, rand() % (maxv - minv + 1) + minv);
   return 0;
   }
@@ -3550,7 +3551,7 @@ indexn = min_index;
 svm_node* nodes[2];
 nodes[0] = m->SV[indexp];
 nodes[1] = m->SV[indexn];
-for (int i = 0; i < VARS; i++)
+for (int i = 0; i < DIMENSION; i++)
 sol.setVal(i, int((nodes[0][i].value + nodes[1][i].value)/2));
 return 0;
 }*/
@@ -3559,7 +3560,7 @@ int model_solver(const svm_model* m, Solution& sol)
 {
 	//std::cout << "\n-->>>model_solver ";
 	if (m == NULL) {
-		for (int i = 0; i < VARS; i++)
+		for (int i = 0; i < DIMENSION; i++)
 			sol.setVal(i, rand() % (maxv - minv + 1) + minv);
 		return 0;
 	}
@@ -3600,23 +3601,28 @@ int model_solver(const svm_model* m, Solution& sol)
 	indexn = min_index;
 	/*
 	std::cout << "{";
-	for (int i = 0; i < VARS; i++) {
+	for (int i = 0; i < DIMENSION; i++) {
 		std::cout << m->SV[indexp][i] << ",";
 	}
 	std::cout << "}{";
-	for (int i = 0; i < VARS; i++) {
+	for (int i = 0; i < DIMENSION; i++) {
 		std::cout << m->SV[indexn][i] << ",";
 	}
 	std::cout << "}==>";
 	*/
 	//std::cout << GREEN << pn << "," << nn << "<" << pick_p << "," << pick_n <<">" << WHITE;
 	//std::cout << BLUE << "<" << indexp << "," << indexn <<">" << WHITE;
-	int pieces = rand() % 6 + VARS + 1;
+	int pieces = rand() % 6 + DIMENSION + 1;
 	double u  = (rand() % (pieces-1) + 1.0) / pieces;
 	//std::cout << "u=" << u;
-	for (int i = 0; i < VARS; i++) {
+	for (int i = 0; i < DIMENSION; i++) {
 		double value =  nearbyint(m->SV[indexp][i].value + (m->SV[indexn][i].value - m->SV[indexp][i].value) * u);
 		sol.setVal(i, value);
 	}
 	return 0;
 } 
+
+int setDimension(int d) {
+	DIMENSION = d;
+	return d;
+}

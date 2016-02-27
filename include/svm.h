@@ -4,6 +4,15 @@
 #include "svm_core.h"
 #include "string.h"
 
+
+
+#define D1mapping (VARS)
+#define D2mapping (VARS * (VARS + 1) / 2 + D1mapping)
+#define D3mapping (VARS * (VARS + 1) * (2 * VARS + 1) / 6 + D2mapping) 
+#define D4mapping (VARS * (VARS + 1) / 2 * VARS * (VARS + 1) / 2 + D3mapping) 
+typedef double MState[D4mapping];
+
+
 class SVM : public MLalgo
 {
 	private:
@@ -15,7 +24,8 @@ class SVM : public MLalgo
 
 		double* label; // [max_items * 2];
 		double** data; // [max_items * 2];
-		double** pdata; // [max_items * 2];
+		//double** pdata; // [max_items * 2];
+		MState* pdata;
 
 		int mapping_type;
 		int mapping_dimension;
@@ -66,12 +76,12 @@ class SVM : public MLalgo
 			classifier = NULL;
 
 			data = new double*[max_size];
-			pdata = new double*[max_size];
+			pdata = new MState[max_size];
 			label = new double[max_size];
 			for (int i = 0; i < max_size; i++)
 				label[i] = -1;
 			problem.l = 0;
-			problem.x = (svm_node**)(pdata);
+			problem.x = (svm_node**)(data);
 			problem.y = label;
 			model = NULL;
 			pre_model = NULL;
@@ -107,37 +117,80 @@ class SVM : public MLalgo
 				<< cur_psize << "+|" << cur_nsize << "-]";
 #endif
 
+			//POINTER
 			// prepare new training data set
 			// training set & label layout:
 			// data :  0 | positive states | negative states | ...
 			// label:    | 1, 1, ..., 1, . | -1, -1, ..., -1, -1, -1, ...
 			// move the negative states from old OFFSET: [pre_positive_size] to new OFFSET: [cur_positive_size]
 			memmove(data + cur_psize, data + pre_psize, pre_nsize * sizeof(double*));
+
 			// add new positive states at OFFSET: [pre_positive_size]
+			int cur_index = pre_psize + pre_nsize;
 			for (int i = 0 ; i < cur_psize; i++) {
+				mappingData(gsets[POSITIVE].values[i], pdata[cur_index + i], 4);
+				data[pre_psize + i] = pdata[cur_index + i];
+				label[pre_psize + i] = 1;
+			}
+			/*
+			for (int i = pre_psize; i < cur_psize; i++) {
 				data[i] = gsets[POSITIVE].values[i];
 				label[i] = 1;
 			}
+			*/
 			// add new negative states at OFFSET: [cur_positive_size + pre_negative_size]
+			cur_index = cur_psize + pre_nsize;
 			for (int i = 0 ; i < cur_nsize; i++) {
+				mappingData(gsets[NEGATIVE].values[i], pdata[cur_index + i], 4);
+				data[cur_index + i] = pdata[cur_index + i];
+				label[cur_index + i] = -1;
+			}
+			/*
+			for (int i = pre_nsize; i < cur_nsize; i++) {
+				//data[cur_psize + i] = gsets[NEGATIVE].values[i];
 				data[cur_psize + i] = gsets[NEGATIVE].values[i];
 			}
+			*/
 			problem.l = cur_psize + cur_nsize;
 			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
+			mappingDataSet();
 			return ret;
 		}
 
+		int typeChanger(int type) {
+			if ((type < 1) || (type > 4))
+				return -1;
+			switch (type) {
+				case 1:
+					return setDimension(D1mapping);
+				case 2:
+					return setDimension(D2mapping);
+				case 3:
+					return setDimension(D3mapping);
+				case 4:
+					return setDimension(D4mapping);
+			}
+			return -1;
+			//return setDimension(D##type##mapping);
+		}
+
 		void setMapping(int type) {
+			std::cout << "--->>> set mapping " << type << "  ";
 			if ((type < 1) || (type > 4))
 				std::cout << "warning: mapping type is out of bounds.\n";
 			mapping_type = type;
 		}
 
 		bool mappingDataSet(){
+			std::cout << "--->>> mapping data set.\n";
 			if (mapping_type < 1) return false;
 			if (mapping_type > 4) return false;
+			if (mapping_type == 1) {
+				problem.x = (svm_node**)data;
+				return true;
+			}
 			mapping_dimension = 0;
 			switch (mapping_type) {
 				case 4:
@@ -151,18 +204,24 @@ class SVM : public MLalgo
 				default:
 					break;
 			}
+			std::cout << "mapping dimension = " << mapping_dimension << std::endl;
 				
 			for (int i = 0; i < problem.l; i++) {
-				pdata[i] = new double[mapping_dimension];
+				//pdata[i] = new double[mapping_dimension];
 				//assign value to pdata[i] 
-				if (mappingData(data[i], pdata[i], mapping_type) == false)
+				std::cout << "check point @i=" << i << std::endl;
+				if (mappingData(data[i], pdata[i], mapping_type) == false) {
+					std::cout << "<<<---F mapping data set.\n";
 					return false;
+				}
 			}
 					
+			problem.x = (svm_node**)pdata;
+			std::cout << "<<<--- mapping data set.\n";
 			return true;
 		}
 
-		bool mappingData(double* src, double* dst, int mp_type) {
+		bool mappingData(double* src, double* dst, int mp_type = 4) {
 			int index = 0;
 			if (mp_type >= 1) {
 				for (int i = 0; i < VARS; i++) {

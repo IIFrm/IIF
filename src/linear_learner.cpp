@@ -94,7 +94,7 @@ int LinearLearner::learn()
 	int mapping_type = 1;
 
 
-	for (rnd = 1; ((rnd <= max_iteration) && (pass_rate >= 1)); rnd++) {
+	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
 		std::cout << "[" << rnd << "]";
 		int exes = (rnd == 1)? init_exes : after_exes;
 init_svm:
@@ -117,8 +117,8 @@ init_svm:
 #ifdef __PRT
 		std::cout << "\t(" << step++ << ") prepare training data... ";
 #endif
+		svm->typeChanger(mapping_type);
 		svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
-		svm->setMapping(mapping_type);
 
 
 #ifdef __PRT
