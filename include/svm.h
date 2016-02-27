@@ -6,10 +6,7 @@
 
 
 
-#define D1mapping (VARS)
-#define D2mapping (VARS * (VARS + 1) / 2 + D1mapping)
-#define D3mapping (VARS * (VARS + 1) * (2 * VARS + 1) / 6 + D2mapping) 
-#define D4mapping (VARS * (VARS + 1) / 2 * VARS * (VARS + 1) / 2 + D3mapping) 
+
 typedef double MState[D4mapping];
 
 
@@ -85,7 +82,7 @@ class SVM : public MLalgo
 			problem.y = label;
 			model = NULL;
 			pre_model = NULL;
-			pdata = NULL;
+			//pdata = NULL;
 			mapping_type = 0;
 			mapping_dimension = 0;
 		}
@@ -96,6 +93,7 @@ class SVM : public MLalgo
 			if (pre_model != NULL) svm_free_and_destroy_model(&pre_model);
 			if (classifier != NULL) delete classifier;
 			if (data != NULL) delete []data;
+			if (pdata != NULL) delete[]pdata;
 			if (label != NULL) delete label;
 		}
 
@@ -184,6 +182,7 @@ class SVM : public MLalgo
 		}
 
 		bool mappingDataSet(){
+			/*
 			std::cout << "--->>> mapping data set.\n";
 			if (mapping_type < 1) return false;
 			if (mapping_type > 4) return false;
@@ -218,6 +217,7 @@ class SVM : public MLalgo
 					
 			problem.x = (svm_node**)pdata;
 			std::cout << "<<<--- mapping data set.\n";
+			*/
 			return true;
 		}
 

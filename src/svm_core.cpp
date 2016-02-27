@@ -3369,7 +3369,7 @@ int svm_model_visualization(const svm_model *model, Equation& equ)
 	const double * const *sv_coef = model->sv_coef;
 	const svm_node * const *SV = model->SV;
 
-	double theta[DIMENSION];// = equ->theta;
+	double theta[D4mapping];// = equ->theta;
 	double theta0 = sv_coef[0][0] > 0? 1 : -1;
 	for (int i = 0; i < DIMENSION; i++)
 		theta[i] = 0;

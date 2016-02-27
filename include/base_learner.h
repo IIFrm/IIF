@@ -43,10 +43,10 @@ class BaseLearner{
 			int a[VARS];
 			for (int i = 0; i < VARS; i++)
 				a[i] = static_cast<int>(input.getVal(i));
-			int b[D];
-			stateReverseMapping(a, b);
+			/*int b[D];
+			stateReverseMapping(a, b);*/
 			//target_program
-			func(b);
+			func(a);
 
 			afterLoop(gsets);
 			if (gsets[COUNTER_EXAMPLE].traces_num() > 0) {
