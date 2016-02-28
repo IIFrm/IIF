@@ -154,7 +154,7 @@ class SVM : public MLalgo
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
 			//mappingDataSet();
-			std::cout << BLUE << problem << WHITE << std::endl;
+			std::cout << BLUE << problem << WHITE;
 			return ret;
 		}
 

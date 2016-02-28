@@ -158,80 +158,96 @@ init_svm:
 		}
 
 		/*
-		 *	similarLast is used to store the convergence check return value for the last time.
-		 *	We only admit convergence if the three consecutive round are converged.
-		 *	This is to prevent in some round the points are too right to adjust the classifier.
+		 *	Check on Question traces.
+		 *	There should not exists one traces, in which a negative state is behind a positive state.
 		 */
-#ifdef __PRT
-		std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") check convergence:        ";
-#endif
-		//if (svm->converged(lastEquation, 1) == 0) {
-		if (svm->converged_model() == true) {
-			if (similarLast == true) {
-#ifdef __PRT
-				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
-#endif
-				converged = true;
-				rnd++;
-				break;
-			}
-#ifdef __PRT
-			std::cout << "[FT]";
-#endif
-			similarLast = true;
-		} else {
-#ifdef __PRT
-			std::cout << ((similarLast == true) ? "[T" : "[F") << "F] ";
-#endif
-			similarLast = false;
-		}
-#ifdef __PRT
-		std::cout << "  [FAIL] neXt round " << std::endl;
-#endif
-
-		//if (lastEquation == NULL) lastEquation = new Equation[1];
-		//lastEquation[0] = *(svm->getClassifier());
-		//lastModel = svm->getModel();
-		lastModel = svm->model;
-	} // end of SVM training procedure
-
-
-	std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
-	std::cout << "Finish running svm for " << rnd - 1 << " times." << std::endl;
-
-	int ret = 0;
-	if ((converged) && (rnd <= max_iteration)) {
-		/*bool sat =*/ svm_model_z3(lastModel, cl);
-		/*if (sat == true) std::cout << "TRUE" << std::endl;
-		  else std::cout << "FALSE" << std::endl;
-		  */
 		/*
-		   int equ_num = -1;
-		   Equation* equ = svm->roundoff(equ_num);
-		   assert(equ_num == 1);
-		   */
-		std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
-		std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
-		std::cout << "\t\t" << GREEN << *cl << YELLOW << std::endl;
-		std::cout << "  }" << WHITE << std::endl;
-		//delete equ;
-	}
+#ifdef __PRT
+std::cout << "\n\t(" << step++ << ") checking question traces.";
+#endif
+if (svm->checkQuestionSet(gsets[QUESTION]) != 0) {
+#ifdef __PRT
+std::cout << std::endl << RED << "check on question set return error." << std::endl << WHITE;
+#endif
+return -1;
+}
+*/
 
-	if ((pass_rate < 1) || (rnd >= max_iteration)) {
-		std::cout << RED << "  Cannot divide by SVM perfectly.\n" << WHITE;
-		ret = -1;
+/*
+ *	similarLast is used to store the convergence check return value for the last time.
+ *	We only admit convergence if the three consecutive round are converged.
+ *	This is to prevent in some round the points are too right to adjust the classifier.
+ */
+#ifdef __PRT
+std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") check convergence:        ";
+#endif
+//if (svm->converged(lastEquation, 1) == 0) {
+if (svm->converged_model() == true) {
+	if (similarLast == true) {
+#ifdef __PRT
+		std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
+#endif
+		converged = true;
+		rnd++;
+		break;
 	}
+#ifdef __PRT
+	std::cout << "[FT]";
+#endif
+	similarLast = true;
+} else {
+#ifdef __PRT
+	std::cout << ((similarLast == true) ? "[T" : "[F") << "F] ";
+#endif
+	similarLast = false;
+}
+#ifdef __PRT
+std::cout << "  [FAIL] neXt round " << std::endl;
+#endif
 
-	if (lastEquation) delete lastEquation;
+//if (lastEquation == NULL) lastEquation = new Equation[1];
+//lastEquation[0] = *(svm->getClassifier());
+//lastModel = svm->getModel();
+lastModel = svm->model;
+} // end of SVM training procedure
 
-	return ret;
-	}
 
-	std::string LinearLearner::invariant() {
-		return cl->toString();
-		/*Equation *equ = new Equation();
-		  bool sat = svm_model_z3(svm->getModel(), equ);
-		  std::string s = equ->toString();
-		  delete equ;
-		  return s;*/
-	}
+std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
+std::cout << "Finish running svm for " << rnd - 1 << " times." << std::endl;
+
+int ret = 0;
+if ((converged) && (rnd <= max_iteration)) {
+	/*bool sat =*/ svm_model_z3(lastModel, cl);
+	/*if (sat == true) std::cout << "TRUE" << std::endl;
+	  else std::cout << "FALSE" << std::endl;
+	  */
+	/*
+	   int equ_num = -1;
+	   Equation* equ = svm->roundoff(equ_num);
+	   assert(equ_num == 1);
+	   */
+	std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
+	std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
+	std::cout << "\t\t" << GREEN << *cl << YELLOW << std::endl;
+	std::cout << "  }" << WHITE << std::endl;
+	//delete equ;
+}
+
+if ((pass_rate < 1) || (rnd >= max_iteration)) {
+	std::cout << RED << "  Cannot divide by SVM perfectly.\n" << WHITE;
+	ret = -1;
+}
+
+if (lastEquation) delete lastEquation;
+
+return ret;
+}
+
+std::string LinearLearner::invariant() {
+	return cl->toString();
+	/*Equation *equ = new Equation();
+	  bool sat = svm_model_z3(svm->getModel(), equ);
+	  std::string s = equ->toString();
+	  delete equ;
+	  return s;*/
+}

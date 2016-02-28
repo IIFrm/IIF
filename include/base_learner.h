@@ -30,13 +30,12 @@ class BaseLearner{
 
 		virtual ~BaseLearner() {} 
 
-
 /** @brief This function runs the target_program with the given input
  *
  *  @param  input defines input values which are used to call target_program 
  */
 		void runTarget(Solution& input) {
-			assert(func != NULL);
+			assert(func != NULL || "Func equals NULL, ERROR!\n");
 			//assert(&input != NULL);
 			beforeLoop();
 
