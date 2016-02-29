@@ -355,7 +355,7 @@ class Equation{
 				 * equ == NULL means no equation is specified
 				 * So we randomly generate points in given scope [minv, maxv]
 				 */
-				for (int i = 0; i < equ->dimension; i++)
+				for (int i = 0; i < VARS; i++)
 					sol.setVal(i, rand() % (maxv - minv + 1) + minv);
 				return 0;
 			}
