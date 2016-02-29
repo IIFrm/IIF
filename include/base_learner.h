@@ -45,7 +45,9 @@ class BaseLearner{
 			/*int b[D];
 			stateReverseMapping(a, b);*/
 			//target_program
+			//std::cout << "----> run the loop function.\n";
 			func(a);
+			//std::cout << "\t<---- run the loop function.\n";
 
 			afterLoop(gsets);
 			if (gsets[COUNTER_EXAMPLE].traces_num() > 0) {
@@ -55,6 +57,7 @@ class BaseLearner{
 				setColor(std::cout);
 				exit(-1);
 			}
+			//std::cout << "\n<---- return from runTarget method.\n";
 		}
 
 		virtual int learn() = 0;

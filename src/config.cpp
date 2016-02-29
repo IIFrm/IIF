@@ -42,34 +42,3 @@ bool register_program(int (*func)(int*), const char* func_name)
 	target_program = func;
 	return true;
 }
-
-/*
-void sig_alrm(int signo) {
-	std::cout << "\nTIMEOUT!\n";
-	exit(-1);
-}
-
-
-States* initSystem(int (*func)(int*), const char* func_name, int timeout) 
-{
-	States* ss = new States[4];
-	srand(time(NULL)); // initialize seed for rand() function
-
-	register_program(func, func_name);
-#ifdef linux
-	if (signal(SIGALRM, sig_alrm) == SIG_ERR)
-		exit(-1);
-	alarm(timeout);
-#endif
-	
-	return &ss[1];
-}
-
-
-int destroySystem(States* gsets)
-{
-	States* ss = &gsets[-1];
-	delete []ss;
-	return 0;
-}
-*/

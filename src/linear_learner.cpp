@@ -46,6 +46,7 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 		std::cout << input << "|";
 #endif
 		runTarget(input);
+		//std::cout << "END";
 	}
 	if (exen == 0) {
 #ifdef __PRT
@@ -95,7 +96,7 @@ int LinearLearner::learn()
 
 	// lastEquation = new Equation[1];
 	double pass_rate = 1;
-	int mapping_type = 2;
+	int mapping_type = 1;
 
 
 	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
@@ -104,13 +105,13 @@ int LinearLearner::learn()
 init_svm:
 #ifdef __PRT
 		int step = 1;
-		std::cout << RED << "Linear SVM------------------------------------------------------------------------------------------------------------" << WHITE << std::endl;
+		std::cout << RED << "Linear SVM------------------------{" << mapping_type << "}------------------------------------------------------------------------------------" << WHITE << std::endl;
 		std::cout << "\t(" << YELLOW << step++ << WHITE << ") execute programs... [" << exes + random_exes << "] ";
 #endif
-		std::cout << std::endl << "\t-->selective sampling:\n\t";
+		//std::cout << std::endl << "\t-->selective sampling:\n\t";
 		//selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
 		selectiveSampling(random_exes, exes, 0, lastModel);
-		std::cout << "\t<--selective sampling:\n";
+		//std::cout << "\t<--selective sampling:\n";
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
 #ifdef __PRT
@@ -211,7 +212,7 @@ init_svm:
 		   assert(equ_num == 1);
 		   */
 		std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
-		std::cout << YELLOW << "  Hypothesis Invairant(Converged): {\n";
+		std::cout << YELLOW << "  Hypothesis Invariant(Converged): {\n";
 		std::cout << "\t\t" << GREEN << *cl << YELLOW << std::endl;
 		std::cout << "  }" << WHITE << std::endl;
 		//delete equ;

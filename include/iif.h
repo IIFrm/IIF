@@ -13,7 +13,7 @@
 #include "instrumentation.h"
 #include "ml_algo.h"
 #include "svm.h"
-#include "svm_i.h"
+//#include "svm_i.h"
 #include "color.h"
 #include "solution.h"
 #include "equation.h"
@@ -22,10 +22,10 @@
 #include "states.h"
 #include "base_learner.h"
 #include "linear_learner.h"
-#include "poly_learner.h"
-#include "rbf_learner.h"
-#include "conjunctive_learner.h"
-#include "disjunctive_learner.h"
+//#include "poly_learner.h"
+//#include "rbf_learner.h"
+//#include "conjunctive_learner.h"
+//#include "disjunctive_learner.h"
 #include "iif_assert.h"
 
 #include <iostream>
@@ -87,10 +87,38 @@ namespace iif{
 			iifContext (const char* vfilename, int (*func)(int*), const char* func_name = "Unknown", int timeout = 1800) {
 				std::ifstream vfile(vfilename);
 				vfile >> vnum;
+				/*
 				variables = new std::string[vnum];
 				for (int i = 0; i < vnum; i++)
 					vfile >> variables[i];
+				*/
+				variables = new std::string[D4mapping];
+				for (int i = 0; i < VARS; i++)
+					vfile >> variables[i];
 				vfile.close();
+				int index = VARS;
+				for (int i = 0; i < VARS; i++) {
+					for (int j = i; j < VARS; j++) {
+						variables[index++] = variables[i] + "*" + variables[j];
+					}
+				}
+				for (int i = 0; i < VARS; i++) {
+					for (int j = i; j < VARS; j++) {
+						for (int k = j; k < VARS; k++) {
+							variables[index++] = variables[i] + "*" + variables[j] + "*" + variables[k];
+						}
+					}
+				}
+				for (int i = 0; i < VARS; i++) {
+					for (int j = i; j < VARS; j++) {
+						for (int k = j; k < VARS; k++) {
+							for (int l = k; l < VARS; l++) {
+								variables[index++] = variables[i] + "*" + variables[j] + "*" + variables[k] + "*" + variables[l];
+							}
+						}
+					}
+				}
+
 
 				States* ss = new States[4];
 				gsets = &ss[1];
@@ -111,9 +139,8 @@ namespace iif{
 				}
 				States* ss = &gsets[-1];
 				delete []ss;
-				/*if (variables != NULL)
+				if (variables != NULL)
 					delete []variables;
-					*/
 			}
 
 
@@ -121,6 +148,7 @@ namespace iif{
 				BaseLearner* newLearner = NULL;
 				if (strcmp(learnerName, "linear") == 0)
 					newLearner = new LinearLearner(gsets);
+				/* 
 				else if (strcmp(learnerName, "poly") == 0)
 					newLearner = new PolyLearner(gsets);
 				else if (strcmp(learnerName, "rbf") == 0)
@@ -129,6 +157,7 @@ namespace iif{
 					newLearner = new ConjunctiveLearner(gsets);
 				else if (strcmp(learnerName, "disjunctive") == 0)
 					newLearner = new DisjunctiveLearner(gsets);
+					*/
 
 				if (last == NULL) {
 					last = new LearnerNode();
