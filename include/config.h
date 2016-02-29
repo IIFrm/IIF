@@ -21,8 +21,8 @@
 
 #define D1mapping (VARS)
 #define D2mapping (VARS * (VARS + 1) / 2 + D1mapping)
-#define D3mapping (VARS * (VARS + 1) * (2 * VARS + 1) / 6 + D2mapping) 
-#define D4mapping (VARS * (VARS + 1) / 2 * VARS * (VARS + 1) / 2 + D3mapping) 
+#define D3mapping (VARS * (VARS + 1) * (VARS + 2) / 6 + D2mapping) 
+#define D4mapping (VARS * (VARS + 1) * (VARS + 2) * (VARS + 3) / 24 + D3mapping) 
 
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  
  *		   This should be set in /CMakeLists.txt file

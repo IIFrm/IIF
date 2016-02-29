@@ -132,7 +132,7 @@ init_svm:
 			std::cout << "\n\t(" << step++ << ") start training with mapping dimension {" << mapping_type << "}...";
 #endif
 			svm->train();
-			std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
+			//std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
 
 			/*
 			 *	check on its own training data.
