@@ -151,7 +151,8 @@ void svm_set_print_string_function(void (*print_func)(const char *));
 bool svm_model_z3(const svm_model *m, Classifier* cl = NULL); 
 bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl = NULL); 
 
-int svm_model_visualization(const svm_model *model, Equation& equ);
+int svm_model_visualization(const svm_model *model, Equation* equ = NULL);
+//int equation_factorization(const Equation *equ, Classifier* cl, int mapping_type = 1);
 
 void print_svm_samples(const svm_problem *sp);
 

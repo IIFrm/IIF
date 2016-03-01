@@ -35,8 +35,6 @@
  */
 extern int (*target_program) (int*);
 
-
-
 /** @brief defines the initial max number items contains by states set. 
  *		   Better to be a number larger than 1000 
  */
@@ -49,11 +47,11 @@ const int max_states_in_one_trace = 10240;
 
 /** @brief defines the number of tests runs initially. Should be a positive integer.
  */
-const int init_exes = 8 * VARS;
+const int init_exes = 16 * VARS;
 
 /** @brief defines the number of tests runs after the first time. Should be a positive integer.
  */
-const int after_exes = 8 * VARS;
+static int after_exes = 16 * VARS;
 
 /** @brief defines the number of random tests runs each time, 
  *		   which is used to avoid bias caused by tests picking chioce. 

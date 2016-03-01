@@ -73,15 +73,9 @@ class States{
 				addLength++;
 				size++;
 			}
-			/*
-			memcpy(values[size], st, sizeof(double) * VARS * len);
-			t_index[p_index + 1] = t_index[p_index] + len;
-			p_index++;
-			size = size + len;
-			return len;
-			*/
 			t_index[p_index + 1] = t_index[p_index] + addLength;
 			p_index++;
+			//std::cout << "+" << addLength << " ";
 			return addLength;
 		}
 

@@ -3222,13 +3222,13 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 	if (ret == unsat) {
 		std::cout << "UNSAT. can not get Z3 MODEL.\n";
 		/* z3::expr_vector core = s.unsat_core();
-		std::cout << "unsat core: " << core << std::endl;
-		std::cout << GREEN;
-		std::cout << "size = " << core.size() << std::endl;
-		for (int i = 0; i < core.size(); i++)
-			std::cout << "\t" << core[i] << std::endl;
-		std::cout << WHITE;
-		*/
+		   std::cout << "unsat core: " << core << std::endl;
+		   std::cout << GREEN;
+		   std::cout << "size = " << core.size() << std::endl;
+		   for (int i = 0; i < core.size(); i++)
+		   std::cout << "\t" << core[i] << std::endl;
+		   std::cout << WHITE;
+		   */
 		return false;
 	}
 
@@ -3337,11 +3337,11 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 		eq.reset(avalue);
 		std::cout << "Equation: \n" << eq << std::endl;
 		cl->add(&eq);
-//#ifdef __PRT_Z3SOLVE
-//		std::cout << *e << std::endl;
-//		e->roundoff();
-//		std::cout << *e << std::endl;
-//#endif
+		//#ifdef __PRT_Z3SOLVE
+		//		std::cout << *e << std::endl;
+		//		e->roundoff();
+		//		std::cout << *e << std::endl;
+		//#endif
 	}
 #ifdef __PRT_Z3SOLVE
 	std::cout << "[";
@@ -3353,17 +3353,16 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 	return true;
 }
 
-int svm_model_visualization(const svm_model *model, Equation& equ)
+int svm_model_visualization(const svm_model *model, Equation* equ)
 {
 	if (model == NULL)
 		return -1;
-	if (model->param.kernel_type == RBF)
+	if (equ == NULL)
 		return -1;
-	/*
 	if (model->param.kernel_type != LINEAR) {
 		info("Can not visualize hyperplane for kernel %s\n", kernel_type_table[model->param.kernel_type]);
 		return -1;
-	}*/
+	}
 
 	int l = model->l;
 	const double * const *sv_coef = model->sv_coef;
@@ -3377,12 +3376,12 @@ int svm_model_visualization(const svm_model *model, Equation& equ)
 	for(int i=0;i<l;i++)
 	{
 		const svm_node *p0 = SV[0];
-		//		double label[i] = sv_coef[0][i];
+		//	double label[i] = sv_coef[0][i];
 		double temp = 0;
 		const svm_node *p = SV[i];
 		for (int j = 0; j < DIMENSION; j++)
 		{
-			//			double x[i][j] = p->value;
+			//	double x[i][j] = p->value;
 			theta[j] += sv_coef[0][i] * p->value;
 			temp += p0->value * p->value; 
 			p++;
@@ -3391,32 +3390,32 @@ int svm_model_visualization(const svm_model *model, Equation& equ)
 		temp *= sv_coef[0][i];
 		theta0 -= temp;
 	}
-	equ.setTheta0(theta0);
-	equ.setTheta(theta);
-	/* if (model->param.kernel_type == LINEAR) {
-		std::cout << "After visualization: " << YELLOW << equ << WHITE << std::endl;
-	} else if (model->param.kernel_type == POLY) {
-		std::cout << "After visualization: " << YELLOW << "(" << model->param.gamma << " * (";
-		equ.printInside();
-		std::cout << ") + " << model->param.coef0 << ") ^ " << model->param.degree << " >= 0"<< WHITE << std::endl;
-	}
-	*/
-	equ.roundoff();
-	if (model->param.kernel_type == LINEAR) {
-		std::cout << "After visualization: " << YELLOW << equ << WHITE << std::endl;
-	} /* else if (model->param.kernel_type == POLY) {
-		std::cout << "After visualization: " << YELLOW << "(" << model->param.gamma << " * (";
-		equ.printInside();
-		std::cout << ") + " << model->param.coef0 << ") ^ " << model->param.degree << " >= 0"<< WHITE << std::endl;
-	} */
-	/*	info(" %.16g [0]", theta[0]);
-		for (int j = 1; j < vars; j++)
-		info ("  +  %.16g [%d]", theta[j], j);
-		info(" >= %.16g\n", -theta0);
-		*/
+	equ->setDimension(DIMENSION);
+	equ->setTheta0(theta0);
+	equ->setTheta(theta);
+	equ->roundoff();
+	std::cout << *equ << std::endl;
 	return 0;	
 }
 
+
+/*int equation_factorization(Equation* equ, Classifier* cl, int mapping_type)
+{
+	if (equ == NULL)
+		return -1;
+	if (cl == NULL)
+		return -1;
+	if (mapping_type == 1) {
+		cl->add(equ);
+		return 0;
+	}
+
+	if (mapping_type == 2) {
+	}
+
+	return 0;	
+}
+*/
 
 struct svm_model *svm_I_train(const struct svm_problem *prob, const struct svm_parameter *param) 
 {
@@ -3445,8 +3444,8 @@ void prepare_svm_parameters(struct svm_parameter& param, int type, int degree)
 	param.coef0 = 0;
 	param.nu = 0.5;
 	param.cache_size = 100;
-	param.C = 10000;
-	//param.C = DBL_MAX;
+	//param.C = 10000;
+	param.C = DBL_MAX;
 	//param.C = 1000;
 	param.eps = 1e-3;
 	param.p = 0.1;
@@ -3479,8 +3478,9 @@ bool model_converged(struct svm_model *m1, struct svm_model *m2)
 	if (m1->l != m2->l) return false;
 	if (fabs(*(m1->rho) - *(m2->rho)) > 0.001) return false;
 	int l = m1->l;
+
 	/*
-	for (int j = 0; j < l; j++) {
+	   for (int j = 0; j < l; j++) {
 	//if (m1->sv_coef[0][j] != m2->sv_coef[0][j]) return false;
 	if (fabs(m1->sv_coef[0][j] - m2->sv_coef[0][j]) > 0.001) return false;
 	if (node_equal(m1->SV[j], m2->SV[j]) == false) return false;
@@ -3535,12 +3535,12 @@ int model_solver(const svm_model* m, Solution& sol)
 			}
 		}
 		/* if (label[i] < 0) {
-			if (n_num++ == pick_n)
-				indexn = i;
-		}
-		if ((indexp != -1) && (indexn != -1))
-			break;
-		*/
+		   if (n_num++ == pick_n)
+		   indexn = i;
+		   }
+		   if ((indexp != -1) && (indexn != -1))
+		   break;
+		   */
 	}
 	double min_dist = DBL_MAX;
 	int min_index = -1;
@@ -3556,16 +3556,16 @@ int model_solver(const svm_model* m, Solution& sol)
 	assert(min_index != -1);
 	indexn = min_index;
 	/*
-	std::cout << "{";
-	for (int i = 0; i < DIMENSION; i++) {
-		std::cout << m->SV[indexp][i] << ",";
-	}
-	std::cout << "}{";
-	for (int i = 0; i < DIMENSION; i++) {
-		std::cout << m->SV[indexn][i] << ",";
-	}
-	std::cout << "}==>";
-	*/
+	   std::cout << "{";
+	   for (int i = 0; i < DIMENSION; i++) {
+	   std::cout << m->SV[indexp][i] << ",";
+	   }
+	   std::cout << "}{";
+	   for (int i = 0; i < DIMENSION; i++) {
+	   std::cout << m->SV[indexn][i] << ",";
+	   }
+	   std::cout << "}==>";
+	   */
 	//std::cout << GREEN << pn << "," << nn << "<" << pick_p << "," << pick_n <<">" << WHITE;
 	//std::cout << BLUE << "<" << indexp << "," << indexn <<">" << WHITE;
 	int pieces = rand() % 6 + VARS + 1;

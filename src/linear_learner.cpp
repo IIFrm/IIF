@@ -14,11 +14,6 @@ static void print_null(const char *s) {}
 LinearLearner::LinearLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
 	svm = new SVM(0, print_null);
 	this->max_iteration = max_iteration; 
-	cl = new Classifier();
-	if (func == NULL) {
-		std::cout << "Function equals NULL, return.\n";
-		return;
-	}
 }
 
 
@@ -33,53 +28,55 @@ LinearLearner::~LinearLearner() {
 /// type > 0, params contains type number of inputs.....
 int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params)
 {
+#ifdef __PRT
+	std::cout << "{R|";
+#endif
+
 	if ((type != 0) && (exen > type))
 		randn += exen - type;
-#ifdef __PRT
-	std::cout << "{";
-#endif
 	Solution input;
+	int ret = 0;
 	for (int i = 0; i < randn; i++) {
 		//Equation::linear_solver(NULL, input);
-		model_solver(NULL, input);
+		//model_solver(NULL, input);
+		Classifier::solver(NULL, input);
+		ret = runTarget(input);
 #ifdef __PRT
+		printRunResult(ret);
 		std::cout << input << "|";
 #endif
-		runTarget(input);
-		//std::cout << "END";
-	}
-	if (exen == 0) {
-#ifdef __PRT
-		std::cout << "}" << std::endl;
-#endif
-		return randn + exen;
 	}
 
 #ifdef __PRT
-	std::cout << "+|";
+	std::cout << BLUE << "<<";
 #endif
 
 	if (type == 0) {
 		for (int i = 0; i < exen; i++) {
-			//Equation::linear_solver((Equation*)params, input);
-			model_solver((svm_model*)params, input);
+			//model_solver((svm_model*)params, input);
+			Classifier::solver((Classifier*)params, input);
+			ret = runTarget(input);
 #ifdef __PRT
+			printRunResult(ret);
 			std::cout << input << "|";
 #endif
-			runTarget(input);
 		}
-	} else if (type > 0) {
+	} 
+	/*else if (type > 0) {
 		Solution* p = (Solution*)params;
+#ifdef __PRT
+			std::cout << "|>>";
+#endif
 		for (int i = 0; i < type; i++) {
 #ifdef __PRT
 			std::cout << p[i] << "|";
 #endif
 			runTarget(p[i]);
-			//run_target(*(((Solution*)paras)+i));
 		}
 	}
+	*/
 #ifdef __PRT
-	std::cout << "}" << std::endl;
+	std::cout << WHITE << "}" << std::endl;
 #endif
 	return randn + exen;
 }
@@ -90,27 +87,28 @@ int LinearLearner::learn()
 	int rnd;
 	bool similarLast = false;
 	bool converged = false;
-	Equation* lastEquation = NULL;
 	svm_model* lastModel = NULL;
 	int pre_psize = 0, pre_nsize = 0; // , pre_question_size = 0;
 
-	// lastEquation = new Equation[1];
 	double pass_rate = 1;
 	int mapping_type = 1;
 
 
 	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
-		std::cout << RED << "[" << rnd << "]" << WHITE;
 		int exes = (rnd == 1)? init_exes : after_exes;
 init_svm:
 #ifdef __PRT
 		int step = 1;
+		std::cout << RED << "[" << rnd << "]" << WHITE;
 		std::cout << RED << "Linear SVM------------------------{" << mapping_type << "}------------------------------------------------------------------------------------" << WHITE << std::endl;
 		std::cout << "\t(" << YELLOW << step++ << WHITE << ") execute programs... [" << exes + random_exes << "] ";
+#else
+		std::cout << RED << "[" << rnd << "]" << WHITE;
 #endif
 		//std::cout << std::endl << "\t-->selective sampling:\n\t";
 		//selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
-		selectiveSampling(random_exes, exes, 0, lastModel);
+		//selectiveSampling(random_exes, exes, 0, lastModel);
+		selectiveSampling(random_exes, exes, 0, cl);
 		//std::cout << "\t<--selective sampling:\n";
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
@@ -127,36 +125,34 @@ init_svm:
 		svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
 
 		while (mapping_type <= 4) {
-			svm->typeChanger(mapping_type);
+			cl->clear();
 #ifdef __PRT
 			std::cout << "\n\t(" << step++ << ") start training with mapping dimension {" << mapping_type << "}...";
 #endif
+			svm->typeChanger(mapping_type);
 			svm->train();
-			//std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
+			std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
+			cl->factorization(*(svm->equ));
 
-			/*
-			 *	check on its own training data.
-			 *	There should be no prediction errors.
-			 */
 #ifdef __PRT
-			std::cout << "\t(" << YELLOW << step++ << WHITE << ") checking training traces.";
+			std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") checking training traces.";
 #endif
 			pass_rate = svm->checkTrainingSet();
 
+#ifdef __PRT
 			if (pass_rate == 1) {
-#ifdef __PRT
-				std::cout << GREEN << " [" << pass_rate * 100 << "%]" << WHITE;
-				std::cout << GREEN << " [PASS]" << WHITE;
-#endif
-				break;
+				std::cout << GREEN << " [100%] [PASS]" << WHITE;
+			} else {
+				std::cout <<  RED << " [" << pass_rate * 100 << "%]" << WHITE;
+				std::cout << " [FAIL] \n The problem is not linear separable by mapping " << mapping_type << ".. Trying to project to a higher space " << std::endl;
 			}
-			std::cout <<  RED << " [" << pass_rate * 100 << "%]" << WHITE;
-
-#ifdef __PRT
-			std::cout << " [FAIL] \n The problem is not linear separable by mapping " << mapping_type << ".. Trying to project to a higher space " << std::endl;
 #endif
-			mapping_type++;
+			if (pass_rate == 1)
+				break;
+			else
+				mapping_type++;
 		}
+		if (mapping_type > 4) break;
 
 		/*
 		 *	similarLast is used to store the convergence check return value for the last time.
@@ -166,7 +162,7 @@ init_svm:
 #ifdef __PRT
 		std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") check convergence:        ";
 #endif
-		//if (svm->converged(lastEquation, 1) == 0) {
+		//if (svm->converged(equation) == 0) {
 		if (svm->converged_model() == true) {
 			if (similarLast == true) {
 #ifdef __PRT
@@ -178,11 +174,14 @@ init_svm:
 			}
 #ifdef __PRT
 			std::cout << "[FT]";
+			after_exes *= 2;
 #endif
 			similarLast = true;
 		} else {
 #ifdef __PRT
 			std::cout << ((similarLast == true) ? "[T" : "[F") << "F] ";
+			if (similarLast == true)
+				after_exes /= 2;
 #endif
 			similarLast = false;
 		}
@@ -190,8 +189,6 @@ init_svm:
 		std::cout << "  [FAIL] neXt round " << std::endl;
 #endif
 
-		//if (lastEquation == NULL) lastEquation = new Equation[1];
-		//lastEquation[0] = *(svm->getClassifier());
 		//lastModel = svm->getModel();
 		lastModel = svm->model;
 	} // end of SVM training procedure
@@ -202,20 +199,15 @@ init_svm:
 
 	int ret = 0;
 	if ((converged) && (rnd <= max_iteration)) {
-		/*bool sat =*/ svm_model_z3(lastModel, cl);
+		/*bool sat =*/ //svm_model_z3(lastModel, cl);
+		svm_model_visualization(lastModel, equ);
 		/*if (sat == true) std::cout << "TRUE" << std::endl;
 		  else std::cout << "FALSE" << std::endl;
 		  */
-		/*
-		   int equ_num = -1;
-		   Equation* equ = svm->roundoff(equ_num);
-		   assert(equ_num == 1);
-		   */
 		std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
 		std::cout << YELLOW << "  Hypothesis Invariant(Converged): {\n";
-		std::cout << "\t\t" << GREEN << *cl << YELLOW << std::endl;
+		std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
 		std::cout << "  }" << WHITE << std::endl;
-		//delete equ;
 	}
 
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {
@@ -223,16 +215,14 @@ init_svm:
 		ret = -1;
 	}
 
-	if (lastEquation) delete lastEquation;
-
 	return ret;
-	}
+}
 
-	std::string LinearLearner::invariant() {
-		return cl->toString();
-		/*Equation *equ = new Equation();
-		  bool sat = svm_model_z3(svm->getModel(), equ);
-		  std::string s = equ->toString();
-		  delete equ;
-		  return s;*/
-	}
+std::string LinearLearner::invariant() {
+	return cl->toString();
+	/*Equation *equ = new Equation();
+	  bool sat = svm_model_z3(svm->getModel(), equ);
+	  std::string s = equ->toString();
+	  delete equ;
+	  return s;*/
+}

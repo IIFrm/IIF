@@ -99,13 +99,13 @@ namespace iif{
 				int index = VARS;
 				for (int i = 0; i < VARS; i++) {
 					for (int j = i; j < VARS; j++) {
-						variables[index++] = variables[i] + "*" + variables[j];
+						variables[index++] = "(" + variables[i] + "*" + variables[j] + ")";
 					}
 				}
 				for (int i = 0; i < VARS; i++) {
 					for (int j = i; j < VARS; j++) {
 						for (int k = j; k < VARS; k++) {
-							variables[index++] = variables[i] + "*" + variables[j] + "*" + variables[k];
+							variables[index++] = "(" + variables[i] + "*" + variables[j] + "*" + variables[k] + ")";
 						}
 					}
 				}
@@ -113,11 +113,12 @@ namespace iif{
 					for (int j = i; j < VARS; j++) {
 						for (int k = j; k < VARS; k++) {
 							for (int l = k; l < VARS; l++) {
-								variables[index++] = variables[i] + "*" + variables[j] + "*" + variables[k] + "*" + variables[l];
+								variables[index++] = "(" + variables[i] + "*" + variables[j] + "*" + variables[k] + "*" + variables[l] + ")";
 							}
 						}
 					}
 				}
+				/*
 				std::cout << "D1mapping = " << D1mapping << "\n";
 				std::cout << "D2mapping = " << D2mapping << "\n";
 				std::cout << "D3mapping = " << D3mapping << "\n";
@@ -125,6 +126,7 @@ namespace iif{
 				std::cout << "variable name list: \n";
 				for (int i = 0; i < D4mapping; i++)
 					std::cout << i << " >> " << variables[i] << "\n";
+					*/
 
 
 				States* ss = new States[4];

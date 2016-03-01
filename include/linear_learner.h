@@ -20,7 +20,6 @@ class LinearLearner: public BaseLearner {
 	protected:
 		SVM* svm;
 		int max_iteration;
-		Classifier* cl;
 };
 
 #endif

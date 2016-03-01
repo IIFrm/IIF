@@ -10,7 +10,9 @@ int loop_times = 10;
 while(loop_times-- > 0)
 {
 recordi(x);
- if (x == 50) {
+ if (x>50) x++;
+		if (x < 0) x--;
+		if (x == 50) {
 			x --;
 		} else if (x == 0) {
 			x ++;

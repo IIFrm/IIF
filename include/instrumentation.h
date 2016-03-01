@@ -59,4 +59,6 @@ int beforeLoop();
  */
 int afterLoop(States *);
 
+void printRunResult(int);
+
 #endif

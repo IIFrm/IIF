@@ -16,7 +16,6 @@ class SVM : public MLalgo
 		svm_parameter param;
 		svm_problem problem;
 		svm_model* pre_model;
-		Equation* classifier;
 		int max_size;
 
 		double* label; // [max_items * 2];
@@ -28,6 +27,7 @@ class SVM : public MLalgo
 		int mapping_dimension;
 
 	public:
+		Equation* equ;
 		svm_model* model;
 
 	protected:
@@ -53,7 +53,7 @@ class SVM : public MLalgo
 
 	public:
 		inline Equation* getClassifier() {
-			return classifier;
+			return equ;
 		}
 
 		inline svm_model* getModel() {
@@ -61,7 +61,7 @@ class SVM : public MLalgo
 		}
 
 		inline int setClassifier(Equation* e) {
-			*classifier = *e;
+			*equ = *e;
 			return 0;
 		}
 
@@ -70,7 +70,7 @@ class SVM : public MLalgo
 			if (f != NULL)
 				svm_set_print_string_function(f);
 			model = NULL;
-			classifier = NULL;
+			equ = NULL;
 
 			data = new double*[max_size];
 			pdata = new MState[max_size];
@@ -91,7 +91,7 @@ class SVM : public MLalgo
 			//if (model != NULL) delete model;
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (pre_model != NULL) svm_free_and_destroy_model(&pre_model);
-			if (classifier != NULL) delete classifier;
+			if (equ != NULL) delete equ;
 			if (data != NULL) delete []data;
 			if (pdata != NULL) delete[]pdata;
 			if (label != NULL) delete label;
@@ -154,13 +154,14 @@ class SVM : public MLalgo
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
 			//mappingDataSet();
-			std::cout << BLUE << problem << WHITE;
+			//std::cout << BLUE << problem << WHITE;
 			return ret;
 		}
 
 		int typeChanger(int type) {
 			if ((type < 1) || (type > 4))
 				return -1;
+			mapping_type = type;
 			switch (type) {
 				case 1:
 					return setDimension(D1mapping);
@@ -172,7 +173,6 @@ class SVM : public MLalgo
 					return setDimension(D4mapping);
 			}
 			return -1;
-			//return setDimension(D##type##mapping);
 		}
 
 		void setMapping(int type) {
@@ -182,45 +182,6 @@ class SVM : public MLalgo
 			mapping_type = type;
 		}
 
-		bool mappingDataSet(){
-			/*
-			std::cout << "--->>> mapping data set.\n";
-			if (mapping_type < 1) return false;
-			if (mapping_type > 4) return false;
-			if (mapping_type == 1) {
-				problem.x = (svm_node**)data;
-				return true;
-			}
-			mapping_dimension = 0;
-			switch (mapping_type) {
-				case 4:
-					mapping_dimension += VARS * (VARS + 1) / 2 * VARS * (VARS + 1) / 2; 
-				case 3:
-					mapping_dimension += VARS * (VARS + 1) * (2 * VARS + 1) / 6; 
-				case 2:
-					mapping_dimension += VARS * (VARS + 1) / 2;
-				case 1:
-					mapping_dimension += VARS;
-				default:
-					break;
-			}
-			std::cout << "mapping dimension = " << mapping_dimension << std::endl;
-				
-			for (int i = 0; i < problem.l; i++) {
-				//pdata[i] = new double[mapping_dimension];
-				//assign value to pdata[i] 
-				std::cout << "check point @i=" << i << std::endl;
-				if (mappingData(data[i], pdata[i], mapping_type) == false) {
-					std::cout << "<<<---F mapping data set.\n";
-					return false;
-				}
-			}
-					
-			problem.x = (svm_node**)pdata;
-			std::cout << "<<<--- mapping data set.\n";
-			*/
-			return true;
-		}
 
 		bool mappingData(double* src, double* dst, int mp_type = 4) {
 			int index = 0;
@@ -279,11 +240,10 @@ class SVM : public MLalgo
 			//std::cout << "checking point 1\n";
 			//std::cout << problem << std::endl;
 			model = svm_train(&problem, &param);
-			//std::cout << "model --> " << *model << std::endl;
+			std::cout << "\n\tmodel --> " << *model << std::endl;
 			//std::cout << "checking point 2\n";
-			/* if (classifier == NULL) classifier = new Equation();
-			 svm_model_visualization(model, *classifier);
-			*/
+			//if (equ == NULL) equ = new Equation();
+			svm_model_visualization(model, equ);
 			//svm_free_and_destroy_model(&model);
 			//model = NULL;
 			return 0;
@@ -348,7 +308,7 @@ class SVM : public MLalgo
 			assert ((num == 1) || "SVM::get_converged: Unexpected equation number parameter.");
 			if (pre_model == NULL) return 1;
 			Equation* pre_classifier = (Equation*)pre_model;
-			return classifier->is_similar(*pre_classifier);
+			return equ->is_similar(*pre_classifier);
 		}
 
 		bool converged_model () {
@@ -360,10 +320,10 @@ class SVM : public MLalgo
 		}
 
 		std::ostream& _print(std::ostream& out) const {
-			out << "SVM-model: ";
-			out << *model << std::endl;
+			//out << "SVM-model: ";
+			//out << *model << std::endl;
 			//svm_model_visualization(model, *classifier);
-			//out << *classifier; // << std::endl;
+			out << *equ; // << std::endl;
 			return out;
 		}
 
@@ -373,9 +333,9 @@ class SVM : public MLalgo
 
 		Equation* roundoff(int& num) {
 			num = 1;
-			Equation* equ = new Equation();
-			classifier->roundoff(*equ);
-			return equ;
+			Equation* newequ = new Equation();
+			equ->roundoff(*newequ);
+			return newequ;
 		}
 
 		int predict(double* v) {
@@ -396,8 +356,6 @@ class SVM : public MLalgo
 			else return -1;
 		}
 		*/
-
-
 };
 
 #endif /* _SVM_H */

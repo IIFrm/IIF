@@ -33,6 +33,7 @@ extern std::string* variables;
 extern int vnum;
 //extern char variable_name[D4mapping][8];
 
+
 const double UPBOUND = pow(0.1, PRECISION);
 static double _roundoff(double x)
 {
@@ -56,6 +57,15 @@ static double _roundoff(double x)
 class Equation{
 	public:
 		int dimension;
+
+		int getMappingType(){
+			if (dimension == D1mapping) return 1;
+			if (dimension == D2mapping) return 2;
+			if (dimension == D3mapping) return 3;
+			if (dimension == D4mapping) return 4;
+			return -1;
+		}
+
 		/** @brief Default constructor.
 		 *		   Set all its elements to value 0
 		 */
@@ -188,7 +198,7 @@ class Equation{
 		 *	@param c is z3::context, defines which context the return expr will be used.
 		 *	@return z3::expr
 		 */
-//#ifdef linux
+		//#ifdef linux
 #if (linux || __MACH__)
 		z3::expr toZ3expr (char** name, z3::context& c) const
 		{
@@ -245,7 +255,7 @@ class Equation{
 		 *  @return bool true if yes, false if no.
 		 */
 		bool imply(const Equation& e2) {
-//#ifdef linux
+			//#ifdef linux
 #if (linux || __MACH__)
 #ifdef __PRT_QUERY
 			std::cout << "-------------Imply solving-------------\n";
@@ -284,7 +294,7 @@ class Equation{
 		}
 
 		static bool multiImply(const Equation* e1, int e1_num, const Equation& e2) {
-//#ifdef linux
+			//#ifdef linux
 #if (linux || __MACH__)
 #ifdef __PRT_QUERY
 			std::cout << "-------------Multi-Imply solving-------------\n";
@@ -392,7 +402,7 @@ solve:
 				if (i != pick)
 					reminder -= sol.getVal(i) * equ->theta[i];
 			}
-			sol.setVal(pick, int(reminder / equ->theta[pick]) + rand() % 2);
+			sol.setVal(pick, int(reminder / equ->theta[pick]) + rand() % 5 - 2);
 			if (sol.getVal(pick) > maxv || sol.getVal(pick) < minv) {
 				if (++times > 10) 
 					/** sometimes we can not get solution between given scope
@@ -502,10 +512,7 @@ solve:
 			if (second_min == 0) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
 
 #ifdef __PRT_EQUATION
-			setColor(std::cout, GREEN);
-			std::cout << "Before roundoff: " << *this;
-			//std::cout << "  [min=" << min << "]"; 
-			//std::cout << "  [min=" << min << "]"; 
+			std::cout << GREEN << "Before roundoff: " << *this;
 #endif
 			if (min / second_min <= UPBOUND) 
 				min = second_min;
@@ -521,15 +528,15 @@ solve:
 				e.theta[i] = _roundoff(theta[i] / min);
 			e.theta0 = _roundoff(theta0 / min);
 #ifdef __PRT_EQUATION
-			std::cout << "\tAfter roundoff: " << e << std::endl;
-			setColor(std::cout);
+			std::cout << "\tAfter roundoff: " << e << WHITE << std::endl;
 #endif
 			//std::cout << e << std::endl;
 			return 0;
 		}
 
-		int roundoff() {
-			return roundoff(*this);
+		Equation* roundoff() {
+			roundoff(*this);
+			return this;
 		}
 
 		inline double getTheta0() { return theta0;}
@@ -549,7 +556,12 @@ solve:
 			return 0;
 		}
 
-		Equation& setDimension(int mapping_type) {
+		Equation& setDimension(int d) {
+			dimension = d;
+			return *this;
+		}
+
+		Equation& setMappingType(int mapping_type) {
 			switch(mapping_type) {
 				case 1:
 					dimension = D1mapping;
@@ -567,7 +579,8 @@ solve:
 			return *this;
 		}
 
-	private:
+	//protected:
+	public:
 		double theta0;
 		double theta[D4mapping];
 };

@@ -69,20 +69,16 @@ int addStateInt(int first ...)
 	va_end(ap);
 
 #ifdef __PRT_TRACE
-	setColor(std::cout, BLUE);
-	std::cout << "(" << program_states[state_index][0];
+	std::cout << BLUE << "(" << program_states[state_index][0];
 	for (int i = 1; i < D; i++) {
 	    std::cout << "," << program_states[state_index][i];
 	}
-	std::cout << ")";
-	setColor(std::cout);
+	std::cout << ")" << WHITE;
 #endif
 	stateMapping(program_states[state_index], converted_states[state_index]);
 	state_index++;
 	if (state_index >= max_states_in_one_trace) {
-		setColor(std::cout, RED);
-		std::cout << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n";
-		setColor(std::cout);
+		std::cout << RED << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n" << WHITE;
 		exit(-1);
 	}
 	return 0;
@@ -100,9 +96,7 @@ int addStateDouble(double first, ...)
 	stateMapping(program_states[state_index], converted_states[state_index]);
 	state_index++;
 	if (state_index >= max_states_in_one_trace) {
-		setColor(std::cout, RED);
-		std::cout << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n";
-		setColor(std::cout);
+		std::cout << RED << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n" << WHITE;
 		exit(-1);
 	}
 	return 0;
@@ -138,23 +132,36 @@ int afterLoop(States* gsets)
 	}
 
 #ifdef __PRT_TRACE
-	setColor(std::cout, BLUE);
-	std::cout << "TRACE: ";
+	std::cout << BLUE << "TRACE: ";
 	for (int i = 0; i < state_index; i++) {
 		std::cout << "(" << program_states[i][0];
 		for (int j = 1; j < D; j++)
 			std::cout << "," << program_states[i][j];
 		std::cout << ")->";
 	}
-	std::cout << "END[" << label << "]" << std::endl;
-	setColor(std::cout);
-
-	//TS[label].addLoopTrace(LT);
+	std::cout << "END[" << label << "]" << WHITE << std::endl;
 #endif
+	
 	gsets[label].addStates(converted_states, state_index);
-	return 0;
+	return label;
 }
 
+void printRunResult(int rr) {
+	switch (rr) {
+		case -1:
+			std::cout << "-";
+			break;
+		case 0:
+			std::cout << "?";
+			break;
+		case 1:
+			std::cout << "+";
+			break;
+		case 2:
+			std::cout << "x";
+			break;
+	}
+}
 
 int mDouble(double* p)
 {
