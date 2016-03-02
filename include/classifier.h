@@ -86,13 +86,13 @@ class Classifier{
 					B = eq.theta[0];
 					C = eq.theta0;
 					double delta = B * B - 4 * A * C;
+					//std::cout << "A=" << A << " B=" << B << " C= " << C << " delta=" << delta << std::endl;
 					if (delta < 0) return -1;
-					std::cout << "A=" << A << " B=" << B << " C= " << C << " delta=" << delta << std::endl;
 					double x1, x2;
 					x1 = (-1 * B + sqrt(delta)) / (2 * A);
 					x2 = (-1 * B - sqrt(delta)) / (2 * A);
 					if (x1 > x2) std::swap(x1, x2);
-					std::cout << "x1=" << x1 << ", x2=" << x2 << "\n";
+					//std::cout << "x1=" << x1 << ", x2=" << x2 << "\n";
 					if (A > 0) {
 						this->add((new Equation(x1, -1.0))->roundoff());
 						this->add((new Equation(-1 * x2, 1.0))->roundoff(), DISJUNCT);

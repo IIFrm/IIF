@@ -47,17 +47,17 @@ const int max_states_in_one_trace = 10240;
 
 /** @brief defines the number of tests runs initially. Should be a positive integer.
  */
-const int init_exes = 2 * VARS;
+const int init_exes = 16 * VARS;
 
 /** @brief defines the number of tests runs after the first time. Should be a positive integer.
  */
-static int after_exes = 2 * VARS;
+static int after_exes = 16 * VARS;
 
 /** @brief defines the number of random tests runs each time, 
  *		   which is used to avoid bias caused by tests picking chioce. 
  *		   Should be a non-negative integer.
  */
-const int random_exes = 1 * VARS;
+const int random_exes = 4 * VARS;
 
 /** @brief defines the max number of iterations tried by machine learning algorithm, 
  *		   Should be a positive integer. Usually set between 8-128

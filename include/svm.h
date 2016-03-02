@@ -13,6 +13,7 @@ typedef double MState[D4mapping];
 class SVM : public MLalgo
 {
 	private:
+	public:
 		svm_parameter param;
 		svm_problem problem;
 		svm_model* pre_model;
@@ -122,11 +123,12 @@ class SVM : public MLalgo
 			// label:    | 1, 1, ..., 1, . | -1, -1, ..., -1, -1, -1, ...
 			// move the negative states from old OFFSET: [pre_positive_size] to new OFFSET: [cur_positive_size]
 			memmove(data + cur_psize, data + pre_psize, pre_nsize * sizeof(double*));
+			//memmove(pdata + cur_psize, pdata + pre_psize, pre_nsize * sizeof(MState));
 
 			// add new positive states at OFFSET: [pre_positive_size]
 			int cur_index = pre_psize + pre_nsize;
 			for (int i = 0 ; i < cur_psize - pre_psize; i++) {
-				mappingData(gsets[POSITIVE].values[i], pdata[cur_index + i], 4);
+				mappingData(gsets[POSITIVE].values[pre_psize + i], pdata[cur_index + i], 4);
 				data[pre_psize + i] = pdata[cur_index + i];
 				label[pre_psize + i] = 1;
 			}
@@ -139,7 +141,7 @@ class SVM : public MLalgo
 			// add new negative states at OFFSET: [cur_positive_size + pre_negative_size]
 			cur_index = cur_psize + pre_nsize;
 			for (int i = 0 ; i < cur_nsize - pre_nsize; i++) {
-				mappingData(gsets[NEGATIVE].values[i], pdata[cur_index + i], 4);
+				mappingData(gsets[NEGATIVE].values[pre_nsize + i], pdata[cur_index + i], 4);
 				data[cur_index + i] = pdata[cur_index + i];
 				label[cur_index + i] = -1;
 			}
@@ -242,7 +244,7 @@ class SVM : public MLalgo
 				equ = NULL;
 			}
 			//std::cout << "checking point 1\n";
-			std::cout << std::endl << problem << std::endl;
+			//std::cout << std::endl << problem << std::endl;
 			model = svm_train(&problem, &param);
 			std::cout << "\n\tmodel --> " << *model << std::endl;
 			//std::cout << "checking point 2\n";

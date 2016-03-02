@@ -130,6 +130,7 @@ init_svm:
 			std::cout << "\n\t(" << step++ << ") start training with mapping dimension {" << mapping_type << "}...";
 #endif
 			svm->typeChanger(mapping_type);
+			//std::cout << "@@problem:" << svm->problem << std::endl;
 			svm->train();
 			std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
 			cl->factorization(*(svm->equ));
@@ -140,17 +141,15 @@ init_svm:
 			pass_rate = svm->checkTrainingSet();
 
 #ifdef __PRT
-			if (pass_rate == 1) {
+			if (pass_rate == 1)
 				std::cout << GREEN << " [100%] [PASS]" << WHITE;
-			} else {
-				std::cout <<  RED << " [" << pass_rate * 100 << "%]" << WHITE;
-				std::cout << " [FAIL] \n The problem is not linear separable by mapping " << mapping_type << ".. Trying to project to a higher space " << std::endl;
-			}
+			else
+				std::cout <<  RED << " [" << pass_rate * 100 << "%]" << " [FAIL] \n The problem is not linear separable by mapping " 
+					<< mapping_type << ".. Trying to project to a higher space " << WHITE << std::endl;
 #endif
 			if (pass_rate == 1)
 				break;
-			else
-				mapping_type++;
+			mapping_type++;
 		}
 		if (mapping_type > 4) break;
 
