@@ -29,7 +29,7 @@ LinearLearner::~LinearLearner() {
 int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params)
 {
 #ifdef __PRT
-	std::cout << "{R|";
+	std::cout << "{" << GREEN;
 #endif
 
 	if ((type != 0) && (exen > type))
@@ -42,13 +42,14 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 		Classifier::solver(NULL, input);
 		ret = runTarget(input);
 #ifdef __PRT
+		std::cout << input;
 		printRunResult(ret);
-		std::cout << input << "|";
+		std::cout << "|";
 #endif
 	}
 
 #ifdef __PRT
-	std::cout << BLUE << "<<";
+	std::cout << BLUE;
 #endif
 
 	if (type == 0) {
@@ -57,8 +58,8 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 			Classifier::solver((Classifier*)params, input);
 			ret = runTarget(input);
 #ifdef __PRT
+			std::cout << "|" << input;
 			printRunResult(ret);
-			std::cout << input << "|";
 #endif
 		}
 	} 
@@ -127,7 +128,7 @@ init_svm:
 		while (mapping_type <= 4) {
 			cl->clear();
 #ifdef __PRT
-			std::cout << "\n\t(" << step++ << ") start training with mapping dimension {" << mapping_type << "}...";
+			std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") start training with mapping dimension {" << mapping_type << "}...";
 #endif
 			svm->typeChanger(mapping_type);
 			//std::cout << "@@problem:" << svm->problem << std::endl;
@@ -136,7 +137,7 @@ init_svm:
 			cl->factorization(*(svm->equ));
 
 #ifdef __PRT
-			std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") checking training traces.";
+			std::cout << "\t(" << YELLOW << step++ << WHITE << ") checking training traces.";
 #endif
 			pass_rate = svm->checkTrainingSet();
 
@@ -203,7 +204,7 @@ init_svm:
 		/*if (sat == true) std::cout << "TRUE" << std::endl;
 		  else std::cout << "FALSE" << std::endl;
 		  */
-		std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
+		//std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
 		std::cout << YELLOW << "  Hypothesis Invariant(Converged): {\n";
 		std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
 		std::cout << "  }" << WHITE << std::endl;

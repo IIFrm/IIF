@@ -239,14 +239,14 @@ class SVM : public MLalgo
 					svm_free_and_destroy_model(&pre_model);
 				pre_model = model;
 			}
-			if (equ != NULL) {
+			/*if (equ != NULL) {
 				delete equ;
 				equ = NULL;
-			}
+			}*/
 			//std::cout << "checking point 1\n";
 			//std::cout << std::endl << problem << std::endl;
 			model = svm_train(&problem, &param);
-			std::cout << "\n\tmodel --> " << *model << std::endl;
+			//std::cout << "\n\tmodel --> " << *model << std::endl;
 			//std::cout << "checking point 2\n";
 			if (equ == NULL) equ = new Equation();
 			svm_model_visualization(model, equ);

@@ -3393,8 +3393,9 @@ int svm_model_visualization(const svm_model *model, Equation* equ)
 	equ->setDimension(DIMENSION);
 	equ->setTheta0(theta0);
 	equ->setTheta(theta);
+	//std::cout << BLUE << "Before RoundOFF " << *equ << WHITE << std::endl;
 	equ->roundoff();
-	std::cout << *equ << std::endl;
+	//std::cout << *equ << std::endl;
 	return 0;	
 }
 
@@ -3523,10 +3524,10 @@ int model_solver(const svm_model* m, Solution& sol)
 	//assert(m->nr_class == 2);
 	int pn = m->nSV[0], nn = m->nSV[1];
 	int pick_p = rand() % pn;
-	int pick_n = rand() % nn;
+	//int pick_n = rand() % nn;
 	double* label = m->sv_coef[0];
 	int indexp = -1, indexn = -1;
-	int p_num = 0, n_num = 0;
+	int p_num = 0; //, n_num = 0;
 	for (int i = 0; i < pn + nn; i++) {
 		if (label[i] >= 0) {
 			if (p_num++ == pick_p) {

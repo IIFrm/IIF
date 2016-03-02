@@ -64,10 +64,10 @@ class Classifier{
 		}
 
 		int factorization(Equation& eq) {
-			std::cout << "Factorization Process >>>>\n";
+			//std::cout << "\tFactorization Process >>>>\n";
 			int mapping_type = eq.getMappingType();
 			if (mapping_type == 1) {
-				std::cout << "univariant linear function: " << eq << "\n";
+				//std::cout << "univariant linear function: " << eq << "\n";
 				this->add(&eq);
 				return 0;
 			}
@@ -75,7 +75,7 @@ class Classifier{
 			if (mapping_type == 2) {
 				if (VARS == 1) {
 					// univariant quadratic function
-					std::cout << "univariant quadratic function: " << eq << "\n";
+					//std::cout << "univariant quadratic function: " << eq << "\n";
 					double A, B, C;
 					A = eq.theta[1];
 					if (A == 0) {
@@ -100,7 +100,7 @@ class Classifier{
 						this->add((new Equation(-1 * x1, 1.0))->roundoff());
 						this->add((new Equation(x2, -1.0))->roundoff());
 					}
-					std::cout << *this << std::endl;
+					//std::cout << *this << std::endl;
 					return 0;
 				}
 			}
