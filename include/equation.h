@@ -59,10 +59,10 @@ class Equation{
 		int dimension;
 
 		int getMappingType(){
-			if (dimension == D1mapping) return 1;
-			if (dimension == D2mapping) return 2;
-			if (dimension == D3mapping) return 3;
-			if (dimension == D4mapping) return 4;
+			if (dimension == Cv1to1) return 1;
+			if (dimension == Cv1to2) return 2;
+			if (dimension == Cv1to3) return 3;
+			if (dimension == Cv1to4) return 4;
 			return -1;
 		}
 
@@ -70,9 +70,9 @@ class Equation{
 		 *		   Set all its elements to value 0
 		 */
 		Equation() {
-			dimension = VARS;
+			dimension = Nv;
 			theta0 = 0;
-			for (int i = 1; i < D4mapping; i++) {
+			for (int i = 1; i < Cv1to4; i++) {
 				theta[i] = 0; 
 			}
 		}
@@ -90,7 +90,7 @@ class Equation{
 		 *		   The first element is Theta0
 		 */
 		Equation(double a0, ...) {
-			dimension = VARS;
+			dimension = Nv;
 			va_list ap;
 			va_start(ap, a0);
 			theta0 = a0;
@@ -108,7 +108,7 @@ class Equation{
 		Equation(const Equation& equ) {
 			dimension = equ.dimension;
 			theta0 = equ.theta0;
-			for (int i = 0; i < D4mapping; i++)
+			for (int i = 0; i < Cv1to4; i++)
 				theta[i] = equ.theta[i];
 		}
 
@@ -123,7 +123,7 @@ class Equation{
 			if (this == &rhs) { return *this; }
 			dimension = rhs.dimension;
 			theta0 = rhs.theta0;
-			for (int i = 0; i < D4mapping; i++)
+			for (int i = 0; i < Cv1to4; i++)
 				theta[i] = rhs.theta[i];
 			return *this;
 		}
@@ -366,7 +366,7 @@ class Equation{
 				 * equ == NULL means no equation is specified
 				 * So we randomly generate points in given scope [minv, maxv]
 				 */
-				for (int i = 0; i < VARS; i++)
+				for (int i = 0; i < Nv; i++)
 					sol.setVal(i, rand() % (maxv - minv + 1) + minv);
 				return 0;
 			}
@@ -565,16 +565,16 @@ solve:
 		Equation& setMappingType(int mapping_type) {
 			switch(mapping_type) {
 				case 1:
-					dimension = D1mapping;
+					dimension = Cv1to1;
 					break;
 				case 2:
-					dimension = D2mapping;
+					dimension = Cv1to2;
 					break;
 				case 3:
-					dimension = D3mapping;
+					dimension = Cv1to3;
 					break;
 				case 4:
-					dimension = D4mapping;
+					dimension = Cv1to4;
 					break;
 			}
 			return *this;
@@ -583,7 +583,7 @@ solve:
 	//protected:
 	public:
 		double theta0;
-		double theta[D4mapping];
+		double theta[Cv1to4];
 };
 
 #endif

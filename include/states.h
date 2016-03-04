@@ -5,13 +5,13 @@
 #include <string.h>
 
 
-typedef double State[VARS];
+typedef double State[Nv];
 
 class States{
 	public:
-		States() : max_size(max_items) {
-			values = new double[max_items][VARS];
-			t_index = new int[max_items];
+		States() : max_size(Mitems) {
+			values = new double[Mitems][Nv];
+			t_index = new int[Mitems];
 			//values = vector< vector<double> > (max_size, vector<double>(VARS));
 			//index= vector<int>(max_size);
 			t_index[0] = 0;
@@ -43,13 +43,13 @@ class States{
 			if (size + len >= max_size) {
 				//std::cerr << "exceed maximium program states." << std::endl;
 				int previous_max_size = max_size;
-				double(*previous_values)[VARS] = values;
+				double(*previous_values)[Nv] = values;
 				//while (t_index[p_index] + len >= max_size)
 					max_size *= 2;
 
-				if ((values = new double[max_size][VARS]) == NULL)
+				if ((values = new double[max_size][Nv]) == NULL)
 					return -1;
-				memcpy(values, previous_values, previous_max_size * VARS * sizeof(double));
+				memcpy(values, previous_values, previous_max_size * Nv * sizeof(double));
 
 
 				int* previous_t_index = t_index;
@@ -98,7 +98,7 @@ class States{
 			}
 			for (int i = t_index[num]; i < t_index[num + 1]; i++) {
 				std::cout << "(" << values[i][0];
-				for (int j = 1; j < VARS; j++)
+				for (int j = 1; j < Nv; j++)
 					std::cout << "," << values[i][j];
 				std::cout << ")->";
 			}
@@ -111,7 +111,7 @@ class States{
 				std::cout << "\tTr." << i << ":";
 				for (int j = ss.t_index[i]; j < ss.t_index[i + 1]; j++) {
 					std::cout << "(" << ss.values[j][0];
-					for (int k = 1; k < VARS; k++)
+					for (int k = 1; k < Nv; k++)
 						std::cout << "," << ss.values[j][k];
 					std::cout << ")->";
 				}
@@ -153,7 +153,7 @@ class States{
 
 	private:
 		static bool stateCmp(const State& s1, const State& s2) {
-		for (int i = 0; i < VARS; i++) {
+		for (int i = 0; i < Nv; i++) {
 			if (s1[i] != s2[i])
 				return false;
 			}

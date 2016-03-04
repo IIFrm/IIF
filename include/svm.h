@@ -7,7 +7,7 @@
 
 
 
-typedef double MState[D4mapping];
+typedef double MState[Cv1to4];
 
 
 class SVM : public MLalgo
@@ -166,13 +166,13 @@ class SVM : public MLalgo
 			mapping_type = type;
 			switch (type) {
 				case 1:
-					return setDimension(D1mapping);
+					return setDimension(Cv1to1);
 				case 2:
-					return setDimension(D2mapping);
+					return setDimension(Cv1to2);
 				case 3:
-					return setDimension(D3mapping);
+					return setDimension(Cv1to3);
 				case 4:
-					return setDimension(D4mapping);
+					return setDimension(Cv1to4);
 			}
 			return -1;
 		}
@@ -188,31 +188,31 @@ class SVM : public MLalgo
 		bool mappingData(double* src, double* dst, int mp_type = 4) {
 			int index = 0;
 			if (mp_type >= 1) {
-				for (int i = 0; i < VARS; i++) {
+				for (int i = 0; i < Nv; i++) {
 					dst[index++] = src[i];
 				}
 			}
 			if (mp_type >= 2) {
-				for (int i = 0; i < VARS; i++) {
-					for (int j = i; j < VARS; j++) {
+				for (int i = 0; i < Nv; i++) {
+					for (int j = i; j < Nv; j++) {
 						dst[index++] = src[i] * src[j];
 					}
 				}
 			}
 			if (mp_type >= 3) {
-				for (int i = 0; i < VARS; i++) {
-					for (int j = i; j < VARS; j++) {
-						for (int k = j; k < VARS; k++) {
+				for (int i = 0; i < Nv; i++) {
+					for (int j = i; j < Nv; j++) {
+						for (int k = j; k < Nv; k++) {
 							dst[index++] = src[i] * src[j] * src[k];
 						}
 					}
 				}
 			}
 			if (mp_type >= 4) {
-				for (int i = 0; i < VARS; i++) {
-					for (int j = i; j < VARS; j++) {
-						for (int k = j; k < VARS; k++) {
-							for (int l = k; l < VARS; l++) {
+				for (int i = 0; i < Nv; i++) {
+					for (int j = i; j < Nv; j++) {
+						for (int k = j; k < Nv; k++) {
+							for (int l = k; l < Nv; l++) {
 								dst[index++] = src[i] * src[j] * src[k] * src[l];
 							}
 						}

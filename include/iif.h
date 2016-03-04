@@ -92,27 +92,27 @@ namespace iif{
 				for (int i = 0; i < vnum; i++)
 					vfile >> variables[i];
 				*/
-				variables = new std::string[D4mapping];
-				for (int i = 0; i < VARS; i++)
+				variables = new std::string[Cv1to4];
+				for (int i = 0; i < Nv; i++)
 					vfile >> variables[i];
 				vfile.close();
-				int index = VARS;
-				for (int i = 0; i < VARS; i++) {
-					for (int j = i; j < VARS; j++) {
+				int index = Nv;
+				for (int i = 0; i < Nv; i++) {
+					for (int j = i; j < Nv; j++) {
 						variables[index++] = "(" + variables[i] + "*" + variables[j] + ")";
 					}
 				}
-				for (int i = 0; i < VARS; i++) {
-					for (int j = i; j < VARS; j++) {
-						for (int k = j; k < VARS; k++) {
+				for (int i = 0; i < Nv; i++) {
+					for (int j = i; j < Nv; j++) {
+						for (int k = j; k < Nv; k++) {
 							variables[index++] = "(" + variables[i] + "*" + variables[j] + "*" + variables[k] + ")";
 						}
 					}
 				}
-				for (int i = 0; i < VARS; i++) {
-					for (int j = i; j < VARS; j++) {
-						for (int k = j; k < VARS; k++) {
-							for (int l = k; l < VARS; l++) {
+				for (int i = 0; i < Nv; i++) {
+					for (int j = i; j < Nv; j++) {
+						for (int k = j; k < Nv; k++) {
+							for (int l = k; l < Nv; l++) {
 								variables[index++] = "(" + variables[i] + "*" + variables[j] + "*" + variables[k] + "*" + variables[l] + ")";
 							}
 						}

@@ -73,7 +73,7 @@ class Classifier{
 			}
 
 			if (mapping_type == 2) {
-				if (VARS == 1) {
+				if (Nv == 1) {
 					// univariant quadratic function
 					//std::cout << "univariant quadratic function: " << eq << "\n";
 					double A, B, C;

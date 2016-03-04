@@ -59,7 +59,7 @@ class Solution{
 		 */
 		Solution() {
 			val[0] = 0;
-			for (int i = 1; i < VARS; i++) {
+			for (int i = 1; i < Nv; i++) {
 				val[i] = 0;
 			}
 		}
@@ -74,7 +74,7 @@ class Solution{
 			va_start(ap, a0);
 			val[0] = a0;
 
-			for (int i = 1; i < VARS; i++) {
+			for (int i = 1; i < Nv; i++) {
 				val[i] = va_arg(ap, double);
 			}
 			va_end(ap);
@@ -87,7 +87,7 @@ class Solution{
 		 */
 		friend std::ostream& operator << (std::ostream& out, const Solution& sol) {
 			out << "(" << sol.val[0];
-			for (int j = 1; j < VARS; j++)
+			for (int j = 1; j < Nv; j++)
 				out << "," << sol.val[j];
 			out << ")";
 			return out;
@@ -95,20 +95,20 @@ class Solution{
 
 		double getVal(int i)
 		{
-			assert ((i < VARS) || "index out of bound.");
+			assert ((i < Nv) || "index out of bound.");
 			return val[i];
 		}
 
 		int setVal(int i, double value)
 		{
-			assert ((i < VARS) || "index out of bound.");
+			assert ((i < Nv) || "index out of bound.");
 			val[i] = value;
 			return 0;
 		}
 
 	private:
 		/// The data field of Solution, stores all the values as a solution to an Equation 
-		double val[VARS];
+		double val[Nv];
 };
 
 

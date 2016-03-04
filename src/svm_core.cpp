@@ -16,7 +16,7 @@ using namespace z3;
 #endif
 
 int libsvm_version = LIBSVM_VERSION;
-int DIMENSION = VARS;
+int DIMENSION = Nv;
 typedef float Qfloat;
 typedef signed char schar;
 #ifndef min
@@ -3368,7 +3368,7 @@ int svm_model_visualization(const svm_model *model, Equation* equ)
 	const double * const *sv_coef = model->sv_coef;
 	const svm_node * const *SV = model->SV;
 
-	double theta[D4mapping];// = equ->theta;
+	double theta[Cv1to4];// = equ->theta;
 	double theta0 = sv_coef[0][0] > 0? 1 : -1;
 	for (int i = 0; i < DIMENSION; i++)
 		theta[i] = 0;
@@ -3517,7 +3517,7 @@ int model_solver(const svm_model* m, Solution& sol)
 	//std::cout << "\n-->>>model_solver ";
 	if (m == NULL) {
 		//for (int i = 0; i < DIMENSION; i++)
-		for (int i = 0; i < VARS; i++)
+		for (int i = 0; i < Nv; i++)
 			sol.setVal(i, rand() % (maxv - minv + 1) + minv);
 		return 0;
 	}
@@ -3569,10 +3569,10 @@ int model_solver(const svm_model* m, Solution& sol)
 	   */
 	//std::cout << GREEN << pn << "," << nn << "<" << pick_p << "," << pick_n <<">" << WHITE;
 	//std::cout << BLUE << "<" << indexp << "," << indexn <<">" << WHITE;
-	int pieces = rand() % 6 + VARS + 1;
+	int pieces = rand() % 6 + Nv + 1;
 	double u  = (rand() % (pieces-1) + 1.0) / pieces;
 	//std::cout << "u=" << u;
-	for (int i = 0; i < VARS; i++) {
+	for (int i = 0; i < Nv; i++) {
 		double value =  nearbyint(m->SV[indexp][i].value + (m->SV[indexn][i].value - m->SV[indexp][i].value) * u);
 		sol.setVal(i, value);
 	}

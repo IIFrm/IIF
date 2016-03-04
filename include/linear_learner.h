@@ -7,7 +7,7 @@
 
 class LinearLearner: public BaseLearner {
 	public:
-		LinearLearner(States* gsets, int (*func)(int*) = target_program, int max_iteration = max_iter);
+		LinearLearner(States* gsets, int (*func)(int*) = target_program, int max_iteration = Miter);
 
 		~LinearLearner();
 

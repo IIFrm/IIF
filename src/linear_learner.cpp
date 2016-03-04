@@ -96,20 +96,20 @@ int LinearLearner::learn()
 
 
 	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
-		int exes = (rnd == 1)? init_exes : after_exes;
+		int exes = (rnd == 1)? Nexe_init : Nexe_after;
 init_svm:
 #ifdef __PRT
 		int step = 1;
 		std::cout << RED << "[" << rnd << "]" << WHITE;
 		std::cout << RED << "Linear SVM------------------------{" << mapping_type << "}------------------------------------------------------------------------------------" << WHITE << std::endl;
-		std::cout << "\t(" << YELLOW << step++ << WHITE << ") execute programs... [" << exes + random_exes << "] ";
+		std::cout << "\t(" << YELLOW << step++ << WHITE << ") execute programs... [" << exes + Nexe_rand << "] ";
 #else
 		std::cout << RED << "[" << rnd << "]" << WHITE;
 #endif
 		//std::cout << std::endl << "\t-->selective sampling:\n\t";
 		//selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
 		//selectiveSampling(random_exes, exes, 0, lastModel);
-		selectiveSampling(random_exes, exes, 0, cl);
+		selectiveSampling(Nexe_rand, exes, 0, cl);
 		//std::cout << "\t<--selective sampling:\n";
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
@@ -174,14 +174,14 @@ init_svm:
 			}
 #ifdef __PRT
 			std::cout << "[FT]";
-			after_exes *= 2;
+			Nexe_after *= 2;
 #endif
 			similarLast = true;
 		} else {
 #ifdef __PRT
 			std::cout << ((similarLast == true) ? "[T" : "[F") << "F] ";
 			if (similarLast == true)
-				after_exes /= 2;
+				Nexe_after /= 2;
 #endif
 			similarLast = false;
 		}

@@ -45,8 +45,8 @@ class BaseLearner{
 			//assert(&input != NULL);
 			beforeLoop();
 
-			int a[VARS];
-			for (int i = 0; i < VARS; i++)
+			int a[Nv];
+			for (int i = 0; i < Nv; i++)
 				a[i] = static_cast<int>(input.getVal(i));
 			/*int b[D];
 			stateReverseMapping(a, b);*/

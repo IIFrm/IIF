@@ -12,7 +12,7 @@ int assert_times = 0;
 char lt[4][10] =  { "Negative", "Question", "Positive", "Bugtrace"};
 char(*LabelTable)[10] = &lt[1];
 
-double program_states[max_states_in_one_trace][VARS];
+double program_states[MstatesIn1trace][Nv];
 int state_index;
 
 #include "color.h"
@@ -21,7 +21,7 @@ int addStateInt(int first ...)
 	va_list ap;
 	va_start(ap, first);
 	program_states[state_index][0] = first;
-	for (int i = 1; i < VARS; i++) {
+	for (int i = 1; i < Nv; i++) {
 		program_states[state_index][i] = va_arg(ap, int);
 	}
 	va_end(ap);
@@ -34,8 +34,8 @@ int addStateInt(int first ...)
 	std::cout << ")" << WHITE;
 #endif
 	state_index++;
-	if (state_index >= max_states_in_one_trace) {
-		std::cout << RED << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n" << WHITE;
+	if (state_index >= MstatesIn1trace) {
+		std::cout << RED << "\nToo many states (>" << MstatesIn1trace << ") in one execution. Stop here.\n" << WHITE;
 		exit(-1);
 	}
 	return 0;
@@ -46,13 +46,13 @@ int addStateDouble(double first, ...)
 	va_list ap;
 	va_start(ap, first);
 	program_states[state_index][0] = first;
-	for (int i = 1; i < VARS; i++) {
+	for (int i = 1; i < Nv; i++) {
 		program_states[state_index][i] = va_arg(ap, double);
 	}
 	va_end(ap);
 	state_index++;
-	if (state_index >= max_states_in_one_trace) {
-		std::cout << RED << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n" << WHITE;
+	if (state_index >= MstatesIn1trace) {
+		std::cout << RED << "\nToo many states (>" << MstatesIn1trace << ") in one execution. Stop here.\n" << WHITE;
 		exit(-1);
 	}
 	return 0;
@@ -121,8 +121,8 @@ void printRunResult(int rr) {
 
 int mDouble(double* p)
 {
-	int a[VARS];
-	for (int i = 0; i < VARS; i++)
+	int a[Nv];
+	for (int i = 0; i < Nv; i++)
 		a[i] = static_cast<int>(p[i]);
 	return mInt(a);
 }
