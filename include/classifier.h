@@ -65,14 +65,14 @@ class Classifier{
 
 		int factorization(Equation& eq) {
 			//std::cout << "\tFactorization Process >>>>\n";
-			int mapping_type = eq.getMappingType();
-			if (mapping_type == 1) {
+			int times = eq.getMappingType();
+			if (times == 1) {
 				//std::cout << "univariant linear function: " << eq << "\n";
 				this->add(&eq);
 				return 0;
 			}
 
-			if (mapping_type == 2) {
+			if (times == 2) {
 				if (Nv == 1) {
 					// univariant quadratic function
 					//std::cout << "univariant quadratic function: " << eq << "\n";
@@ -101,6 +101,9 @@ class Classifier{
 						this->add((new Equation(x2, -1.0))->roundoff());
 					}
 					//std::cout << *this << std::endl;
+					return 0;
+				}
+				if (Nv == 2) {
 					return 0;
 				}
 			}

@@ -9,26 +9,42 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
+
 /**  @brief defines the number of paramenters by a given loop,\
  *		   This also is the number of parameters we need to record for processing.
- *		   This should be set in ${project_root}/CMakeLists.txt file
+ *		   This should be set in /CMakeLists.txt file
  *		   If it is not set correctly, you may come across a runtime error
  */
-#define VARS ${VARS} 
-//#define D ${VARS} 
-//#define VARS (D + D * (D + 1) / 2)
-//#define VARS (D)
+#define Nv ${VARS} 
 
-#define D1mapping (VARS)
-#define D2mapping (VARS * (VARS + 1) / (1 * 2) + D1mapping)
-#define D3mapping (VARS * (VARS + 1) * (VARS + 2) / (1 * 2 * 3) + D2mapping) 
-#define D4mapping (VARS * (VARS + 1) * (VARS + 2) * (VARS + 3) / (1 * 2 * 3 * 4) + D3mapping) 
+ /*#define Cv(i) do {int return_num##i = 1;\
+ for (int tempi = 0; tempi < i; i++) return_num##i *= (Nv + i);\
+ for (int tempi = 0; tempi < i; i++) return_num##i /= (1 + i);\
+ } while(0);
+ #define Cv1to1 (Cv(1))
+ #define Cv1to2 (Cv(1) + Cv(2))
+ #define Cv1to3 (Cv(1) + Cv(2) + Cv(3))
+ #define Cv1to4 (Cv(1) + Cv(2) + Cv(3) + Cv(4))
+ */
+
+#define Cv0 (1)
+#define Cv1 (Nv)
+#define Cv2 (Nv * (Nv + 1) / (1 * 2))
+#define Cv3 (Nv * (Nv + 1) * (Nv + 2) / (1 * 2 * 3)) 
+#define Cv4 (Nv * (Nv + 1) * (Nv + 2) * (Nv + 3) / (1 * 2 * 3 * 4))
+
+#define Cv1to1 (Cv1)
+#define Cv1to2 (Cv1 + Cv2)
+#define Cv1to3 (Cv1 + Cv2 + Cv3) 
+#define Cv1to4 (Cv1 + Cv2 + Cv3 + Cv4) 
+
+
 
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  
- *		   This should be set in ${project_root}/CMakeLists.txt file
+ *		   This should be set in /CMakeLists.txt file
  *		   You'd better set this value in a scope [1, 12] 
  */
-#define PRECISION ${PRECISION}
+#define PRECISION 3
 
 /** @brief The pointer to test program, DO NOT assign directly
  *		   Call register_program to set its value
@@ -38,31 +54,31 @@ extern int (*target_program) (int*);
 /** @brief defines the initial max number items contains by states set. 
  *		   Better to be a number larger than 1000 
  */
-const int max_items = 10000000;
+const int Mitems = 10000000;
 
 /** @brief defines max number of states contains in one executionn. 
  *		   Better to be a number larger than 128 
  */
-const int max_states_in_one_trace = 10240;
+const int MstatesIn1trace = 10240;
 
 /** @brief defines the number of tests runs initially. Should be a positive integer.
  */
-const int init_exes = 16 * VARS;
+const int Nexe_init = 16 * Nv;
 
 /** @brief defines the number of tests runs after the first time. Should be a positive integer.
  */
-static int after_exes = 16 * VARS;
+static int Nexe_after = 16 * Nv;
 
 /** @brief defines the number of random tests runs each time, 
  *		   which is used to avoid bias caused by tests picking chioce. 
  *		   Should be a non-negative integer.
  */
-const int random_exes = 4 * VARS;
+const int Nexe_rand = 4 * Nv;
 
 /** @brief defines the max number of iterations tried by machine learning algorithm, 
  *		   Should be a positive integer. Usually set between 8-128
  */
-const int max_iter = 512;
+const int Miter = 512;
 
 /** @brief This function register the test program to the framework.
  *
