@@ -12,8 +12,50 @@ int assert_times = 0;
 char lt[4][10] =  { "Negative", "Question", "Positive", "Bugtrace"};
 char(*LabelTable)[10] = &lt[1];
 
-double program_states[max_states_in_one_trace][VARS];
+double program_states[max_states_in_one_trace][D];
+double converted_states[max_states_in_one_trace][VARS];
 int state_index;
+
+double* stateMapping(double* src, double* dst) // src is of D dimension, while dst is of VARS dimension
+{
+	if (D == VARS) {
+		for (int i = 0; i < D; i++) {
+			dst[i] = src[i];
+		}
+		return dst;
+	}
+	switch (D) {
+		case 1:
+			// mapping rule: (x) --> (x, x^2)
+			dst[0] = src[0];
+			dst[1] = src[0] * src[0];
+			break;
+		case 2:
+			// mapping rule: (x0, x1) --> (x0, x1, x0^2, x0*x1, x1^2)
+			dst[0] = src[0];
+			dst[1] = src[1];
+			dst[2] = src[0] * src[0];
+			dst[3] = src[0] * src[1];
+			dst[4] = src[1] * src[1];
+			break;
+		default:
+			break;
+	}
+	return dst;
+}
+
+// src is of VARS dimension, while dst is of D dimension
+double* stateReverseMapping(double* src, double* dst) {
+	for (int i = 0; i < D; i++)
+		dst[i] = src[i];
+	return dst;
+}
+int* stateReverseMapping(int* src, int* dst) {
+	for (int i = 0; i < D; i++)
+		dst[i] = src[i];
+	return dst;
+}
+
 
 #include "color.h"
 int addStateInt(int first ...)
@@ -21,18 +63,19 @@ int addStateInt(int first ...)
 	va_list ap;
 	va_start(ap, first);
 	program_states[state_index][0] = first;
-	for (int i = 1; i < VARS; i++) {
+	for (int i = 1; i < D; i++) {
 		program_states[state_index][i] = va_arg(ap, int);
 	}
 	va_end(ap);
 
 #ifdef __PRT_TRACE
 	std::cout << BLUE << "(" << program_states[state_index][0];
-	for (int i = 1; i < VARS; i++) {
+	for (int i = 1; i < D; i++) {
 	    std::cout << "," << program_states[state_index][i];
 	}
 	std::cout << ")" << WHITE;
 #endif
+	stateMapping(program_states[state_index], converted_states[state_index]);
 	state_index++;
 	if (state_index >= max_states_in_one_trace) {
 		std::cout << RED << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n" << WHITE;
@@ -46,10 +89,11 @@ int addStateDouble(double first, ...)
 	va_list ap;
 	va_start(ap, first);
 	program_states[state_index][0] = first;
-	for (int i = 1; i < VARS; i++) {
+	for (int i = 1; i < D; i++) {
 		program_states[state_index][i] = va_arg(ap, double);
 	}
 	va_end(ap);
+	stateMapping(program_states[state_index], converted_states[state_index]);
 	state_index++;
 	if (state_index >= max_states_in_one_trace) {
 		std::cout << RED << "\nToo many states (>" << max_states_in_one_trace << ") in one execution. Stop here.\n" << WHITE;
@@ -98,7 +142,7 @@ int afterLoop(States* gsets)
 	std::cout << "END[" << label << "]" << WHITE << std::endl;
 #endif
 	
-	gsets[label].addStates(program_states, state_index);
+	gsets[label].addStates(converted_states, state_index);
 	return label;
 }
 
@@ -121,8 +165,8 @@ void printRunResult(int rr) {
 
 int mDouble(double* p)
 {
-	int a[VARS];
-	for (int i = 0; i < VARS; i++)
+	int a[D];
+	for (int i = 0; i < D; i++)
 		a[i] = static_cast<int>(p[i]);
 	return mInt(a);
 }

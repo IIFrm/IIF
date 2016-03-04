@@ -341,6 +341,7 @@ class Equation{
 			return false;
 		}
 
+
 		/** @brief A shell on linear_solver(equ, sol)
 		 * 
 		 * @param sol set by callee as a solution to given object

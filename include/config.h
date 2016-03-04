@@ -14,15 +14,15 @@
  *		   This should be set in /CMakeLists.txt file
  *		   If it is not set correctly, you may come across a runtime error
  */
-//#define VARS 1 
-#define D 1 
+#define VARS 2 
+//#define D 2 
 //#define VARS (D + D * (D + 1) / 2)
-#define VARS (D)
+//#define VARS (D)
 
 #define D1mapping (VARS)
-#define D2mapping (VARS * (VARS + 1) / 2 + D1mapping)
-#define D3mapping (VARS * (VARS + 1) * (VARS + 2) / 6 + D2mapping) 
-#define D4mapping (VARS * (VARS + 1) * (VARS + 2) * (VARS + 3) / 24 + D3mapping) 
+#define D2mapping (VARS * (VARS + 1) / (1 * 2) + D1mapping)
+#define D3mapping (VARS * (VARS + 1) * (VARS + 2) / (1 * 2 * 3) + D2mapping) 
+#define D4mapping (VARS * (VARS + 1) * (VARS + 2) * (VARS + 3) / (1 * 2 * 3 * 4) + D3mapping) 
 
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  
  *		   This should be set in /CMakeLists.txt file
