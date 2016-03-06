@@ -63,31 +63,35 @@ class Classifier{
 			return 0;
 		}
 
-		int factorization(Equation& eq) {
+		bool factor(Equation& eq) {
 			//std::cout << "\tFactorization Process >>>>\n";
+			eq.factor();
 			int etimes = eq.getEtimes();
 			if (etimes == 1) {
 				//std::cout << "univariant linear function: " << eq << "\n";
 				this->add(&eq);
-				return 0;
+				return true;
 			}
 
-			if (etimes == 2) {
-				if (Nv == 1) {
+			if (Nv == 1) {
+				if (etimes == 2) {
 					// univariant quadratic function
 					//std::cout << "univariant quadratic function: " << eq << "\n";
 					double A, B, C;
 					A = eq.getTheta(2);
+					B = eq.getTheta(1);
+					C = eq.getTheta(0);
 					if (A == 0) {
 						eq.setEtimes(1);
 						this->add(&eq);
-						return 0;
+						return true;
 					}
-					B = eq.getTheta(1);
-					C = eq.getTheta(0);
 					double delta = B * B - 4 * A * C;
 					//std::cout << "A=" << A << " B=" << B << " C= " << C << " delta=" << delta << std::endl;
-					if (delta < 0) return -1;
+					if (delta < 0) {
+						std::cout << RED << "Delta shouldnot be less than 0.\n";
+						return false;
+					}
 					double x1, x2;
 					x1 = (-1 * B + sqrt(delta)) / (2 * A);
 					x2 = (-1 * B - sqrt(delta)) / (2 * A);
@@ -101,14 +105,31 @@ class Classifier{
 						this->add((new Equation(x2, -1.0))->roundoff());
 					}
 					//std::cout << *this << std::endl;
-					return 0;
+					return true;
 				}
-				if (Nv == 2) {
-					return 0;
+
+				if (etimes == 3) {
+					double A, B, C, D;
+					A = eq.getTheta(3);
+					B = eq.getTheta(2);
+					C = eq.getTheta(1);
+					D = eq.getTheta(0);
+					double delta1 = B * C / (6 * A * A) - B * B * B / (27 * A * A * A) - D / (2 * A);
+					double delta2 = C / (3 * A) - B * B / (9 * A * A);
+					double delta = delta1 * delta1 + delta2 * delta2 * delta2;
+					if (delta > 0) {
+						std::cout << RED << "Delta shouldnot be more than 0.\n";
+						return false;
+					}
+					double x1 = -B / (3 * A) + pow(delta1 + sqrt(delta), 1.0/3) + pow(delta1 - sqrt(delta), 1.0/3);
+					//double x2, x3;
+					// calculate x2 x3
+					this->add((new Equation(x1, -1.0))->roundoff());
+					return true;
 				}
 			}
 
-			return -1;
+			return false;
 		}
 		
 		static int solver(const Classifier* cl, Solution& sol) {

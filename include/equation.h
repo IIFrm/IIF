@@ -135,7 +135,7 @@ public:
 			else 
 				stm << " + ";
 			if (theta[j] != 1) 
-				stm << theta[j] << " * ";
+				stm << "(" << theta[j] << ")*";
 			stm << variables[j];
 		}
 		stm << " >= 0";
@@ -146,11 +146,11 @@ public:
 	/** @brief Output the equation in a readable format
 	 *
 	 *	Example:
-	 *  2{0} + 3{1} >= 5
+	 *  5 + 2{0} + 3{1} >= 0
 	 *
 	 *  @param equ the equation to be ouput
 	 */
-	friend std::ostream& operator << (std::ostream& out, const Equation& equ) {
+	friend std::ostream& operator<< (std::ostream& out, const Equation& equ) {
 		out << std::setprecision(16);
 		bool firstplus = false;
 		for (int j = 0; j < equ.dims; j++) {
@@ -160,7 +160,7 @@ public:
 			else 
 				out << " + ";
 			if (equ.theta[j] != 1) 
-				out << equ.theta[j] << " * ";
+				out << "(" << equ.theta[j] << ")*";
 			out << variables[j];
 		}
 		out << " >= 0";
@@ -168,23 +168,6 @@ public:
 		return out;
 	}
 
-	/*
-	void printInside() {
-		std::cout << std::setprecision(16);
-		if (theta[0] != 1)
-			std::cout << theta[0] << " * ";
-		std::cout << variables[0];
-		for (int j = 1; j < dims; j++) {
-			std::cout << "  +  ";
-			if (theta[j] != 1)
-				std::cout << theta[j] << " * ";
-			std::cout << variables[j];
-		}
-		if (theta0 < 0)
-			std::cout << " - " << -theta0;
-		else
-			std::cout << " + " << theta0;
-	}*/
 
 	/** @brief This method converts *this equation object to z3 expr object.
 	 *
@@ -195,51 +178,8 @@ public:
 	 *	@param c is z3::context, defines which context the return expr will be used.
 	 *	@return z3::expr
 	 */
-	 //#ifdef linux
 #if (linux || __MACH__)
-	z3::expr toZ3expr(char** name, z3::context& c) const
-	{
-		char** pname = name;
-		if (pname == NULL) {
-			pname = new char*[Cv1to4];
-			for (int i = 0; i < Cv1to4; i++) {
-				pname[i] = new char[8];
-				sprintf(pname[i], "x%d", i);
-			}
-		}
-
-		const Equation& e = *this;
-		std::vector<z3::expr> x;
-		std::vector<z3::expr> theta;
-
-		char real[65];
-		snprintf(real, 64, "%2.8f", e.theta[0]);
-		z3::expr expr = c.real_val(real);
-		theta.push_back(expr);
-
-		for (int i = 1; i < dims; i++) {
-			z3::expr tmp = c.real_const(pname[i]);
-			x.push_back(tmp);
-
-			snprintf(real, 64, "%2.8f", e.theta[i]);
-			tmp = c.real_val(real);
-			theta.push_back(tmp);
-
-			expr = expr + theta[i] * x[i];
-		}
-
-		//std::cout << "expr1: " << expr1 << std::endl;
-		//std::cout << "expr2: " << expr2 << std::endl;
-
-		z3::expr hypo = expr >= 0;
-		if (name == NULL) {
-			for (int i = 0; i < dims; i++) {
-				delete[]pname[i];
-			}
-			delete[]pname;
-		}
-		return hypo;
-	}
+	z3::expr toZ3expr(char** name, z3::context& c) const;
 #endif
 
 	/** @brief This imply method checks whether this equation object can imply another one or not
@@ -252,111 +192,40 @@ public:
 	 *  @param e2 is the equation right side
 	 *  @return bool true if yes, false if no.
 	 */
-	bool imply(const Equation& e2) {
-		//#ifdef linux
-#if (linux || __MACH__)
-#ifdef __PRT_QUERY
-		std::cout << "-------------Imply solving-------------\n";
-#endif
-		Equation& e1 = *this;
-		z3::config cfg;
-		cfg.set("auto_config", true);
-		z3::context c(cfg);
+	bool imply(const Equation& e2);
+	static bool multiImply(const Equation* e1, int e1_num, const Equation& e2);
 
-		/*char** name = new char* [1];
-		  name[0] = "asdfg";
-		  z3::expr hypo = e1.to_z3expr(name, c);
-		  z3::expr conc = e2.to_z3expr(name, c);
-		  */
-		z3::expr hypo = e1.toZ3expr(NULL, c);
-		z3::expr conc = e2.toZ3expr(NULL, c);
-#ifdef __PRT_QUERY
-		std::cout << "hypo: " << hypo << std::endl;
-		std::cout << "conc: " << conc << std::endl;
-#endif
-
-		z3::expr query = implies(hypo, conc);
-#ifdef __PRT_QUERY
-		std::cout << "Query : " << query << std::endl;
-		std::cout << "Answer: ";
-#endif
-
-		z3::solver s(c);
-		s.add(!query);
-		z3::check_result ret = s.check();
-		if (ret == unsat) {
-			return true;
-		}
-#endif
-		return false;
-	}
-
-	static bool multiImply(const Equation* e1, int e1_num, const Equation& e2) {
-		//#ifdef linux
-#if (linux || __MACH__)
-#ifdef __PRT_QUERY
-		std::cout << "-------------Multi-Imply solving-------------\n";
-#endif
-
-		z3::config cfg;
-		cfg.set("auto_config", true);
-		z3::context c(cfg);
-
-
-		z3::expr hypo = e1[0].toZ3expr(NULL, c);
-		for (int i = 1; i < e1_num; i++) {
-			hypo = hypo && e1[i].toZ3expr(NULL, c);;
-		}
-
-		z3::expr conc = e2.toZ3expr(NULL, c);
-
-		//std::cout << "hypo: " << hypo << std::endl;
-		//std::cout << "conc: " << conc << std::endl;
-
-		z3::expr query = implies(hypo, conc);
-#ifdef __PRT_QUERY
-		std::cout << "Query : " << query << std::endl;
-		std::cout << "Answer: ";
-#endif
-
-		z3::solver s(c);
-		s.add(!query);
-		z3::check_result ret = s.check();
-
-
-		if (ret == unsat) {
-#ifdef __PRT_QUERY
-			std::cout << "True" << std::endl;
-#endif
-			return true;
-		}
-		else {
-#ifdef __PRT_QUERY
-			std::cout << "False" << std::endl;
-#endif
-			return false;
-		}
-#endif
-		return false;
-	}
-
-
-	static bool factorNv1Times2(double A, double B, double C);
-
-	static bool factorNv1Times3(double A, double B, double C, double D);
-
-	static bool factorNv2Times2(double A, double B, double C, double D, double E, double F);
-
-	static bool factorNv2Times3(double A, double B, double C, double D, double E,
-		double F, double G, double H, double I, double J);
-
-	static bool factorNv3Times2(double A, double B, double C, double D, double E,
-		double F, double G, double H, double I, double J);
+	static bool factorNv1Times2(double *B);
+	static bool factorNv1Times3(double *B);
+	static bool factorNv2Times2(double *B);
+	static bool factorNv2Times3(double *B);
+	static bool factorNv3Times2(double *B);
 
 	static bool toStandardForm(const Equation& e, double* coefs);
 
 	bool toStandardForm(double* coefs) {
 		return Equation::toStandardForm(*this, coefs);
+	}
+
+	bool factor() {
+		std::cout << "\t  <<Factoring Equation>> ";
+		if (getEtimes() == 1) return true;
+		double coefs[Cv0to4];
+		this->toStandardForm(coefs);
+		switch(Nv) {
+			case 1:
+				if (getEtimes() == 2) return factorNv1Times2(coefs);
+				if (getEtimes() == 3) return factorNv1Times3(coefs);
+				return false;
+			case 2:
+				if (getEtimes() == 2) return factorNv2Times2(coefs);
+				if (getEtimes() == 3) return factorNv2Times3(coefs);
+				return false;
+			case 3:
+				if (getEtimes() == 2) return factorNv3Times2(coefs);
+				return false;
+		}
+		return false;
 	}
 
 
@@ -556,7 +425,7 @@ public:
 		return this;
 	}
 
-	inline double getTheta(int i) {
+	inline double getTheta(int i) const {
 		assert((i < dims) || "parameter for getTheta is out of boundary.");
 		return theta[i];
 	}
@@ -570,10 +439,10 @@ public:
 			theta[i] = values[i];
 		return true;
 	}
-	inline double getTheta0() { return theta[0]; }
+	inline double getTheta0() const { return theta[0]; }
 	inline bool setTheta0(double value) { theta[0] = value; return true; }
 
-	inline int getEtimes() {
+	inline int getEtimes() const {
 		return etimes;
 	}
 

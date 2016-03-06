@@ -134,7 +134,7 @@ int LinearLearner::learn()
 			//std::cout << "@@problem:" << svm->problem << std::endl;
 			svm->train();
 			std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
-			cl->factorization(*(svm->equ));
+			cl->factor(*(svm->equ));
 
 #ifdef __PRT
 			std::cout << "\t(" << YELLOW << step++ << WHITE << ") checking training traces.";
