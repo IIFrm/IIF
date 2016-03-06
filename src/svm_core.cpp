@@ -3253,9 +3253,9 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 
 	Equation eq;
 	if (cl != NULL) {
-		eq.reset(avalue[0]);
+		eq.set(avalue[0]);
 		cl->add(&eq, CONJUNCT);
-		eq.reset(avalue[1]);
+		eq.set(avalue[1]);
 		cl->add(&eq, CONJUNCT);
 	}
 #ifdef __PRT_Z3SOLVE
@@ -3334,7 +3334,7 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 
 	Equation eq;
 	if (cl != NULL) {
-		eq.reset(avalue);
+		eq.set(avalue);
 		std::cout << "Equation: \n" << eq << std::endl;
 		cl->add(&eq);
 		//#ifdef __PRT_Z3SOLVE
@@ -3390,7 +3390,7 @@ int svm_model_visualization(const svm_model *model, Equation* equ)
 		temp *= sv_coef[0][i];
 		theta0 -= temp;
 	}
-	equ->setDimension(DIMENSION);
+	equ->setDims(DIMENSION);
 	equ->setTheta0(theta0);
 	equ->setTheta(theta);
 	//std::cout << BLUE << "Before RoundOFF " << *equ << WHITE << std::endl;

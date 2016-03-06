@@ -38,6 +38,15 @@
 #define Cv1to3 (Cv1 + Cv2 + Cv3) 
 #define Cv1to4 (Cv1 + Cv2 + Cv3 + Cv4) 
 
+#define Cv0to1 (Cv0 + Cv1)
+#define Cv0to2 (Cv0 + Cv1 + Cv2)
+#define Cv0to3 (Cv0 + Cv1 + Cv2 + Cv3) 
+#define Cv0to4 (Cv0 + Cv1 + Cv2 + Cv3 + Cv4)
+
+/*#define _Cv1to(n) Cv1to##n
+#define Cv1to(n) _Cv1to(n)
+*/
+
 
 
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  

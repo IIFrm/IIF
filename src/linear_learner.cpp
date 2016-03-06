@@ -11,9 +11,9 @@
 
 static void print_null(const char *s) {}
 
-LinearLearner::LinearLearner(States* gsets, int (*func)(int*), int max_iteration) : BaseLearner(gsets, func) { 
+LinearLearner::LinearLearner(States* gsets, int(*func)(int*), int max_iteration) : BaseLearner(gsets, func) {
 	svm = new SVM(0, print_null);
-	this->max_iteration = max_iteration; 
+	this->max_iteration = max_iteration;
 }
 
 
@@ -62,7 +62,7 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 			printRunResult(ret);
 #endif
 		}
-	} 
+	}
 	/*else if (type > 0) {
 		Solution* p = (Solution*)params;
 #ifdef __PRT
@@ -96,8 +96,8 @@ int LinearLearner::learn()
 
 
 	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
-		int exes = (rnd == 1)? Nexe_init : Nexe_after;
-init_svm:
+		int exes = (rnd == 1) ? Nexe_init : Nexe_after;
+	init_svm:
 #ifdef __PRT
 		int step = 1;
 		std::cout << RED << "[" << rnd << "]" << WHITE;
@@ -114,8 +114,8 @@ init_svm:
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
 #ifdef __PRT
-			if (gsets[POSITIVE].traces_num() == 0) std::cout << RED << "\t[0] Positive trace, execute program again." << WHITE << std::endl;
-			if (gsets[NEGATIVE].traces_num() == 0) std::cout << RED << "\t[0] Negative trace, execute program again." << WHITE << std::endl;
+			if (gsets[POSITIVE].traces_num() == 0) std::cout << RED << "\tZero Positive trace, execute program again." << WHITE << std::endl;
+			if (gsets[NEGATIVE].traces_num() == 0) std::cout << RED << "\tZero Negative trace, execute program again." << WHITE << std::endl;
 #endif
 			goto init_svm;
 		}
@@ -125,7 +125,7 @@ init_svm:
 #endif
 		svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
 
-		while (mapping_type <= 4) {
+		while (mapping_type <= 3) {
 			cl->clear();
 #ifdef __PRT
 			std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") start training with mapping dimension {" << mapping_type << "}...";
@@ -145,14 +145,14 @@ init_svm:
 			if (pass_rate == 1)
 				std::cout << GREEN << " [100%] [PASS]" << WHITE;
 			else
-				std::cout <<  RED << " [" << pass_rate * 100 << "%]" << " [FAIL] \n The problem is not linear separable by mapping " 
-					<< mapping_type << ".. Trying to project to a higher space " << WHITE << std::endl;
+				std::cout << RED << " [" << pass_rate * 100 << "%]" << " [FAIL] \n The problem is not linear separable by mapping "
+				<< mapping_type << ".. Trying to project to a higher space " << WHITE << std::endl;
 #endif
 			if (pass_rate == 1)
 				break;
 			mapping_type++;
 		}
-		if (mapping_type > 4) break;
+		if (mapping_type > 3) break;
 
 		/*
 		 *	similarLast is used to store the convergence check return value for the last time.
@@ -177,7 +177,8 @@ init_svm:
 			Nexe_after *= 2;
 #endif
 			similarLast = true;
-		} else {
+		}
+		else {
 #ifdef __PRT
 			std::cout << ((similarLast == true) ? "[T" : "[F") << "F] ";
 			if (similarLast == true)
@@ -204,7 +205,7 @@ init_svm:
 		/*if (sat == true) std::cout << "TRUE" << std::endl;
 		  else std::cout << "FALSE" << std::endl;
 		  */
-		//std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
+		  //std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
 		std::cout << YELLOW << "  Hypothesis Invariant(Converged): {\n";
 		std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
 		std::cout << "  }" << WHITE << std::endl;

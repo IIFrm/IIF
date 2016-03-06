@@ -92,27 +92,28 @@ namespace iif{
 				for (int i = 0; i < vnum; i++)
 					vfile >> variables[i];
 				*/
-				variables = new std::string[Cv1to4];
-				for (int i = 0; i < Nv; i++)
+				variables = new std::string[Cv0to4];
+				variables[0] = '1';
+				for (int i = 1; i <= Nv; i++)
 					vfile >> variables[i];
 				vfile.close();
-				int index = Nv;
-				for (int i = 0; i < Nv; i++) {
-					for (int j = i; j < Nv; j++) {
+				int index = Nv+1;
+				for (int i = 1; i <= Nv; i++) {
+					for (int j = i; j <= Nv; j++) {
 						variables[index++] = "(" + variables[i] + "*" + variables[j] + ")";
 					}
 				}
-				for (int i = 0; i < Nv; i++) {
-					for (int j = i; j < Nv; j++) {
-						for (int k = j; k < Nv; k++) {
+				for (int i = 1; i <= Nv; i++) {
+					for (int j = i; j <= Nv; j++) {
+						for (int k = j; k <= Nv; k++) {
 							variables[index++] = "(" + variables[i] + "*" + variables[j] + "*" + variables[k] + ")";
 						}
 					}
 				}
-				for (int i = 0; i < Nv; i++) {
-					for (int j = i; j < Nv; j++) {
-						for (int k = j; k < Nv; k++) {
-							for (int l = k; l < Nv; l++) {
+				for (int i = 1; i <= Nv; i++) {
+					for (int j = i; j <= Nv; j++) {
+						for (int k = j; k <= Nv; k++) {
+							for (int l = k; l <= Nv; l++) {
 								variables[index++] = "(" + variables[i] + "*" + variables[j] + "*" + variables[k] + "*" + variables[l] + ")";
 							}
 						}

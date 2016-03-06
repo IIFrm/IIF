@@ -65,26 +65,26 @@ class Classifier{
 
 		int factorization(Equation& eq) {
 			//std::cout << "\tFactorization Process >>>>\n";
-			int times = eq.getMappingType();
-			if (times == 1) {
+			int etimes = eq.getEtimes();
+			if (etimes == 1) {
 				//std::cout << "univariant linear function: " << eq << "\n";
 				this->add(&eq);
 				return 0;
 			}
 
-			if (times == 2) {
+			if (etimes == 2) {
 				if (Nv == 1) {
 					// univariant quadratic function
 					//std::cout << "univariant quadratic function: " << eq << "\n";
 					double A, B, C;
-					A = eq.theta[1];
+					A = eq.getTheta(2);
 					if (A == 0) {
-						eq.setMappingType(1);
+						eq.setEtimes(1);
 						this->add(&eq);
 						return 0;
 					}
-					B = eq.theta[0];
-					C = eq.theta0;
+					B = eq.getTheta(1);
+					C = eq.getTheta(0);
 					double delta = B * B - 4 * A * C;
 					//std::cout << "A=" << A << " B=" << B << " C= " << C << " delta=" << delta << std::endl;
 					if (delta < 0) return -1;
