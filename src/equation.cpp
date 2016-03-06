@@ -318,3 +318,72 @@ bool Equation::factorNv3Times2(double A, double B, double C, double D, double E,
 	return true;
 }
 
+bool Equation::toStandardForm(const Equation& e, double* coefs, int et) {
+	et = e.getEtimes();
+	if (et > 3) return false;
+	if (Nv > 3) return false;
+
+	if (et == 1) {
+		for (int i = 0; i < Nv - 1; i++)
+			coefs[i] = e.getTheta(i+1);
+		coefs[Nv-1] = e.getTheta(0);
+		return true;
+	}
+	if (et == 2) {
+		if (Nv == 1) {
+			coefs[0] = e.getTheta(2);
+			coefs[1] = e.getTheta(1);
+			coefs[2] = e.getTheta(0);
+			return true;
+		}
+		if (Nv == 2) {
+			coefs[0] = e.getTheta(3);
+			coefs[1] = e.getTheta(5);
+			coefs[2] = e.getTheta(4);
+			coefs[3] = e.getTheta(1);
+			coefs[4] = e.getTheta(2);
+			coefs[5] = e.getTheta(0);
+			return true;
+		}
+		if (Nv == 3) {
+			coefs[0] = e.getTheta(4);
+			coefs[1] = e.getTheta(7);
+			coefs[2] = e.getTheta(9);
+			coefs[3] = e.getTheta(5);
+			coefs[4] = e.getTheta(6);
+			coefs[5] = e.getTheta(8);
+			coefs[6] = e.getTheta(1);
+			coefs[7] = e.getTheta(2);
+			coefs[8] = e.getTheta(3);
+			coefs[9] = e.getTheta(0);
+			return true;
+		}
+	}
+	if (et == 3) {
+		if (Nv == 1) {
+			coefs[0] = e.getTheta(3);
+			coefs[1] = e.getTheta(2);
+			coefs[2] = e.getTheta(1);
+			coefs[3] = e.getTheta(0);
+			return true;
+		}
+		if (Nv == 2) {
+			coefs[0] = e.getTheta(6);
+			coefs[1] = e.getTheta(9);
+			coefs[2] = e.getTheta(7);
+			coefs[3] = e.getTheta(8);
+			coefs[4] = e.getTheta(3);
+			coefs[5] = e.getTheta(5);
+			coefs[6] = e.getTheta(4);
+			coefs[7] = e.getTheta(1);
+			coefs[8] = e.getTheta(2);
+			coefs[9] = e.getTheta(0);
+			return true;
+		}
+		if (Nv == 3) {
+			return false;
+		}
+	}
+}
+
+
