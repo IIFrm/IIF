@@ -3165,6 +3165,7 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 		return false;
 	std::cout << *m << std::endl;
 
+	/*
 #if (linux || __MACH__)
 	double* label = m->sv_coef[0];
 	struct svm_node** data = m->SV;
@@ -3221,14 +3222,6 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 	z3::check_result ret = s.check();
 	if (ret == unsat) {
 		std::cout << "UNSAT. can not get Z3 MODEL.\n";
-		/* z3::expr_vector core = s.unsat_core();
-		   std::cout << "unsat core: " << core << std::endl;
-		   std::cout << GREEN;
-		   std::cout << "size = " << core.size() << std::endl;
-		   for (int i = 0; i < core.size(); i++)
-		   std::cout << "\t" << core[i] << std::endl;
-		   std::cout << WHITE;
-		   */
 		return false;
 	}
 
@@ -3266,6 +3259,7 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 	std::cout << "]\n";
 #endif
 #endif
+	*/
 	return true;
 }
 
@@ -3274,6 +3268,7 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 	if (m == NULL)
 		return false;
 
+	/*
 #if (linux || __MACH__)
 	double* label = m->sv_coef[0];
 	struct svm_node** data = m->SV;
@@ -3350,6 +3345,7 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 	std::cout << "]\n";
 #endif
 #endif
+	*/
 	return true;
 }
 
@@ -3368,10 +3364,10 @@ int svm_model_visualization(const svm_model *model, Equation* equ)
 	const double * const *sv_coef = model->sv_coef;
 	const svm_node * const *SV = model->SV;
 
-	double theta[Cv1to4];// = equ->theta;
-	double theta0 = sv_coef[0][0] > 0? 1 : -1;
-	for (int i = 0; i < DIMENSION; i++)
+	double theta[Cv0to4];// = equ->theta;
+	for (int i = 0; i < Cv0to4; i++)
 		theta[i] = 0;
+	theta[0] = sv_coef[0][0] > 0? 1 : -1;
 
 	for(int i=0;i<l;i++)
 	{
@@ -3381,18 +3377,17 @@ int svm_model_visualization(const svm_model *model, Equation* equ)
 		const svm_node *p = SV[i];
 		for (int j = 0; j < DIMENSION; j++)
 		{
-			//	double x[i][j] = p->value;
-			theta[j] += sv_coef[0][i] * p->value;
+			//double x[i][j] = p->value;
+			theta[j+1] += sv_coef[0][i] * p->value;
 			temp += p0->value * p->value; 
 			p++;
 			p0++;
 		}
 		temp *= sv_coef[0][i];
-		theta0 -= temp;
+		theta[0] -= temp;
 	}
-	equ->setDims(DIMENSION);
-	equ->setTheta0(theta0);
-	equ->setTheta(theta);
+	equ->setDims(DIMENSION + 1);
+	equ->set(theta);
 	//std::cout << BLUE << "Before RoundOFF " << *equ << WHITE << std::endl;
 	equ->roundoff();
 	//std::cout << *equ << std::endl;

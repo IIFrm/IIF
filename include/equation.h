@@ -60,8 +60,6 @@ private:
 	int etimes;
 
 public:
-
-
 	/** @brief Default constructor.
 	 *		   Set all its elements to value 0
 	 */
@@ -72,8 +70,14 @@ public:
 		}
 	}
 
-	bool set(int* values, int length = Nv) {
-		setDims(length);
+	bool set(double* values) {
+		for (int i = 0; i < dims; i++) {
+			theta[i] = values[i];
+		}
+		return true;
+	}
+
+	bool set(int* values) {
 		for (int i = 0; i < dims; i++) {
 			theta[i] = values[i];
 		}
@@ -123,10 +127,14 @@ public:
 
 	std::string toString() {
 		std::ostringstream stm;
-		stm << theta[0];
-		for (int j = 1; j < dims; j++) {
-			stm << "  +  ";
-			if (theta[0] != 1)
+		bool firstplus = false;
+		for (int j = 0; j < dims; j++) {
+			if (theta[j] == 0) continue;
+			if (firstplus == false) 
+				firstplus = true;
+			else 
+				stm << " + ";
+			if (theta[j] != 1) 
 				stm << theta[j] << " * ";
 			stm << variables[j];
 		}
@@ -144,10 +152,14 @@ public:
 	 */
 	friend std::ostream& operator << (std::ostream& out, const Equation& equ) {
 		out << std::setprecision(16);
-		out << equ.theta[0];
-		for (int j = 1; j < equ.dims; j++) {
-			out << "  +  ";
-			if (equ.theta[j] != 1)
+		bool firstplus = false;
+		for (int j = 0; j < equ.dims; j++) {
+			if (equ.theta[j] == 0) continue;
+			if (firstplus == false) 
+				firstplus = true;
+			else 
+				out << " + ";
+			if (equ.theta[j] != 1) 
 				out << equ.theta[j] << " * ";
 			out << variables[j];
 		}
@@ -202,8 +214,8 @@ public:
 
 		char real[65];
 		snprintf(real, 64, "%2.8f", e.theta[0]);
-		theta.push_back(real);
 		z3::expr expr = c.real_val(real);
+		theta.push_back(expr);
 
 		for (int i = 1; i < dims; i++) {
 			z3::expr tmp = c.real_const(pname[i]);
@@ -378,6 +390,7 @@ public:
 		}
 
 		int j;
+		assert(equ->dims == Cv0to1);
 		///< a flag to justify whether all the coefficients are zeros...
 		for (j = 0; j < equ->dims; j++) {
 			if (equ->theta[j] != 0) break;
@@ -401,15 +414,15 @@ public:
 		///< pick store the dimension that should not generate randomly
 		///< The algo is we generate numbers randomly, unless the picked dimension
 		///< The picked dimension should be calcuate based on equation and other dimensions
-		while (equ->theta[pick] == 0)
+		while (equ->theta[pick + 1] == 0)
 			pick = (pick + 1) % equ->dims;
 		reminder = -equ->theta[0];
-		for (int i = 0; i < Nv; i++) {
+		for (int i = 0; i < Cv1; i++) {
 			sol.setVal(i, rand() % (maxv - minv + 1) + minv);
 			if (i != pick)
 				reminder -= sol.getVal(i) * equ->theta[i + 1];
 		}
-		sol.setVal(pick, int(reminder / equ->theta[pick]) + rand() % 5 - 2);
+		sol.setVal(pick, int(reminder / equ->theta[pick + 1]) + rand() % 3 - 1);
 		if (sol.getVal(pick) > maxv || sol.getVal(pick) < minv) {
 			if (++times > 10)
 				/** sometimes we can not get solution between given scope
@@ -525,6 +538,7 @@ public:
 			//if ((std::abs(theta0) < min) && (std::abs(theta0) > 1.0E-4))	
 			min = std::abs(theta[0]);
 
+		//std::cout << " [min=" << min << "] ";
 
 		//if (min <= pow(0.1, 5)) min = 1;
 		for (int i = 0; i < dims; i++)
