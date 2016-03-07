@@ -151,6 +151,7 @@ mv $verfc3 $filename"_klee3"
 
 cd $filename"_klee1" 
 rm -rf klee-*
+rm -rf *.smt2
 echo -e $blue"Compiling the C files and Run KLEE..."$white
 echo -e $blue"Compiling the C files and Run KLEE...1"$white
 llvm-gcc --emit-llvm -c -g $verfc1
@@ -168,6 +169,7 @@ cd ..
 
 cd $filename"_klee2" 
 rm -rf klee-*
+rm -rf *.smt2
 echo -e $blue"Compiling the C files and Run KLEE...2"$white
 llvm-gcc --emit-llvm -c -g $verfc2
 klee -write-smt2s $verfo2 
@@ -184,6 +186,7 @@ cd ..
 
 cd $filename"_klee3" 
 rm -rf klee-*
+rm -rf *.smt2
 echo -e $blue"Compiling the C files and Run KLEE...3"$white
 llvm-gcc --emit-llvm -c -g $verfc3
 klee -write-smt2s $verfo3 

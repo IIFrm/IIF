@@ -17,7 +17,7 @@ recordi(x);
 		} else if (x == 0) {
 			x ++;
 		} else {
-			x += rand() % 3 - 1;
+			x += /*rand() % 3*/ - 1;
 		}
 }
 recordi(x);
