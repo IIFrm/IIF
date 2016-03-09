@@ -48,6 +48,8 @@
 */
 
 
+#define _in_
+#define _out_
 
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  
  *		   This should be set in /CMakeLists.txt file

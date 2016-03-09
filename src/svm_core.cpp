@@ -3167,65 +3167,65 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 
 	/*
 #if (linux || __MACH__)
-	double* label = m->sv_coef[0];
-	struct svm_node** data = m->SV;
+double* label = m->sv_coef[0];
+struct svm_node** data = m->SV;
 
-	z3::config cfg;
-	cfg.set("auto_config", true);
-	z3::context c(cfg);
-	z3::solver s(c);
+z3::config cfg;
+cfg.set("auto_config", true);
+z3::context c(cfg);
+z3::solver s(c);
 
-	std::vector<z3::expr> A0;
-	std::vector<z3::expr> A1;
-	std::vector<z3::expr> X;
-	char pname[4];
+std::vector<z3::expr> A0;
+std::vector<z3::expr> A1;
+std::vector<z3::expr> X;
+char pname[4];
 	// form: a0 * x0 + a1 * x1 + a2 * x2 + a3 >= 0
 	// parameters: a0 a1 a2 a3 --> integer
 	for (int i = 0; i < DIMENSION + 1; i++) {
-		sprintf(pname, "a0_%d", i);
-		z3::expr tmp0 = c.int_const(pname);
-		A0.push_back(tmp0);
-		sprintf(pname, "a1_%d", i);
-		z3::expr tmp1 = c.int_const(pname);
-		A1.push_back(tmp1);
+	sprintf(pname, "a0_%d", i);
+	z3::expr tmp0 = c.int_const(pname);
+	A0.push_back(tmp0);
+	sprintf(pname, "a1_%d", i);
+	z3::expr tmp1 = c.int_const(pname);
+	A1.push_back(tmp1);
 	}
 
 
 	char xvalue[33];
 	int l = m->l;
 	for (int k = 0; k < l; k++) {
-		z3::expr expr0 = A0[DIMENSION];
-		z3::expr expr1 = A1[DIMENSION];
-		for (int i = 0; i < DIMENSION; i++) {
-			snprintf(xvalue, 32, "%d", int(data[k][i].value));
-			z3::expr xi = c.int_val(xvalue);
-			// equation = equation + ai * xi
-			expr0 = expr0 + xi * A0[i];
-			expr1 = expr1 + xi * A1[i];
-		}
-		if (label[k] >= 0) {
-			expr0 = expr0 >= 0;
-			expr1 = expr1 >= 0;
-			s.add(expr0 && expr1);
-		} else {
-			expr0 = expr0 < 0;
-			expr1 = expr1 < 0;
-			s.add(expr0 || expr1);
-		}
-		//s.add(expr0 || expr1);
-		//s.add(expr0);
-		//s.add(expr1);
+	z3::expr expr0 = A0[DIMENSION];
+	z3::expr expr1 = A1[DIMENSION];
+	for (int i = 0; i < DIMENSION; i++) {
+	snprintf(xvalue, 32, "%d", int(data[k][i].value));
+	z3::expr xi = c.int_val(xvalue);
+	// equation = equation + ai * xi
+	expr0 = expr0 + xi * A0[i];
+	expr1 = expr1 + xi * A1[i];
+	}
+	if (label[k] >= 0) {
+	expr0 = expr0 >= 0;
+	expr1 = expr1 >= 0;
+	s.add(expr0 && expr1);
+	} else {
+	expr0 = expr0 < 0;
+	expr1 = expr1 < 0;
+	s.add(expr0 || expr1);
+	}
+	//s.add(expr0 || expr1);
+	//s.add(expr0);
+	//s.add(expr1);
 	}
 #ifdef __PRT_Z3SOLVE
-	std::cout << s << std::endl;
+std::cout << s << std::endl;
 #endif
-	z3::check_result ret = s.check();
-	if (ret == unsat) {
-		std::cout << "UNSAT. can not get Z3 MODEL.\n";
-		return false;
-	}
+z3::check_result ret = s.check();
+if (ret == unsat) {
+std::cout << "UNSAT. can not get Z3 MODEL.\n";
+return false;
+}
 
-	z3::model z3m = s.get_model();
+z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: "<< RED << z3m << "\n";
 
 	int avalue[2][DIMENSION+1];
@@ -3233,34 +3233,34 @@ bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& 
 	int index2 = -1;
 	// traversing the model
 	for (unsigned i = 0; i < z3m.size(); i++) {
-		func_decl v = z3m[i];
-		// this problem contains only constants
-		//assert(v.arity() == 0); 
-		//std::cout << v.name() << " = " << z3m.get_const_interp(v);
-		sscanf(v.name().str().c_str(), "a%d_%d", &index1, &index2);
-		//std::cout << "\t index=" << index << "\n";
-		assert(z3m.get_const_interp(v).is_int() == true);
-		if(Z3_get_numeral_int(c, z3m.get_const_interp(v), &avalue[index1][index2]) != Z3_TRUE)
-			return false;
-	}
+	func_decl v = z3m[i];
+	// this problem contains only constants
+	//assert(v.arity() == 0); 
+	//std::cout << v.name() << " = " << z3m.get_const_interp(v);
+	sscanf(v.name().str().c_str(), "a%d_%d", &index1, &index2);
+	//std::cout << "\t index=" << index << "\n";
+	assert(z3m.get_const_interp(v).is_int() == true);
+	if(Z3_get_numeral_int(c, z3m.get_const_interp(v), &avalue[index1][index2]) != Z3_TRUE)
+		return false;
+}
 
-	Equation eq;
-	if (cl != NULL) {
-		eq.set(avalue[0]);
-		cl->add(&eq, CONJUNCT);
-		eq.set(avalue[1]);
-		cl->add(&eq, CONJUNCT);
-	}
+Equation eq;
+if (cl != NULL) {
+	eq.set(avalue[0]);
+	cl->add(&eq, CONJUNCT);
+	eq.set(avalue[1]);
+	cl->add(&eq, CONJUNCT);
+}
 #ifdef __PRT_Z3SOLVE
-	std::cout << "[";
-	for (int i = 0; i < 2; i++)
-		for (int j = 0; j < DIMENSION + 1; j++)
-			std::cout << "a" << i << "_" << j << "=" << avalue[i][j] << ", ";
-	std::cout << "]\n";
+std::cout << "[";
+for (int i = 0; i < 2; i++)
+for (int j = 0; j < DIMENSION + 1; j++)
+std::cout << "a" << i << "_" << j << "=" << avalue[i][j] << ", ";
+std::cout << "]\n";
 #endif
 #endif
-	*/
-	return true;
+*/
+return true;
 }
 
 bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
@@ -3270,73 +3270,73 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 
 	/*
 #if (linux || __MACH__)
-	double* label = m->sv_coef[0];
-	struct svm_node** data = m->SV;
+double* label = m->sv_coef[0];
+struct svm_node** data = m->SV;
 
-	z3::config cfg;
-	cfg.set("auto_config", true);
-	z3::context c(cfg);
-	z3::solver s(c);
+z3::config cfg;
+cfg.set("auto_config", true);
+z3::context c(cfg);
+z3::solver s(c);
 
-	std::vector<z3::expr> A;
-	std::vector<z3::expr> X;
-	char pname[4];
+std::vector<z3::expr> A;
+std::vector<z3::expr> X;
+char pname[4];
 	// form: a0 * x0 + a1 * x1 + a2 * x2 + a3 >= 0
 	// parameters: a0 a1 a2 a3 --> integer
 	for (int i = 0; i < DIMENSION + 1; i++) {
-		sprintf(pname, "a%d", i);
-		z3::expr tmp = c.int_const(pname);
-		A.push_back(tmp);
+	sprintf(pname, "a%d", i);
+	z3::expr tmp = c.int_const(pname);
+	A.push_back(tmp);
 	}
 
 
 	char xvalue[33];
 	int l = m->l;
 	for (int k = 0; k < l; k++) {
-		z3::expr expr = A[DIMENSION];
-		for (int i = 0; i < DIMENSION; i++) {
-			snprintf(xvalue, 32, "%d", int(data[k][i].value));
-			z3::expr tmp = c.int_val(xvalue);
-			// equation = equation + ai * xi
-			expr = expr + tmp * A[i];
-		}
-		if (label[k] >= 0) expr = expr >= 0;
-		else expr = expr < 0;
-		s.add(expr);
+	z3::expr expr = A[DIMENSION];
+	for (int i = 0; i < DIMENSION; i++) {
+	snprintf(xvalue, 32, "%d", int(data[k][i].value));
+	z3::expr tmp = c.int_val(xvalue);
+	// equation = equation + ai * xi
+	expr = expr + tmp * A[i];
+	}
+	if (label[k] >= 0) expr = expr >= 0;
+	else expr = expr < 0;
+	s.add(expr);
 	}
 #ifdef __PRT_Z3SOLVE
-	std::cout << s << std::endl;
+std::cout << s << std::endl;
 #endif
-	z3::check_result ret = s.check();
-	if (ret == unsat) return false;
+z3::check_result ret = s.check();
+if (ret == unsat) return false;
 
-	z3::model z3m = s.get_model();
+z3::model z3m = s.get_model();
 
-	int avalue[DIMENSION+1];
-	int index = -1;
+int avalue[DIMENSION+1];
+int index = -1;
 	// traversing the model
 	for (unsigned i = 0; i < z3m.size(); i++) {
-		func_decl v = z3m[i];
-		// this problem contains only constants
-		//assert(v.arity() == 0); 
-		//std::cout << v.name() << " = " << z3m.get_const_interp(v);
-		sscanf(v.name().str().c_str(), "a%d", &index);
-		//std::cout << "\t index=" << index << "\n";
-		assert(z3m.get_const_interp(v).is_int() == true);
-		if(Z3_get_numeral_int(c, z3m.get_const_interp(v), &avalue[index]) != Z3_TRUE)
-			return false;
+	func_decl v = z3m[i];
+	// this problem contains only constants
+	//assert(v.arity() == 0); 
+	//std::cout << v.name() << " = " << z3m.get_const_interp(v);
+	sscanf(v.name().str().c_str(), "a%d", &index);
+	//std::cout << "\t index=" << index << "\n";
+	assert(z3m.get_const_interp(v).is_int() == true);
+	if(Z3_get_numeral_int(c, z3m.get_const_interp(v), &avalue[index]) != Z3_TRUE)
+	return false;
 	}
 
 	Equation eq;
 	if (cl != NULL) {
-		eq.set(avalue);
-		std::cout << "Equation: \n" << eq << std::endl;
-		cl->add(&eq);
-		//#ifdef __PRT_Z3SOLVE
-		//		std::cout << *e << std::endl;
-		//		e->roundoff();
-		//		std::cout << *e << std::endl;
-		//#endif
+	eq.set(avalue);
+	std::cout << "Equation: \n" << eq << std::endl;
+	cl->add(&eq);
+	//#ifdef __PRT_Z3SOLVE
+	//		std::cout << *e << std::endl;
+	//		e->roundoff();
+	//		std::cout << *e << std::endl;
+	//#endif
 	}
 #ifdef __PRT_Z3SOLVE
 	std::cout << "[";
@@ -3346,7 +3346,7 @@ bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
 #endif
 #endif
 	*/
-	return true;
+		return true;
 }
 
 int svm_model_visualization(const svm_model *model, Equation* equ)
@@ -3394,24 +3394,6 @@ int svm_model_visualization(const svm_model *model, Equation* equ)
 	return 0;	
 }
 
-
-/*int equation_factorization(Equation* equ, Classifier* cl, int mapping_type)
-{
-	if (equ == NULL)
-		return -1;
-	if (cl == NULL)
-		return -1;
-	if (mapping_type == 1) {
-		cl->add(equ);
-		return 0;
-	}
-
-	if (mapping_type == 2) {
-	}
-
-	return 0;	
-}
-*/
 
 struct svm_model *svm_I_train(const struct svm_problem *prob, const struct svm_parameter *param) 
 {
@@ -3577,4 +3559,196 @@ int model_solver(const svm_model* m, Solution& sol)
 int setDimension(int d) {
 	DIMENSION = d;
 	return d;
+}
+
+bool svm_model_approximate(const svm_model *m, int times/*, Classifier* cl*/)
+{
+	if (m == NULL)
+		return false;
+	/*
+	if (cl == NULL)
+		return false;
+		*/
+	std::cout << *m << std::endl;
+
+#if (linux || __MACH__)
+	double* label = m->sv_coef[0];
+	struct svm_node** data = m->SV;
+
+	z3::config cfg;
+	cfg.set("auto_config", true);
+	z3::context c(cfg);
+	z3::solver s(c);
+
+	std::vector<std::vector<z3::expr> > A;
+	for (int i = 0; i < times; i++)
+		A.push_back(std::vector<z3::expr>());
+	std::vector<z3::expr> X;
+	char pname[10];
+	// form: (a00 * x0 + a01 * x1 + a02) * (a10 * x0 + a11 * x1 + a12) >= 0
+	// parameters: a0 a1 a2 a3 --> integer
+	for (int i = 0; i < times; i++) {
+		for (int j = 0; j <= Nv; j++) {
+			sprintf(pname, "a%d_%d", i, j);
+			z3::expr tmp0 = c.int_const(pname);
+			A[i].push_back(tmp0);
+		}
+	}
+
+
+	char xvalue[33];
+	int l = m->l;
+	for (int k = 0; k < l; k++) {
+		std::vector<z3::expr> expr_paranthese;
+		for (int i = 0; i < times; i++) {
+			expr_paranthese.push_back(A[i][Nv]);
+		}
+		for (int j = 0; j < Nv; j++) {
+			snprintf(xvalue, 32, "%d", int(data[k][j].value));
+			z3::expr xi = c.int_val(xvalue);
+			for (int i = 0; i < times; i++) {
+				expr_paranthese[i] = expr_paranthese[i] + xi * A[i][j];
+			}
+		}
+		z3::expr query = c.int_val("1");
+		for (int i = 0; i < times; i++)
+			query = query * expr_paranthese[i];
+		if (label[k] >= 0) {
+			query = query >= 0;
+		} else {
+			query = query < 0;
+		}
+		s.add(query);
+	}
+	for (int i = 1; i < times; i++)
+		s.add(A[i][0] >= A[i-1][0]);
+	if (times >= 2)
+		s.add(A[1][0] > 0);
+#ifdef __PRT_Z3SOLVE
+	std::cout << s << std::endl;
+#endif
+	std::cout << s << std::endl;
+	z3::check_result ret = s.check();
+	if (ret == unsat) {
+		std::cout << "UNSAT. can not get Z3 MODEL.\n";
+		return false;
+	}
+
+	z3::model z3m = s.get_model();
+	std::cout << GREEN << "Z3 MODEL: "<< RED << z3m << "\n" << WHITE;
+
+	/*
+	int avalue[2][DIMENSION+1];
+	int index1 = -1;
+	int index2 = -1;
+	// traversing the model
+	for (unsigned i = 0; i < z3m.size(); i++) {
+		func_decl v = z3m[i];
+		// this problem contains only constants
+		//assert(v.arity() == 0); 
+		//std::cout << v.name() << " = " << z3m.get_const_interp(v);
+		sscanf(v.name().str().c_str(), "a%d_%d", &index1, &index2);
+		//std::cout << "\t index=" << index << "\n";
+		assert(z3m.get_const_interp(v).is_int() == true);
+		if(Z3_get_numeral_int(c, z3m.get_const_interp(v), &avalue[index1][index2]) != Z3_TRUE)
+			return false;
+	}
+
+	Equation eq;
+	if (cl != NULL) {
+		eq.set(avalue[0]);
+		cl->add(&eq, CONJUNCT);
+		eq.set(avalue[1]);
+		cl->add(&eq, CONJUNCT);
+	}
+#ifdef __PRT_Z3SOLVE
+	std::cout << "[";
+	for (int i = 0; i < 2; i++)
+		for (int j = 0; j < DIMENSION + 1; j++)
+			std::cout << "a" << i << "_" << j << "=" << avalue[i][j] << ", ";
+	std::cout << "]\n";
+#endif
+*/
+#endif
+	return true;
+}
+
+bool svm_problem_approximate(const svm_problem *sp, int times/*, Classifier* cl*/)
+{
+	if (sp == NULL)
+		return false;
+	/*
+	if (cl == NULL)
+		return false;
+		*/
+	std::cout << *sp << std::endl;
+
+#if (linux || __MACH__)
+	double* label = sp->y;
+	struct svm_node** data = sp->x;
+
+	z3::config cfg;
+	cfg.set("auto_config", true);
+	z3::context c(cfg);
+	z3::solver s(c);
+
+	std::vector<std::vector<z3::expr> > A;
+	for (int i = 0; i < times; i++)
+		A.push_back(std::vector<z3::expr>());
+	std::vector<z3::expr> X;
+	char pname[10];
+	// form: (a00 * x0 + a01 * x1 + a02) * (a10 * x0 + a11 * x1 + a12) >= 0
+	// parameters: a0 a1 a2 a3 --> integer
+	for (int i = 0; i < times; i++) {
+		for (int j = 0; j <= Nv; j++) {
+			sprintf(pname, "a%d_%d", i, j);
+			z3::expr tmp0 = c.int_const(pname);
+			A[i].push_back(tmp0);
+		}
+	}
+
+
+	char xvalue[33];
+	int l = sp->l;
+	for (int k = 0; k < l; k++) {
+		std::vector<z3::expr> expr_paranthese;
+		for (int i = 0; i < times; i++) {
+			expr_paranthese.push_back(A[i][Nv]);
+		}
+		for (int j = 0; j < Nv; j++) {
+			snprintf(xvalue, 32, "%d", int(data[k][j].value));
+			z3::expr xi = c.int_val(xvalue);
+			for (int i = 0; i < times; i++) {
+				expr_paranthese[i] = expr_paranthese[i] + xi * A[i][j];
+			}
+		}
+		z3::expr query = c.int_val("1");
+		for (int i = 0; i < times; i++)
+			query = query * expr_paranthese[i];
+		if (label[k] >= 0) {
+			query = query >= 0;
+		} else {
+			query = query < 0;
+		}
+		s.add(query);
+	}
+	for (int i = 1; i < times; i++)
+		s.add(A[i][0] >= A[i-1][0]);
+	if (times >= 2)
+		s.add(A[1][0] > 0);
+#ifdef __PRT_Z3SOLVE
+	std::cout << s << std::endl;
+#endif
+	std::cout << s << std::endl;
+	z3::check_result ret = s.check();
+	if (ret == unsat) {
+		std::cout << "UNSAT. can not get Z3 MODEL.\n";
+		return false;
+	}
+
+	z3::model z3m = s.get_model();
+	std::cout << GREEN << "Z3 MODEL: "<< RED << z3m << "\n" << WHITE;
+
+#endif
+	return true;
 }

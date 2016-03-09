@@ -8,6 +8,7 @@
 #include "color.h"
 #include "solution.h"
 #include "classifier.h"
+#include "fstream"
 
 #include <iostream>
 #define LIBSVM_VERSION 320
@@ -32,6 +33,7 @@ struct svm_problem
 	int l;
 	double *y;
 	struct svm_node **x;
+	int np, nn;
 
 	friend std::ostream& operator << (std::ostream& out, const svm_problem& sp) {
 		for (int i = 0; i < sp.l; i++) {
@@ -42,6 +44,37 @@ struct svm_problem
 		}
 		return out;
 	}
+
+	bool save_to_file(const char* filepath) {
+		std::ofstream fout(filepath);
+		fout << l << "\t" << np << "\t" << nn << "\n";
+		for (int i = 0; i < l; i++) {
+			fout << y[i];
+			for (int j = 0; j < Nv; j++)
+				fout << "\t" << j << ":" << (x[i][j]).value;
+			fout << "\n";
+		}
+		fout.close();
+		return true;
+	}
+
+	bool load_from_file(const char* filepath) {
+		std::ifstream fin(filepath);
+		fin >> l >> np >> nn;
+		int tmpint;
+		char tmpchar;
+		for (int i = 0; i < l; i++) {
+			fin >> y[i];
+			for (int j = 0; j < Nv; j++) {
+				fin >> tmpint >> tmpchar >> (x[i][j]).value;
+				assert(tmpint == j);
+				assert(tmpchar == ':');
+			}
+		}
+		fin.close();
+		return true;
+	}
+
 };
 
 
@@ -149,7 +182,9 @@ int svm_check_probability_model(const struct svm_model *model);
 void svm_set_print_string_function(void (*print_func)(const char *));
 
 bool svm_model_z3(const svm_model *m, Classifier* cl = NULL); 
-bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl = NULL); 
+//bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl = NULL); 
+bool svm_model_approximate(const svm_model *m, int times/*, Classifier* cl = NULL*/); 
+bool svm_problem_approximate(const svm_problem *sp, int times/*, Classifier* cl = NULL*/); 
 
 int svm_model_visualization(const svm_model *model, Equation* equ = NULL);
 //int equation_factorization(const Equation *equ, Classifier* cl, int mapping_type = 1);

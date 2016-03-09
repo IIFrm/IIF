@@ -54,21 +54,31 @@ invfile="tmp/"$invname
 
 
 
+
 echo -n -e $blue"Converting the given config file to a valid cplusplus file..."$white
 g++ cfg2test.cpp -o cfg2test
-./cfg2test $cfgfile $cppfile $varfile $invfile
-VARS=$?
-echo -e $blue"[DONE]"$white
+ret=$?
+if [ $ret -ne 0 ]
+then
+	echo "cfg2test.cpp compiling error, stop here."
+	exit $ret 
+fi
+
+if [ $# -ge 2 ]
+then
+	./cfg2test $cfgfile $cppfile $varfile $invfile $2
+else
+	./cfg2test $cfgfile $cppfile $varfile $invfile
+fi
+Nv=$?
 rm ./cfg2test
-#exit $VARS
-
-
+#exit $Nv
 
 
 echo -n -e $blue"Generating CMakeLists file for further construction..."$white
 cmakefile="./CMakeLists.txt"
 echo "cmake_minimum_required (VERSION 2.8)" > $cmakefile
-echo "set(VARS "$VARS")" >> $cmakefile
+echo "set(Nv "$Nv")" >> $cmakefile
 cat ./cmake.base >> $cmakefile
 echo "add_executable("$filename" "$cppfile" \${DIR_SRCS} \${HEADER})" >> $cmakefile
 echo "target_link_libraries("$filename" \${Z3_LIBRARY})" >> $cmakefile
@@ -122,6 +132,12 @@ echo -n -e $blue"Generating three C files to do the verification by KLEE"$white
 verfname=$filename".c"
 verffile="tmp/"$verfname
 g++ cfg2verf.cpp -o cfg2verf
+ret=$?
+if [ $ret -ne 0 ]
+then
+	echo "cfg2verf.cpp compiling error, stop here."
+	exit $ret 
+fi
 ./cfg2verf $tmpcfg $verffile
 rm ./cfg2verf
 echo -e $blue"[Done]"$white
@@ -219,7 +235,7 @@ cd ..
 #rm $varfile
 #rm $invfile
 echo -e $yellow"END HERE..."$white
-exit $VARS
+exit $Nv
 
 
 

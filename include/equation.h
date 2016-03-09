@@ -195,6 +195,13 @@ public:
 	bool imply(const Equation& e2);
 	static bool multiImply(const Equation* e1, int e1_num, const Equation& e2);
 
+	/*
+	static bool approximate(const Equation& e, _out_ Equation* eqs);
+	bool approximate(_out_ Equation* eqs) {
+		return Equation::approximate(*this, eqs);
+	}
+	*/
+
 	static bool factorNv1Times2(double *B);
 	static bool factorNv1Times3(double *B);
 	static bool factorNv2Times2(double *B);
@@ -208,7 +215,7 @@ public:
 	}
 
 	bool factor() {
-		std::cout << "\t  <<Factoring Equation>> ";
+		std::cout << "\t  <<Factoring Equation>> \n";
 		if (getEtimes() == 1) return true;
 		double coefs[Cv0to4];
 		this->toStandardForm(coefs);

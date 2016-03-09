@@ -90,6 +90,8 @@ class SVM : public MLalgo
 
 		~SVM() {
 			//if (model != NULL) delete model;
+			problem.save_to_file("../tmp/saved_testcase");
+			std::cout << "save to file succeed.\n";
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (pre_model != NULL) svm_free_and_destroy_model(&pre_model);
 			if (equ != NULL) delete equ;
@@ -152,6 +154,8 @@ class SVM : public MLalgo
 			}
 			*/
 			problem.l = cur_psize + cur_nsize;
+			problem.np = cur_psize;
+			problem.nn = cur_nsize;
 			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;

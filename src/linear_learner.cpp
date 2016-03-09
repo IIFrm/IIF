@@ -202,6 +202,8 @@ int LinearLearner::learn()
 	if ((converged) && (rnd <= max_iteration)) {
 		/*bool sat =*/ //svm_model_z3(lastModel, cl);
 		svm_model_visualization(lastModel, equ);
+		//svm_model_approximate(lastModel, equ->getEtimes());
+		//svm_problem_approximate(&svm->problem, equ->getEtimes());
 		/*if (sat == true) std::cout << "TRUE" << std::endl;
 		  else std::cout << "FALSE" << std::endl;
 		  */

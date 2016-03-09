@@ -2,6 +2,8 @@
 #define _STATES_H_
 #include "config.h"
 #include <iostream>
+#include <fstream>
+#include <cassert>
 #include <string.h>
 
 
@@ -12,8 +14,6 @@ class States{
 		States() : max_size(Mitems) {
 			values = new double[Mitems][Nv];
 			t_index = new int[Mitems];
-			//values = vector< vector<double> > (max_size, vector<double>(VARS));
-			//index= vector<int>(max_size);
 			t_index[0] = 0;
 			p_index = 0;
 			size = 0;
@@ -31,13 +31,30 @@ class States{
 		}
 
 		/*bool setVariableName(char** strs) {
-			if (strs == NULL) return false;
-			for (int i = 0; i < VARS; i++){
-				if (strs[i] && strs[i][0] != '\0')
-					strncpy(name[i], strs[i], 8);
+		  if (strs == NULL) return false;
+		  for (int i = 0; i < VARS; i++){
+		  if (strs[i] && strs[i][0] != '\0')
+		  strncpy(name[i], strs[i], 8);
+		  }
+		  return true;
+		  }*/
+
+		bool initFromFile(int num, std::ifstream& fin) {
+			int tmpint;
+			char tmpchar;
+			for (int i = 0; i < num; i++) {
+				fin >> tmpint;
+				for (int j = 0; j < Nv; j++) {
+					fin >> tmpint >> tmpchar >> values[i][j];
+					assert(tmpint == j);
+					assert(tmpchar == ':');
+				}
 			}
+			size += num;
+			t_index[p_index + 1] = t_index[p_index] + num;
+			p_index++;
 			return true;
-		}*/
+		}
 
 		int addStates(State st[], int len) {
 			if (size + len >= max_size) {
@@ -45,7 +62,7 @@ class States{
 				int previous_max_size = max_size;
 				double(*previous_values)[Nv] = values;
 				//while (t_index[p_index] + len >= max_size)
-					max_size *= 2;
+				max_size *= 2;
 
 				if ((values = new double[max_size][Nv]) == NULL)
 					return -1;
@@ -134,7 +151,7 @@ class States{
 		/// is designed to store all the names of variables, used for output;
 		///  currently not in use.
 		/// char name[VARS][8];
-		
+
 		State (*values);
 		int label;
 		int size;
@@ -153,9 +170,9 @@ class States{
 
 	private:
 		static bool stateCmp(const State& s1, const State& s2) {
-		for (int i = 0; i < Nv; i++) {
-			if (s1[i] != s2[i])
-				return false;
+			for (int i = 0; i < Nv; i++) {
+				if (s1[i] != s2[i])
+					return false;
 			}
 			return true;
 		}

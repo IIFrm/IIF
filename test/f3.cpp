@@ -25,6 +25,6 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/f3.var", loopFunction, "loopFunction");
-context.addLearner("linear").addLearner("conjunctive");
+context.addLearner("linear");
 return context.learn("../tmp/f3.inv");
 }

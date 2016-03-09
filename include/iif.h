@@ -84,14 +84,9 @@ namespace iif{
 				vnum = 0;
 			}
 
-			iifContext (const char* vfilename, int (*func)(int*), const char* func_name = "Unknown", int timeout = 1800) {
+			iifContext (const char* vfilename, int (*func)(int*), const char* func_name = "Unknown", const char* pasttestcase = NULL, int timeout = 1800) {
 				std::ifstream vfile(vfilename);
 				vfile >> vnum;
-				/*
-				variables = new std::string[vnum];
-				for (int i = 0; i < vnum; i++)
-					vfile >> variables[i];
-				*/
 				variables = new std::string[Cv0to4];
 				variables[0] = '1';
 				for (int i = 1; i <= Nv; i++)
@@ -119,19 +114,21 @@ namespace iif{
 						}
 					}
 				}
-				/*
-				std::cout << "D1mapping = " << D1mapping << "\n";
-				std::cout << "D2mapping = " << D2mapping << "\n";
-				std::cout << "D3mapping = " << D3mapping << "\n";
-				std::cout << "D4mapping = " << D4mapping << "\n";
-				std::cout << "variable name list: \n";
-				for (int i = 0; i < D4mapping; i++)
-					std::cout << i << " >> " << variables[i] << "\n";
-					*/
-
 
 				States* ss = new States[4];
 				gsets = &ss[1];
+				gsets[NEGATIVE].label = -1;
+				gsets[QUESTION].label = 0;
+				gsets[POSITIVE].label = 1;
+				gsets[COUNTER_EXAMPLE].label = 2;
+				if (pasttestcase != NULL) {
+					std::ifstream fin(pasttestcase);
+					int l, pn, nn;
+					fin >> l >> pn >> nn;
+					gsets[POSITIVE].initFromFile(pn, fin);
+					gsets[NEGATIVE].initFromFile(nn, fin);
+					fin.close();
+				}
 				first = NULL;
 				last = NULL;
 				register_program(func, func_name);

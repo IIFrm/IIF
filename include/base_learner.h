@@ -26,7 +26,7 @@
 class BaseLearner{
 	public:
 		BaseLearner(States* gsets, int (*func)(int*)): gsets(gsets), func(func) {
-			init_gsets();
+			//init_gsets();
 			cl = new Classifier();
 			equ = new Equation();
 		}
@@ -48,8 +48,6 @@ class BaseLearner{
 			int a[Nv];
 			for (int i = 0; i < Nv; i++)
 				a[i] = static_cast<int>(input.getVal(i));
-			/*int b[D];
-			stateReverseMapping(a, b);*/
 			//target_program
 			//std::cout << "----> run the loop function.\n";
 			func(a);
@@ -72,12 +70,12 @@ class BaseLearner{
 		virtual std::string invariant() = 0;
 
 	protected:
-		void init_gsets() {
+		/*void init_gsets() {
 			gsets[NEGATIVE].label = -1;
 			gsets[QUESTION].label = 0;
 			gsets[POSITIVE].label = 1;
 			gsets[COUNTER_EXAMPLE].label = 2;
-		}
+		}*/
 
 		States* gsets;
 		int (*func)(int*);

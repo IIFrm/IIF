@@ -8,6 +8,7 @@
 #include "equation.h"
 
 
+
 bool Equation::factorNv1Times2(double *B) { //, double B, double C) {
 #if (linux || __MACH__)
 	z3::config cfg;

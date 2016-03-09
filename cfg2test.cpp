@@ -35,11 +35,12 @@ class Config {
 
 class FileHelper {
 	public:
-		FileHelper(const char* cfgfilename, const char* cppfilename, const char* varfilename, const char* invfilename) {
+		FileHelper(const char* cfgfilename, const char* cppfilename, const char* varfilename, const char* invfilename, const char* testcasefilename) {
 			this->cfgfilename = cfgfilename;
 			this->cppfilename = cppfilename;
 			this->varfilename = varfilename;
 			this->invfilename = invfilename;
+			this->testcasefilename = testcasefilename;
 			confignum = 7;
 			cs = new Config[confignum];
 			cs[0].key = "names";
@@ -50,15 +51,15 @@ class FileHelper {
 			cs[5].key = "postcondition";
 			cs[6].key = "afterloop";
 			/*
-			cs[0].key = "num";
-			cs[1].key = "names";
-			cs[2].key = "precondition";
-			cs[3].key = "beforeloop";
-			cs[4].key = "loopcondition";
-			cs[5].key = "loop";
-			cs[6].key = "postcondition";
-			cs[7].key = "afterloop";
-			*/
+			   cs[0].key = "num";
+			   cs[1].key = "names";
+			   cs[2].key = "precondition";
+			   cs[3].key = "beforeloop";
+			   cs[4].key = "loopcondition";
+			   cs[5].key = "loop";
+			   cs[6].key = "postcondition";
+			   cs[7].key = "afterloop";
+			   */
 			//variables = NULL;
 			vnum = 0;
 		}
@@ -80,11 +81,11 @@ class FileHelper {
 			while(getline(cfgFile, line)) {
 				size_t pos = line.find('=');
 				/*if(pos == string::npos) {
-					if (lastidx >= 0) 
-						cs[lastidx].value += "\n" + line;
-					continue;
-				}
-				*/
+				  if (lastidx >= 0) 
+				  cs[lastidx].value += "\n" + line;
+				  continue;
+				  }
+				  */
 				string key = line.substr(0,pos);
 				bool get_record = false;
 				for (int i = 0; i < confignum; i++) {
@@ -121,23 +122,23 @@ class FileHelper {
 
 
 			/*for (int i = 0; i < vnum; i++)
-				cout << "var[" << i << "] = " << variables[i] << endl;
-			
-			std::istringstream ss(cs[0].value);
-			ss >> vnum;
-			variables = new string[vnum];
-			size_t start = 0;
-			size_t end = cs[1].value.find(' ');
-			while (end == start) {
-				end = cs[1].value.find(' ', end+1);
-				start++;
-			}
-			for (int i = 0; i < vnum; i++) {
-				variables[i] = cs[1].value.substr(start, end-start);
-				start = end + 1;
-				end = cs[1].value.find(' ', start);
-			}
-			*/
+			  cout << "var[" << i << "] = " << variables[i] << endl;
+
+			  std::istringstream ss(cs[0].value);
+			  ss >> vnum;
+			  variables = new string[vnum];
+			  size_t start = 0;
+			  size_t end = cs[1].value.find(' ');
+			  while (end == start) {
+			  end = cs[1].value.find(' ', end+1);
+			  start++;
+			  }
+			  for (int i = 0; i < vnum; i++) {
+			  variables[i] = cs[1].value.substr(start, end-start);
+			  start = end + 1;
+			  end = cs[1].value.find(' ', start);
+			  }
+			  */
 			return true;
 		}
 
@@ -175,18 +176,18 @@ class FileHelper {
 		}
 
 		/*
-		bool writeInvFile() {
-			ofstream invFile(invfilename);
-			if(!invFile.is_open()) {
-				cout<<"can not open cpp file!"<<endl;
-				return false;
-			}
-			invFile << vnum << endl;
-			for (int i = 0; i< vnum; i++)
-				invFile << variables[i] << endl;
-			invFile.close();
-			return true;
-		}*/
+		   bool writeInvFile() {
+		   ofstream invFile(invfilename);
+		   if(!invFile.is_open()) {
+		   cout<<"can not open cpp file!"<<endl;
+		   return false;
+		   }
+		   invFile << vnum << endl;
+		   for (int i = 0; i< vnum; i++)
+		   invFile << variables[i] << endl;
+		   invFile.close();
+		   return true;
+		   }*/
 
 	private:
 		inline bool writeRecordi(ofstream& cppFile) {
@@ -219,9 +220,13 @@ class FileHelper {
 		}
 
 		inline bool writeCppMain(ofstream& cppFile) {
-			cppFile << "int main(int argc, char** argv)\n {\n" 
-				<< "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n"
-				<< "context.addLearner(\"linear\");\n"
+			cppFile << "int main(int argc, char** argv)\n {\n";
+			if (testcasefilename)
+				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\", \"../" << testcasefilename << "\");\n";
+			else
+				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n";
+
+			cppFile << "context.addLearner(\"linear\");\n"
 				<< "return context.learn(\"../" << invfilename << "\");\n}" << endl;
 			return true;
 			cppFile << "int main(int argc, char** argv)\n {\n" 
@@ -238,6 +243,7 @@ class FileHelper {
 		const char* cppfilename;
 		const char* varfilename;
 		const char* invfilename;
+		const char* testcasefilename;
 		Config* cs;
 		int confignum;
 		vector<string> variables;
@@ -251,11 +257,20 @@ int main(int argc, char** argv)
 	const char* cppfilename = "inputcfg.cpp";
 	const char* varfilename = "inputcfg.var";
 	const char* invfilename = "inputcfg.inv";
+	const char* testcasefilename = NULL;
 	if (argc >= 2) cfgfilename = argv[1];
 	if (argc >= 3) cppfilename = argv[2];
 	if (argc >= 4) varfilename = argv[3];
 	if (argc >= 5) invfilename = argv[4];
-	FileHelper fh(cfgfilename, cppfilename, varfilename, invfilename);
+	if (argc >= 6) testcasefilename = argv[5];
+	/*
+	std::cout << cfgfilename << "\n"
+		<< cppfilename << "\n"
+		<< varfilename << "\n"
+		<< invfilename << "\n"
+		<< testcasefilename << "\n";
+	*/
+	FileHelper fh(cfgfilename, cppfilename, varfilename, invfilename, testcasefilename);
 	//cout << "after construct...\n";
 	fh.readConfigFile();
 	//cout << "after read config file...\n";
