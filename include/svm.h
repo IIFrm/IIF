@@ -5,14 +5,10 @@
 #include "string.h"
 
 
-
-
 typedef double MState[Cv1to4];
-
 
 class SVM : public MLalgo
 {
-	private:
 	public:
 		svm_parameter param;
 		svm_problem problem;
@@ -21,7 +17,6 @@ class SVM : public MLalgo
 
 		double* label; // [max_items * 2];
 		double** data; // [max_items * 2];
-		//double** pdata; // [max_items * 2];
 		MState* pdata;
 
 		int mapping_type;
@@ -269,8 +264,8 @@ class SVM : public MLalgo
 			return static_cast<double>(pass) / problem.l;
 		}
 
+/*
 		int checkQuestionSet(States& qset) {
-			/*
 			if (classifier == NULL) return -1;
 #ifdef __PRT
 			std::cout << " [" << qset.traces_num() << "]";
@@ -310,9 +305,9 @@ class SVM : public MLalgo
 #ifdef __PRT
 			std::cout << " [PASS]";
 #endif
-*/
 			return 0;
 		}
+*/
 
 		int converged (void* pre_model, int num =1) {
 			assert ((num == 1) || "SVM::get_converged: Unexpected equation number parameter.");
@@ -356,16 +351,6 @@ class SVM : public MLalgo
 			if (res >= 0) return 1;
 			else return -1;
 		}
-
-		/*int predict(double* v) {
-			if (classifier == NULL) return -2;
-			if (v == NULL) return -2;
-			double res = Equation::calc(*classifier, v);
-
-			if (res >= 0) return 1;
-			else return -1;
-		}
-		*/
 };
 
 #endif /* _SVM_H */

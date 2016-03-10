@@ -11,6 +11,44 @@ typedef double State[Nv];
 
 class States{
 	public:
+		State (*values);
+		int label;
+		int size;
+
+		// t_index is the array stored all the offset of traces in states.
+		// e.g. t_index[0] = 0 means the 0-th trace is located at position 0 in values;
+		// t_index[1] = 5 means the 1st trace is located at postion 5....
+		//						and also the length of the 0-TH trace is 5!!!!!
+		int* t_index;
+
+		// p_index is the current position of the t_index.
+		// Apperately, we have :
+		//						t_index[p_index] == size
+		// Thus, size is redundant in this context.
+		int p_index;
+
+		inline int getTraceSize() {
+			return p_index;
+		}
+
+		inline int traces_num() {
+			return p_index;
+		}
+
+		int getSize() {
+			return size;
+		}
+
+		double* getState (int i) {
+			if (i >= size) return NULL;
+			return values[i];
+		}
+
+		int getLabel(int index = 0) { 
+			return label; 
+		}
+
+	public:
 		States() : max_size(Mitems) {
 			values = new double[Mitems][Nv];
 			t_index = new int[Mitems];
@@ -29,15 +67,6 @@ class States{
 				t_index = NULL;
 			}
 		}
-
-		/*bool setVariableName(char** strs) {
-		  if (strs == NULL) return false;
-		  for (int i = 0; i < VARS; i++){
-		  if (strs[i] && strs[i][0] != '\0')
-		  strncpy(name[i], strs[i], 8);
-		  }
-		  return true;
-		  }*/
 
 		bool initFromFile(int num, std::ifstream& fin) {
 			int tmpint;
@@ -96,18 +125,6 @@ class States{
 			return addLength;
 		}
 
-		inline int getTraceSize() {
-			return p_index;
-		}
-
-		inline int traces_num() {
-			return p_index;
-		}
-
-		int getSize() {
-			return size;
-		}
-
 		void dumpTrace(int num) {
 			if (num >= p_index) {
 				std::cerr << "exceed state set boundary" << std::endl;
@@ -136,37 +153,6 @@ class States{
 			}
 			return out;
 		}
-
-		double* getState (int i) {
-			if (i >= size) return NULL;
-			return values[i];
-		}
-
-		int getLabel(int index = 0) { 
-			return label; 
-		}
-
-	public:
-		//int num; /// = VARS
-		/// is designed to store all the names of variables, used for output;
-		///  currently not in use.
-		/// char name[VARS][8];
-
-		State (*values);
-		int label;
-		int size;
-
-		// t_index is the array stored all the offset of traces in states.
-		// e.g. t_index[0] = 0 means the 0-th trace is located at position 0 in values;
-		// t_index[1] = 5 means the 1st trace is located at postion 5....
-		//						and also the length of the 0-TH trace is 5!!!!!
-		int* t_index;
-
-		// p_index is the current position of the t_index.
-		// Apperately, we have :
-		//						t_index[p_index] == size
-		// Thus, size is redundant in this context.
-		int p_index;
 
 	private:
 		static bool stateCmp(const State& s1, const State& s2) {

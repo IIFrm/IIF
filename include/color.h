@@ -6,8 +6,7 @@
  *  And remember to call unset_console_color after your output.
  *
  *  @author Li Jiaying
- *  @bug unset_console_color is set the console back to black background, white forground, no strong comparision
- *		instead of the previous setting.
+ *  @bug  no known bugs
  */
 #ifndef _COLOR_H_
 #define _COLOR_H_
@@ -23,6 +22,7 @@ enum Color {RED = 0, YELLOW, GREEN, BLUE, WHITE};
 std::ostream& operator << (std::ostream& out, Color c);
 
 /** @brief This function sets the given stream to the given color, YELLOW is default.
+ *		   This is a legacy function, which is not recommended to use any more.
  *
  *  @param  out  The ostream to be changed, defines which stream you want to set
  *  @param  color The Color to set. YELLOW by default. 

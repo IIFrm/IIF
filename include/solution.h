@@ -22,30 +22,9 @@
 #include <string.h>
 #include <assert.h>
 #include "color.h"
-//#ifdef linux
-//#include <stp/c_interface.h>
-//#include "z3++.h"
-//using namespace z3;
-//#endif
-
 
 extern int maxv;
 extern int minv;
-//extern char variable_name[VARS][8];
-/*
-const double UPBOUND = pow(0.1, PRECISION);
-inline double _roundoff(double x)
-{
-	int inx = nearbyint(x);
-	if ((inx >= x * (1 - UPBOUND) && inx <= x * (1 + UPBOUND))
-			|| (inx <= x * (1 - UPBOUND) && inx >= x * (1 + UPBOUND)))
-		return double(inx);
-	if (std::abs(x) <= UPBOUND)
-		return 0;
-	return x;
-}
-*/
-
 
 /** \class Solution
  *  @brief This class defines the format of a valid solution to an equation.

@@ -2,7 +2,7 @@
  *  @brief Provide base class for all iif learning algorithms.
  *
  *  This file contains the necessary function support for iif learning algorithms.
- *  The function run_target is the most important function in this class for now. 
+ *  The function run_target is the most important function in this base class for now. 
  *
  *  @author Li Jiaying
  *  @bug no known bugs found.
@@ -26,7 +26,6 @@
 class BaseLearner{
 	public:
 		BaseLearner(States* gsets, int (*func)(int*)): gsets(gsets), func(func) {
-			//init_gsets();
 			cl = new Classifier();
 			equ = new Equation();
 		}
@@ -42,9 +41,9 @@ class BaseLearner{
  */
 		int runTarget(Solution& input) {
 			assert(func != NULL || "Func equals NULL, ERROR!\n");
-			//assert(&input != NULL);
 			beforeLoop();
 
+			//< convert the given input with double type to the input with int type 
 			int a[Nv];
 			for (int i = 0; i < Nv; i++)
 				a[i] = static_cast<int>(input.getVal(i));
@@ -59,24 +58,29 @@ class BaseLearner{
 				std::cout << gsets[COUNTER_EXAMPLE] << WHITE << std::endl;
 				exit(-2);
 			}
-			//std::cout << "\n<---- return from runTarget method.\n";
 			return ret;
 		}
 
+		/** @brief This method is the entrance for the whole learning procedure.
+		 *		   Child class should implement it based on learning algorithm.
+		 */
 		virtual int learn() = 0;
 
+		/** @brief This method is used to generate new input and drive the testing process.
+		 *		   This method is actually does several jobs, depend on parameters. 
+		 *		   It is better to split it into several methods.
+		 *
+		 *		   You can find details of each parameters in child class.
+		 */
 		virtual int selectiveSampling(int randn, int exen, int type, void* params) = 0;
 
+		/** @brief This method try to return a readable string which describe the generated invariant.
+		 *		   The returned method is also required to be a valid expression which can be used in C program,
+		 *		   because we will directly insert the string to the program to be verified.
+		 */
 		virtual std::string invariant() = 0;
 
 	protected:
-		/*void init_gsets() {
-			gsets[NEGATIVE].label = -1;
-			gsets[QUESTION].label = 0;
-			gsets[POSITIVE].label = 1;
-			gsets[COUNTER_EXAMPLE].label = 2;
-		}*/
-
 		States* gsets;
 		int (*func)(int*);
 		Classifier* cl;

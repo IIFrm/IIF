@@ -16,13 +16,7 @@
  * Negative = -1 because we want to compatible with natural meaning and svm labels.
  *				 This also cause a problem to reassign states point in each test file which is ugly
  */
-enum trace_type{ NEGATIVE = -1, QUESTION, POSITIVE, COUNTER_EXAMPLE };	/* trace_type */
-
-
-double* stateMapping(double* src, double* dst); // src is of VARS dimension, while dst is of D dimension
-double* stateReverseMapping(double* src, double* dst); // src is of VARS dimension, while dst is of D dimension
-int* stateReverseMapping(int* src, int* dst); // src is of VARS dimension, while dst is of D dimension
-
+enum {NEGATIVE = -1, QUESTION, POSITIVE, COUNTER_EXAMPLE};	/* trace_type */
 
 int addStateInt(int first, ...);
 int addStateDouble(double first, ...);
@@ -46,16 +40,10 @@ int mDouble(double*);
 
 
 /** @brief This function should be called each time before executing loop
- *
- * @param void
- * @return void
  */
 int beforeLoop();
 
 /** @brief This function should be called each time after executing loop
- *
- * @param void
- * @return void
  */
 int afterLoop(States *);
 

@@ -53,7 +53,7 @@ class MLalgo
 		 * @param qset is a reference type to question states. 
 		 * @return int 0 if no error 
 		 */
-		virtual int checkQuestionSet(States& qset) = 0;
+		//virtual int checkQuestionSet(States& qset) = 0;
 
 		/** @brief check whether the training is converged or not 
 		 *

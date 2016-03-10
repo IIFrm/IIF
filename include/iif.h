@@ -41,16 +41,11 @@
 #include <sys/time.h>
 #include <unistd.h>
 #endif
-//#define conj target_program
+
 extern int minv, maxv;
 extern std::string* variables;
 extern int vnum;
 
-
-/*States* initSystem(int (*func)(int*), const char* func_name = "UserFunction", int timeout = 60);
-
-  int destroySystem(States* gsets);
-  */
 
 namespace iif{
 	class LearnerNode {
