@@ -111,7 +111,7 @@ namespace iif{
 				}
 
 				States* ss = new States[4];
-				gsets = &ss[QUESTION];
+				gsets = &ss[1];
 				gsets[NEGATIVE].label = -1;
 				gsets[QUESTION].label = 0;
 				gsets[POSITIVE].label = 1;

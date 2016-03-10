@@ -78,13 +78,13 @@ int afterLoop(States* gsets)
 	assert(assume_times == 1);
 	assert(assert_times == 1);
 	if (_passP && _passQ) {
-		label = 1;
+		label = POSITIVE;
 	} else if (!_passP && !_passQ) {
-		label = -1; 
+		label = NEGATIVE; 
 	} else if (!_passP && _passQ) {
-		label = 0; 
+		label = QUESTION; 
 	} else if (_passP && !_passQ) {
-		label = 2;
+		label = CNT_EMPL;
 	}
 
 #ifdef __PRT_TRACE
@@ -104,16 +104,16 @@ int afterLoop(States* gsets)
 
 void printRunResult(int rr) {
 	switch (rr) {
-		case -1:
+		case NEGATIVE:
 			std::cout << "-";
 			break;
-		case 0:
+		case QUESTION:
 			std::cout << "?";
 			break;
-		case 1:
+		case POSITIVE:
 			std::cout << "+";
 			break;
-		case 2:
+		case CNT_EMPL:
 			std::cout << "x";
 			break;
 	}
