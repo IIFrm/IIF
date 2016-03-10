@@ -111,11 +111,11 @@ namespace iif{
 				}
 
 				States* ss = new States[4];
-				gsets = &ss[1];
+				gsets = &ss[QUESTION];
 				gsets[NEGATIVE].label = -1;
 				gsets[QUESTION].label = 0;
 				gsets[POSITIVE].label = 1;
-				gsets[COUNTER_EXAMPLE].label = 2;
+				gsets[CNT_EMPL].label = 2;
 				if (pasttestcase != NULL) {
 					std::ifstream fin(pasttestcase);
 					int l, pn, nn;
@@ -132,14 +132,16 @@ namespace iif{
 			}
 
 			~iifContext() {
+				// clean up heap memory
 				LearnerNode* p = first;
 				LearnerNode* pp;
+				
 				while (p != NULL) {
 					pp = p->next;
 					delete p;
 					p = pp;
 				}
-				States* ss = &gsets[-1];
+				States* ss = &gsets[NEGATIVE];
 				delete []ss;
 				if (variables != NULL)
 					delete []variables;
@@ -174,6 +176,8 @@ namespace iif{
 
 			int learn(const char* invfilename = ".inv") {
 #ifdef linux
+				// we only support timeout in LINUX system
+				// Because don't know how to easily implement the same function in windows system...:( 
 				if (signal(SIGALRM, sig_alrm) == SIG_ERR)
 					exit(-1);
 				alarm(timeout);

@@ -53,9 +53,9 @@ class BaseLearner{
 			//std::cout << "\t<---- run the loop function.\n";
 
 			int ret = afterLoop(gsets);
-			if (gsets[COUNTER_EXAMPLE].traces_num() > 0) {
+			if (gsets[CNT_EMPL].traces_num() > 0) {
 				std::cout << RED << "}\nProgram BUG! Program have encountered a Counter-Example trace." << std::endl;
-				std::cout << gsets[COUNTER_EXAMPLE] << WHITE << std::endl;
+				std::cout << gsets[CNT_EMPL] << WHITE << std::endl;
 				exit(-2);
 			}
 			return ret;

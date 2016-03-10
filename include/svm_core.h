@@ -33,7 +33,7 @@ struct svm_problem
 	int l;
 	double *y;
 	struct svm_node **x;
-	int np, nn;
+	//int np, nn;
 
 	friend std::ostream& operator << (std::ostream& out, const svm_problem& sp) {
 		for (int i = 0; i < sp.l; i++) {
@@ -45,8 +45,10 @@ struct svm_problem
 		return out;
 	}
 
+	/*
 	bool save_to_file(const char* filepath) {
 		std::ofstream fout(filepath);
+		int np, nn;
 		fout << l << "\t" << np << "\t" << nn << "\n";
 		for (int i = 0; i < l; i++) {
 			fout << y[i];
@@ -60,6 +62,7 @@ struct svm_problem
 
 	bool load_from_file(const char* filepath) {
 		std::ifstream fin(filepath);
+		int np, nn;
 		fin >> l >> np >> nn;
 		int tmpint;
 		char tmpchar;
@@ -74,7 +77,7 @@ struct svm_problem
 		fin.close();
 		return true;
 	}
-
+	*/
 };
 
 
@@ -187,7 +190,7 @@ bool svm_model_approximate(const svm_model *m, int times/*, Classifier* cl = NUL
 bool svm_problem_approximate(const svm_problem *sp, int times/*, Classifier* cl = NULL*/); 
 
 int svm_model_visualization(const svm_model *model, Equation* equ = NULL);
-//int equation_factorization(const Equation *equ, Classifier* cl, int mapping_type = 1);
+//int equation_factorization(const Equation *equ, Classifier* cl, int etimes = 1);
 
 void print_svm_samples(const svm_problem *sp);
 

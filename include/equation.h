@@ -26,13 +26,10 @@
 using namespace z3;
 #endif
 
-
 extern int maxv;
 extern int minv;
 extern std::string* variables;
 extern int vnum;
-//extern char variable_name[Cv1to4][8];
-
 
 const double UPBOUND = pow(0.1, PRECISION);
 static double _roundoff(double x)

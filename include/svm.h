@@ -19,7 +19,7 @@ class SVM : public MLalgo
 		double** data; // [max_items * 2];
 		MState* pdata;
 
-		int mapping_type;
+		int etimes;
 		int mapping_dimension;
 
 	public:
@@ -78,14 +78,13 @@ class SVM : public MLalgo
 			problem.y = label;
 			model = NULL;
 			pre_model = NULL;
-			//pdata = NULL;
-			mapping_type = 0;
+			etimes = 0;
 			mapping_dimension = 0;
 		}
 
 		~SVM() {
 			//if (model != NULL) delete model;
-			problem.save_to_file("../tmp/saved_testcase");
+			//problem.save_to_file("../tmp/saved_testcase");
 			std::cout << "save to file succeed.\n";
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (pre_model != NULL) svm_free_and_destroy_model(&pre_model);
@@ -129,12 +128,7 @@ class SVM : public MLalgo
 				data[pre_psize + i] = pdata[cur_index + i];
 				label[pre_psize + i] = 1;
 			}
-			/*
-			for (int i = pre_psize; i < cur_psize; i++) {
-				data[i] = gsets[POSITIVE].values[i];
-				label[i] = 1;
-			}
-			*/
+
 			// add new negative states at OFFSET: [cur_positive_size + pre_negative_size]
 			cur_index = cur_psize + pre_nsize;
 			for (int i = 0 ; i < cur_nsize - pre_nsize; i++) {
@@ -142,15 +136,10 @@ class SVM : public MLalgo
 				data[cur_index + i] = pdata[cur_index + i];
 				label[cur_index + i] = -1;
 			}
-			/*
-			for (int i = pre_nsize; i < cur_nsize; i++) {
-				//data[cur_psize + i] = gsets[NEGATIVE].values[i];
-				data[cur_psize + i] = gsets[NEGATIVE].values[i];
-			}
-			*/
+
 			problem.l = cur_psize + cur_nsize;
-			problem.np = cur_psize;
-			problem.nn = cur_nsize;
+			//problem.np = cur_psize;
+			//problem.nn = cur_nsize;
 			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
@@ -159,11 +148,11 @@ class SVM : public MLalgo
 			return ret;
 		}
 
-		int typeChanger(int type) {
-			if ((type < 1) || (type > 4))
+		int setEtimes(int et) {
+			if ((et < 1) || (et > 4))
 				return -1;
-			mapping_type = type;
-			switch (type) {
+			etimes = et;
+			switch (et) {
 				case 1:
 					return setDimension(Cv1to1);
 				case 2:
@@ -176,29 +165,21 @@ class SVM : public MLalgo
 			return -1;
 		}
 
-		void setMapping(int type) {
-			std::cout << "--->>> set mapping " << type << "  ";
-			if ((type < 1) || (type > 4))
-				std::cout << "warning: mapping type is out of bounds.\n";
-			mapping_type = type;
-		}
-
-
-		bool mappingData(double* src, double* dst, int mp_type = 4) {
+		bool mappingData(double* src, double* dst, int et = 4) {
 			int index = 0;
-			if (mp_type >= 1) {
+			if (et >= 1) {
 				for (int i = 0; i < Nv; i++) {
 					dst[index++] = src[i];
 				}
 			}
-			if (mp_type >= 2) {
+			if (et >= 2) {
 				for (int i = 0; i < Nv; i++) {
 					for (int j = i; j < Nv; j++) {
 						dst[index++] = src[i] * src[j];
 					}
 				}
 			}
-			if (mp_type >= 3) {
+			if (et >= 3) {
 				for (int i = 0; i < Nv; i++) {
 					for (int j = i; j < Nv; j++) {
 						for (int k = j; k < Nv; k++) {
@@ -207,7 +188,7 @@ class SVM : public MLalgo
 					}
 				}
 			}
-			if (mp_type >= 4) {
+			if (et >= 4) {
 				for (int i = 0; i < Nv; i++) {
 					for (int j = i; j < Nv; j++) {
 						for (int k = j; k < Nv; k++) {
@@ -218,7 +199,7 @@ class SVM : public MLalgo
 					}
 				}
 			}
-			if (mp_type >= 5) {
+			if (et >= 5) {
 				std::cout << "Unsupported for 5 dimension up.\n";
 				return false;
 			}

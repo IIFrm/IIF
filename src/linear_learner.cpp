@@ -89,27 +89,27 @@ int LinearLearner::learn()
 	bool similarLast = false;
 	bool converged = false;
 	svm_model* lastModel = NULL;
-	int pre_psize = 0, pre_nsize = 0; // , pre_question_size = 0;
+	int pre_psize = 0, pre_nsize = 0;
 
 	double pass_rate = 1;
-	int mapping_type = 1;
+	int etimes = 1;
 
 
 	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
-		int exes = (rnd == 1) ? Nexe_init : Nexe_after;
+		int nexe = (rnd == 1) ? Nexe_init : Nexe_after;
 	init_svm:
 #ifdef __PRT
 		int step = 1;
 		std::cout << RED << "[" << rnd << "]" << WHITE;
-		std::cout << RED << "Linear SVM------------------------{" << mapping_type << "}------------------------------------------------------------------------------------" << WHITE << std::endl;
-		std::cout << "\t(" << YELLOW << step++ << WHITE << ") execute programs... [" << exes + Nexe_rand << "] ";
+		std::cout << RED << "Linear SVM------------------------{" << etimes << "}------------------------------------------------------------------------------------" << WHITE << std::endl;
+		std::cout << "\t(" << YELLOW << step++ << WHITE << ") execute programs... [" << nexe + Nexe_rand << "] ";
 #else
 		std::cout << RED << "[" << rnd << "]" << WHITE;
 #endif
 		//std::cout << std::endl << "\t-->selective sampling:\n\t";
-		//selectiveSampling(random_exes, exes, 0, (void*)lastEquation);
-		//selectiveSampling(random_exes, exes, 0, lastModel);
-		selectiveSampling(Nexe_rand, exes, 0, cl);
+		//selectiveSampling(random_exes, nexe, 0, (void*)lastEquation);
+		//selectiveSampling(random_exes, nexe, 0, lastModel);
+		selectiveSampling(Nexe_rand, nexe, 0, cl);
 		//std::cout << "\t<--selective sampling:\n";
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
@@ -125,13 +125,12 @@ int LinearLearner::learn()
 #endif
 		svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
 
-		while (mapping_type <= 3) {
+		while (etimes <= 3) {
 			cl->clear();
 #ifdef __PRT
-			std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") start training with mapping dimension {" << mapping_type << "}...";
+			std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") start training with mapping dimension {" << etimes << "}...";
 #endif
-			svm->typeChanger(mapping_type);
-			//std::cout << "@@problem:" << svm->problem << std::endl;
+			svm->setEtimes(etimes);
 			svm->train();
 			std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
 			cl->factor(*(svm->equ));
@@ -146,13 +145,13 @@ int LinearLearner::learn()
 				std::cout << GREEN << " [100%] [PASS]" << WHITE;
 			else
 				std::cout << RED << " [" << pass_rate * 100 << "%]" << " [FAIL] \n The problem is not linear separable by mapping "
-				<< mapping_type << ".. Trying to project to a higher space " << WHITE << std::endl;
+				<< etimes << ".. Trying to project to a higher space " << WHITE << std::endl;
 #endif
 			if (pass_rate == 1)
 				break;
-			mapping_type++;
+			etimes++;
 		}
-		if (mapping_type > 3) break;
+		if (etimes > 3) break;
 
 		/*
 		 *	similarLast is used to store the convergence check return value for the last time.
@@ -162,7 +161,7 @@ int LinearLearner::learn()
 #ifdef __PRT
 		std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") check convergence:        ";
 #endif
-		//if (svm->converged(equation) == 0) {
+
 		if (svm->converged_model() == true) {
 			if (similarLast == true) {
 #ifdef __PRT
@@ -204,10 +203,7 @@ int LinearLearner::learn()
 		svm_model_visualization(lastModel, equ);
 		//svm_model_approximate(lastModel, equ->getEtimes());
 		//svm_problem_approximate(&svm->problem, equ->getEtimes());
-		/*if (sat == true) std::cout << "TRUE" << std::endl;
-		  else std::cout << "FALSE" << std::endl;
-		  */
-		  //std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
+		//std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
 		std::cout << YELLOW << "  Hypothesis Invariant(Converged): {\n";
 		std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
 		std::cout << "  }" << WHITE << std::endl;
@@ -223,9 +219,4 @@ int LinearLearner::learn()
 
 std::string LinearLearner::invariant() {
 	return cl->toString();
-	/*Equation *equ = new Equation();
-	  bool sat = svm_model_z3(svm->getModel(), equ);
-	  std::string s = equ->toString();
-	  delete equ;
-	  return s;*/
 }
