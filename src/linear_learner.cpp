@@ -218,5 +218,6 @@ int LinearLearner::learn()
 }
 
 std::string LinearLearner::invariant() {
+	return svm->equ->toString();
 	return cl->toString();
 }

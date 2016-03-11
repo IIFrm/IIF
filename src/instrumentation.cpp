@@ -12,12 +12,17 @@ int assert_times = 0;
 char lt[4][10] =  { "Negative", "Question", "Positive", "Bugtrace"};
 char(*LabelTable)[10] = &lt[1];
 
-double program_states[MstatesIn1trace][Nv];
+double program_states[MstatesIn1trace * 2][Nv];
 int state_index;
 
 #include "color.h"
 int addStateInt(int first ...)
 {
+	if (state_index >= 1.5 * MstatesIn1trace)
+		if (rand() % (100 * state_index / MstatesIn1trace) > 1)
+			return 0;
+	if (state_index >= 1.999 * MstatesIn1trace)
+		return 0;
 	va_list ap;
 	va_start(ap, first);
 	program_states[state_index][0] = first;
@@ -33,9 +38,10 @@ int addStateInt(int first ...)
 	}
 	std::cout << ")" << WHITE;
 #endif
+
 	state_index++;
-	if (state_index >= MstatesIn1trace) {
-		std::cout << RED << "\nToo many states (>" << MstatesIn1trace << ") in one execution. Stop here.\n" << WHITE;
+	if (state_index >= 2 * MstatesIn1trace) {
+		std::cout << RED << "\nToo many states (>" << 2 * MstatesIn1trace << ") in one execution. Stop here.\n" << WHITE;
 		exit(-1);
 	}
 	return 0;
@@ -43,6 +49,11 @@ int addStateInt(int first ...)
 
 int addStateDouble(double first, ...)
 {
+	if (state_index >= 1.5 * MstatesIn1trace)
+		if (rand() % (100 * state_index / MstatesIn1trace) > 1)
+			return 0;
+	if (state_index >= 1.999 * MstatesIn1trace)
+		return 0;
 	va_list ap;
 	va_start(ap, first);
 	program_states[state_index][0] = first;
@@ -50,9 +61,18 @@ int addStateDouble(double first, ...)
 		program_states[state_index][i] = va_arg(ap, double);
 	}
 	va_end(ap);
+
+#ifdef __PRT_TRACE
+	std::cout << BLUE << "(" << program_states[state_index][0];
+	for (int i = 1; i < VARS; i++) {
+	    std::cout << "," << program_states[state_index][i];
+	}
+	std::cout << ")" << WHITE;
+#endif
+
 	state_index++;
-	if (state_index >= MstatesIn1trace) {
-		std::cout << RED << "\nToo many states (>" << MstatesIn1trace << ") in one execution. Stop here.\n" << WHITE;
+	if (state_index >= 2 * MstatesIn1trace) {
+		std::cout << RED << "\nToo many states (>" << 2 * MstatesIn1trace << ") in one execution. Stop here.\n" << WHITE;
 		exit(-1);
 	}
 	return 0;
