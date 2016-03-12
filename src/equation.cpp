@@ -55,6 +55,7 @@ bool Equation::factorNv1Times2(double *B) { //, double B, double C) {
 	z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: "<< RED << z3m << WHITE << "\n";
 	output_z3model(z3m);
+	b.clear();
 #endif
 	return true;
 }
@@ -100,6 +101,7 @@ bool Equation::factorNv1Times3(double *B) { //, double B, double C, double D) {
 	z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: "<< RED << z3m << WHITE << "\n";
 	output_z3model(z3m);
+	b.clear();
 #endif
 	return true;
 }
@@ -147,10 +149,12 @@ bool Equation::factorNv2Times2(double *B) {
 		std::cout << RED << "unSAT" << WHITE << std::endl;
 		return false;
 	}
+	b.clear();
 	//std::cout << "SAT" << std::endl;
 	z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << WHITE << "\n";
 	output_z3model(z3m);
+	b.clear();
 #endif
 	return true;
 }
@@ -212,6 +216,7 @@ bool Equation::factorNv2Times3(double* B) {
 	z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << WHITE << "\n";
 	output_z3model(z3m);
+	b.clear();
 #endif
 	return true;
 }
@@ -268,6 +273,7 @@ bool Equation::factorNv3Times2(double *B) { //, double B, double C, double D, do
 	z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << WHITE << "\n";
 	output_z3model(z3m);
+	b.clear();
 #endif
 	return true;
 }
@@ -383,6 +389,8 @@ z3::expr Equation::toZ3expr(char** name, z3::context& c) const
 		}
 		delete[]pname;
 	}
+	x.clear();
+	theta.clear();
 	return hypo;
 }
 #endif

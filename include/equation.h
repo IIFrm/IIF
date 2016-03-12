@@ -458,14 +458,14 @@ public:
 				e.theta[0] = up;
 				if (e.factor() == true) {
 					std::cout << "<---Get Factoring Done." << e << std::endl;
-					return 0;
+					//return 0;
 				}
 			}
 			if (down >= min_bound) {
 				e.theta[0] = down;
 				if (e.factor() == true) {
 					std::cout << "<---Get Factoring Done." << e << std::endl;
-					return 0;
+					//return 0;
 				}
 			}
 		}

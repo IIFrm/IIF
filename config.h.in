@@ -51,6 +51,9 @@
 #define _in_
 #define _out_
 
+#define _factor_polynomial_
+#define _multiply_candidates_
+
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  
  *		   This should be set in /CMakeLists.txt file
  *		   You'd better set this value in a scope [1, 12] 
