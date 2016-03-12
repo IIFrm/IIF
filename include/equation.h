@@ -41,7 +41,6 @@ static double _roundoff(double x)
 	if (std::abs(x) <= UPBOUND)
 		return 0;
 	return double(inx);
-	return x;
 }
 
 
@@ -212,7 +211,7 @@ public:
 	}
 
 	bool factor() {
-		std::cout << "\t  <<Factoring Equation>> \n";
+		//std::cout << "\t  <<Factoring Equation>> \n";
 		if (getEtimes() == 1) return true;
 		double coefs[Cv0to4];
 		this->toStandardForm(coefs);
@@ -384,7 +383,6 @@ public:
 	 */
 	int roundoff(Equation& e) {
 		//std::cout << "ROUND OFF " << *this << " --> ";
-		//double min = std::abs(theta0);
 		double min = DBL_MAX;
 		double second_min = min;
 		for (int i = 1; i < dims; i++) {
@@ -411,17 +409,68 @@ public:
 			//if ((std::abs(theta0) < min) && (std::abs(theta0) > 1.0E-4))	
 			min = std::abs(theta[0]);
 
-		//std::cout << " [min=" << min << "] ";
 
-		//if (min <= pow(0.1, 5)) min = 1;
-		for (int i = 0; i < dims; i++)
+		for (int i = 1; i < dims; i++)
 			e.theta[i] = _roundoff(theta[i] / min);
-		//e.theta0 = _roundoff(theta0 / min);
+		e.theta[0] = ceil(theta[0] / min);
 #ifdef __PRT_EQUATION
 		std::cout << "\tAfter roundoff: " << e << WHITE << std::endl;
 #endif
 		//std::cout << e << std::endl;
 		return 0;
+	}
+
+	int roundoffWithoutConst(Equation& e) {
+		//std::cout << "ROUND OFF WITHOUT CONST" << *this << " --> ";
+		double min = DBL_MAX;
+		double second_min = min;
+		for (int i = 1; i < dims; i++) {
+			if (theta[i] == 0) continue;
+			if (std::abs(theta[i]) < min) {
+				second_min = min;
+				min = std::abs(theta[i]);
+			}
+		}
+
+		if (min == DBL_MAX) min = 1;	// otherwise we will have */0 operation, return inf or nan...
+		if (min == 0) min = 1;	// otherwise we will have */0 operation, return inf or nan...
+		if (second_min == DBL_MAX) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
+		if (second_min == 0) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
+
+#ifdef __PRT_EQUATION
+		std::cout << GREEN << "Before roundoff: " << *this;
+#endif
+		if (min / second_min <= UPBOUND)
+			min = second_min;
+
+		double max_bound = ceil((theta[0] + 1) / min);
+		double min_bound = ceil((theta[0] - 1) / min);
+		for (int i = 1; i < dims; i++)
+			e.theta[i] = _roundoff(theta[i] / min);
+		e.theta[0] = ceil(theta[0] / min);
+#ifdef __PRT_EQUATION
+		std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
+#endif
+		std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
+		double center = theta[0];
+		for (int up = center, down = center - 1; (up <= max_bound) || (down >= min_bound); up++, down--) {
+			if (up <= max_bound) {
+				e.theta[0] = up;
+				if (e.factor() == true) {
+					std::cout << "<---Get Factoring Done." << e << std::endl;
+					return 0;
+				}
+			}
+			if (down >= min_bound) {
+				e.theta[0] = down;
+				if (e.factor() == true) {
+					std::cout << "<---Get Factoring Done." << e << std::endl;
+					return 0;
+				}
+			}
+		}
+		e.theta[0] = center;
+		return -1;
 	}
 
 	Equation* roundoff() {

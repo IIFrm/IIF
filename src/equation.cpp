@@ -7,6 +7,14 @@
 
 #include "equation.h"
 
+static void output_z3model(z3::model& z3m) {
+	std::cout << "{";
+	for (unsigned s = 0; s < z3m.size(); s++) {
+		z3::func_decl v = z3m[s];
+		std::cout << "  " << v.name() << "=" << z3m.get_const_interp(v);
+	}
+	std::cout << "}\n";
+}
 
 
 bool Equation::factorNv1Times2(double *B) { //, double B, double C) {
@@ -41,17 +49,14 @@ bool Equation::factorNv1Times2(double *B) { //, double B, double C) {
 	z3::check_result retu = s.check();
 	if (retu == unsat) {
 		std::cout << RED << "unSAT" << WHITE << std::endl;
-		return -1;
+		return false;
 	}
 	//std::cout << "SAT" << std::endl;
 	z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: "<< RED << z3m << WHITE << "\n";
-	for (unsigned i = 0; i < z3m.size(); i++) {
-		z3::func_decl v = z3m[i];
-		std::cout << v.name() << " = " << z3m.get_const_interp(v) << "\n";
-	}
+	output_z3model(z3m);
 #endif
-	return 0;
+	return true;
 }
 
 
@@ -94,10 +99,7 @@ bool Equation::factorNv1Times3(double *B) { //, double B, double C, double D) {
 	//std::cout << "SAT" << std::endl;
 	z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: "<< RED << z3m << WHITE << "\n";
-	for (unsigned i = 0; i < z3m.size(); i++) {
-		z3::func_decl v = z3m[i];
-		std::cout << v.name() << " = " << z3m.get_const_interp(v) << "\n";
-	}
+	output_z3model(z3m);
 #endif
 	return true;
 }
@@ -148,10 +150,7 @@ bool Equation::factorNv2Times2(double *B) {
 	//std::cout << "SAT" << std::endl;
 	z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << WHITE << "\n";
-	for (unsigned i = 0; i < z3m.size(); i++) {
-		z3::func_decl v = z3m[i];
-		std::cout << v.name() << " = " << z3m.get_const_interp(v) << "\n";
-	}
+	output_z3model(z3m);
 #endif
 	return true;
 }
@@ -212,10 +211,7 @@ bool Equation::factorNv2Times3(double* B) {
 	//std::cout << "SAT" << std::endl;
 	z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << WHITE << "\n";
-	for (unsigned s = 0; s < z3m.size(); s++) {
-		z3::func_decl v = z3m[s];
-		std::cout << v.name() << " = " << z3m.get_const_interp(v) << "\n";
-	}
+	output_z3model(z3m);
 #endif
 	return true;
 }
@@ -271,10 +267,7 @@ bool Equation::factorNv3Times2(double *B) { //, double B, double C, double D, do
 	//std::cout << "SAT" << std::endl;
 	z3::model z3m = s.get_model();
 	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << WHITE << "\n";
-	for (unsigned s = 0; s < z3m.size(); s++) {
-		z3::func_decl v = z3m[s];
-		std::cout << v.name() << " = " << z3m.get_const_interp(v) << "\n";
-	}
+	output_z3model(z3m);
 #endif
 	return true;
 }

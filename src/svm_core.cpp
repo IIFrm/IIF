@@ -3388,8 +3388,8 @@ int svm_model_visualization(const svm_model *model, Equation* equ)
 	}
 	equ->setDims(DIMENSION + 1);
 	equ->set(theta);
-	//std::cout << BLUE << "Before RoundOFF " << *equ << WHITE << std::endl;
-	equ->roundoff();
+	std::cout << BLUE << "Before RoundOFF " << *equ << GREEN << " +[-1, 1]" << WHITE << std::endl;
+	//equ->roundoff();
 	//std::cout << *equ << std::endl;
 	return 0;	
 }

@@ -133,6 +133,7 @@ int LinearLearner::learn()
 			svm->setEtimes(etimes);
 			svm->train();
 			std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
+			svm->equ->roundoff();
 			cl->factor(*(svm->equ));
 
 #ifdef __PRT
@@ -201,6 +202,8 @@ int LinearLearner::learn()
 	if ((converged) && (rnd <= max_iteration)) {
 		/*bool sat =*/ //svm_model_z3(lastModel, cl);
 		svm_model_visualization(lastModel, equ);
+		equ->roundoffWithoutConst(*equ);
+		//equ->roundoff();
 		//svm_model_approximate(lastModel, equ->getEtimes());
 		//svm_problem_approximate(&svm->problem, equ->getEtimes());
 		//std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
