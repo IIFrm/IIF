@@ -17,6 +17,8 @@
 #include <string.h>
 #include <assert.h>
 
+class Equation;
+
 class Classifier{
 	protected:
 		int max_size;

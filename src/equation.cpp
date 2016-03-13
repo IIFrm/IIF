@@ -7,6 +7,54 @@
 
 #include "equation.h"
 
+const double UPBOUND = pow(0.1, PRECISION);
+static double _roundoff(double x)
+{
+	int inx = nearbyint(x);
+	if ((inx >= x * (1 - UPBOUND) && inx <= x * (1 + UPBOUND))
+		|| (inx <= x * (1 - UPBOUND) && inx >= x * (1 + UPBOUND)))
+		return double(inx);
+	if (std::abs(x) <= UPBOUND)
+		return 0;
+	return double(inx);
+}
+
+std::string Equation::toString() const {
+	std::ostringstream stm;
+	bool firstplus = false;
+	if (theta[0] != 0) {
+		firstplus = true;
+		stm << theta[0];
+	}
+	for (int j = 1; j < dims; j++) {
+		if (theta[j] == 0) continue;
+		if (firstplus == false) 
+			firstplus = true;
+		else 
+			stm << " + ";
+		if (theta[j] != 1) 
+			stm << "(" << theta[j] << ")*";
+		stm << variables[j];
+	}
+	stm << " >= 0";
+
+	return stm.str();
+}
+
+std::ostream& operator<< (std::ostream& out, const Equation& equ) {
+	out << std::setprecision(16);
+	out << equ.toString();
+	return out;
+}
+
+Equation& Equation::operator=(Equation& rhs) {
+	if (this == &rhs) { return *this; }
+	setEtimes(rhs.getEtimes());
+	for (int i = 0; i < rhs.getDims(); i++)
+		theta[i] = rhs.theta[i];
+	return *this;
+}
+
 static void output_z3model(z3::model& z3m) {
 	std::cout << "{";
 	for (unsigned s = 0; s < z3m.size(); s++) {
@@ -478,4 +526,107 @@ bool Equation::multiImply(const Equation* e1, int e1_num, const Equation& e2) {
 	}
 #endif
 	return false;
+}
+
+Equation* Equation::roundoff() {
+	roundoff(*this);
+	return this;
+}
+
+int Equation::roundoff(Equation& e) {
+	//std::cout << "ROUND OFF " << *this << " --> ";
+	double min = DBL_MAX;
+	double second_min = min;
+	for (int i = 1; i < dims; i++) {
+		if (theta[i] == 0) continue;
+		if (std::abs(theta[i]) < min) {
+			second_min = min;
+			min = std::abs(theta[i]);
+		}
+	}
+
+	if (min == DBL_MAX) min = 1;	// otherwise we will have */0 operation, return inf or nan...
+	if (min == 0) min = 1;	// otherwise we will have */0 operation, return inf or nan...
+	if (second_min == DBL_MAX) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
+	if (second_min == 0) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
+
+#ifdef __PRT_EQUATION
+	std::cout << GREEN << "Before roundoff: " << *this;
+#endif
+	if (min / second_min <= UPBOUND)
+		min = second_min;
+
+	if ((std::abs(theta[0]) < min) && (1000 * std::abs(theta[0]) >= min))
+		// 100 * theta0 is to keep {0.999999x1 + 0.9999999x2 >= 1.32E-9} from converting to  {BIGNUM x1 + BIGNUM x1  >= 1}
+		//if ((std::abs(theta0) < min) && (std::abs(theta0) > 1.0E-4))	
+		min = std::abs(theta[0]);
+
+
+	for (int i = 1; i < dims; i++)
+		e.theta[i] = _roundoff(theta[i] / min);
+	e.theta[0] = ceil(theta[0] / min);
+#ifdef __PRT_EQUATION
+	std::cout << "\tAfter roundoff: " << e << WHITE << std::endl;
+#endif
+	//std::cout << e << std::endl;
+	return 0;
+}
+
+int Equation::toCandidates(Candidates* cs) {
+	//std::cout << "ROUND OFF WITHOUT CONST" << *this << " --> ";
+	Equation e = *this;
+	double min = DBL_MAX;
+	double second_min = min;
+	for (int i = 1; i < dims; i++) {
+		if (theta[i] == 0) continue;
+		if (std::abs(theta[i]) < min) {
+			second_min = min;
+			min = std::abs(theta[i]);
+		}
+	}
+
+	if (min == DBL_MAX) min = 1;	// otherwise we will have */0 operation, return inf or nan...
+	if (min == 0) min = 1;	// otherwise we will have */0 operation, return inf or nan...
+	if (second_min == DBL_MAX) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
+	if (second_min == 0) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
+
+#ifdef __PRT_EQUATION
+	std::cout << GREEN << "Before roundoff: " << *this;
+#endif
+	if (min / second_min <= UPBOUND)
+		min = second_min;
+
+	double max_bound = ceil((theta[0] + 1) / min);
+	double min_bound = ceil((theta[0] - 1) / min);
+	for (int i = 1; i < dims; i++)
+		e.theta[i] = _roundoff(theta[i] / min);
+	e.theta[0] = ceil(theta[0] / min);
+#ifdef __PRT_EQUATION
+	std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
+#endif
+	std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
+	double center = e.theta[0];
+	for (int up = center, down = center - 1; (up <= max_bound) || (down >= min_bound); up++, down--) {
+		if (up <= max_bound) {
+			e.theta[0] = up;
+			std::cout << "-->factoring up" << up << " ";
+			if (e.factor() == true) {
+				std::cout << "<---Done." << e << std::endl;
+				cs->add(&e);
+				//return 0;
+			}
+		}
+		if (down >= min_bound) {
+			e.theta[0] = down;
+			std::cout << "-->factoring down" << down << " ";
+			if (e.factor() == true) {
+				std::cout << "<---Done." << e << std::endl;
+				cs->add(&e);
+				//return 0;
+			}
+		}
+	}
+	e.theta[0] = center;
+	std::cout << YELLOW << "Candidates size = " << cs->getSize() << std::endl;
+	return cs->getSize();
 }

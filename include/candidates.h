@@ -9,8 +9,8 @@
 #include "config.h"
 #include "states.h"
 #include "equation.h"
-#include "connector.h"
-#include "classifier.h"
+//#include "connector.h"
+//#include "classifier.h"
 #include "color.h"
 
 #include <iostream>
@@ -18,13 +18,16 @@
 #include <string.h>
 #include <assert.h>
 
+class Equation;
+
 class Candidates{
 	protected:
 		int size;
-		std::vector<Classifier*> cands;
+		//std::vector<Classifier*> cands;
+		std::vector<Equation*> cands;
 
 	public:
-		Candidates(int maxsize = 16) {
+		Candidates() {
 			size = 0;
 		}
 		
@@ -32,42 +35,15 @@ class Candidates{
 			cands.clear();
 		} 
 
+		int getSize() const;
 
-		int getSize() const {
-			return size;
-		}
+		int add(Equation* eq);
 
-		int add(Classifier* cl) {
-			cands.push_back(cl);
-			return ++size;
-		}
+		int clear();
 
-		int clear() {
-			size = 0;
-			return 0;
-		}
+		std::string toString(int i = 0);
 
-		static int solver(const Classifier* cl, Solution& sol) {
-			/*if ((cl == NULL) || (cl->size == 0)) 
-				return Equation::linear_solver(NULL, sol);
-			int select_equation = rand() % cl->size;
-			return Equation::linear_solver(&(cl->eqs[select_equation]), sol);
-			*/
-			return 0;
-		}
-
-
-	friend std::ostream& operator << (std::ostream& out, const Candidates& cs) {
-		int size = cs.size;
-		if (size <= 0) {
-			out << "EMPTY candidate..";
-			return out;
-		}
-		out << " (" << cs.cands[0] << ") ";
-		for (int i = 1; i < size; i++) 
-			out << cs.cands[i] << "\n"; 
-		return out;
-	}
+	friend std::ostream& operator << (std::ostream& out, const Candidates& cs);
 };
 
 

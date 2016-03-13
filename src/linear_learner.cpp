@@ -16,7 +16,6 @@ LinearLearner::LinearLearner(States* gsets, int(*func)(int*), int max_iteration)
 	this->max_iteration = max_iteration;
 }
 
-
 LinearLearner::~LinearLearner() {
 	delete svm;
 }
@@ -194,15 +193,13 @@ int LinearLearner::learn()
 		lastModel = svm->model;
 	} // end of SVM training procedure
 
+	std::cout << "--------------------------------------------------------------------------------------------------------------------" << std::endl;
 
-	std::cout << "-------------------------------------------------------" << "-------------------------------------------------------------" << std::endl;
-	std::cout << "Finish running svm for " << rnd - 1 << " times." << std::endl;
-
-	int ret = 0;
+	int ret = 1;
 	if ((converged) && (rnd <= max_iteration)) {
 		/*bool sat =*/ //svm_model_z3(lastModel, cl);
 		svm_model_visualization(lastModel, equ);
-		equ->roundoffWithoutConst(*equ);
+		ret = equ->toCandidates(cs);
 		//equ->roundoff();
 		//svm_model_approximate(lastModel, equ->getEtimes());
 		//svm_problem_approximate(&svm->problem, equ->getEtimes());
@@ -220,7 +217,8 @@ int LinearLearner::learn()
 	return ret;
 }
 
-std::string LinearLearner::invariant() {
+std::string LinearLearner::invariant(int n) {
+	return cs->toString(n);
 	return svm->equ->toString();
 	return cl->toString();
 }

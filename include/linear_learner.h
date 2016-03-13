@@ -15,7 +15,7 @@ class LinearLearner: public BaseLearner {
 
 		int selectiveSampling(int randn, int exen, int type = 0, void* params = NULL);
 
-		virtual std::string invariant();
+		virtual std::string invariant(int n);
 
 	protected:
 		SVM* svm;

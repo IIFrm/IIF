@@ -21,6 +21,7 @@
 #include <sstream>
 #include "color.h"
 #include "solution.h"
+#include "candidates.h"
 #if (linux || __MACH__)
 #include "z3++.h"
 using namespace z3;
@@ -30,18 +31,7 @@ extern int maxv;
 extern int minv;
 extern std::string* variables;
 extern int vnum;
-
-const double UPBOUND = pow(0.1, PRECISION);
-static double _roundoff(double x)
-{
-	int inx = nearbyint(x);
-	if ((inx >= x * (1 - UPBOUND) && inx <= x * (1 + UPBOUND))
-		|| (inx <= x * (1 - UPBOUND) && inx >= x * (1 + UPBOUND)))
-		return double(inx);
-	if (std::abs(x) <= UPBOUND)
-		return 0;
-	return double(inx);
-}
+class Candidates;
 
 
 /** \class Equation
@@ -113,31 +103,9 @@ public:
 	 *
 	 *	@param rhs The right-hand-side equation of assignment
 	 */
-	Equation& operator=(Equation& rhs) {
-		if (this == &rhs) { return *this; }
-		setEtimes(rhs.getEtimes());
-		for (int i = 0; i < rhs.getDims(); i++)
-			theta[i] = rhs.theta[i];
-		return *this;
-	}
+	Equation& operator=(Equation& rhs);
 
-	std::string toString() {
-		std::ostringstream stm;
-		bool firstplus = false;
-		for (int j = 0; j < dims; j++) {
-			if (theta[j] == 0) continue;
-			if (firstplus == false) 
-				firstplus = true;
-			else 
-				stm << " + ";
-			if (theta[j] != 1) 
-				stm << "(" << theta[j] << ")*";
-			stm << variables[j];
-		}
-		stm << " >= 0";
-
-		return stm.str();
-	}
+	std::string toString() const;
 
 	/** @brief Output the equation in a readable format
 	 *
@@ -146,23 +114,7 @@ public:
 	 *
 	 *  @param equ the equation to be ouput
 	 */
-	friend std::ostream& operator<< (std::ostream& out, const Equation& equ) {
-		out << std::setprecision(16);
-		bool firstplus = false;
-		for (int j = 0; j < equ.dims; j++) {
-			if (equ.theta[j] == 0) continue;
-			if (firstplus == false) 
-				firstplus = true;
-			else 
-				out << " + ";
-			if (equ.theta[j] != 1) 
-				out << "(" << equ.theta[j] << ")*";
-			out << variables[j];
-		}
-		out << " >= 0";
-
-		return out;
-	}
+	friend std::ostream& operator<< (std::ostream& out, const Equation& equ);
 
 
 	/** @brief This method converts *this equation object to z3 expr object.
@@ -277,7 +229,6 @@ public:
 			return 0;
 		}
 
-
 		int pick;
 		double reminder;
 		int times = 0;
@@ -381,102 +332,11 @@ public:
 	 *	@param e Contains the equation that has already rounded off
 	 *	@return int 0 if no error.
 	 */
-	int roundoff(Equation& e) {
-		//std::cout << "ROUND OFF " << *this << " --> ";
-		double min = DBL_MAX;
-		double second_min = min;
-		for (int i = 1; i < dims; i++) {
-			if (theta[i] == 0) continue;
-			if (std::abs(theta[i]) < min) {
-				second_min = min;
-				min = std::abs(theta[i]);
-			}
-		}
+	int roundoff(Equation& e);
 
-		if (min == DBL_MAX) min = 1;	// otherwise we will have */0 operation, return inf or nan...
-		if (min == 0) min = 1;	// otherwise we will have */0 operation, return inf or nan...
-		if (second_min == DBL_MAX) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
-		if (second_min == 0) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
+	int toCandidates(Candidates* cs);
 
-#ifdef __PRT_EQUATION
-		std::cout << GREEN << "Before roundoff: " << *this;
-#endif
-		if (min / second_min <= UPBOUND)
-			min = second_min;
-
-		if ((std::abs(theta[0]) < min) && (1000 * std::abs(theta[0]) >= min))
-			// 100 * theta0 is to keep {0.999999x1 + 0.9999999x2 >= 1.32E-9} from converting to  {BIGNUM x1 + BIGNUM x1  >= 1}
-			//if ((std::abs(theta0) < min) && (std::abs(theta0) > 1.0E-4))	
-			min = std::abs(theta[0]);
-
-
-		for (int i = 1; i < dims; i++)
-			e.theta[i] = _roundoff(theta[i] / min);
-		e.theta[0] = ceil(theta[0] / min);
-#ifdef __PRT_EQUATION
-		std::cout << "\tAfter roundoff: " << e << WHITE << std::endl;
-#endif
-		//std::cout << e << std::endl;
-		return 0;
-	}
-
-	int roundoffWithoutConst(Equation& e) {
-		//std::cout << "ROUND OFF WITHOUT CONST" << *this << " --> ";
-		double min = DBL_MAX;
-		double second_min = min;
-		for (int i = 1; i < dims; i++) {
-			if (theta[i] == 0) continue;
-			if (std::abs(theta[i]) < min) {
-				second_min = min;
-				min = std::abs(theta[i]);
-			}
-		}
-
-		if (min == DBL_MAX) min = 1;	// otherwise we will have */0 operation, return inf or nan...
-		if (min == 0) min = 1;	// otherwise we will have */0 operation, return inf or nan...
-		if (second_min == DBL_MAX) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
-		if (second_min == 0) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
-
-#ifdef __PRT_EQUATION
-		std::cout << GREEN << "Before roundoff: " << *this;
-#endif
-		if (min / second_min <= UPBOUND)
-			min = second_min;
-
-		double max_bound = ceil((theta[0] + 1) / min);
-		double min_bound = ceil((theta[0] - 1) / min);
-		for (int i = 1; i < dims; i++)
-			e.theta[i] = _roundoff(theta[i] / min);
-		e.theta[0] = ceil(theta[0] / min);
-#ifdef __PRT_EQUATION
-		std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
-#endif
-		std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
-		double center = theta[0];
-		for (int up = center, down = center - 1; (up <= max_bound) || (down >= min_bound); up++, down--) {
-			if (up <= max_bound) {
-				e.theta[0] = up;
-				if (e.factor() == true) {
-					std::cout << "<---Get Factoring Done." << e << std::endl;
-					//return 0;
-				}
-			}
-			if (down >= min_bound) {
-				e.theta[0] = down;
-				if (e.factor() == true) {
-					std::cout << "<---Get Factoring Done." << e << std::endl;
-					//return 0;
-				}
-			}
-		}
-		e.theta[0] = center;
-		return -1;
-	}
-
-	Equation* roundoff() {
-		roundoff(*this);
-		return this;
-	}
+	Equation* roundoff();
 
 	inline double getTheta(int i) const {
 		assert((i < dims) || "parameter for getTheta is out of boundary.");

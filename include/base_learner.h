@@ -14,6 +14,7 @@
 #include "states.h"
 #include "equation.h"
 #include "classifier.h"
+#include "candidates.h"
 #include "instrumentation.h"
 #include "color.h"
 
@@ -26,6 +27,7 @@
 class BaseLearner{
 	public:
 		BaseLearner(States* gsets, int (*func)(int*)): gsets(gsets), func(func) {
+			cs = new Candidates();
 			cl = new Classifier();
 			equ = new Equation();
 		}
@@ -78,11 +80,12 @@ class BaseLearner{
 		 *		   The returned method is also required to be a valid expression which can be used in C program,
 		 *		   because we will directly insert the string to the program to be verified.
 		 */
-		virtual std::string invariant() = 0;
+		virtual std::string invariant(int n) = 0;
 
 	protected:
 		States* gsets;
 		int (*func)(int*);
+		Candidates* cs;
 		Classifier* cl;
 		Equation* equ;
 };

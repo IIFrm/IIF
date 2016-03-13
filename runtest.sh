@@ -8,7 +8,7 @@ white="\033[0m"
 function findSMT4Z3(){
 	#echo "in findSMT4Z3 funtion..."
 	smtname="failAssert0000";
-	n=9
+	n=99
 	i=1
 	tmpfile="result"
 	while [ $i -lt $n ]; do
@@ -31,6 +31,23 @@ function findSMT4Z3(){
 	return 0
 }
 
+function numInvFile(){
+	inv_prefix=$1
+	#echo "in numInvFile funtion..."
+	n=99
+	i=0
+	tmpfile="result"
+	while [ $i -lt $n ]; do
+		if [ ! -f $inv_prefix"_"$i".inv" ]; then
+			#echo  "No such file."
+			return $i 
+		else
+			i=$(($i+1))
+		fi
+	done
+	return $n
+}
+
 
 if [ $# -lt 1 ]
 then
@@ -46,7 +63,8 @@ mkdir -p tmp
 cfgname=$filename".cfg"
 cppname=$filename".cpp"
 varname=$filename".var"
-invname=$filename".inv"
+#invname=$filename".inv"
+invname=$filename
 cfgfile="cfg/"$cfgname
 cppfile="test/"$cppname
 varfile="tmp/"$varname
@@ -109,12 +127,21 @@ then
 fi
 
 cd ..
-echo -e $blue"Invariant file is located at "$invfile""$white
-cat $invfile
+echo -e $blue"Invariant file is located at "$invfile"_**.inv"$white
+numInvFile $invfile
+numInv=$?
+echo "numInv="$numInv
+i=0
+while [ $i -lt $numInv ]; do
+	echo -n $i"-->"
+	cat $invfile"_"$i".inv"
+	echo ""
+	i=$(($i+1))
+done
 echo ""
 
 
-
+invfile=$invfile"_0.inv"
 
 
 echo -n -e $blue"Generating a new config file contains the invariant candidate..."$white
