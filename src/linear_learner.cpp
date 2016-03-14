@@ -93,6 +93,7 @@ int LinearLearner::learn()
 	double pass_rate = 1;
 	int etimes = 1;
 
+	int zero_times = 0;
 
 	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
 		int nexe = (rnd == 1) ? Nexe_init : Nexe_after;
@@ -116,6 +117,9 @@ int LinearLearner::learn()
 			if (gsets[POSITIVE].traces_num() == 0) std::cout << RED << "\tZero Positive trace, execute program again." << WHITE << std::endl;
 			if (gsets[NEGATIVE].traces_num() == 0) std::cout << RED << "\tZero Negative trace, execute program again." << WHITE << std::endl;
 #endif
+			zero_times++;
+			if (zero_times >= Nretry_init)
+				exit(-1);
 			goto init_svm;
 		}
 

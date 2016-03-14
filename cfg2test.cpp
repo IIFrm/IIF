@@ -44,23 +44,12 @@ class FileHelper {
 			confignum = 7;
 			cs = new Config[confignum];
 			cs[0].key = "names";
-			cs[1].key = "precondition";
-			cs[2].key = "beforeloop";
+			cs[1].key = "beforeloop";
+			cs[2].key = "precondition";
 			cs[3].key = "loopcondition";
 			cs[4].key = "loop";
 			cs[5].key = "postcondition";
 			cs[6].key = "afterloop";
-			/*
-			   cs[0].key = "num";
-			   cs[1].key = "names";
-			   cs[2].key = "precondition";
-			   cs[3].key = "beforeloop";
-			   cs[4].key = "loopcondition";
-			   cs[5].key = "loop";
-			   cs[6].key = "postcondition";
-			   cs[7].key = "afterloop";
-			   */
-			//variables = NULL;
 			vnum = 0;
 		}
 

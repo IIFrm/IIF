@@ -15,7 +15,7 @@
  *		   This should be set in /CMakeLists.txt file
  *		   If it is not set correctly, you may come across a runtime error
  */
-#define Nv 1 
+#define Nv 4 
 
  /*#define Cv(i) do {int return_num##i = 1;\
  for (int tempi = 0; tempi < i; i++) return_num##i *= (Nv + i);\
@@ -77,17 +77,18 @@ const int MstatesIn1trace = 10240;
 
 /** @brief defines the number of tests runs initially. Should be a positive integer.
  */
-const int Nexe_init = 16 * Nv;
+const int Nexe_init = 8 * Nv;
+const int Nretry_init = 128;
 
 /** @brief defines the number of tests runs after the first time. Should be a positive integer.
  */
-static int Nexe_after = 16 * Nv;
+static int Nexe_after = 8 * Nv;
 
 /** @brief defines the number of random tests runs each time, 
  *		   which is used to avoid bias caused by tests picking chioce. 
  *		   Should be a non-negative integer.
  */
-const int Nexe_rand = 4 * Nv;
+const int Nexe_rand = 2 * Nv;
 
 /** @brief defines the max number of iterations tried by machine learning algorithm, 
  *		   Should be a positive integer. Usually set between 8-128

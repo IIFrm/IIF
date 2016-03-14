@@ -179,6 +179,8 @@ public:
 			case 3:
 				if (getEtimes() == 2) return factorNv3Times2(coefs);
 				return false;
+			case 4:
+				return true;
 		}
 		return false;
 	}
