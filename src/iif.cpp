@@ -126,6 +126,7 @@ int iifContext::learn(const char* invfilename) {
 	while (p) {
 		int n_cands = p->learner->learn();
 		if (n_cands > 0) {
+#ifdef _multi_candidates_
 			std::cout << n_cands << std::endl;
 			for (int i = 0; i < n_cands; i++) {
 				sprintf(filename, "%s_%d.inv", (char*)invfilename, i);
@@ -133,6 +134,12 @@ int iifContext::learn(const char* invfilename) {
 				invFile << p->learner->invariant(i);
 				invFile.close();
 			}
+#else
+			sprintf(filename, "%s.inv", (char*)invfilename);
+			std::ofstream invFile(filename);
+			invFile << p->learner->invariant(0);
+			invFile.close();
+#endif
 			return 0;
 		}
 		else

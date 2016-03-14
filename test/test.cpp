@@ -24,5 +24,5 @@ int main(int argc, char** argv)
  {
 iifContext context("../tmp/test.var", loopFunction, "loopFunction");
 context.addLearner("linear");
-return context.learn("../tmp/test.inv");
+return context.learn("../tmp/test");
 }

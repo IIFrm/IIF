@@ -214,6 +214,10 @@ int LinearLearner::learn()
 		ret = -1;
 	}
 
+#ifndef _multi_candidates_
+	if (ret > 0)
+		return 1;
+#endif
 	return ret;
 }
 

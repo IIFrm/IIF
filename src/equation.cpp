@@ -605,6 +605,7 @@ int Equation::toCandidates(Candidates* cs) {
 	std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
 #endif
 	std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
+#ifdef _multi_candidates_
 	double center = e.theta[0];
 	for (int up = center, down = center - 1; (up <= max_bound) || (down >= min_bound); up++, down--) {
 		if (up <= max_bound) {
@@ -627,6 +628,9 @@ int Equation::toCandidates(Candidates* cs) {
 		}
 	}
 	e.theta[0] = center;
+#else
+	cs->add(&e);
+#endif
 	std::cout << YELLOW << "Candidates size = " << cs->getSize() << std::endl;
 	return cs->getSize();
 }

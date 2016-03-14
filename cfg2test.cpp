@@ -35,11 +35,11 @@ class Config {
 
 class FileHelper {
 	public:
-		FileHelper(const char* cfgfilename, const char* cppfilename, const char* varfilename, const char* invfilename, const char* testcasefilename) {
+		FileHelper(const char* cfgfilename, const char* cppfilename, const char* varfilename, const char* invfileprefix, const char* testcasefilename) {
 			this->cfgfilename = cfgfilename;
 			this->cppfilename = cppfilename;
 			this->varfilename = varfilename;
-			this->invfilename = invfilename;
+			this->invfileprefix = invfileprefix;
 			this->testcasefilename = testcasefilename;
 			confignum = 7;
 			cs = new Config[confignum];
@@ -80,12 +80,6 @@ class FileHelper {
 			int lastidx = -1;
 			while(getline(cfgFile, line)) {
 				size_t pos = line.find('=');
-				/*if(pos == string::npos) {
-				  if (lastidx >= 0) 
-				  cs[lastidx].value += "\n" + line;
-				  continue;
-				  }
-				  */
 				string key = line.substr(0,pos);
 				bool get_record = false;
 				for (int i = 0; i < confignum; i++) {
@@ -101,11 +95,8 @@ class FileHelper {
 				else 
 					cs[lastidx].value += "\n" + line;
 			}
-
 			cfgFile.close();
 
-			//cout << cs[0] << endl;
-			//cs[0].value >> vnum;
 			size_t start = 0;
 			size_t end = cs[0].value.find(' ');
 			while (end == start) {
@@ -120,25 +111,6 @@ class FileHelper {
 			variables.push_back(cs[0].value.substr(start, end-start));
 			vnum = variables.size();
 
-
-			/*for (int i = 0; i < vnum; i++)
-			  cout << "var[" << i << "] = " << variables[i] << endl;
-
-			  std::istringstream ss(cs[0].value);
-			  ss >> vnum;
-			  variables = new string[vnum];
-			  size_t start = 0;
-			  size_t end = cs[1].value.find(' ');
-			  while (end == start) {
-			  end = cs[1].value.find(' ', end+1);
-			  start++;
-			  }
-			  for (int i = 0; i < vnum; i++) {
-			  variables[i] = cs[1].value.substr(start, end-start);
-			  start = end + 1;
-			  end = cs[1].value.find(' ', start);
-			  }
-			  */
 			return true;
 		}
 
@@ -174,20 +146,6 @@ class FileHelper {
 			varFile.close();
 			return true;
 		}
-
-		/*
-		   bool writeInvFile() {
-		   ofstream invFile(invfilename);
-		   if(!invFile.is_open()) {
-		   cout<<"can not open cpp file!"<<endl;
-		   return false;
-		   }
-		   invFile << vnum << endl;
-		   for (int i = 0; i< vnum; i++)
-		   invFile << variables[i] << endl;
-		   invFile.close();
-		   return true;
-		   }*/
 
 	private:
 		inline bool writeRecordi(ofstream& cppFile) {
@@ -227,22 +185,23 @@ class FileHelper {
 				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n";
 
 			cppFile << "context.addLearner(\"linear\");\n"
-				<< "return context.learn(\"../" << invfilename << "\");\n}" << endl;
+				<< "return context.learn(\"../" << invfileprefix << "\");\n}" << endl;
 			return true;
+
 			cppFile << "int main(int argc, char** argv)\n {\n" 
 				<< "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n"
 				<< "context.addLearner(\"poly\");\n"
 				<< "context.addLearner(\"rbf\");\n"
 				<< "context.addLearner(\"linear\").addLearner(\"rbf\");\n"
 				<< "context.addLearner(\"linear\").addLearner(\"conjunctive\");\n"
-				<< "return context.learn(\"../" << invfilename << "\");\n}" << endl;
+				<< "return context.learn(\"../" << invfileprefix << "\");\n}" << endl;
 		}
 
 	private:
 		const char* cfgfilename;
 		const char* cppfilename;
 		const char* varfilename;
-		const char* invfilename;
+		const char* invfileprefix;
 		const char* testcasefilename;
 		Config* cs;
 		int confignum;
@@ -256,21 +215,15 @@ int main(int argc, char** argv)
 	const char* cfgfilename = "inputcfg.cfg";
 	const char* cppfilename = "inputcfg.cpp";
 	const char* varfilename = "inputcfg.var";
-	const char* invfilename = "inputcfg.inv";
+	const char* invfileprefix = "inputcfg";
 	const char* testcasefilename = NULL;
 	if (argc >= 2) cfgfilename = argv[1];
 	if (argc >= 3) cppfilename = argv[2];
 	if (argc >= 4) varfilename = argv[3];
-	if (argc >= 5) invfilename = argv[4];
+	if (argc >= 5) invfileprefix = argv[4];
 	if (argc >= 6) testcasefilename = argv[5];
-	/*
-	std::cout << cfgfilename << "\n"
-		<< cppfilename << "\n"
-		<< varfilename << "\n"
-		<< invfilename << "\n"
-		<< testcasefilename << "\n";
-	*/
-	FileHelper fh(cfgfilename, cppfilename, varfilename, invfilename, testcasefilename);
+
+	FileHelper fh(cfgfilename, cppfilename, varfilename, invfileprefix, testcasefilename);
 	//cout << "after construct...\n";
 	fh.readConfigFile();
 	//cout << "after read config file...\n";
