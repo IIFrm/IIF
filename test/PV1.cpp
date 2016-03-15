@@ -7,7 +7,7 @@ int x = a[0];
 int y = a[1];
 
 
-iif_assume((x<0) || (y>0));
+iif_assume((x == -50));
 while(x<0)
 {
 recordi(x, y);
@@ -23,6 +23,6 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/PV1.var", loopFunction, "loopFunction");
-context.addLearner("linear");
+context.addLearner("linear", "../tmp/PV1.cntempl");
 return context.learn("../tmp/PV1");
 }

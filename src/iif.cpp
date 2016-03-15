@@ -87,10 +87,10 @@ iifContext::~iifContext() {
 }
 
 
-iifContext& iifContext::addLearner(const char* learnerName) {
+iifContext& iifContext::addLearner(const char* learnerName, const char* solution_filename) {
 	BaseLearner* newLearner = NULL;
 	if (strcmp(learnerName, "linear") == 0)
-		newLearner = new LinearLearner(gsets);
+		newLearner = new LinearLearner(gsets, solution_filename);
 	/* 
 	   else if (strcmp(learnerName, "poly") == 0)
 	   newLearner = new PolyLearner(gsets);

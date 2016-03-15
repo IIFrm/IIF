@@ -35,12 +35,13 @@ class Config {
 
 class FileHelper {
 	public:
-		FileHelper(const char* cfgfilename, const char* cppfilename, const char* varfilename, const char* invfileprefix, const char* testcasefilename) {
+		FileHelper(const char* cfgfilename, const char* cppfilename, const char* varfilename, const char* invfileprefix, const char* testcasefilename, const char* oldtracefilename) {
 			this->cfgfilename = cfgfilename;
 			this->cppfilename = cppfilename;
 			this->varfilename = varfilename;
 			this->invfileprefix = invfileprefix;
 			this->testcasefilename = testcasefilename;
+			this->oldtracefilename = oldtracefilename;
 			confignum = 7;
 			cs = new Config[confignum];
 			cs[0].key = "names";
@@ -168,22 +169,26 @@ class FileHelper {
 
 		inline bool writeCppMain(ofstream& cppFile) {
 			cppFile << "int main(int argc, char** argv)\n {\n";
-			if (testcasefilename)
-				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\", \"../" << testcasefilename << "\");\n";
+			if (oldtracefilename)
+				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\", \"../" << oldtracefilename << "\");\n";
 			else
 				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n";
 
-			cppFile << "context.addLearner(\"linear\");\n"
-				<< "return context.learn(\"../" << invfileprefix << "\");\n}" << endl;
+			if (testcasefilename)
+				cppFile << "context.addLearner(\"linear\", \"../" << testcasefilename << "\");\n";
+			else
+				cppFile << "context.addLearner(\"linear\");\n";
+			cppFile << "return context.learn(\"../" << invfileprefix << "\");\n}" << endl;
 			return true;
 
-			cppFile << "int main(int argc, char** argv)\n {\n" 
+			/*cppFile << "int main(int argc, char** argv)\n {\n" 
 				<< "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n"
 				<< "context.addLearner(\"poly\");\n"
 				<< "context.addLearner(\"rbf\");\n"
 				<< "context.addLearner(\"linear\").addLearner(\"rbf\");\n"
 				<< "context.addLearner(\"linear\").addLearner(\"conjunctive\");\n"
 				<< "return context.learn(\"../" << invfileprefix << "\");\n}" << endl;
+				*/
 		}
 
 	private:
@@ -192,6 +197,7 @@ class FileHelper {
 		const char* varfilename;
 		const char* invfileprefix;
 		const char* testcasefilename;
+		const char* oldtracefilename;
 		Config* cs;
 		int confignum;
 		vector<string> variables;
@@ -206,13 +212,15 @@ int main(int argc, char** argv)
 	const char* varfilename = "inputcfg.var";
 	const char* invfileprefix = "inputcfg";
 	const char* testcasefilename = NULL;
+	const char* oldtracefilename = NULL;
 	if (argc >= 2) cfgfilename = argv[1];
 	if (argc >= 3) cppfilename = argv[2];
 	if (argc >= 4) varfilename = argv[3];
 	if (argc >= 5) invfileprefix = argv[4];
 	if (argc >= 6) testcasefilename = argv[5];
+	if (argc >= 7) oldtracefilename = argv[5];
 
-	FileHelper fh(cfgfilename, cppfilename, varfilename, invfileprefix, testcasefilename);
+	FileHelper fh(cfgfilename, cppfilename, varfilename, invfileprefix, testcasefilename, oldtracefilename);
 	//cout << "after construct...\n";
 	fh.readConfigFile();
 	//cout << "after read config file...\n";

@@ -26,10 +26,24 @@
 
 class BaseLearner{
 	public:
-		BaseLearner(States* gsets, int (*func)(int*)): gsets(gsets), func(func) {
+		BaseLearner(States* gsets, const char* solution_filename = NULL, int (*func)(int*) = target_program): gsets(gsets), func(func) {
 			cs = new Candidates();
 			cl = new Classifier();
 			equ = new Equation();
+			if (solution_filename != NULL) {
+				std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
+				std::cout << solution_filename << "\n";
+				std::ifstream inf(solution_filename);
+				Solution s;
+				while (inf >> s) {
+					std::cout << "PreRunTest :" << s << " --> ";
+					int ret = runTarget(s);
+					printRunResult(ret);
+					std::cout << std::endl;
+				}
+				inf.close();
+				std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
+			}
 		}
 
 		virtual ~BaseLearner() {

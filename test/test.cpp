@@ -8,7 +8,6 @@ int ya = a[1];
 
 
 iif_assume(xa + ya > 0);
-
 while(xa > 0)
 {
 recordi(xa, ya);
@@ -16,15 +15,14 @@ xa--;
 ya++;
 }
 recordi(xa, ya);
-iif_assert(ya > 0);
+iif_assert(ya >= 0);
 return 0;
 }
 
 
-
 int main(int argc, char** argv)
  {
-iifContext context("../test/test.log", loopFunction, "loopFunction");
-context.addLearner("linear").addLearner("conjunctive");
-return context.learn("../test/test.inv");
+iifContext context("../tmp/test.var", loopFunction, "loopFunction");
+context.addLearner("linear", "../tmp/test.cntempl");
+return context.learn("../tmp/test");
 }

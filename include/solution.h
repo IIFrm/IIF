@@ -72,6 +72,14 @@ class Solution{
 			return out;
 		}
 
+		/** @brief support >> operator
+		 */
+		friend std::istream& operator >> (std::istream& in, Solution& sol) {
+			for (int j = 0; j < Nv; j++)
+				in >> sol.val[j];
+			return in;
+		}
+
 		double getVal(int i)
 		{
 			assert ((i < Nv) || "index out of bound.");

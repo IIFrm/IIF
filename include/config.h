@@ -15,7 +15,7 @@
  *		   This should be set in /CMakeLists.txt file
  *		   If it is not set correctly, you may come across a runtime error
  */
-#define Nv 1 
+#define Nv 2 
 
  /*#define Cv(i) do {int return_num##i = 1;\
  for (int tempi = 0; tempi < i; i++) return_num##i *= (Nv + i);\
@@ -52,7 +52,7 @@
 #define _out_
 
 #define _factor_polynomial_
-#define _multi_candidates_
+//#define _multi_candidates_
 
 /** @brief is a integer, which defines precision as pow(10, -PRECISION)  
  *		   This should be set in /CMakeLists.txt file

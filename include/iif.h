@@ -71,7 +71,7 @@ namespace iif{
 
 			~iifContext();
 
-			iifContext& addLearner(const char* learnerName);
+			iifContext& addLearner(const char* learnerName, const char* solution_filename = NULL);
 
 			int learn(const char* invfilename = "noname");
 

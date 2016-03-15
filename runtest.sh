@@ -93,15 +93,17 @@ file_o3_verf=$prefix"_klee3.o"
 echo -n -e $blue"Converting the given config file to a valid cplusplus file..."$white
 g++ cfg2test.cpp -o cfg2test
 ret=$?
-if [ $ret -ne 0 ]
-then
+if [ $ret -ne 0 ]; then
 	echo "cfg2test.cpp compiling error, stop here."
 	exit $ret 
 fi
 
-if [ $# -ge 2 ]
-then
-	./cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv $2
+if [ $# -ge 2 ]; then
+	if [ $# -ge 3 ]; then
+		./cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv $2 $3
+	else
+		./cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv $2
+	fi
 else
 	./cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv
 fi
