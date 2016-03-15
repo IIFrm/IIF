@@ -5,17 +5,15 @@ using namespace iif;
 int loopFunction(int a[]) {
 int x = a[0];
 
-
-iif_assume((x>=0) && (x<=50));
 int loop_times = 10;
+iif_assume((x>=0) && (x<=50));
 while(loop_times-- > 0)
 {
 recordi(x);
- if (x == 50) {
-			x --;
+ if (x>50) x++;
+		if (x == 0) {
 			x ++;
-		} else {
-		}
+		} else x--;
 }
 recordi(x);
 iif_assert((x>=0) && (x<=50));
@@ -23,10 +21,9 @@ return 0;
 }
 
 
-
 int main(int argc, char** argv)
  {
-iifContext context("../test/conj.log", loopFunction, "loopFunction");
-context.addLearner("linear").addLearner("conjunctive");
-return context.learn("../test/conj.inv");
+iifContext context("../tmp/conj.var", loopFunction, "loopFunction");
+context.addLearner("linear");
+return context.learn("../tmp/conj");
 }
