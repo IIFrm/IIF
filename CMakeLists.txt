@@ -95,5 +95,5 @@ include_directories (include)
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 AUX_SOURCE_DIRECTORY(test DIR_TEST)
 
-add_executable(PV1 test/PV1.cpp ${DIR_SRCS} ${HEADER})
-target_link_libraries(PV1 ${Z3_LIBRARY})
+add_executable(test test/test.cpp ${DIR_SRCS} ${HEADER})
+target_link_libraries(test ${Z3_LIBRARY})

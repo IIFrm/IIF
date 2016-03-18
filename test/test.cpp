@@ -23,6 +23,6 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/test.var", loopFunction, "loopFunction");
-context.addLearner("linear", "../tmp/test.cntempl");
+context.addLearner("linear");
 return context.learn("../tmp/test");
 }

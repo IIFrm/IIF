@@ -5,50 +5,6 @@ yellow="\033[33;\x1b[33m"
 blue="\033[33;\x1b[34m"
 white="\033[0m"
 
-function func_findSmtForZ3(){
-	#echo "in func_findSmtForZ3 funtion..."
-	smtname="failAssert0000";
-	n=99
-	i=1
-	tmpfile="result"
-	while [ $i -lt $n ]; do
-		if [ ! -f $smtname""$i".smt2" ]; then
-			#echo  "No such file."
-			return 0
-		fi
-		echo -n "processing "$smtname""$i".smt2 --> "
-		z3 $smtname""$i".smt2" > $tmpfile""$i
-		read result < $tmpfile""$i
-		rm $tmpfile""$i
-		if [ $result == "unsat" ]; then
-			echo -e $green$result$white
-			i=$(($i+1))
-		else
-			echo -e $red$result$white
-			return 255
-		fi
-	done
-	return 0
-}
-
-function func_numOfInvCands(){
-	inv_prefix=$1
-	#echo "in func_numOfInvCands funtion..."
-	n=99
-	i=0
-	tmpfile="result"
-	while [ $i -lt $n ]; do
-		if [ ! -f $inv_prefix"_"$i".inv" ]; then
-			#echo  "No such file."
-			return $i 
-		else
-			i=$(($i+1))
-		fi
-	done
-	return $n
-}
-
-
 if [ $# -lt 1 ]
 then
 	echo "./test.sh needs more parameters"
@@ -73,6 +29,7 @@ path_cpp=$dir_test""$file_cpp
 path_var=$dir_temp""$file_var
 path_inv=$dir_temp""$file_inv
 prefix_path_inv=$dir_temp""$prefix
+path_cntempl=$dir_temp""$prefix".cntempl"
 
 file_verf=$prefix".c"
 path_verf=$dir_temp""$file_verf
@@ -84,6 +41,67 @@ file_o2_verf=$prefix"_klee2.o"
 file_o3_verf=$prefix"_klee3.o"
 
 
+
+function func_findSmtForZ3(){
+	#echo "in func_findSmtForZ3 funtion..."
+	smtname="failAssert0000";
+	n=99
+	i=1
+	tmpfile="result"
+	while [ $i -lt $n ]; do
+		if [ ! -f $smtname""$i".smt2" ]; then
+			#echo  "No such file."
+			return 0
+		fi
+		echo -n "processing "$smtname""$i".smt2 --> "
+		## delete the last two lines, check-sat and exit
+		sed '$d' -i  $smtname""$i".smt2"
+		sed '$d' -i  $smtname""$i".smt2"
+		../../bin/z3solve $smtname""$i".smt2" "../../"$path_var "../../"$path_cntempl
+		result=$?
+		if [ $result -ne 0 ]; then
+			# unsat
+			echo -e $green$result$white
+			i=$(($i+1))
+		else
+			echo -e $red$result$white
+			return 1
+		fi
+
+		#z3 $smtname""$i".smt2" > $tmpfile""$i
+		#read result < $tmpfile""$i
+		#rm $tmpfile""$i
+		#if [ $result == "unsat" ]; then
+		#	echo -e $green$result$white
+		#	i=$(($i+1))
+		#else
+		#	echo -e $red$result$white
+		#	return 255
+		#fi
+	done
+	return 0
+}
+
+function func_numOfInvCands(){
+	inv_prefix=$1
+	#echo "in func_numOfInvCands funtion..."
+	n=99
+	i=0
+	tmpfile="result"
+	while [ $i -lt $n ]; do
+		if [ ! -f $inv_prefix"_"$i".inv" ]; then
+			#echo  "No such file."
+			return $i 
+		else
+			i=$(($i+1))
+		fi
+	done
+	return $n
+}
+
+
+
+
 #**********************************************************************************************
 # Learning phase
 #**********************************************************************************************
@@ -91,24 +109,24 @@ file_o3_verf=$prefix"_klee3.o"
 # Prepare the target loop program
 ##########################################################################
 echo -n -e $blue"Converting the given config file to a valid cplusplus file..."$white
-g++ cfg2test.cpp -o cfg2test
-ret=$?
-if [ $ret -ne 0 ]; then
-	echo "cfg2test.cpp compiling error, stop here."
-	exit $ret 
-fi
+#g++ cfg2test.cpp -o cfg2test
+#ret=$?
+#if [ $ret -ne 0 ]; then
+#	echo "cfg2test.cpp compiling error, stop here."
+#	exit $ret 
+#fi
 
 if [ $# -ge 2 ]; then
 	if [ $# -ge 3 ]; then
-		./cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv $2 $3
+		./bin/cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv $2 $3
 	else
-		./cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv $2
+		./bin/cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv $2
 	fi
 else
-	./cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv
+	./bin/cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv
 fi
 Nv=$?
-rm ./cfg2test
+#rm ./cfg2test
 
 
 ##########################################################################
@@ -207,15 +225,14 @@ echo -e $blue"[Done]"$white
 # Generate C files to verify using cfg file and inv file
 ##########################################################################
 echo -n -e $blue"Generating three C files to do the verification by KLEE"$white
-g++ cfg2verf.cpp -o cfg2verf
-ret=$?
-if [ $ret -ne 0 ]
-then
-	echo "cfg2verf.cpp compiling error, stop here."
-	exit $ret 
-fi
-./cfg2verf $path_tmp_cfg $path_verf
-rm ./cfg2verf
+#g++ cfg2verf.cpp -o cfg2verf
+#ret=$?
+#if [ $ret -ne 0 ]; then
+#	echo "cfg2verf.cpp compiling error, stop here."
+#	exit $ret 
+#fi
+./bin/cfg2verf $path_tmp_cfg $path_verf
+#rm ./cfg2verf
 echo -e $blue"[Done]"$white
 
 
