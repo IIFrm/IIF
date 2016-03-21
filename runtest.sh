@@ -16,6 +16,7 @@ fi
 dir_cfg="cfg/"
 dir_test="test/"
 dir_temp="tmp/"
+dir_tool="tools/"
 
 
 prefix=$1
@@ -57,7 +58,7 @@ function func_findSmtForZ3(){
 		## delete the last two lines, check-sat and exit
 		sed '$d' -i  $smtname""$i".smt2"
 		sed '$d' -i  $smtname""$i".smt2"
-		../../bin/z3solve $smtname""$i".smt2" "../../"$path_var "../../"$path_cntempl
+		../../tools/z3solve $smtname""$i".smt2" "../../"$path_var "../../"$path_cntempl
 		result=$?
 		if [ $result -ne 0 ]; then
 			# unsat
@@ -65,6 +66,7 @@ function func_findSmtForZ3(){
 			i=$(($i+1))
 		else
 			echo -e $red$result$white
+			echo "counter examples are stored in file "$path_cntempl
 			return 1
 		fi
 
@@ -118,12 +120,12 @@ echo -n -e $blue"Converting the given config file to a valid cplusplus file..."$
 
 if [ $# -ge 2 ]; then
 	if [ $# -ge 3 ]; then
-		./bin/cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv $2 $3
+		./tools/cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv $2 $3
 	else
-		./bin/cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv $2
+		./tools/cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv $2
 	fi
 else
-	./bin/cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv
+	./tools/cfg2test $path_cfg $path_cpp $path_var $prefix_path_inv
 fi
 Nv=$?
 #rm ./cfg2test
@@ -231,7 +233,7 @@ echo -n -e $blue"Generating three C files to do the verification by KLEE"$white
 #	echo "cfg2verf.cpp compiling error, stop here."
 #	exit $ret 
 #fi
-./bin/cfg2verf $path_tmp_cfg $path_verf
+./tools/cfg2verf $path_tmp_cfg $path_verf
 #rm ./cfg2verf
 echo -e $blue"[Done]"$white
 
