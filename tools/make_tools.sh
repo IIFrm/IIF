@@ -24,8 +24,8 @@ echo -n -e "[ 33%] "$blue"Compiling cfg2test"$white
 g++ $dir_src"cfg2test.cpp" -std=c++11 -o $dir_bin"cfg2test"
 handle_exit $?
 
-echo -n -e "[ 66%] "$blue"Compiling model_parse"$white
-g++ $dir_src"cfg2verf.cpp" -std=c++11 -o $dir_bin"cfg2verf"
+echo -n -e "[ 66%] "$blue"Compiling cfg2verif"$white
+g++ $dir_src"cfg2verif.cpp" -std=c++11 -o $dir_bin"cfg2verif"
 handle_exit $?
 
 echo -n -e "[100%] "$blue"Compiling model_parse"$white
