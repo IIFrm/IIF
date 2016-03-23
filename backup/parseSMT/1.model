@@ -1,0 +1,11 @@
+sat
+(model 
+  (define-fun x () (Array (_ BitVec 32) (_ BitVec 8))
+    (_ as-array k!0))
+  (define-fun k!0 ((x!1 (_ BitVec 32))) (_ BitVec 8)
+    (ite (= x!1 #x00000003) #x7f
+    (ite (= x!1 #x00000002) #xff
+    (ite (= x!1 #x00000000) #xff
+    (ite (= x!1 #x00000001) #xff
+      #xff)))))
+)
