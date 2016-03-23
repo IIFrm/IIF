@@ -7,8 +7,8 @@ white="\033[0m"
 
 if [ $# -lt 1 ]
 then
-	echo "./test.sh needs more parameters"
-	echo "./test.sh cofig_prefix"
+	echo "./run_once.sh needs more parameters"
+	echo "./run_once.sh cofig_prefix"
 	echo "try it again..."
 	exit 1
 fi

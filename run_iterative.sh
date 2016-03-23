@@ -7,8 +7,8 @@ white="\033[0m"
 
 if [ $# -lt 1 ]
 then
-	echo "./test.sh needs more parameters"
-	echo "./test.sh cofig_prefix"
+	echo "./run_once.sh needs more parameters"
+	echo "./run_once.sh cofig_prefix"
 	echo "try it again..."
 	exit 1
 fi
@@ -43,67 +43,6 @@ file_o3_verf=$prefix"_klee3.o"
 
 
 
-function func_findSmtForZ3(){
-	#echo "in func_findSmtForZ3 funtion..."
-	smtname="failAssert0000";
-	n=99
-	i=1
-	tmpfile="result"
-	while [ $i -lt $n ]; do
-		if [ ! -f $smtname""$i".smt2" ]; then
-			#echo  "No such file."
-			return 0
-		fi
-		echo -n "processing "$smtname""$i".smt2 --> "
-		## delete the last two lines, check-sat and exit
-		sed '$d' -i  $smtname""$i".smt2"
-		sed '$d' -i  $smtname""$i".smt2"
-		../../tools/z3solve $smtname""$i".smt2" "../../"$path_var "../../"$path_cntempl
-		result=$?
-		if [ $result -ne 0 ]; then
-			# unsat
-			echo -e $green$result$white
-			i=$(($i+1))
-		else
-			echo -e $red$result$white
-			echo "counter examples are stored in file "$path_cntempl
-			return 1
-		fi
-
-		#z3 $smtname""$i".smt2" > $tmpfile""$i
-		#read result < $tmpfile""$i
-		#rm $tmpfile""$i
-		#if [ $result == "unsat" ]; then
-		#	echo -e $green$result$white
-		#	i=$(($i+1))
-		#else
-		#	echo -e $red$result$white
-		#	return 255
-		#fi
-	done
-	return 0
-}
-
-function func_numOfInvCands(){
-	inv_prefix=$1
-	#echo "in func_numOfInvCands funtion..."
-	n=99
-	i=0
-	tmpfile="result"
-	while [ $i -lt $n ]; do
-		if [ ! -f $inv_prefix"_"$i".inv" ]; then
-			#echo  "No such file."
-			return $i 
-		else
-			i=$(($i+1))
-		fi
-	done
-	return $n
-}
-
-
-
-
 #**********************************************************************************************
 # Learning phase
 #**********************************************************************************************
@@ -111,12 +50,6 @@ function func_numOfInvCands(){
 # Prepare the target loop program
 ##########################################################################
 echo -n -e $blue"Converting the given config file to a valid cplusplus file..."$white
-#g++ cfg2test.cpp -o cfg2test
-#ret=$?
-#if [ $ret -ne 0 ]; then
-#	echo "cfg2test.cpp compiling error, stop here."
-#	exit $ret 
-#fi
 
 if [ $# -ge 2 ]; then
 	if [ $# -ge 3 ]; then
