@@ -4,6 +4,7 @@ bin/*.out
 src/*.out
 test/*.inv
 tmp/
+bin
 data
 build
 tags
