@@ -13,7 +13,7 @@ dir_bin="./bin/"
 function handle_exit() {
 	exit_code=$1
 	if [ $exit_code -eq 0 ]; then
-		echo -e $green$bold"[PASS]"$white
+		echo -e $green"[DONE]"$white
 	else
 		echo -e $red$bold"[FAIL]Compiling Error. (error code: "$status")"$white
 		exit $status

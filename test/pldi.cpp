@@ -6,22 +6,18 @@ int loopFunction(int a[]) {
 int x = a[0];
 int y = a[1];
 
-
 iif_assume(x < 0);
 while(x < 0)
 {
-recordi(x, y);
-x=x+y; y++;
+recordi(x, y);x=x+y; y++;
 }
-recordi(x, y);
-iif_assert(y>=0);
+recordi(x, y);iif_assert(y>=0);
 return 0;
 }
 
-
 int main(int argc, char** argv)
  {
-iifContext context("../tmp/pldi.var", loopFunction, "loopFunction");
-context.addLearner("linear");
+iifContext context("../tmp/pldi.var", loopFunction, "loopFunction", "../tmp/pldi.ds");
+context.addLearner("linear", "../tmp/pldi.cnt");
 return context.learn("../tmp/pldi");
 }

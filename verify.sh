@@ -56,13 +56,12 @@ while [ $i -lt $n ]; do
 	fi
 	path_smt2=$smtname""$i".smt2"
 	path_model=$smtname""$i".model"
-	echo -n "processing "$path_smt2" --> "
+	echo -n "Solving "$path_smt2" by z3 --> "
 	## delete the last line, exit
 	sed '$d' -i  $smtname""$i".smt2"
 	echo "(get-model)" >> $path_smt2
 	echo "(exit)" >> $path_smt2
 
-	echo -n -e $blue"Z3 solving:"$white
 	z3 $path_smt2 > $path_model
 
 	"../../"$dir_tool"model_parser" "../../"$path_var $path_model "../../"$path_cnt
@@ -88,10 +87,11 @@ rm -rf klee-*
 rm -rf *.smt2
 echo -e $blue"Compiling the C files and Run KLEE..."$u$white
 llvm-gcc --emit-llvm -c -g $file_c_verif > /dev/null
-klee -write-smt2s $file_o_verif 2>&1 1> /dev/null
+klee -write-smt2s $file_o_verif #2>&- 1>&-
 ret=$?
 func_findSmtForZ3
 ret=$?
+#echo -n -e $red$ret$white
 if [ $ret -ne 0 ]; then
 	echo -n -e $red">>>NOT A VALID INVARIVANT..."
 	if [ $u -eq 1 ]; then
@@ -107,6 +107,7 @@ if [ $ret -ne 0 ]; then
 	fi
 	exit $ret
 fi
+#echo -e $blue"[PASS]"$white
 cd ..
 return 0
 }
@@ -118,7 +119,7 @@ return 0
 ##########################################################################
 # From inv files to prepare for verification step
 ##########################################################################
-echo -e $blue"Invariant file is located at "$path_inv""$white
+echo -n -e $blue"Invariant file is located at "$path_inv" >>> "$white
 cat $path_inv
 echo ""
 

@@ -10,8 +10,7 @@ x=0; y=0;
 iif_assume(y >= 0);
 while(true)
 {
-recordi(x, y);
-if (x <= 50) 
+recordi(x, y);if (x <= 50) 
 	y++;
 	else
 	y--;
@@ -19,15 +18,13 @@ if (x <= 50)
 	break;
 	x++;
 }
-recordi(x, y);
-iif_assert(x==102);
+recordi(x, y);iif_assert(x==102);
 return 0;
 }
 
-
 int main(int argc, char** argv)
  {
-iifContext context("../tmp/V2.var", loopFunction, "loopFunction");
-context.addLearner("linear");
+iifContext context("../tmp/V2.var", loopFunction, "loopFunction", "../tmp/V2.ds");
+context.addLearner("linear", "../tmp/V2.cnt");
 return context.learn("../tmp/V2");
 }

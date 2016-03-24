@@ -12,18 +12,15 @@ int loopFunction(int a[]) {
 	iif_assume(i>=j);
 	while(x <= 100)
 	{
-		recordi(i, j, x, y);
-		x=x+i; y=y+j;
+		recordi(i, j, x, y);x=x+i; y=y+j;
 	}
-	recordi(i, j, x, y);
-	iif_assert(x>=y);
+	recordi(i, j, x, y);iif_assert(x>=y);
 	return 0;
 }
 
-
 int main(int argc, char** argv)
 {
-	iifContext context("../tmp/WP1.var", loopFunction, "loopFunction");
-	context.addLearner("linear");
+	iifContext context("../tmp/WP1.var", loopFunction, "loopFunction", "../tmp/WP1.ds");
+	context.addLearner("linear", "../tmp/WP1.cnt");
 	return context.learn("../tmp/WP1");
 }

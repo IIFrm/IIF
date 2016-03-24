@@ -11,8 +11,7 @@ loop_times%=10; int branch=1;int x, y;
 iif_assume(xa + 2 * ya >= 0);
 while(loop_times-->=0)
 {
-recordi(xa, ya, loop_times);
- x = xa + 2 * ya;
+recordi(xa, ya, loop_times); x = xa + 2 * ya;
 		y = -2 * xa + ya;
 
 		x++;
@@ -23,15 +22,13 @@ recordi(xa, ya, loop_times);
 		xa = x - 2 * y;
 		ya = 2 * x + y;
 }
-recordi(xa, ya, loop_times);
-iif_assert(xa + 2 * ya >= 0);
+recordi(xa, ya, loop_times);iif_assert(xa + 2 * ya >= 0);
 return 0;
 }
 
-
 int main(int argc, char** argv)
  {
-iifContext context("../tmp/ex1.var", loopFunction, "loopFunction");
-context.addLearner("linear");
+iifContext context("../tmp/ex1.var", loopFunction, "loopFunction", "../tmp/ex1.ds");
+context.addLearner("linear", "../tmp/ex1.cnt");
 return context.learn("../tmp/ex1");
 }

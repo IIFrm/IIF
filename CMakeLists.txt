@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.8)
-set(Nv 2)
+set(Nv 4)
 project(InvariantInferenceFramework)
 set(PRECISION 3)
 
@@ -95,5 +95,5 @@ include_directories (include)
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 AUX_SOURCE_DIRECTORY(test DIR_TEST)
 
-add_executable(test test/test.cpp ${DIR_SRCS} ${HEADER})
-target_link_libraries(test ${Z3_LIBRARY})
+add_executable(WP1 test/WP1.cpp ${DIR_SRCS} ${HEADER})
+target_link_libraries(WP1 ${Z3_LIBRARY})
