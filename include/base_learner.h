@@ -26,23 +26,24 @@
 
 class BaseLearner{
 	public:
-		BaseLearner(States* gsets, const char* solution_filename = NULL, int (*func)(int*) = target_program): gsets(gsets), func(func) {
+		BaseLearner(States* gsets, const char* last_cnt_fname = NULL, int (*func)(int*) = target_program): gsets(gsets), func(func) {
 			cs = new Candidates();
 			cl = new Classifier();
 			equ = new Equation();
-			if (solution_filename != NULL) {
-				std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
-				std::cout << solution_filename << "\n";
-				std::ifstream inf(solution_filename);
+			if (last_cnt_fname!= NULL) {
+				//std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
+				std::ifstream fin(last_cnt_fname);
+				if (fin) {
 				Solution s;
-				while (inf >> s) {
-					std::cout << "PreRunTest :" << s << " --> ";
+				while (fin >> s) {
+					std::cout << BLUE << BOLD << "Test on Last Counter Example: " << s << " from file " << last_cnt_fname << " --> " << NORMAL << WHITE;
 					int ret = runTarget(s);
 					printRunResult(ret);
-					std::cout << std::endl;
+					std::cout << std::endl << WHITE;
 				}
-				inf.close();
-				std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
+				fin.close();
+				//std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
+				}
 			}
 		}
 
@@ -70,7 +71,8 @@ class BaseLearner{
 
 			int ret = afterLoop(gsets);
 			if (gsets[CNT_EMPL].traces_num() > 0) {
-				std::cout << RED << "}\nProgram BUG! Program have encountered a Counter-Example trace." << std::endl;
+				//std::cout << RED << "}\nProgram BUG! Program have encountered a Counter-Example trace." << std::endl;
+				std::cout << RED << BOLD << "x.\nProgram BUG! Program have encountered a Counter-Example trace." << std::endl;
 				std::cout << gsets[CNT_EMPL] << WHITE << std::endl;
 				exit(-2);
 			}

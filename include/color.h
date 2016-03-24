@@ -17,7 +17,7 @@
  *  which is enough for our output.
  *  You can import more color if you want.
  */
-enum Color {RED = 0, YELLOW, GREEN, BLUE, WHITE};
+enum Color {RED = 0, YELLOW, GREEN, BLUE, WHITE, BOLD, NORMAL};
 
 std::ostream& operator << (std::ostream& out, Color c);
 

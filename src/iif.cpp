@@ -57,11 +57,13 @@ iifContext::iifContext(const char* vfilename, int (*func)(int*), const char* fun
 	gsets[CNT_EMPL].label = 2;
 	if (pasttestcase != NULL) {
 		std::ifstream fin(pasttestcase);
-		int l, pn, nn;
-		fin >> l >> pn >> nn;
-		gsets[POSITIVE].initFromFile(pn, fin);
-		gsets[NEGATIVE].initFromFile(nn, fin);
-		fin.close();
+		if (fin) {
+			int l, pn, nn;
+			fin >> l >> pn >> nn;
+			gsets[POSITIVE].initFromFile(pn, fin);
+			gsets[NEGATIVE].initFromFile(nn, fin);
+			fin.close();
+		}
 	}
 	first = NULL;
 	last = NULL;
@@ -87,10 +89,10 @@ iifContext::~iifContext() {
 }
 
 
-iifContext& iifContext::addLearner(const char* learnerName, const char* solution_filename) {
+iifContext& iifContext::addLearner(const char* learnerName, const char* last_cnt_fname) {
 	BaseLearner* newLearner = NULL;
 	if (strcmp(learnerName, "linear") == 0)
-		newLearner = new LinearLearner(gsets, solution_filename);
+		newLearner = new LinearLearner(gsets, last_cnt_fname);
 	/* 
 	   else if (strcmp(learnerName, "poly") == 0)
 	   newLearner = new PolyLearner(gsets);

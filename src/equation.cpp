@@ -564,7 +564,8 @@ int Equation::roundoff(Equation& e) {
 
 	for (int i = 1; i < dims; i++)
 		e.theta[i] = _roundoff(theta[i] / min);
-	e.theta[0] = ceil(theta[0] / min);
+	//e.theta[0] = ceil(theta[0] / min);
+	e.theta[0] = _roundoff(theta[0] / min);
 #ifdef __PRT_EQUATION
 	std::cout << "\tAfter roundoff: " << e << WHITE << std::endl;
 #endif
@@ -596,11 +597,14 @@ int Equation::toCandidates(Candidates* cs) {
 	if (min / second_min <= UPBOUND)
 		min = second_min;
 
-	double max_bound = ceil((theta[0] + 1) / min);
-	double min_bound = ceil((theta[0] - 1) / min);
+	//double max_bound = ceil((theta[0] + 1) / min);
+	//double min_bound = ceil((theta[0] - 1) / min);
+	double max_bound = _roundoff((theta[0] + 1) / min);
+	double min_bound = _roundoff((theta[0] - 1) / min);
 	for (int i = 1; i < dims; i++)
 		e.theta[i] = _roundoff(theta[i] / min);
-	e.theta[0] = ceil(theta[0] / min);
+	//e.theta[0] = ceil(theta[0] / min);
+	e.theta[0] = _roundoff(theta[0] / min);
 #ifdef __PRT_EQUATION
 	std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
 #endif

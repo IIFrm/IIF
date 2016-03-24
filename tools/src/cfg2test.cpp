@@ -218,7 +218,8 @@ int main(int argc, char** argv)
 	if (argc >= 4) varfilename = argv[3];
 	if (argc >= 5) invfileprefix = argv[4];
 	if (argc >= 6) testcasefilename = argv[5];
-	if (argc >= 7) oldtracefilename = argv[5];
+	if (argc >= 7) oldtracefilename = argv[6];
+	cout << "!!!" << testcasefilename << " !!!" << oldtracefilename << endl;
 
 	FileHelper fh(cfgfilename, cppfilename, varfilename, invfileprefix, testcasefilename, oldtracefilename);
 	//cout << "after construct...\n";

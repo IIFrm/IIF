@@ -47,7 +47,11 @@ void setColor(std::ostream& out, int choice) {
 			out << "\033[33;\x1b[34m";
 			break;
 		case WHITE: // white
+		case NORMAL: // normal
 			out << "\033[0m";
+			break;
+		case BOLD: // bold 
+			out << "\033[1m";
 			break;
 	}	
 }

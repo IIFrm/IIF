@@ -38,12 +38,12 @@ git clone git@github.com:IIFrm/IIF.git
 ```
 cd IIF
 mkdir build
-./runtest test
-./runtest conj
+./run_once.sh test
+./run_once.sh conj
 ```
 
 #### Notes
-+ The folder 'backup/' and 'doc/' are not used currently.
++ The folder 'backup/' is not used currently.
 + The 'test', 'conj' are filenames located in 'cfg' folder without extension.
 
 #### Add a new test

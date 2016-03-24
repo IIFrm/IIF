@@ -4,6 +4,8 @@ green="\033[33;\x1b[32m"
 yellow="\033[33;\x1b[33m"
 blue="\033[33;\x1b[34m"
 white="\033[0m"
+bold="\033[1m"
+normal="\033[0m"
 
 if [ $# -lt 1 ]
 then
@@ -71,7 +73,7 @@ path_tmp_cfg="tmp/tmp.cfg"
 cp $path_cfg $path_tmp_cfg
 echo -n "invariant=" >> $path_tmp_cfg
 cat $path_inv >> $path_tmp_cfg
-echo -e $green"[Done]"$white
+echo -e $green$bold"[Done]"$white
 
 
 #**********************************************************************************************

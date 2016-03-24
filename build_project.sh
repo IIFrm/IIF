@@ -4,6 +4,8 @@ green="\033[33;\x1b[32m"
 yellow="\033[33;\x1b[33m"
 blue="\033[33;\x1b[34m"
 white="\033[0m"
+bold="\033[1m"
+normal="\033[0m"
 
 if [ $# -lt 1 ]
 then
@@ -49,7 +51,7 @@ else
 	$dir_tool"cfg2test" $path_cfg $path_cpp $path_var $prefix_path_inv
 fi
 Nv=$?
-echo -e $green"[DONE]"$white
+echo -e $green$bold"[DONE]"$white
 
 
 ##########################################################################
@@ -62,7 +64,7 @@ echo "set(Nv "$Nv")" >> $cmakefile
 cat ./cmake.base >> $cmakefile
 echo "add_executable("$prefix" "$path_cpp" \${DIR_SRCS} \${HEADER})" >> $cmakefile
 echo "target_link_libraries("$prefix" \${Z3_LIBRARY})" >> $cmakefile
-echo -e $green"[DONE]"$white
+echo -e $green$bold"[DONE]"$white
 
 
 
@@ -75,11 +77,11 @@ cd build
 cmake ..
 make $prefix
 if [ $? -ne 0 ]; then
-	echo "[FAIL]make error, contact developer to fix project source code first..."
+	echo -e $red$bold"[FAIL]make error, contact developer to fix project source code first..."$white
 	cd ..
 	exit 1
 fi
-echo -e $green"[DONE]"$white
+echo -e $green$bold"[DONE]"$white
 
 cd ..
 exit 0

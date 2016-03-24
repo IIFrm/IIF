@@ -4,6 +4,8 @@ green="\033[33;\x1b[32m"
 yellow="\033[33;\x1b[33m"
 blue="\033[33;\x1b[34m"
 white="\033[0m"
+bold="\033[1m"
+normal="\033[0m"
 
 dir_src="./src/"
 dir_bin="./bin/"
@@ -11,9 +13,9 @@ dir_bin="./bin/"
 function handle_exit() {
 	exit_code=$1
 	if [ $exit_code -eq 0 ]; then
-		echo -e $green"[PASS]"$white
+		echo -e $green$bold"[PASS]"$white
 	else
-		echo -e $red"[FAIL]Compiling Error. (error code: "$status")"$white
+		echo -e $red$bold"[FAIL]Compiling Error. (error code: "$status")"$white
 		exit $status
 	fi
 	return 0

@@ -4,6 +4,8 @@ green="\033[33;\x1b[32m"
 yellow="\033[33;\x1b[33m"
 blue="\033[33;\x1b[34m"
 white="\033[0m"
+bold="\033[1m"
+normal="\033[0m"
 
 if [ $# -lt 1 ]
 then
@@ -52,17 +54,17 @@ function func_findSmtForZ3(){
 		echo "(get-model)" >> $path_smt2
 		echo "(exit)" >> $path_smt2
 
-		echo -n -e $blue"Z3 solving"$white
+		echo -n -e $blue"Z3 solving:"$white
 		z3 $path_smt2 > $path_model
 		
 		"../../"$dir_tool"model_parser" "../../"$path_var $path_model "../../"$path_cnt
 		result=$?
 		if [ $result -eq 0 ]; then
 			# unsat
-			echo -e $green": [unsat]"$white
+			echo -e $green$bold" [unsat] [PASS]"$white
 			i=$(($i+1))
 		else
-			echo -e $red": [sat]"$white
+			echo -e $red$bold" [sat] [FAIL]"$white
 			echo -e "counter examples are stored in file "$yellow$path_cnt$white
 			return 1
 		fi
@@ -108,9 +110,9 @@ function KleeVerify(){
 # Generate C files to verify using cfg file and inv file
 ##########################################################################
 path_tmp_cfg="tmp/tmp.cfg"
-echo -n -e $blue"Generating three C files to do the verification by KLEE"$white
+echo -n -e $blue"Generating three C files to do the verification by KLEE..."$white
 $dir_tool"cfg2verif" $path_tmp_cfg $path_verif
-echo -e $green"[Done]"$white
+echo -e $green$bold"[Done]"$white
 
 
 

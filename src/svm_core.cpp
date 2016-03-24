@@ -3449,7 +3449,9 @@ bool node_equal(svm_node* n1, svm_node* n2)
 bool model_converged(struct svm_model *m1, struct svm_model *m2)
 {
 	if ((m1 == NULL) || (m2 == NULL)) return false;
+#ifdef __PRT
 	std::cout << " sv[" << m1->l << "," << m2->l <<"] ";
+#endif
 	//std::cout << "\n" << BLUE << "\tfirst model:"<< *m1 << std::endl;
 	//std::cout << "\tsecond model:"<< *m2 << WHITE << std::endl;
 	if (m1->nr_class != m2->nr_class) return false;
