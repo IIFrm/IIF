@@ -154,14 +154,15 @@ class FileHelper {
 		}
 
 		inline bool writeMain(ofstream& cppFile, int choice) {
-			cppFile << "int main()\n {\n"; 
+			cppFile << "\nint main() {\n"; 
 			for (int i = 0; i < vnum; i++) 
 				cppFile << "int " + variables[i] + ";\n";
 			for (int i = 0; i < vnum; i++) 
 				cppFile << "klee_make_symbolic(&" << variables[i] <<", sizeof(" << variables[i] << "), \"" << variables[i] << "\");\n";
 
 			// before loop statements;
-			cppFile << cs[BEFL].value << std::endl;
+			if (cs[BEFL].value.compare("") != 0)
+				cppFile << cs[BEFL].value << std::endl;
 
 			switch (choice) {
 				case 1:

@@ -85,7 +85,7 @@ class SVM : public MLalgo
 		~SVM() {
 			//if (model != NULL) delete model;
 			//problem.save_to_file("../tmp/saved_testcase");
-			std::cout << "save to file succeed.\n";
+			//std::cout << "save to file succeed.\n";
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (pre_model != NULL) svm_free_and_destroy_model(&pre_model);
 			if (equ != NULL) delete equ;

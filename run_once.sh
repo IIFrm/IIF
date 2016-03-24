@@ -24,15 +24,17 @@ dir_tool="tools/bin/"
 prefix=$1
 mkdir -p tmp
 file_cfg=$prefix".cfg"
-file_cpp=$prefix".cpp"
-file_var=$prefix".var"
-file_inv=$prefix".inv"
 path_cfg=$dir_cfg""$file_cfg
+file_cpp=$prefix".cpp"
 path_cpp=$dir_test""$file_cpp
+file_var=$prefix".var"
 path_var=$dir_temp""$file_var
+file_inv=$prefix".inv"
 path_inv=$dir_temp""$file_inv
-prefix_path_inv=$dir_temp""$prefix
-path_cnt=$dir_temp""$prefix".cnt"
+file_cnt=$prefix".cnt"
+path_cnt=$dir_temp""$file_cnt
+file_cnt_lib=$prefix".cntlib"
+path_cnt_lib=$dir_temp""$file_cnt_lib
 
 
 ##########################################################################
@@ -58,26 +60,10 @@ if [ $ret -ne 0 ]; then
 fi
 cd ..
 
-##########################################################################
-# From inv files to prepare for verification step
-##########################################################################
-echo -e $blue"Invariant file is located at "$path_inv""$white
-cat $path_inv
-echo ""
-
-##########################################################################
-# Generating a new config file contains the invariant candidate...
-##########################################################################
-echo -n -e $blue"Generating a new config file contains the invariant candidate..."$white
-path_tmp_cfg="tmp/tmp.cfg"
-cp $path_cfg $path_tmp_cfg
-echo -n "invariant=" >> $path_tmp_cfg
-cat $path_inv >> $path_tmp_cfg
-echo -e $green$bold"[Done]"$white
-
 
 #**********************************************************************************************
 # verification phase
 #**********************************************************************************************
 ./verify.sh $1
+
 exit $?

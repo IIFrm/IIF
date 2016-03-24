@@ -114,7 +114,7 @@ class FileHelper {
 			}
 			writeCppHeader(cppFile);
 			writeCppLoopFunction(cppFile);
-			cppFile << endl;
+			//cppFile << endl;
 			writeCppMain(cppFile);
 			cppFile.close();
 			return true;
@@ -142,14 +142,14 @@ class FileHelper {
 			cppFile << "recordi(" << variables[0];
 			for (int i = 1; i < vnum; i++)
 				cppFile << ", " << variables[i];
-			cppFile << ");\n";
+			cppFile << ");";
 			return true;
 		}
 
 		inline bool writeCppHeader(ofstream& cppFile) {
 			cppFile << "#include \"iif.h\"\n"
 				<< "#include <iostream>\n" 
-				<< "using namespace iif;\n"<< endl;
+				<< "using namespace iif;\n\n";
 			return true;
 		}
 
@@ -159,16 +159,18 @@ class FileHelper {
 				cppFile << "int " << variables[i] << " = a[" << i << "];\n";
 				//cppFile << "int " + variables[i] + " = a[" + to_string(i) + "];\n";
 			}
+			cppFile << "\n";
 			for (int i = 0; i < confignum; i++) {
 				if (cs[i].key == "loop") { cppFile << "{\n"; writeRecordi(cppFile); }
-				cppFile << cs[i].cppstatement << endl;
+				if (cs[i].cppstatement.compare("") != 0)
+					cppFile << cs[i].cppstatement << endl;
 				if (cs[i].key == "loop") { cppFile << "}\n"; writeRecordi(cppFile); }
 			}
 			return true;
 		}
 
 		inline bool writeCppMain(ofstream& cppFile) {
-			cppFile << "int main(int argc, char** argv)\n {\n";
+			cppFile << "\nint main(int argc, char** argv)\n {\n";
 			if (oldtracefilename)
 				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\", \"../" << oldtracefilename << "\");\n";
 			else
@@ -219,7 +221,7 @@ int main(int argc, char** argv)
 	if (argc >= 5) invfileprefix = argv[4];
 	if (argc >= 6) testcasefilename = argv[5];
 	if (argc >= 7) oldtracefilename = argv[6];
-	cout << "!!!" << testcasefilename << " !!!" << oldtracefilename << endl;
+	//cout << "!!!" << testcasefilename << " !!!" << oldtracefilename << endl;
 
 	FileHelper fh(cfgfilename, cppfilename, varfilename, invfileprefix, testcasefilename, oldtracefilename);
 	//cout << "after construct...\n";

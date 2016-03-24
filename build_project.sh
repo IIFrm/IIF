@@ -74,7 +74,7 @@ echo -e $green$bold"[DONE]"$white
 echo -e $blue"Build the project..."$white
 cd build
 #rm -rf *
-cmake ..
+cmake .. > /dev/null
 make $prefix
 if [ $? -ne 0 ]; then
 	echo -e $red$bold"[FAIL]make error, contact developer to fix project source code first..."$white
