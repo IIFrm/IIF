@@ -86,5 +86,6 @@ while [ $iteration -le 32 ]; do
 	else
 		iteration=$(($iteration+1))
 	fi
+	cat $dir_temp"svm.ds" > $path_dataset
 done
 exit $?

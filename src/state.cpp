@@ -12,10 +12,11 @@ States::~States() {
 }
 
 bool States::initFromFile(int num, std::ifstream& fin) {
+	int label;
 	int tmpint;
 	char tmpchar;
 	for (int i = 0; i < num; i++) {
-		fin >> tmpint;
+		fin >> label;
 		for (int j = 0; j < Nv; j++) {
 			fin >> tmpint >> tmpchar >> values[i][j];
 			assert(tmpint == j);

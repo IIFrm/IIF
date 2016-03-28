@@ -135,6 +135,9 @@ int LinearLearner::learn()
 #endif
 			svm->setEtimes(etimes);
 			svm->train();
+#ifdef __DS_ENABLED
+			std::cout << "[" << svm->problem.np << ":" << svm->problem.nn << "]";
+#endif
 			std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
 			svm->equ->roundoff();
 			//cl->factor(*(svm->equ));

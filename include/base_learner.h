@@ -26,17 +26,17 @@
 
 class BaseLearner{
 	public:
-		BaseLearner(States* gsets, const char* last_cnt_fname = NULL, int (*func)(int*) = target_program): gsets(gsets), func(func) {
+		BaseLearner(States* gsets, const char* cntempl_fname = NULL, int (*func)(int*) = target_program): gsets(gsets), func(func) {
 			cs = new Candidates();
 			cl = new Classifier();
 			equ = new Equation();
-			if (last_cnt_fname!= NULL) {
+			if (cntempl_fname!= NULL) {
 				//std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
-				std::ifstream fin(last_cnt_fname);
+				std::ifstream fin(cntempl_fname);
 				if (fin) {
 				Solution s;
 				while (fin >> s) {
-					std::cout << BLUE << BOLD << "Test on Last Counter Example: " << s << " from file " << last_cnt_fname << " --> " << NORMAL << WHITE;
+					std::cout << BLUE << BOLD << "Test on Last Counter Example: " << s << " from file " << cntempl_fname << " --> " << NORMAL << WHITE;
 					int ret = runTarget(s);
 					printRunResult(ret);
 					std::cout << std::endl << WHITE;

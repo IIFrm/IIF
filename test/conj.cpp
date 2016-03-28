@@ -9,17 +9,14 @@ int loop_times = 10;
 iif_assume((x>=0) && (x<=50));
 while(loop_times-- > 0)
 {
-recordi(x);
- if (x>50) x++;
+recordi(x); if (x>50) x++;
 		if (x == 0) {
 			x ++;
 		} else x--;
 }
-recordi(x);
-iif_assert((x>=0) && (x<=50));
+recordi(x);iif_assert((x>=0) && (x<=50));
 return 0;
 }
-
 
 int main(int argc, char** argv)
  {

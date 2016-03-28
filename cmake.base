@@ -15,6 +15,7 @@ if(PRINT_ALL)
 	add_definitions (-D__PRT_TRACE)
 	add_definitions (-D__PRT_EQUATION)
 endif(PRINT_ALL)
+add_definitions (-D__DS_ENABLED)
 
 
 if(UNIX)

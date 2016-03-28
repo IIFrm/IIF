@@ -33,7 +33,6 @@ struct svm_problem
 	int l;
 	double *y;
 	struct svm_node **x;
-	//int np, nn;
 
 	friend std::ostream& operator << (std::ostream& out, const svm_problem& sp) {
 		for (int i = 0; i < sp.l; i++) {
@@ -45,10 +44,10 @@ struct svm_problem
 		return out;
 	}
 
-	/*
+#ifdef __DS_ENABLED	
+	int np, nn;
 	bool save_to_file(const char* filepath) {
 		std::ofstream fout(filepath);
-		int np, nn;
 		fout << l << "\t" << np << "\t" << nn << "\n";
 		for (int i = 0; i < l; i++) {
 			fout << y[i];
@@ -60,8 +59,10 @@ struct svm_problem
 		return true;
 	}
 
+	/*
 	bool load_from_file(const char* filepath) {
 		std::ifstream fin(filepath);
+		if (!fin) return false;
 		int np, nn;
 		fin >> l >> np >> nn;
 		int tmpint;
@@ -78,6 +79,7 @@ struct svm_problem
 		return true;
 	}
 	*/
+#endif
 };
 
 

@@ -76,6 +76,10 @@ class SVM : public MLalgo
 			problem.l = 0;
 			problem.x = (svm_node**)(data);
 			problem.y = label;
+#ifdef __DS_ENABLED
+			problem.np = 0;
+			problem.nn = 0;
+#endif
 			model = NULL;
 			pre_model = NULL;
 			etimes = 0;
@@ -84,8 +88,10 @@ class SVM : public MLalgo
 
 		~SVM() {
 			//if (model != NULL) delete model;
-			//problem.save_to_file("../tmp/saved_testcase");
-			//std::cout << "save to file succeed.\n";
+#ifdef __DS_ENABLED
+			problem.save_to_file("../tmp/svm.ds");
+			std::cout << "save to file succeed. ../tmp/svm.ds\n";
+#endif
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (pre_model != NULL) svm_free_and_destroy_model(&pre_model);
 			if (equ != NULL) delete equ;
@@ -137,9 +143,12 @@ class SVM : public MLalgo
 				label[cur_index + i] = -1;
 			}
 
+#ifdef __DS_ENABLED
+			problem.np = cur_psize;
+			problem.nn = cur_nsize;
+#endif
 			problem.l = cur_psize + cur_nsize;
-			//problem.np = cur_psize;
-			//problem.nn = cur_nsize;
+
 			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;

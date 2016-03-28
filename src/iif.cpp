@@ -18,7 +18,7 @@ iifContext::iifContext (States* ss) {
 	vnum = 0;
 }
 
-iifContext::iifContext(const char* vfilename, int (*func)(int*), const char* func_name, const char* pasttestcase, int timeout) {
+iifContext::iifContext(const char* vfilename, int (*func)(int*), const char* func_name, const char* dataset_fname, int timeout) {
 	std::ifstream vfile(vfilename);
 	vfile >> vnum;
 	variables = new std::string[Cv0to4];
@@ -55,8 +55,8 @@ iifContext::iifContext(const char* vfilename, int (*func)(int*), const char* fun
 	gsets[QUESTION].label = 0;
 	gsets[POSITIVE].label = 1;
 	gsets[CNT_EMPL].label = 2;
-	if (pasttestcase != NULL) {
-		std::ifstream fin(pasttestcase);
+	if (dataset_fname != NULL) {
+		std::ifstream fin(dataset_fname);
 		if (fin) {
 			int l, pn, nn;
 			fin >> l >> pn >> nn;
@@ -115,7 +115,7 @@ iifContext& iifContext::addLearner(const char* learnerName, const char* last_cnt
 	return *this;
 }
 
-int iifContext::learn(const char* invfilename) {
+int iifContext::learn(const char* invfilename, int times) {
 #ifdef linux
 	// we only support timeout in LINUX system
 	// Because don't know how to easily implement the same function in windows system...:( 
