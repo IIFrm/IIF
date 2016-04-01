@@ -67,7 +67,7 @@ class Classifier{
 
 		bool factor(Equation& eq) {
 			//std::cout << "\tFactorization Process >>>>\n";
-			eq.factor();
+			std::cout << GREEN << eq << WHITE <<std::endl;
 			int etimes = eq.getEtimes();
 			if (etimes == 1) {
 				//std::cout << "univariant linear function: " << eq << "\n";
@@ -129,6 +129,8 @@ class Classifier{
 					this->add((new Equation(x1, -1.0))->roundoff());
 					return true;
 				}
+			} else {
+				eq.factor();
 			}
 
 			return false;

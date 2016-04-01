@@ -204,9 +204,8 @@ int LinearLearner::learn()
 
 	int ret = 1;
 	if ((converged) && (rnd <= max_iteration)) {
-		/*bool sat =*/ //svm_model_z3(lastModel, cl);
 		svm_model_visualization(lastModel, equ);
-		ret = equ->toCandidates(cs);
+		//ret = equ->toCandidates(cs);
 		//equ->roundoff();
 		//svm_model_approximate(lastModel, equ->getEtimes());
 		//svm_problem_approximate(&svm->problem, equ->getEtimes());
@@ -229,7 +228,9 @@ int LinearLearner::learn()
 }
 
 std::string LinearLearner::invariant(int n) {
-	return cs->toString(n);
-	return svm->equ->toString();
+	cl->factor(*svm->equ);
 	return cl->toString();
+	return svm->equ->toString();
+	//return cs->toString(n);
+	//return cl->toString();
 }

@@ -27,7 +27,7 @@
 class BaseLearner{
 	public:
 		BaseLearner(States* gsets, const char* cntempl_fname = NULL, int (*func)(int*) = target_program): gsets(gsets), func(func) {
-			cs = new Candidates();
+			//cs = new Candidates();
 			cl = new Classifier();
 			equ = new Equation();
 			if (cntempl_fname!= NULL) {
@@ -101,7 +101,7 @@ class BaseLearner{
 	protected:
 		States* gsets;
 		int (*func)(int*);
-		Candidates* cs;
+		//Candidates* cs;
 		Classifier* cl;
 		Equation* equ;
 };
