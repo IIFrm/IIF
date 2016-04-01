@@ -1,5 +1,5 @@
-/** @file equation.h
- *  @brief Defines the linear equation format and its solution format.
+/** @file polynomial.h
+ *  @brief Defines the linear polynomial format and its solution format.
  *
  *  @author Li Jiaying
  *  @bug No known bugs. 
@@ -41,9 +41,9 @@ std::string Polynomial::toString() const {
 	return stm.str();
 }
 
-std::ostream& operator<< (std::ostream& out, const Polynomial& equ) {
+std::ostream& operator<< (std::ostream& out, const Polynomial& poly) {
 	out << std::setprecision(16);
-	out << equ.toString();
+	out << poly.toString();
 	return out;
 }
 
@@ -551,7 +551,7 @@ int Polynomial::roundoff(Polynomial& e) {
 	if (second_min == DBL_MAX) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
 	if (second_min == 0) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
 
-#ifdef __PRT_EQUATION
+#ifdef __PRT_polynomial
 	std::cout << GREEN << "Before roundoff: " << *this;
 #endif
 	if (min / second_min <= UPBOUND)
@@ -567,7 +567,7 @@ int Polynomial::roundoff(Polynomial& e) {
 		e.theta[i] = _roundoff(theta[i] / min);
 	//e.theta[0] = ceil(theta[0] / min);
 	e.theta[0] = _roundoff(theta[0] / min);
-#ifdef __PRT_EQUATION
+#ifdef __PRT_polynomial
 	std::cout << "\tAfter roundoff: " << e << WHITE << std::endl;
 #endif
 	//std::cout << e << std::endl;
@@ -592,7 +592,7 @@ int Polynomial::toCandidates(Candidates* cs) {
 	if (second_min == DBL_MAX) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
 	if (second_min == 0) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
 
-#ifdef __PRT_EQUATION
+#ifdef __PRT_polynomial
 	std::cout << GREEN << "Before roundoff: " << *this;
 #endif
 	if (min / second_min <= UPBOUND)
@@ -606,7 +606,7 @@ int Polynomial::toCandidates(Candidates* cs) {
 		e.theta[i] = _roundoff(theta[i] / min);
 	//e.theta[0] = ceil(theta[0] / min);
 	e.theta[0] = _roundoff(theta[0] / min);
-#ifdef __PRT_EQUATION
+#ifdef __PRT_polynomial
 	std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
 #endif
 	std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
