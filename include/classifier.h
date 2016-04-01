@@ -8,7 +8,7 @@
 
 #include "config.h"
 #include "states.h"
-#include "equation.h"
+#include "polynomial.h"
 #include "connector.h"
 #include "color.h"
 
@@ -17,19 +17,19 @@
 #include <string.h>
 #include <assert.h>
 
-class Equation;
+class Polynomial;
 
 class Classifier{
 	protected:
 		int max_size;
 		int size;
-		Equation* eqs;
+		Polynomial* eqs;
 		Connector* cts;
 
 	public:
 		Classifier(int maxsize = 16) {
 			max_size = maxsize;
-			eqs = new Equation[max_size];
+			eqs = new Polynomial[max_size];
 			cts = new Connector[max_size];
 			size = 0;
 		}
@@ -44,7 +44,7 @@ class Classifier{
 			return size;
 		}
 
-		int add(Equation* eq, Connector* ct) {
+		int add(Polynomial* eq, Connector* ct) {
 			if (size >= max_size)
 				return -1;
 			eqs[size] = *eq;
@@ -52,7 +52,7 @@ class Classifier{
 			return ++size;
 		}
 
-		int add(Equation* eq, int type = CONJUNCT) {
+		int add(Polynomial* eq, int type = CONJUNCT) {
 			if (size >= max_size)
 				return -1;
 			eqs[size] = *eq;
@@ -65,7 +65,7 @@ class Classifier{
 			return 0;
 		}
 
-		bool factor(Equation& eq) {
+		bool factor(Polynomial& eq) {
 			//std::cout << "\tFactorization Process >>>>\n";
 			std::cout << GREEN << eq << WHITE <<std::endl;
 			int etimes = eq.getEtimes();
@@ -100,11 +100,11 @@ class Classifier{
 					if (x1 > x2) std::swap(x1, x2);
 					//std::cout << "x1=" << x1 << ", x2=" << x2 << "\n";
 					if (A > 0) {
-						this->add((new Equation(x1, -1.0))->roundoff());
-						this->add((new Equation(-1 * x2, 1.0))->roundoff(), DISJUNCT);
+						this->add((new Polynomial(x1, -1.0))->roundoff());
+						this->add((new Polynomial(-1 * x2, 1.0))->roundoff(), DISJUNCT);
 					} else {
-						this->add((new Equation(-1 * x1, 1.0))->roundoff());
-						this->add((new Equation(x2, -1.0))->roundoff());
+						this->add((new Polynomial(-1 * x1, 1.0))->roundoff());
+						this->add((new Polynomial(x2, -1.0))->roundoff());
 					}
 					//std::cout << *this << std::endl;
 					return true;
@@ -126,7 +126,7 @@ class Classifier{
 					double x1 = -B / (3 * A) + pow(delta1 + sqrt(delta), 1.0/3) + pow(delta1 - sqrt(delta), 1.0/3);
 					//double x2, x3;
 					// calculate x2 x3
-					this->add((new Equation(x1, -1.0))->roundoff());
+					this->add((new Polynomial(x1, -1.0))->roundoff());
 					return true;
 				}
 			} else {
@@ -138,9 +138,9 @@ class Classifier{
 		
 		static int solver(const Classifier* cl, Solution& sol) {
 			if ((cl == NULL) || (cl->size == 0)) 
-				return Equation::linear_solver(NULL, sol);
+				return Polynomial::linear_solver(NULL, sol);
 			int select_equation = rand() % cl->size;
-			return Equation::linear_solver(&(cl->eqs[select_equation]), sol);
+			return Polynomial::linear_solver(&(cl->eqs[select_equation]), sol);
 		}
 
 

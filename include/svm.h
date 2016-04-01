@@ -23,7 +23,7 @@ class SVM : public MLalgo
 		int mapping_dimension;
 
 	public:
-		Equation* equ;
+		Polynomial* equ;
 		svm_model* model;
 
 	protected:
@@ -48,7 +48,7 @@ class SVM : public MLalgo
 
 
 	public:
-		inline Equation* getClassifier() {
+		inline Polynomial* getClassifier() {
 			return equ;
 		}
 
@@ -56,7 +56,7 @@ class SVM : public MLalgo
 			return model;
 		}
 
-		inline int setClassifier(Equation* e) {
+		inline int setClassifier(Polynomial* e) {
 			*equ = *e;
 			return 0;
 		}
@@ -237,7 +237,7 @@ class SVM : public MLalgo
 			model = svm_train(&problem, &param);
 			//std::cout << "\n\tmodel --> " << *model << std::endl;
 			//std::cout << "checking point 2\n";
-			if (equ == NULL) equ = new Equation();
+			if (equ == NULL) equ = new Polynomial();
 			svm_model_visualization(model, equ);
 			//svm_free_and_destroy_model(&model);
 			//model = NULL;
@@ -248,7 +248,7 @@ class SVM : public MLalgo
 			if (problem.l <= 0) return 0;
 			int pass = 0;
 			for (int i = 0; i < problem.l; i++) {
-				//pass += (Equation::calc(*classifier, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
+				//pass += (Polynomial::calc(*classifier, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
 				pass += (predict((double*)problem.x[i]) * problem.y[i] >= 0) ? 1 : 0;
 			}
 			return static_cast<double>(pass) / problem.l;
@@ -268,7 +268,7 @@ class SVM : public MLalgo
 				//std::cout << "\t\t" << i << ">";
 				//gsets[QUESTION].print_trace(i);
 				for (int j = qset.t_index[i]; j < qset.t_index[i + 1]; j++) {
-					cur = Equation::calc(*classifier, qset.values[j]);
+					cur = Polynomial::calc(*classifier, qset.values[j]);
 					//std::cout << ((cur >= 0) ? "+" : "-");
 					if ((pre >= 0) && (cur < 0)) {
 						// deal with wrong question trace.
@@ -278,7 +278,7 @@ class SVM : public MLalgo
 						qset.dumpTrace(i);
 #endif
 						for (int j = qset.t_index[i]; j < qset.t_index[i + 1]; j++) {
-							cur = Equation::calc(*classifier, qset.values[j]);
+							cur = Polynomial::calc(*classifier, qset.values[j]);
 #ifdef __PRT
 							std::cout << ((cur >= 0) ? "+" : "-");
 #endif
@@ -302,7 +302,7 @@ class SVM : public MLalgo
 		int converged (void* pre_model, int num =1) {
 			assert ((num == 1) || "SVM::get_converged: Unexpected equation number parameter.");
 			if (pre_model == NULL) return 1;
-			Equation* pre_classifier = (Equation*)pre_model;
+			Polynomial* pre_classifier = (Polynomial*)pre_model;
 			return equ->is_similar(*pre_classifier);
 		}
 
@@ -326,9 +326,9 @@ class SVM : public MLalgo
 			return problem.l;
 		}
 
-		Equation* roundoff(int& num) {
+		Polynomial* roundoff(int& num) {
 			num = 1;
-			Equation* newequ = new Equation();
+			Polynomial* newequ = new Polynomial();
 			equ->roundoff(*newequ);
 			return newequ;
 		}

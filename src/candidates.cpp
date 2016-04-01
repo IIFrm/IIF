@@ -14,8 +14,8 @@ int Candidates::getSize() const {
 	return size;
 }
 
-int Candidates::add(Equation* eq) {
-	Equation* e = new Equation(*eq);
+int Candidates::add(Polynomial* eq) {
+	Polynomial* e = new Polynomial(*eq);
 	cands.push_back(e);
 	return ++size;
 }

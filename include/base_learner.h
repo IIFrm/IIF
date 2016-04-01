@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "states.h"
-#include "equation.h"
+#include "polynomial.h"
 #include "classifier.h"
 #include "candidates.h"
 #include "instrumentation.h"
@@ -29,7 +29,7 @@ class BaseLearner{
 		BaseLearner(States* gsets, const char* cntempl_fname = NULL, int (*func)(int*) = target_program): gsets(gsets), func(func) {
 			//cs = new Candidates();
 			cl = new Classifier();
-			equ = new Equation();
+			equ = new Polynomial();
 			if (cntempl_fname!= NULL) {
 				//std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
 				std::ifstream fin(cntempl_fname);
@@ -103,7 +103,7 @@ class BaseLearner{
 		int (*func)(int*);
 		//Candidates* cs;
 		Classifier* cl;
-		Equation* equ;
+		Polynomial* equ;
 };
 
 

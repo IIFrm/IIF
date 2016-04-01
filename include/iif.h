@@ -16,7 +16,7 @@
 //#include "svm_i.h"
 #include "color.h"
 #include "solution.h"
-#include "equation.h"
+#include "polynomial.h"
 #include "connector.h"
 #include "classifier.h"
 #include "states.h"
