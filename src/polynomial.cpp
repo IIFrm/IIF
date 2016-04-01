@@ -5,7 +5,7 @@
  *  @bug No known bugs. 
  */
 
-#include "equation.h"
+#include "polynomial.h"
 
 const double UPBOUND = pow(0.1, PRECISION);
 static double _roundoff(double x)
@@ -19,7 +19,7 @@ static double _roundoff(double x)
 	return double(inx);
 }
 
-std::string Equation::toString() const {
+std::string Polynomial::toString() const {
 	std::ostringstream stm;
 	bool firstplus = false;
 	if (theta[0] != 0) {
@@ -41,13 +41,13 @@ std::string Equation::toString() const {
 	return stm.str();
 }
 
-std::ostream& operator<< (std::ostream& out, const Equation& equ) {
+std::ostream& operator<< (std::ostream& out, const Polynomial& equ) {
 	out << std::setprecision(16);
 	out << equ.toString();
 	return out;
 }
 
-Equation& Equation::operator=(Equation& rhs) {
+Polynomial& Polynomial::operator=(Polynomial& rhs) {
 	if (this == &rhs) { return *this; }
 	setEtimes(rhs.getEtimes());
 	for (int i = 0; i < rhs.getDims(); i++)
@@ -55,6 +55,7 @@ Equation& Equation::operator=(Equation& rhs) {
 	return *this;
 }
 
+#if (linux || __MACH__)
 static void output_z3model(z3::model& z3m) {
 	std::cout << "{";
 	for (unsigned s = 0; s < z3m.size(); s++) {
@@ -63,9 +64,9 @@ static void output_z3model(z3::model& z3m) {
 	}
 	std::cout << "}\n";
 }
+#endif
 
-
-bool Equation::factorNv1Times2(double *B) { //, double B, double C) {
+bool Polynomial::factorNv1Times2(double *B) { //, double B, double C) {
 #if (linux || __MACH__)
 	z3::config cfg;
 	cfg.set("auto_config", true);
@@ -109,7 +110,7 @@ bool Equation::factorNv1Times2(double *B) { //, double B, double C) {
 }
 
 
-bool Equation::factorNv1Times3(double *B) { //, double B, double C, double D) {
+bool Polynomial::factorNv1Times3(double *B) { //, double B, double C, double D) {
 #if (linux || __MACH__)
 	z3::config cfg;
 	cfg.set("auto_config", true);
@@ -155,7 +156,7 @@ bool Equation::factorNv1Times3(double *B) { //, double B, double C, double D) {
 }
 
 
-bool Equation::factorNv2Times2(double *B) {
+bool Polynomial::factorNv2Times2(double *B) {
 #if (linux || __MACH__)
 	z3::config cfg;
 	cfg.set("auto_config", true);
@@ -208,7 +209,7 @@ bool Equation::factorNv2Times2(double *B) {
 }
 
 
-bool Equation::factorNv2Times3(double* B) {
+bool Polynomial::factorNv2Times3(double* B) {
 #if (linux || __MACH__)
 	z3::config cfg;
 	cfg.set("auto_config", true);
@@ -270,7 +271,7 @@ bool Equation::factorNv2Times3(double* B) {
 }
 
 
-bool Equation::factorNv3Times2(double *B) { //, double B, double C, double D, double E, 
+bool Polynomial::factorNv3Times2(double *B) { //, double B, double C, double D, double E, 
 #if (linux || __MACH__)
 	z3::config cfg;
 	cfg.set("auto_config", true);
@@ -326,7 +327,7 @@ bool Equation::factorNv3Times2(double *B) { //, double B, double C, double D, do
 	return true;
 }
 
-bool Equation::toStandardForm(const Equation& e, double* coefs/*, int et*/) {
+bool Polynomial::toStandardForm(const Polynomial& e, double* coefs/*, int et*/) {
 	int et = e.getEtimes();
 	if (et > 3) return false;
 	if (Nv > 3) return false;
@@ -396,7 +397,7 @@ bool Equation::toStandardForm(const Equation& e, double* coefs/*, int et*/) {
 }
 
 #if (linux || __MACH__)
-z3::expr Equation::toZ3expr(char** name, z3::context& c) const
+z3::expr Polynomial::toZ3expr(char** name, z3::context& c) const
 {
 	char** pname = name;
 	if (pname == NULL) {
@@ -407,7 +408,7 @@ z3::expr Equation::toZ3expr(char** name, z3::context& c) const
 		}
 	}
 
-	const Equation& e = *this;
+	const Polynomial& e = *this;
 	std::vector<z3::expr> x;
 	std::vector<z3::expr> theta;
 
@@ -442,12 +443,12 @@ z3::expr Equation::toZ3expr(char** name, z3::context& c) const
 	return hypo;
 }
 #endif
-bool Equation::imply(const Equation& e2) {
+bool Polynomial::imply(const Polynomial& e2) {
 #if (linux || __MACH__)
 #ifdef __PRT_QUERY
 	std::cout << "-------------Imply solving-------------\n";
 #endif
-	Equation& e1 = *this;
+	Polynomial& e1 = *this;
 	z3::config cfg;
 	cfg.set("auto_config", true);
 	z3::context c(cfg);
@@ -480,7 +481,7 @@ bool Equation::imply(const Equation& e2) {
 	return false;
 }
 
-bool Equation::multiImply(const Equation* e1, int e1_num, const Equation& e2) {
+bool Polynomial::multiImply(const Polynomial* e1, int e1_num, const Polynomial& e2) {
 #if (linux || __MACH__)
 #ifdef __PRT_QUERY
 	std::cout << "-------------Multi-Imply solving-------------\n";
@@ -528,12 +529,12 @@ bool Equation::multiImply(const Equation* e1, int e1_num, const Equation& e2) {
 	return false;
 }
 
-Equation* Equation::roundoff() {
+Polynomial* Polynomial::roundoff() {
 	roundoff(*this);
 	return this;
 }
 
-int Equation::roundoff(Equation& e) {
+int Polynomial::roundoff(Polynomial& e) {
 	//std::cout << "ROUND OFF " << *this << " --> ";
 	double min = DBL_MAX;
 	double second_min = min;
@@ -573,9 +574,9 @@ int Equation::roundoff(Equation& e) {
 	return 0;
 }
 
-int Equation::toCandidates(Candidates* cs) {
+int Polynomial::toCandidates(Candidates* cs) {
 	//std::cout << "ROUND OFF WITHOUT CONST" << *this << " --> ";
-	Equation e = *this;
+	Polynomial e = *this;
 	double min = DBL_MAX;
 	double second_min = min;
 	for (int i = 1; i < dims; i++) {

@@ -3157,7 +3157,7 @@ void print_svm_samples(const svm_problem *sp)
 void print_svm_samples(const svm_problem *sp){}
 #endif
 
-bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Equation& equ)
+bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Polynomial& equ)
 {
 	if (m == NULL)
 		return false;
@@ -3244,7 +3244,7 @@ z3::model z3m = s.get_model();
 		return false;
 }
 
-Equation eq;
+Polynomial eq;
 if (cl != NULL) {
 	eq.set(avalue[0]);
 	cl->add(&eq, CONJUNCT);
@@ -3263,7 +3263,7 @@ std::cout << "]\n";
 return true;
 }
 
-bool svm_model_z3(const svm_model *m, Classifier* cl) //, Equation& equ)
+bool svm_model_z3(const svm_model *m, Classifier* cl) //, Polynomial& equ)
 {
 	if (m == NULL)
 		return false;
@@ -3327,10 +3327,10 @@ int index = -1;
 	return false;
 	}
 
-	Equation eq;
+	Polynomial eq;
 	if (cl != NULL) {
 	eq.set(avalue);
-	std::cout << "Equation: \n" << eq << std::endl;
+	std::cout << "Polynomial: \n" << eq << std::endl;
 	cl->add(&eq);
 	//#ifdef __PRT_Z3SOLVE
 	//		std::cout << *e << std::endl;
@@ -3349,7 +3349,7 @@ int index = -1;
 		return true;
 }
 
-int svm_model_visualization(const svm_model *model, Equation* equ)
+int svm_model_visualization(const svm_model *model, Polynomial* equ)
 {
 	if (model == NULL)
 		return -1;
@@ -3656,7 +3656,7 @@ bool svm_model_approximate(const svm_model *m, int times/*, Classifier* cl*/)
 			return false;
 	}
 
-	Equation eq;
+	Polynomial eq;
 	if (cl != NULL) {
 		eq.set(avalue[0]);
 		cl->add(&eq, CONJUNCT);

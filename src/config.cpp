@@ -14,7 +14,7 @@ int vnum;
 bool check_target_program(int (*func)(int*))
 {
     Solution sol;
-    Equation::linear_solver(NULL, sol);
+    Polynomial::linear_solver(NULL, sol);
 	int a[Nv];
 	for (int i = 0; i < Nv; i++)
 	    a[i] = sol.getVal(i);

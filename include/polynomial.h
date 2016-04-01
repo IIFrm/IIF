@@ -5,8 +5,8 @@
  *  @bug No known bugs.
  */
 
-#ifndef _EQUATION_H_
-#define _EQUATION_H_
+#ifndef _POLYNOMIAL_H_
+#define _POLYNOMIAL_H_
 
 #include "config.h"
 #include <cmath>
@@ -34,13 +34,13 @@ extern int vnum;
 class Candidates;
 
 
-/** \class Equation
+/** \class Polynomial
  *  @brief This class defines an equation by storing all its coefficiencies.
  *		   An equation is regarded a hyperplane in math.
  *
  *  theta[0] * 1 + theta[1] * x_1 + theta[1] * x_2 + ... + theta[Cv1to4] * x_{Cv0to4} >= 0
  */
-class Equation {
+class Polynomial {
 private:
 	int dims;
 	int etimes;
@@ -49,7 +49,7 @@ public:
 	/** @brief Default constructor.
 	 *		   Set all its elements to value 0
 	 */
-	Equation() {
+	Polynomial() {
 		setEtimes(1);
 		for (int i = 1; i < Cv0to4; i++) {
 			theta[i] = 0;
@@ -74,7 +74,7 @@ public:
 	 *		   Set its elements to the given values, order keeps
 	 *		   The first element is Theta0
 	 */
-	Equation(double a0, ...) {
+	Polynomial(double a0, ...) {
 		setEtimes(1);
 		va_list ap;
 		va_start(ap, a0);
@@ -90,7 +90,7 @@ public:
 	 *
 	 * @param equ The equation to be copied.
 	 */
-	Equation(Equation& equ) {
+	Polynomial(Polynomial& equ) {
 		setEtimes(equ.getEtimes());
 		for (int i = 0; i < equ.getDims(); i++)
 			theta[i] = equ.theta[i];
@@ -103,7 +103,7 @@ public:
 	 *
 	 *	@param rhs The right-hand-side equation of assignment
 	 */
-	Equation& operator=(Equation& rhs);
+	Polynomial& operator=(Polynomial& rhs);
 
 	std::string toString() const;
 
@@ -114,7 +114,7 @@ public:
 	 *
 	 *  @param equ the equation to be ouput
 	 */
-	friend std::ostream& operator<< (std::ostream& out, const Equation& equ);
+	friend std::ostream& operator<< (std::ostream& out, const Polynomial& equ);
 
 
 	/** @brief This method converts *this equation object to z3 expr object.
@@ -140,13 +140,13 @@ public:
 	 *  @param e2 is the equation right side
 	 *  @return bool true if yes, false if no.
 	 */
-	bool imply(const Equation& e2);
-	static bool multiImply(const Equation* e1, int e1_num, const Equation& e2);
+	bool imply(const Polynomial& e2);
+	static bool multiImply(const Polynomial* e1, int e1_num, const Polynomial& e2);
 
 	/*
-	static bool approximate(const Equation& e, _out_ Equation* eqs);
-	bool approximate(_out_ Equation* eqs) {
-		return Equation::approximate(*this, eqs);
+	static bool approximate(const Polynomial& e, _out_ Polynomial* eqs);
+	bool approximate(_out_ Polynomial* eqs) {
+		return Polynomial::approximate(*this, eqs);
 	}
 	*/
 
@@ -156,14 +156,14 @@ public:
 	static bool factorNv2Times3(double *B);
 	static bool factorNv3Times2(double *B);
 
-	static bool toStandardForm(const Equation& e, double* coefs);
+	static bool toStandardForm(const Polynomial& e, double* coefs);
 
 	bool toStandardForm(double* coefs) {
-		return Equation::toStandardForm(*this, coefs);
+		return Polynomial::toStandardForm(*this, coefs);
 	}
 
 	bool factor() {
-		//std::cout << "\t  <<Factoring Equation>> \n";
+		//std::cout << "\t  <<Factoring Polynomial>> \n";
 		if (getEtimes() == 1) return true;
 		double coefs[Cv0to4];
 		this->toStandardForm(coefs);
@@ -195,7 +195,7 @@ public:
 		return linear_solver(this, sol);
 	}
 
-	/** @brief The solver for an Equation.
+	/** @brief The solver for an Polynomial.
 	 *
 	 * This method calcuate the most informative points in space
 	 * It return a points really on the margin or next to the margin
@@ -204,7 +204,7 @@ public:
 	 *			  contains the solution, integer format
 	 * @return int 0 if no error.
 	 */
-	static int linear_solver(const Equation* equ, Solution& sol) {
+	static int linear_solver(const Polynomial* equ, Solution& sol) {
 		if (equ == NULL) {
 			/**
 			 * equ == NULL means no equation is specified
@@ -267,7 +267,7 @@ public:
 	 *	@param sol is the tested solution, should not be NULL
 	 *	@return The distance/value of the solution to the given equation
 	 */
-	static double calc(Equation& equ, double* sol) {
+	static double calc(Polynomial& equ, double* sol) {
 		if (sol == NULL) return -1;
 		//if (&equ == NULL) return -1;
 		double res = equ.theta[0];
@@ -284,7 +284,7 @@ public:
 	 *		  The default is 4, which means we can bare 0.0001 difference.
 	 *		  In this case 1 ~=1.00001, but 1!~=1.000011
 	 */
-	int is_similar(Equation& e2, int precision = PRECISION) {
+	int is_similar(Polynomial& e2, int precision = PRECISION) {
 		if (dims != e2.getDims()) return -1;
 		double ratio = 0;
 		int i;
@@ -334,11 +334,11 @@ public:
 	 *	@param e Contains the equation that has already rounded off
 	 *	@return int 0 if no error.
 	 */
-	int roundoff(Equation& e);
+	int roundoff(Polynomial& e);
 
 	int toCandidates(Candidates* cs);
 
-	Equation* roundoff();
+	Polynomial* roundoff();
 
 	inline double getTheta(int i) const {
 		assert((i < dims) || "parameter for getTheta is out of boundary.");

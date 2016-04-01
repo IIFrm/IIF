@@ -10,7 +10,7 @@
 #define _ML_ALGO_H_
 #include <iostream>
 #include "states.h"
-#include "equation.h"
+#include "polynomial.h"
 
 class MLalgo 
 {
@@ -96,7 +96,7 @@ class MLalgo
 		 *		   Remember to DELETE them after use by caller.
 		 *		   Otherwise memory leak.
 		 */
-		virtual Equation* roundoff(int& equation_num) = 0;
+		virtual Polynomial* roundoff(int& equation_num) = 0;
 
 
 		/** @brief Predict sample x against the whole training model.(equations)

@@ -8,7 +8,7 @@
 
 #include "config.h"
 #include "states.h"
-#include "equation.h"
+#include "polynomial.h"
 //#include "connector.h"
 //#include "classifier.h"
 #include "color.h"
@@ -18,13 +18,13 @@
 #include <string.h>
 #include <assert.h>
 
-class Equation;
+class Polynomial;
 
 class Candidates{
 	protected:
 		int size;
 		//std::vector<Classifier*> cands;
-		std::vector<Equation*> cands;
+		std::vector<Polynomial*> cands;
 
 	public:
 		Candidates() {
@@ -37,7 +37,7 @@ class Candidates{
 
 		int getSize() const;
 
-		int add(Equation* eq);
+		int add(Polynomial* eq);
 
 		int clear();
 

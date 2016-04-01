@@ -94,7 +94,7 @@ class Solution{
 		}
 
 	private:
-		/// The data field of Solution, stores all the values as a solution to an Equation 
+		/// The data field of Solution, stores all the values as a solution to an Polynomial 
 		double val[Nv];
 };
 

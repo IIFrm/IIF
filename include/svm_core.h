@@ -191,8 +191,8 @@ bool svm_model_z3(const svm_model *m, Classifier* cl = NULL);
 bool svm_model_approximate(const svm_model *m, int times/*, Classifier* cl = NULL*/); 
 bool svm_problem_approximate(const svm_problem *sp, int times/*, Classifier* cl = NULL*/); 
 
-int svm_model_visualization(const svm_model *model, Equation* equ = NULL);
-//int equation_factorization(const Equation *equ, Classifier* cl, int etimes = 1);
+int svm_model_visualization(const svm_model *model, Polynomial* equ = NULL);
+//int equation_factorization(const Polynomial *equ, Classifier* cl, int etimes = 1);
 
 void print_svm_samples(const svm_problem *sp);
 

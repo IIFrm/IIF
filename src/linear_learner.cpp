@@ -1,6 +1,6 @@
 #include "config.h"
 #include "color.h"
-#include "equation.h"
+#include "polynomial.h"
 #include "classifier.h"
 #include "linear_learner.h"
 
@@ -36,7 +36,7 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 	Solution input;
 	int ret = 0;
 	for (int i = 0; i < randn; i++) {
-		//Equation::linear_solver(NULL, input);
+		//Polynomial::linear_solver(NULL, input);
 		//model_solver(NULL, input);
 		Classifier::solver(NULL, input);
 		ret = runTarget(input);
