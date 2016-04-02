@@ -22,28 +22,45 @@ iifContext::iifContext(const char* vfilename, int (*func)(int*), const char* fun
 	std::ifstream vfile(vfilename);
 	vfile >> vnum;
 	variables = new std::string[Cv0to4];
+	vparray = new VariablePowerArray[Cv0to4];
 	variables[0] = '1';
-	for (int i = 1; i <= Nv; i++)
-		vfile >> variables[i];
-	vfile.close();
-	int index = Nv+1;
-	for (int i = 1; i <= Nv; i++) {
-		for (int j = i; j <= Nv; j++) {
-			variables[index++] = "(" + variables[i] + "*" + variables[j] + ")";
+	for (int i = 0; i < Cv0to4; i++) {
+		for(int j = 0; j < Nv; j++) {
+			vparray[i][j] = 0;
 		}
 	}
 	for (int i = 1; i <= Nv; i++) {
-		for (int j = i; j <= Nv; j++) {
-			for (int k = j; k <= Nv; k++) {
-				variables[index++] = "(" + variables[i] + "*" + variables[j] + "*" + variables[k] + ")";
+		vfile >> variables[i];
+		vparray[i][i-1] = 1;
+	}
+	vfile.close();
+	int index = Nv+1;
+	for (int i = 0; i < Nv; i++) {
+		for (int j = i; j < Nv; j++) {
+			vparray[index][i]++;
+			vparray[index][j]++;
+			variables[index++] = "(" + variables[i+1] + "*" + variables[j+1] + ")";
+		}
+	}
+	for (int i = 0; i < Nv; i++) {
+		for (int j = i; j < Nv; j++) {
+			for (int k = j; k < Nv; k++) {
+				vparray[index][i]++;
+				vparray[index][j]++;
+				vparray[index][k]++;
+				variables[index++] = "(" + variables[i+1] + "*" + variables[j+1] + "*" + variables[k+1] + ")";
 			}
 		}
 	}
-	for (int i = 1; i <= Nv; i++) {
-		for (int j = i; j <= Nv; j++) {
-			for (int k = j; k <= Nv; k++) {
-				for (int l = k; l <= Nv; l++) {
-					variables[index++] = "(" + variables[i] + "*" + variables[j] + "*" + variables[k] + "*" + variables[l] + ")";
+	for (int i = 0; i < Nv; i++) {
+		for (int j = i; j < Nv; j++) {
+			for (int k = j; k < Nv; k++) {
+				for (int l = k; l < Nv; l++) {
+					vparray[index][i]++;
+					vparray[index][j]++;
+					vparray[index][k]++;
+					vparray[index][l]++;
+					variables[index++] = "(" + variables[i+1] + "*" + variables[j+1] + "*" + variables[k+1] + "*" + variables[l+1] + ")";
 				}
 			}
 		}
@@ -86,6 +103,8 @@ iifContext::~iifContext() {
 	delete []ss;
 	if (variables != NULL)
 		delete []variables;
+	if (vparray != NULL)
+		delete vparray;
 }
 
 

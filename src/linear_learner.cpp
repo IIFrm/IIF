@@ -211,7 +211,8 @@ int LinearLearner::learn()
 		//svm_problem_approximate(&svm->problem, equ->getEtimes());
 		//std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
 		std::cout << YELLOW << "  Hypothesis Invariant(Converged): {\n";
-		std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
+		//std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
+		std::cout << "\t\t" << GREEN << equ->toString() << YELLOW << std::endl;
 		std::cout << "  }" << WHITE << std::endl;
 	}
 

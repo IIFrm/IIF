@@ -25,6 +25,7 @@ std::string Polynomial::toString() const {
 	if (theta[0] != 0) {
 		firstplus = true;
 		stm << theta[0];
+		stm << "*" << vparray[0];
 	}
 	for (int j = 1; j < dims; j++) {
 		if (theta[j] == 0) continue;
@@ -34,6 +35,7 @@ std::string Polynomial::toString() const {
 			stm << " + ";
 		if (theta[j] != 1) 
 			stm << "(" << theta[j] << ")*";
+		stm << vparray[j];
 		stm << variables[j];
 	}
 	stm << " >= 0";
@@ -43,7 +45,23 @@ std::string Polynomial::toString() const {
 
 std::ostream& operator<< (std::ostream& out, const Polynomial& poly) {
 	out << std::setprecision(16);
-	out << poly.toString();
+	bool firstplus = false;
+	if (poly.theta[0] != 0) {
+		firstplus = true;
+		out << poly.theta[0];
+	}
+	for (int j = 1; j < poly.dims; j++) {
+		if (poly.theta[j] == 0) continue;
+		if (firstplus == false) 
+			firstplus = true;
+		else 
+			out << " + ";
+		if (poly.theta[j] != 1) 
+			out << "(" << poly.theta[j] << ")*";
+		//out << vparray[j];
+		out << variables[j];
+	}
+	out << " >= 0";
 	return out;
 }
 
@@ -443,10 +461,10 @@ z3::expr Polynomial::toZ3expr(char** name, z3::context& c) const
 	return hypo;
 }
 #endif
-bool Polynomial::imply(const Polynomial& e2) {
+bool Polynomial::uniImply(const Polynomial& e2) {
 #if (linux || __MACH__)
 #ifdef __PRT_QUERY
-	std::cout << "-------------Imply solving-------------\n";
+	std::cout << "-------------uni-Imply solving-------------\n";
 #endif
 	Polynomial& e1 = *this;
 	z3::config cfg;

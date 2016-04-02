@@ -318,7 +318,8 @@ class SVM : public MLalgo
 			//out << "SVM-model: ";
 			//out << *model << std::endl;
 			//svm_model_visualization(model, *classifier);
-			out << *equ; // << std::endl;
+			//out << *equ; // << std::endl;
+			out << equ->toString(); // << std::endl;
 			return out;
 		}
 

@@ -8,6 +8,8 @@
  */
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
+#include <iostream>
+#include <cassert>
 
 
 /**  @brief defines the number of paramenters by a given loop,\
@@ -17,15 +19,15 @@
  */
 #define Nv ${Nv} 
 
- /*#define Cv(i) do {int return_num##i = 1;\
- for (int tempi = 0; tempi < i; i++) return_num##i *= (Nv + i);\
- for (int tempi = 0; tempi < i; i++) return_num##i /= (1 + i);\
- } while(0);
- #define Cv1to1 (Cv(1))
- #define Cv1to2 (Cv(1) + Cv(2))
- #define Cv1to3 (Cv(1) + Cv(2) + Cv(3))
- #define Cv1to4 (Cv(1) + Cv(2) + Cv(3) + Cv(4))
- */
+/*#define Cv(i) do {int return_num##i = 1;\
+  for (int tempi = 0; tempi < i; i++) return_num##i *= (Nv + i);\
+  for (int tempi = 0; tempi < i; i++) return_num##i /= (1 + i);\
+  } while(0);
+#define Cv1to1 (Cv(1))
+#define Cv1to2 (Cv(1) + Cv(2))
+#define Cv1to3 (Cv(1) + Cv(2) + Cv(3))
+#define Cv1to4 (Cv(1) + Cv(2) + Cv(3) + Cv(4))
+*/
 
 #define Cv0 (1)
 #define Cv1 (Nv)
@@ -46,7 +48,6 @@
 /*#define _Cv1to(n) Cv1to##n
 #define Cv1to(n) _Cv1to(n)
 */
-
 
 #define _in_
 #define _out_
@@ -76,12 +77,12 @@ const int Mitems = 10000000;
 const int MstatesIn1trace = 10240;
 
 /** @brief defines the number of tests runs initially. Should be a positive integer.
- */
+*/
 const int Nexe_init = 8 * Nv;
 const int Nretry_init = 128;
 
 /** @brief defines the number of tests runs after the first time. Should be a positive integer.
- */
+*/
 static int Nexe_after = 8 * Nv;
 
 /** @brief defines the number of random tests runs each time, 
@@ -106,8 +107,27 @@ const int Miter = 512;
 bool register_program(int (*func)(int*), const char* func_name = 0);
 
 /** @brief defines the timeout signal handler 
- */
+*/
 // legacy function, can be removed after all the test modification
 //void sig_alrm(int signo);
 
+class VariablePowerArray{
+	int _vtimes[Nv];
+	public:
+	int& operator[] (int i) {
+		assert((i>=0) && (i<Nv));
+		return _vtimes[i];
+	}
+
+	friend std::ostream& operator << (std::ostream& out, VariablePowerArray& vpa) {
+		out << "[" << vpa[0];
+		for (int i = 1; i < Nv; i++) {
+			out << "," << vpa[i];
+		}
+		out <<"]";
+		return out;
+	}
+};
+
+extern VariablePowerArray* vparray;
 #endif

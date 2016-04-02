@@ -42,9 +42,11 @@
 #include <unistd.h>
 #endif
 
+
 extern int minv, maxv;
 extern std::string* variables;
 extern int vnum;
+extern VariablePowerArray* vparray;
 
 
 namespace iif{
@@ -55,7 +57,6 @@ namespace iif{
 			BaseLearner* learner;
 			LearnerNode* next;
 	};
-
 
 	class iifContext {
 		private:

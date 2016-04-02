@@ -9,6 +9,7 @@ int(*target_program)(int*) = NULL;
 
 int minv = -200, maxv = 200;
 std::string* variables;
+VariablePowerArray* vparray;
 int vnum;
 
 bool check_target_program(int (*func)(int*))

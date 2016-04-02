@@ -31,6 +31,7 @@ using namespace z3;
 extern int maxv;
 extern int minv;
 extern std::string* variables;
+extern VariablePowerArray* vparray;
 extern int vnum;
 class Candidates;
 
@@ -121,7 +122,7 @@ class Polynomial {
 
 		/** @brief This method converts *this polynomail object to z3 expr object.
 		 *
-		 *  Introducing this method help to simplify imlementation of imply method.
+		 *  Introducing this method help to simplify imlementation of uniImply method.
 		 *
 		 *  @param name contains each variants names.
 		 *				If NULL, the name would be "x_1", "x_2" form.
@@ -132,7 +133,7 @@ class Polynomial {
 		z3::expr toZ3expr(char** name, z3::context& c) const;
 #endif
 
-		/** @brief This imply method checks whether this polynomail object can imply another one or not
+		/** @brief This uniImply method checks whether this polynomail object can uniImply another one or not
 		 *		   That is to say:  *this ==> e2 ??
 		 *		   *this is default polynomail left side
 		 *
@@ -142,7 +143,7 @@ class Polynomial {
 		 *  @param e2 is the polynomail right side
 		 *  @return bool true if yes, false if no.
 		 */
-		bool imply(const Polynomial& e2);
+		bool uniImply(const Polynomial& e2);
 		static bool multiImply(const Polynomial* e1, int e1_num, const Polynomial& e2);
 
 		static int solve_univariate_polynomial(Polynomial& poly, double* results) {
@@ -158,16 +159,67 @@ class Polynomial {
 			return num_rational_solution;
 		}
 
-		int solve_univariate_polynomial(double* results) {
+		static int solve_multivariate_polynomial(Polynomial& poly, double* results) {
+			assert(Nv > 1);
+			assert(poly.dims <= Cv0to4);
+			gsl_poly_complex_workspace* w = gsl_poly_complex_workspace_alloc (Nv + 1);
+			// should modify here.
+			// how to caculate the parameters for each variable...
+			gsl_poly_complex_solve (poly.theta, poly.dims, w, results);
+			gsl_poly_complex_workspace_free (w);
+			int num_rational_solution = 0;
+			for(int i = 0; i < Nv + 1; i++) {
+				if (results[2*i+1] != 0) 
+					num_rational_solution++;
+			}
+			return num_rational_solution;
+		}
+
+		inline int solve_univariate_polynomial(double* results) {
 			return solve_univariate_polynomial(*this, results);
 		}
 
-		/*
-		   static bool approximate(const Polynomial& e, _out_ Polynomial* eqs);
-		   bool approximate(_out_ Polynomial* eqs) {
-		   return Polynomial::approximate(*this, eqs);
-		   }
-		   */
+		inline int solve_multivariate_polynomial(double* results) {
+			return solve_multivariate_polynomial(*this, results);
+		}
+
+		int parseEachVariable(std::string& vs, int& start) {
+			const char* str = vs.c_str();
+			char variable[8];
+			int cpos = 0;
+			while (start <= strlen(str)) {
+				while ((str[start] != '(') && (str[start] != ')') &&
+					(str[start] != '*') && (str[start] != ' ')) {
+					variable[cpos++] = str[start++];
+				}
+				if (cpos > 0) {
+					variable[cpos] = '\0';
+					break;
+				}
+				start++;
+			}
+			for (int i = 0; i < Nv; i++) {
+				if (strcmp(variable, variables[i+1].c_str()) == 0)
+					return i; 
+			}
+			return -1;
+		}
+
+		double evalItem(int index, double* given_values) {
+			assert (index < dims);
+			double result = theta[index];
+			if (index == 0) return result;
+			int begin = 0;
+			while (true) {
+				int var_index = parseEachVariable(variables[index], begin);
+				if (var_index >= 0)
+					result *= given_values[var_index];
+				else
+					break;
+			}
+			return result;
+		}
+
 
 		static bool factorNv1Times2(double *B);
 		static bool factorNv1Times3(double *B);
