@@ -63,7 +63,7 @@ class BaseLearner{
 			//< convert the given input with double type to the input with int type 
 			int a[Nv];
 			for (int i = 0; i < Nv; i++)
-				a[i] = static_cast<int>(input.getVal(i));
+				a[i] = static_cast<int>(input[i]);
 			//target_program
 			//std::cout << "----> run the loop function.\n";
 			func(a);

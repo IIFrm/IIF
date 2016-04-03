@@ -80,17 +80,9 @@ class Solution{
 			return in;
 		}
 
-		double getVal(int i)
-		{
-			assert ((i < Nv) || "index out of bound.");
-			return val[i];
-		}
-
-		int setVal(int i, double value)
-		{
-			assert ((i < Nv) || "index out of bound.");
-			val[i] = value;
-			return 0;
+		double& operator[](int index) {
+			assert((index >= 0) && (index < Nv));
+			return val[index];
 		}
 
 	private:

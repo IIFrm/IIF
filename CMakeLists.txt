@@ -3,7 +3,7 @@ set(Nv 1)
 project(InvariantInferenceFramework)
 set(PRECISION 3)
 
-#add_definitions (-D__PRT)
+add_definitions (-D__PRT)
 #add_definitions (-D__PRT_Z3SOLVE)
 #add_definitions (-D__PRT_TRACE)
 #add_definitions (-D__PRT_EQUATION)
@@ -82,6 +82,84 @@ find_package_handle_standard_args(Z3
 include_directories(${Z3_INCLUDE_DIR})
 #endif(UNIX)
 
+IF(UNIX) 
+	SET(GSL_CONFIG_PREFER_PATH 
+		"$ENV{GSL_DIR}/bin"
+		"$ENV{GSL_DIR}"
+		"$ENV{GSL_HOME}/bin" 
+		"$ENV{GSL_HOME}" 
+		CACHE STRING "preferred path to GSL (gsl-config)")
+	FIND_PROGRAM(GSL_CONFIG gsl-config
+		${GSL_CONFIG_PREFER_PATH}
+		/usr/bin/
+		)
+	# MESSAGE("DBG GSL_CONFIG ${GSL_CONFIG}")
+
+	IF (GSL_CONFIG) 
+		# set CXXFLAGS to be fed into CXX_FLAGS by the user:
+		SET(GSL_CXX_FLAGS "`${GSL_CONFIG} --cflags`")
+
+		# set INCLUDE_DIRS to prefix+include
+		EXEC_PROGRAM(${GSL_CONFIG}
+			ARGS --prefix
+			OUTPUT_VARIABLE GSL_PREFIX)
+		SET(GSL_INCLUDE_DIR ${GSL_PREFIX}/include CACHE STRING INTERNAL)
+
+		# set link libraries and link flags
+		#SET(GSL_LIBRARIES "`${GSL_CONFIG} --libs`")
+		EXEC_PROGRAM(${GSL_CONFIG}
+			ARGS --libs
+			OUTPUT_VARIABLE GSL_LIBRARIES )
+
+		# extract link dirs for rpath  
+		EXEC_PROGRAM(${GSL_CONFIG}
+			ARGS --libs
+			OUTPUT_VARIABLE GSL_CONFIG_LIBS )
+
+		# extract version
+		EXEC_PROGRAM(${GSL_CONFIG}
+			ARGS --version
+			OUTPUT_VARIABLE GSL_FULL_VERSION )
+
+		# split version as major/minor
+		STRING(REGEX MATCH "(.)\\..*" GSL_VERSION_MAJOR_ "${GSL_FULL_VERSION}")
+		SET(GSL_VERSION_MAJOR ${CMAKE_MATCH_1})
+		STRING(REGEX MATCH ".\\.(.*)" GSL_VERSION_MINOR_ "${GSL_FULL_VERSION}")
+		SET(GSL_VERSION_MINOR ${CMAKE_MATCH_1})
+
+		# split off the link dirs (for rpath)
+		# use regular expression to match wildcard equivalent "-L*<endchar>"
+		# with <endchar> is a space or a semicolon
+		STRING(REGEX MATCHALL "[-][L]([^ ;])+" 
+			GSL_LINK_DIRECTORIES_WITH_PREFIX 
+			"${GSL_CONFIG_LIBS}" )
+		#      MESSAGE("DBG  GSL_LINK_DIRECTORIES_WITH_PREFIX=${GSL_LINK_DIRECTORIES_WITH_PREFIX}")
+
+		# remove prefix -L because we need the pure directory for LINK_DIRECTORIES
+
+		IF (GSL_LINK_DIRECTORIES_WITH_PREFIX)
+			STRING(REGEX REPLACE "[-][L]" "" GSL_LINK_DIRECTORIES ${GSL_LINK_DIRECTORIES_WITH_PREFIX} )
+		ENDIF (GSL_LINK_DIRECTORIES_WITH_PREFIX)
+		SET(GSL_EXE_LINKER_FLAGS "-Wl,-rpath,${GSL_LINK_DIRECTORIES}" CACHE STRING INTERNAL)
+		#      MESSAGE("DBG  GSL_LINK_DIRECTORIES=${GSL_LINK_DIRECTORIES}")
+		#      MESSAGE("DBG  GSL_EXE_LINKER_FLAGS=${GSL_EXE_LINKER_FLAGS}")
+
+		#      ADD_DEFINITIONS("-DHAVE_GSL")
+		#      SET(GSL_DEFINITIONS "-DHAVE_GSL")
+		MARK_AS_ADVANCED(
+			GSL_CXX_FLAGS
+			GSL_INCLUDE_DIR
+			GSL_LIBRARIES
+			GSL_LINK_DIRECTORIES
+			GSL_DEFINITIONS
+			)
+		MESSAGE(STATUS "Using GSL from ${GSL_PREFIX}")
+
+	ELSE(GSL_CONFIG)
+		MESSAGE("FindGSL.cmake: gsl-config not found. Please set it manually. GSL_CONFIG=${GSL_CONFIG}")
+	ENDIF(GSL_CONFIG)
+
+ENDIF(UNIX)
 
 
 file(GLOB HEADER "include/*.h")
@@ -99,3 +177,4 @@ AUX_SOURCE_DIRECTORY(test DIR_TEST)
 
 add_executable(conj test/conj.cpp ${DIR_SRCS} ${HEADER})
 target_link_libraries(conj ${Z3_LIBRARY})
+target_link_libraries(conj ${GSL_LIBRARIES})

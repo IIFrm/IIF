@@ -3497,7 +3497,7 @@ int model_solver(const svm_model* m, Solution& sol)
 	if (m == NULL) {
 		//for (int i = 0; i < DIMENSION; i++)
 		for (int i = 0; i < Nv; i++)
-			sol.setVal(i, rand() % (maxv - minv + 1) + minv);
+			sol[i] = rand() % (maxv - minv + 1) + minv;
 		return 0;
 	}
 	//assert(m->nr_class == 2);
@@ -3553,7 +3553,7 @@ int model_solver(const svm_model* m, Solution& sol)
 	//std::cout << "u=" << u;
 	for (int i = 0; i < Nv; i++) {
 		double value =  nearbyint(m->SV[indexp][i].value + (m->SV[indexn][i].value - m->SV[indexp][i].value) * u);
-		sol.setVal(i, value);
+		sol[i] = value;
 	}
 	return 0;
 } 

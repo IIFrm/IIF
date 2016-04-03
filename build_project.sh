@@ -64,6 +64,7 @@ echo "set(Nv "$Nv")" >> $cmakefile
 cat ./cmake.base >> $cmakefile
 echo "add_executable("$prefix" "$path_cpp" \${DIR_SRCS} \${HEADER})" >> $cmakefile
 echo "target_link_libraries("$prefix" \${Z3_LIBRARY})" >> $cmakefile
+echo "target_link_libraries("$prefix" \${GSL_LIBRARIES})" >> $cmakefile
 echo -e $green$bold"[DONE]"$white
 
 

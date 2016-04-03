@@ -24,7 +24,6 @@ LinearLearner::~LinearLearner() {
 /// type == 0, solve equations defined by paras....
 //			   if params == NULL, all are random points
 //			   if params != NULL, selective sampling
-/// type > 0, params contains type number of inputs.....
 int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params)
 {
 #ifdef __PRT
@@ -36,9 +35,9 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 	Solution input;
 	int ret = 0;
 	for (int i = 0; i < randn; i++) {
-		//Polynomial::linear_solver(NULL, input);
+		Polynomial::solver(NULL, input);
 		//model_solver(NULL, input);
-		Classifier::solver(NULL, input);
+		//Classifier::solver(NULL, input);
 		ret = runTarget(input);
 #ifdef __PRT
 		std::cout << input;
@@ -54,7 +53,8 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 	if (type == 0) {
 		for (int i = 0; i < exen; i++) {
 			//model_solver((svm_model*)params, input);
-			Classifier::solver((Classifier*)params, input);
+			Polynomial::solver((Polynomial*)params, input);
+			//Classifier::solver((Classifier*)params, input);
 			ret = runTarget(input);
 #ifdef __PRT
 			std::cout << "|" << input;
@@ -62,19 +62,6 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 #endif
 		}
 	}
-	/*else if (type > 0) {
-		Solution* p = (Solution*)params;
-#ifdef __PRT
-			std::cout << "|>>";
-#endif
-		for (int i = 0; i < type; i++) {
-#ifdef __PRT
-			std::cout << p[i] << "|";
-#endif
-			runTarget(p[i]);
-		}
-	}
-	*/
 #ifdef __PRT
 	std::cout << WHITE << "}" << std::endl;
 #endif
@@ -109,7 +96,8 @@ int LinearLearner::learn()
 		//std::cout << std::endl << "\t-->selective sampling:\n\t";
 		//selectiveSampling(random_exes, nexe, 0, (void*)lastEquation);
 		//selectiveSampling(random_exes, nexe, 0, lastModel);
-		selectiveSampling(Nexe_rand, nexe, 0, cl);
+		selectiveSampling(Nexe_rand, nexe, 0, svm->equ);
+		//selectiveSampling(Nexe_rand, nexe, 0, cl);
 		//std::cout << "\t<--selective sampling:\n";
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
@@ -139,7 +127,7 @@ int LinearLearner::learn()
 			std::cout << "[" << svm->problem.np << ":" << svm->problem.nn << "]";
 #endif
 			std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
-			svm->equ->roundoff();
+			//svm->equ->roundoff();
 			//cl->factor(*(svm->equ));
 
 #ifdef __PRT

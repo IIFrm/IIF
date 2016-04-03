@@ -138,9 +138,9 @@ class Classifier{
 		
 		static int solver(const Classifier* cl, Solution& sol) {
 			if ((cl == NULL) || (cl->size == 0)) 
-				return Polynomial::linear_solver(NULL, sol);
+				return Polynomial::solver(NULL, sol);
 			int select_equation = rand() % cl->size;
-			return Polynomial::linear_solver(&(cl->eqs[select_equation]), sol);
+			return Polynomial::solver(&(cl->eqs[select_equation]), sol);
 		}
 
 
