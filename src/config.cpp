@@ -7,7 +7,7 @@
 extern int assume_times, assert_times;
 int(*target_program)(int*) = NULL;
 
-int minv = -200, maxv = 200;
+int minv = -500, maxv = 500;
 std::string* variables;
 VariablePowerArray* vparray;
 int vnum;

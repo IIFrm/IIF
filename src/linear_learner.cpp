@@ -21,7 +21,7 @@ LinearLearner::~LinearLearner() {
 }
 
 
-/// type == 0, solve equations defined by paras....
+/// type == 0, solve polyations defined by paras....
 //			   if params == NULL, all are random points
 //			   if params != NULL, selective sampling
 int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params)
@@ -76,6 +76,7 @@ int LinearLearner::learn()
 	bool converged = false;
 	svm_model* lastModel = NULL;
 	int pre_psize = 0, pre_nsize = 0;
+	Polynomial *poly = new Polynomial();
 
 	double pass_rate = 1;
 	int etimes = 1;
@@ -94,9 +95,9 @@ int LinearLearner::learn()
 		std::cout << RED << "[" << rnd << "]" << WHITE;
 #endif
 		//std::cout << std::endl << "\t-->selective sampling:\n\t";
-		//selectiveSampling(random_exes, nexe, 0, (void*)lastEquation);
+		//selectiveSampling(random_exes, nexe, 0, (void*)lastpolyation);
 		//selectiveSampling(random_exes, nexe, 0, lastModel);
-		selectiveSampling(Nexe_rand, nexe, 0, svm->equ);
+		selectiveSampling(Nexe_rand, nexe, 0, svm->poly);
 		//selectiveSampling(Nexe_rand, nexe, 0, cl);
 		//std::cout << "\t<--selective sampling:\n";
 
@@ -127,8 +128,10 @@ int LinearLearner::learn()
 			std::cout << "[" << svm->problem.np << ":" << svm->problem.nn << "]";
 #endif
 			std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
-			//svm->equ->roundoff();
-			//cl->factor(*(svm->equ));
+			//Polynomial poly;
+			//svm->poly->roundoff(poly);
+			//svm->poly->roundoff();
+			//cl->factor(*(svm->poly));
 
 #ifdef __PRT
 			std::cout << "\t(" << YELLOW << step++ << WHITE << ") checking training traces.";
@@ -192,16 +195,18 @@ int LinearLearner::learn()
 
 	int ret = 1;
 	if ((converged) && (rnd <= max_iteration)) {
-		svm_model_visualization(lastModel, equ);
-		//ret = equ->toCandidates(cs);
-		//equ->roundoff();
-		//svm_model_approximate(lastModel, equ->getEtimes());
-		//svm_problem_approximate(&svm->problem, equ->getEtimes());
+		svm_model_visualization(lastModel, poly);
+		//ret = poly->toCandidates(cs);
+		//poly->roundoff();
+		//svm_model_approximate(lastModel, poly->getEtimes());
+		//svm_problem_approximate(&svm->problem, poly->getEtimes());
 		//std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
+		poly->roundoff();
 		std::cout << YELLOW << "  Hypothesis Invariant(Converged): {\n";
-		//std::cout << "\t\t" << GREEN << *equ << YELLOW << std::endl;
-		std::cout << "\t\t" << GREEN << equ->toString() << YELLOW << std::endl;
+		//std::cout << "\t\t" << GREEN << *poly << YELLOW << std::endl;
+		std::cout << "\t\t" << GREEN << poly->toString() << YELLOW << std::endl;
 		std::cout << "  }" << WHITE << std::endl;
+		*svm->poly = *poly;
 	}
 
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {
@@ -217,9 +222,9 @@ int LinearLearner::learn()
 }
 
 std::string LinearLearner::invariant(int n) {
-	cl->factor(*svm->equ);
+	cl->factor(*svm->poly);
 	return cl->toString();
-	return svm->equ->toString();
+	return svm->poly->toString();
 	//return cs->toString(n);
 	//return cl->toString();
 }

@@ -23,7 +23,7 @@ class SVM : public MLalgo
 		int mapping_dimension;
 
 	public:
-		Polynomial* equ;
+		Polynomial* poly;
 		svm_model* model;
 
 	protected:
@@ -49,7 +49,7 @@ class SVM : public MLalgo
 
 	public:
 		inline Polynomial* getClassifier() {
-			return equ;
+			return poly;
 		}
 
 		inline svm_model* getModel() {
@@ -57,7 +57,7 @@ class SVM : public MLalgo
 		}
 
 		inline int setClassifier(Polynomial* e) {
-			*equ = *e;
+			*poly = *e;
 			return 0;
 		}
 
@@ -66,7 +66,7 @@ class SVM : public MLalgo
 			if (f != NULL)
 				svm_set_print_string_function(f);
 			model = NULL;
-			equ = NULL;
+			poly = NULL;
 
 			data = new double*[max_size];
 			pdata = new MState[max_size];
@@ -94,7 +94,7 @@ class SVM : public MLalgo
 #endif
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (pre_model != NULL) svm_free_and_destroy_model(&pre_model);
-			if (equ != NULL) delete equ;
+			if (poly != NULL) delete poly;
 			if (data != NULL) delete []data;
 			if (pdata != NULL) delete[]pdata;
 			if (label != NULL) delete label;
@@ -228,17 +228,17 @@ class SVM : public MLalgo
 					svm_free_and_destroy_model(&pre_model);
 				pre_model = model;
 			}
-			/*if (equ != NULL) {
-				delete equ;
-				equ = NULL;
+			/*if (poly != NULL) {
+				delete poly;
+				poly = NULL;
 			}*/
 			//std::cout << "checking point 1\n";
 			//std::cout << std::endl << problem << std::endl;
 			model = svm_train(&problem, &param);
 			//std::cout << "\n\tmodel --> " << *model << std::endl;
 			//std::cout << "checking point 2\n";
-			if (equ == NULL) equ = new Polynomial();
-			svm_model_visualization(model, equ);
+			if (poly == NULL) poly = new Polynomial();
+			svm_model_visualization(model, poly);
 			//svm_free_and_destroy_model(&model);
 			//model = NULL;
 			return 0;
@@ -300,10 +300,10 @@ class SVM : public MLalgo
 */
 
 		int converged (void* pre_model, int num =1) {
-			assert ((num == 1) || "SVM::get_converged: Unexpected equation number parameter.");
+			assert ((num == 1) || "SVM::get_converged: Unexpected polyation number parameter.");
 			if (pre_model == NULL) return 1;
 			Polynomial* pre_classifier = (Polynomial*)pre_model;
-			return equ->is_similar(*pre_classifier);
+			return poly->is_similar(*pre_classifier);
 		}
 
 		bool converged_model () {
@@ -318,8 +318,8 @@ class SVM : public MLalgo
 			//out << "SVM-model: ";
 			//out << *model << std::endl;
 			//svm_model_visualization(model, *classifier);
-			//out << *equ; // << std::endl;
-			out << equ->toString(); // << std::endl;
+			//out << *poly; // << std::endl;
+			out << poly->toString(); // << std::endl;
 			return out;
 		}
 
@@ -329,9 +329,9 @@ class SVM : public MLalgo
 
 		Polynomial* roundoff(int& num) {
 			num = 1;
-			Polynomial* newequ = new Polynomial();
-			equ->roundoff(*newequ);
-			return newequ;
+			Polynomial* newpoly = new Polynomial();
+			poly->roundoff(*newpoly);
+			return newpoly;
 		}
 
 		int predict(double* v) {

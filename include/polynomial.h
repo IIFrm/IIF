@@ -291,7 +291,7 @@ class Polynomial {
 			}
 
 			int j;
-			assert(poly->dims == Cv0to1);
+			//assert(poly->dims == Cv0to1);
 			///< a flag to justify whether all the coefficients are zeros...
 			for (j = 0; j < poly->dims; j++) {
 				if (poly->theta[j] != 0) break;
@@ -310,7 +310,7 @@ class Polynomial {
 			double reminder;
 			int times = 0;
 
-solve:
+solve_again:
 			pick = rand() % poly->dims;
 			///< pick store the dimension that should not generate randomly
 			///< The algo is we generate numbers randomly, unless the picked dimension
@@ -329,7 +329,7 @@ solve:
 					/** sometimes we can not get solution between given scope
 					 *	we try 10 times, if still no suitable solution, we pick the last one...
 					 */
-					goto solve;
+					goto solve_again;
 			}
 			//std::cout << "solved the polynomail to get one solution";
 			return 0;

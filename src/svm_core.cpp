@@ -80,7 +80,7 @@ class Cache
 		Cache(int l,long int size);
 		~Cache();
 
-		// request data [0,len)
+		// rpolyest data [0,len)
 		// return some position p where [p,len) need to be filled
 		// (p >= len if nothing needs to be filled)
 		int get_data(const int index, Qfloat **data, int len);
@@ -3157,7 +3157,7 @@ void print_svm_samples(const svm_problem *sp)
 void print_svm_samples(const svm_problem *sp){}
 #endif
 
-bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Polynomial& equ)
+bool svm_model_z3_conjunctive(const svm_model *m, Classifier* cl) //, Polynomial& poly)
 {
 	if (m == NULL)
 		return false;
@@ -3199,7 +3199,7 @@ char pname[4];
 	for (int i = 0; i < DIMENSION; i++) {
 	snprintf(xvalue, 32, "%d", int(data[k][i].value));
 	z3::expr xi = c.int_val(xvalue);
-	// equation = equation + ai * xi
+	// polyation = polyation + ai * xi
 	expr0 = expr0 + xi * A0[i];
 	expr1 = expr1 + xi * A1[i];
 	}
@@ -3263,7 +3263,7 @@ std::cout << "]\n";
 return true;
 }
 
-bool svm_model_z3(const svm_model *m, Classifier* cl) //, Polynomial& equ)
+bool svm_model_z3(const svm_model *m, Classifier* cl) //, Polynomial& poly)
 {
 	if (m == NULL)
 		return false;
@@ -3297,7 +3297,7 @@ char pname[4];
 	for (int i = 0; i < DIMENSION; i++) {
 	snprintf(xvalue, 32, "%d", int(data[k][i].value));
 	z3::expr tmp = c.int_val(xvalue);
-	// equation = equation + ai * xi
+	// polyation = polyation + ai * xi
 	expr = expr + tmp * A[i];
 	}
 	if (label[k] >= 0) expr = expr >= 0;
@@ -3349,11 +3349,11 @@ int index = -1;
 		return true;
 }
 
-int svm_model_visualization(const svm_model *model, Polynomial* equ)
+int svm_model_visualization(const svm_model *model, Polynomial* poly)
 {
 	if (model == NULL)
 		return -1;
-	if (equ == NULL)
+	if (poly == NULL)
 		return -1;
 	if (model->param.kernel_type != LINEAR) {
 		info("Can not visualize hyperplane for kernel %s\n", kernel_type_table[model->param.kernel_type]);
@@ -3364,7 +3364,7 @@ int svm_model_visualization(const svm_model *model, Polynomial* equ)
 	const double * const *sv_coef = model->sv_coef;
 	const svm_node * const *SV = model->SV;
 
-	double theta[Cv0to4];// = equ->theta;
+	double theta[Cv0to4];// = poly->theta;
 	for (int i = 0; i < Cv0to4; i++)
 		theta[i] = 0;
 	theta[0] = sv_coef[0][0] > 0? 1 : -1;
@@ -3386,11 +3386,11 @@ int svm_model_visualization(const svm_model *model, Polynomial* equ)
 		temp *= sv_coef[0][i];
 		theta[0] -= temp;
 	}
-	equ->setDims(DIMENSION + 1);
-	equ->set(theta);
-	//std::cout << BLUE << "Before RoundOFF " << *equ << GREEN << " +[-1, 1]" << WHITE << std::endl;
-	//equ->roundoff();
-	//std::cout << *equ << std::endl;
+	poly->setDims(DIMENSION + 1);
+	poly->set(theta);
+	//std::cout << BLUE << "Before RoundOFF " << *poly << GREEN << " +[-1, 1]" << WHITE << std::endl;
+	//poly->roundoff();
+	//std::cout << *poly << std::endl;
 	return 0;	
 }
 
@@ -3436,7 +3436,7 @@ void prepare_svm_parameters(struct svm_parameter& param, int type, int degree)
 	svm_set_print_string_function(my_print_func);
 }
 
-bool node_equal(svm_node* n1, svm_node* n2)
+bool node_polyal(svm_node* n1, svm_node* n2)
 {
 	for (int i = 0; i < DIMENSION; i++)
 		if (n1[i].value != n2[i].value)
@@ -3463,14 +3463,14 @@ bool model_converged(struct svm_model *m1, struct svm_model *m2)
 	   for (int j = 0; j < l; j++) {
 	//if (m1->sv_coef[0][j] != m2->sv_coef[0][j]) return false;
 	if (fabs(m1->sv_coef[0][j] - m2->sv_coef[0][j]) > 0.001) return false;
-	if (node_equal(m1->SV[j], m2->SV[j]) == false) return false;
+	if (node_polyal(m1->SV[j], m2->SV[j]) == false) return false;
 	}
 	*/
 
 	for (int i = 0; i < l; i++) {
 		bool getpair = false;
 		for (int j = 0; j < l; j++) {
-			if (node_equal(m1->SV[i], m2->SV[j])) {
+			if (node_polyal(m1->SV[i], m2->SV[j])) {
 				getpair = true;
 				break;
 			}

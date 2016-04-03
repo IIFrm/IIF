@@ -29,7 +29,7 @@ class BaseLearner{
 		BaseLearner(States* gsets, const char* cntempl_fname = NULL, int (*func)(int*) = target_program): gsets(gsets), func(func) {
 			//cs = new Candidates();
 			cl = new Classifier();
-			equ = new Polynomial();
+			poly = new Polynomial();
 			if (cntempl_fname!= NULL) {
 				//std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
 				std::ifstream fin(cntempl_fname);
@@ -49,7 +49,7 @@ class BaseLearner{
 
 		virtual ~BaseLearner() {
 			delete cl;
-			delete equ;
+			delete poly;
 		} 
 
 /** @brief This function runs the target_program with the given input
@@ -103,7 +103,7 @@ class BaseLearner{
 		int (*func)(int*);
 		//Candidates* cs;
 		Classifier* cl;
-		Polynomial* equ;
+		Polynomial* poly;
 };
 
 

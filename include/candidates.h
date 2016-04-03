@@ -9,8 +9,6 @@
 #include "config.h"
 #include "states.h"
 #include "polynomial.h"
-//#include "connector.h"
-//#include "classifier.h"
 #include "color.h"
 
 #include <iostream>
