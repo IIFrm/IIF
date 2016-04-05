@@ -12,7 +12,8 @@ while(x<0)
 recordi(x, y);x=x+y;
 y++;
 }
-recordi(x, y);iif_assert(y>0);
+recordi(x, y);
+iif_assert(y>0);
 return 0;
 }
 

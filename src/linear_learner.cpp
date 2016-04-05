@@ -11,7 +11,8 @@
 
 static void print_null(const char *s) {}
 
-LinearLearner::LinearLearner(States* gsets, const char* solution_filename, int (*func)(int*), int max_iteration) : BaseLearner(gsets, solution_filename, func) {
+LinearLearner::LinearLearner(States* gsets, const char* solution_filename, 
+		int (*func)(int*), int max_iteration) : BaseLearner(gsets, solution_filename, func) {
 	svm = new SVM(0, print_null);
 	this->max_iteration = max_iteration;
 }
@@ -39,11 +40,13 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 		//model_solver(NULL, input);
 		//Classifier::solver(NULL, input);
 		ret = runTarget(input);
+
 #ifdef __PRT
 		std::cout << input;
 		printRunResult(ret);
 		std::cout << "|";
 #endif
+
 	}
 
 #ifdef __PRT
@@ -56,15 +59,19 @@ int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params
 			Polynomial::solver((Polynomial*)params, input);
 			//Classifier::solver((Classifier*)params, input);
 			ret = runTarget(input);
+
 #ifdef __PRT
 			std::cout << "|" << input;
 			printRunResult(ret);
 #endif
+
 		}
 	}
+
 #ifdef __PRT
 	std::cout << WHITE << "}" << std::endl;
 #endif
+
 	return randn + exen;
 }
 
@@ -76,7 +83,6 @@ int LinearLearner::learn()
 	bool converged = false;
 	svm_model* lastModel = NULL;
 	int pre_psize = 0, pre_nsize = 0;
-	Polynomial *poly = new Polynomial();
 
 	double pass_rate = 1;
 	int etimes = 1;
@@ -89,8 +95,9 @@ int LinearLearner::learn()
 #ifdef __PRT
 		int step = 1;
 		std::cout << RED << "[" << rnd << "]" << WHITE;
-		std::cout << RED << "Linear SVM------------------------{" << etimes << "}------------------------------------------------------------------------------------" << WHITE << std::endl;
-		std::cout << "\t(" << YELLOW << step++ << WHITE << ") execute programs... [" << nexe + Nexe_rand << "] ";
+		std::cout << RED << "Linear SVM------------------------{" << etimes 
+			<< "}------------------------------------------------------------------------------------\n\t(" 
+			<< YELLOW << step++ << WHITE << ") execute programs... [" << nexe + Nexe_rand << "] ";
 #else
 		std::cout << RED << "[" << rnd << "]" << WHITE;
 #endif
@@ -102,10 +109,14 @@ int LinearLearner::learn()
 		//std::cout << "\t<--selective sampling:\n";
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
+
 #ifdef __PRT
-			if (gsets[POSITIVE].traces_num() == 0) std::cout << RED << "\tZero Positive trace, execute program again." << WHITE << std::endl;
-			if (gsets[NEGATIVE].traces_num() == 0) std::cout << RED << "\tZero Negative trace, execute program again." << WHITE << std::endl;
+			if (gsets[POSITIVE].traces_num() == 0) 
+				std::cout << RED << "\tZero Positive trace, execute program again." << WHITE << std::endl;
+			if (gsets[NEGATIVE].traces_num() == 0) 
+				std::cout << RED << "\tZero Negative trace, execute program again." << WHITE << std::endl;
 #endif
+
 			zero_times++;
 			if (zero_times >= Nretry_init)
 				exit(-1);
@@ -115,18 +126,24 @@ int LinearLearner::learn()
 #ifdef __PRT
 		std::cout << "\t(" << YELLOW << step++ << WHITE << ") prepare training data... ";
 #endif
+
 		svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
 
 		while (etimes <= 3) {
 			cl->clear();
+
 #ifdef __PRT
-			std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") start training with mapping dimension {" << etimes << "}...";
+			std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") start training "
+				"with mapping dimension {" << etimes << "}...";
 #endif
+
 			svm->setEtimes(etimes);
 			svm->train();
+
 #ifdef __DS_ENABLED
 			std::cout << "[" << svm->problem.np << ":" << svm->problem.nn << "]";
 #endif
+
 			std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
 			//Polynomial poly;
 			//svm->poly->roundoff(poly);
@@ -136,15 +153,18 @@ int LinearLearner::learn()
 #ifdef __PRT
 			std::cout << "\t(" << YELLOW << step++ << WHITE << ") checking training traces.";
 #endif
+
 			pass_rate = svm->checkTrainingSet();
 
 #ifdef __PRT
 			if (pass_rate == 1)
 				std::cout << GREEN << " [100%] [PASS]" << WHITE;
 			else
-				std::cout << RED << " [" << pass_rate * 100 << "%]" << " [FAIL] \n The problem is not linear separable by mapping "
+				std::cout << RED << " [" << pass_rate * 100 << "%]" 
+					<< " [FAIL] \n The problem is not linear separable by mapping "
 				<< etimes << ".. Trying to project to a higher space " << WHITE << std::endl;
 #endif
+
 			if (pass_rate == 1)
 				break;
 			etimes++;
@@ -169,18 +189,21 @@ int LinearLearner::learn()
 				rnd++;
 				break;
 			}
+
 #ifdef __PRT
 			std::cout << "[FT]";
 			Nexe_after *= 2;
 #endif
+
 			similarLast = true;
-		}
-		else {
+		} else {
+
 #ifdef __PRT
 			std::cout << ((similarLast == true) ? "[T" : "[F") << "F] ";
 			if (similarLast == true)
 				Nexe_after /= 2;
 #endif
+
 			similarLast = false;
 		}
 #ifdef __PRT
@@ -191,22 +214,21 @@ int LinearLearner::learn()
 		lastModel = svm->model;
 	} // end of SVM training procedure
 
-	std::cout << "--------------------------------------------------------------------------------------------------------------------" << std::endl;
+	std::cout << "----------------------------------------------------------------------------" 
+		<< "----------------------------------------\n";
 
 	int ret = 1;
 	if ((converged) && (rnd <= max_iteration)) {
-		svm_model_visualization(lastModel, poly);
+		svm_model_visualization(lastModel, svm->poly);
 		//ret = poly->toCandidates(cs);
 		//poly->roundoff();
 		//svm_model_approximate(lastModel, poly->getEtimes());
 		//svm_problem_approximate(&svm->problem, poly->getEtimes());
 		//std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
-		poly->roundoff();
-		std::cout << YELLOW << "  Hypothesis Invariant(Converged): {\n";
-		//std::cout << "\t\t" << GREEN << *poly << YELLOW << std::endl;
-		std::cout << "\t\t" << GREEN << poly->toString() << YELLOW << std::endl;
+		//poly->roundoff();
+		std::cout << YELLOW << "  Invariant Candidate: {  ";
+		std::cout << GREEN << svm->poly->toString() << YELLOW;
 		std::cout << "  }" << WHITE << std::endl;
-		*svm->poly = *poly;
 	}
 
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {
@@ -218,10 +240,12 @@ int LinearLearner::learn()
 	if (ret > 0)
 		return 1;
 #endif
+
 	return ret;
 }
 
 std::string LinearLearner::invariant(int n) {
+	svm->poly->roundoff();
 	cl->factor(*svm->poly);
 	return cl->toString();
 	return svm->poly->toString();

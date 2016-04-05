@@ -23,19 +23,19 @@ class Classifier{
 	protected:
 		int max_size;
 		int size;
-		Polynomial* eqs;
+		Polynomial* polys;
 		Connector* cts;
 
 	public:
 		Classifier(int maxsize = 16) {
 			max_size = maxsize;
-			eqs = new Polynomial[max_size];
+			polys = new Polynomial[max_size];
 			cts = new Connector[max_size];
 			size = 0;
 		}
 		
 		~Classifier() { 
-			if (eqs) delete []eqs;
+			if (polys) delete []polys;
 			if (cts) delete []cts;
 		} 
 
@@ -44,18 +44,18 @@ class Classifier{
 			return size;
 		}
 
-		int add(Polynomial* eq, Connector* ct) {
+		int add(Polynomial* poly, Connector* ct) {
 			if (size >= max_size)
 				return -1;
-			eqs[size] = *eq;
+			polys[size] = *poly;
 			cts[size] = *ct;
 			return ++size;
 		}
 
-		int add(Polynomial* eq, int type = CONJUNCT) {
+		int add(Polynomial* poly, int type = CONJUNCT) {
 			if (size >= max_size)
 				return -1;
-			eqs[size] = *eq;
+			polys[size] = *poly;
 			cts[size].setType(type);
 			return ++size;
 		}
@@ -65,27 +65,27 @@ class Classifier{
 			return 0;
 		}
 
-		bool factor(Polynomial& eq) {
+		bool factor(Polynomial& poly) {
 			//std::cout << "\tFactorization Process >>>>\n";
-			std::cout << GREEN << eq << WHITE <<std::endl;
-			int etimes = eq.getEtimes();
+			//std::cout << GREEN << poly << WHITE <<std::endl;
+			int etimes = poly.getEtimes();
 			if (etimes == 1) {
-				//std::cout << "univariant linear function: " << eq << "\n";
-				this->add(&eq);
+				//std::cout << "univariant linear function: " << poly << "\n";
+				this->add(&poly);
 				return true;
 			}
 
 			if (Nv == 1) {
 				if (etimes == 2) {
 					// univariant quadratic function
-					//std::cout << "univariant quadratic function: " << eq << "\n";
+					//std::cout << "univariant quadratic function: " << poly << "\n";
 					double A, B, C;
-					A = eq.getTheta(2);
-					B = eq.getTheta(1);
-					C = eq.getTheta(0);
+					A = poly.getTheta(2);
+					B = poly.getTheta(1);
+					C = poly.getTheta(0);
 					if (A == 0) {
-						eq.setEtimes(1);
-						this->add(&eq);
+						poly.setEtimes(1);
+						this->add(&poly);
 						return true;
 					}
 					double delta = B * B - 4 * A * C;
@@ -112,10 +112,10 @@ class Classifier{
 
 				if (etimes == 3) {
 					double A, B, C, D;
-					A = eq.getTheta(3);
-					B = eq.getTheta(2);
-					C = eq.getTheta(1);
-					D = eq.getTheta(0);
+					A = poly.getTheta(3);
+					B = poly.getTheta(2);
+					C = poly.getTheta(1);
+					D = poly.getTheta(0);
 					double delta1 = B * C / (6 * A * A) - B * B * B / (27 * A * A * A) - D / (2 * A);
 					double delta2 = C / (3 * A) - B * B / (9 * A * A);
 					double delta = delta1 * delta1 + delta2 * delta2 * delta2;
@@ -130,7 +130,7 @@ class Classifier{
 					return true;
 				}
 			} else {
-				eq.factor();
+				poly.factor();
 			}
 
 			return false;
@@ -139,8 +139,8 @@ class Classifier{
 		static int solver(const Classifier* cl, Solution& sol) {
 			if ((cl == NULL) || (cl->size == 0)) 
 				return Polynomial::solver(NULL, sol);
-			int select_equation = rand() % cl->size;
-			return Polynomial::solver(&(cl->eqs[select_equation]), sol);
+			int select_polyuation = rand() % cl->size;
+			return Polynomial::solver(&(cl->polys[select_polyuation]), sol);
 		}
 
 
@@ -150,9 +150,9 @@ class Classifier{
 				stm << "";
 				return stm.str();
 			}
-			stm << "(" << eqs[0] << ") ";
+			stm << "(" << polys[0] << ") ";
 			for (int i = 1; i < size; i++) 
-				stm << cts[i] << " (" << eqs[i] << ") ";
+				stm << cts[i] << " (" << polys[i] << ") ";
 			return stm.str();
 		}
 
@@ -162,9 +162,9 @@ class Classifier{
 			out << "EMPTY classifier..";
 			return out;
 		}
-		out << " (" << cs.eqs[0] << ") ";
+		out << " (" << cs.polys[0] << ") ";
 		for (int i = 1; i < size; i++) 
-			out << cs.cts[i] << " (" << cs.eqs[i] << ") ";
+			out << cs.cts[i] << " (" << cs.polys[i] << ") ";
 		return out;
 	}
 };

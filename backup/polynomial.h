@@ -146,7 +146,7 @@ class Polynomial {
 		bool uniImply(const Polynomial& e2);
 		static bool multiImply(const Polynomial* e1, int e1_num, const Polynomial& e2);
 
-		static bool gslSolvePolynomial(_in_ double* coefs, _in_ int power, _out_ double* results) {
+		static int solve_univariate_polynomial(_in_ double* coefs, _in_ int power, _out_ double* results) {
 			double* solutions = new double[power * 2];
 			gsl_poly_complex_workspace* w = gsl_poly_complex_workspace_alloc (power + 1);
 			gsl_poly_complex_solve (coefs, power + 1, w, solutions);
@@ -154,22 +154,26 @@ class Polynomial {
 			int num_rational_solution = 0;
 			for(int i = 0; i < power; i++) {
 				if (solutions[2*i+1] == 0)
-					num_rational_solution++;
+					results[num_rational_solution++] = solutions[2 * i];
 			}
-			if (num_rational_solution > 0)
-				results[0] = solutions[rand() % num_rational_solution];
 			delete []solutions;
-			return num_rational_solution > 0;
+			return num_rational_solution;
+		}
+
+		static int solve_univariate_polynomial(_in_ Polynomial& poly, _out_ double* results) {
+			assert(Nv == 1);
+			return solve_univariate_polynomial(poly.theta, poly.getEtimes(), results);
+		}
+
+		inline int solve_univariate_polynomial(double* results) {
+			return solve_univariate_polynomial(*this, results);
 		}
 
 		double evaluateItem(int index, const double* given_values) {
 			assert ((index >= 0) && (index < dims));
 			double result = theta[index];
-			for (int i = 0; (i < Nv) && (result != 0); i++) {
-				if (vparray[index][i] != 0) {
-					result *= pow(given_values[i], vparray[index][i]);
-				}
-			}
+			for (int i = 0; i < Nv; i++)
+				result *= pow(given_values[i], vparray[index][i]);
 			return result;
 		}
 
@@ -183,22 +187,28 @@ class Polynomial {
 			return result;
 		}
 
+		int evaluatePolynomial(int x, _in_ _out_ double* given_values) {
+			double* uni_coefs = new double [etimes];
+			double* results = new double [etimes * 2];
+			for (int power = 0; power < etimes; power++)
+				uni_coefs[power] = evaluateCoef(x, power, given_values);
+			int num_rational_solution = solve_univariate_polynomial(uni_coefs, etimes, results);
+			if (num_rational_solution > 0)
+				given_values[x] = results[0];
+			delete []results;
+			delete []uni_coefs;
+			return num_rational_solution;
+		}
 
-		inline bool solvePolynomial(double* results) {
-			bool res = false;
-			int pickX = rand()%Nv;
-			if (Nv == 1) {
-				res = gslSolvePolynomial(theta, etimes, results);
-				results[pickX] += rand() % (5 - etimes) - 2 + etimes / 2;
-			} else {
-				// Nv >= 2
-				double* uni_coefs = new double [etimes + 1];
-				for (int power = 0; power <= etimes; power++)
-					uni_coefs[power] = evaluateCoef(pickX, power, results);
-				res = gslSolvePolynomial(uni_coefs, etimes, &results[pickX]);
-				delete []uni_coefs;
-			}
-			return res;
+
+		static int solve_multivariate_polynomial(Polynomial& poly, double* results, int x) {
+			assert(Nv > 1);
+			assert(poly.dims <= Cv0to4);
+			return poly.evaluatePolynomial(x, results);
+		}
+
+		inline int solve_multivariate_polynomial(double* results, int x = 0) {
+			return solve_multivariate_polynomial(*this, results, x);
 		}
 
 		static bool factorNv1Times2(double *B);
@@ -267,38 +277,60 @@ class Polynomial {
 				return 0;
 			}
 
-			/*
-			   if (Nv == 1) { 
-			   double* results = new double[poly->getEtimes()];
-			   std::cout << "*";
-			   int num_rational_solution = poly->solvePolynomial(results);
-			   if (num_rational_solution >= 1)
-			   sol[0] = results[rand() % num_rational_solution] + rand() % 3 - 1;
-			   else
-			   sol[0] = rand() % (maxv - minv + 1) + minv;
-			   std::cout << sol[0] << "*";
-			   delete []results;
-			   return 0;
-			   }
-			   */
+			if (Nv == 1) { 
+				double* results = new double[poly->getEtimes()];
+				std::cout << "*";
+				int num_rational_solution = poly->solve_univariate_polynomial(results);
+				if (num_rational_solution >= 1)
+					sol[0] = results[rand() % num_rational_solution] + rand() % 3 - 1;
+				else
+					sol[0] = rand() % (maxv - minv + 1) + minv;
+				std::cout << sol[0] << "*";
+				delete []results;
+				return 0;
+			}
 
-			int times = 0;
-			bool retry = true;
-			while ((times++ < 10) && retry) {
-				retry = false;
-				for (int i = 0; i < Nv; i++) {
+			int j;
+			//assert(poly->dims == Cv0to1);
+			///< a flag to justify whether all the coefficients are zeros...
+			for (j = 0; j < poly->dims; j++) {
+				if (poly->theta[j] != 0) break;
+			}
+
+			/// If all the coefficients are zeros....
+			/// We just randomly pickup solutions to return
+			if (j == poly->dims) {
+				for (int i = 0; i < poly->dims; i++) {
 					sol[i] = rand() % (maxv - minv + 1) + minv;
 				}
-				poly->solvePolynomial(sol.val);
-				for (int j = 0; j < Nv; j++) {
-					if (sol[j] > 10*maxv || sol[j] < 10*minv) {
-						retry = true;
-						break;
-					}
-				}
+				return 0;
 			}
-			std::cout << sol << "~";
 
+			int pick;
+			double reminder;
+			int times = 0;
+
+solve_again:
+			pick = rand() % poly->dims;
+			///< pick store the dimension that should not generate randomly
+			///< The algo is we generate numbers randomly, unless the picked dimension
+			///< The picked dimension should be calcuate based on polynomail and other dimensions
+			while (poly->theta[pick + 1] == 0)
+				pick = (pick + 1) % poly->dims;
+			reminder = -poly->theta[0];
+			for (int i = 0; i < Cv1; i++) {
+				sol[i] = rand() % (maxv - minv + 1) + minv;
+				if (i != pick)
+					reminder -= sol[i] * poly->theta[i + 1];
+			}
+			sol[pick] = int(reminder / poly->theta[pick + 1]) + rand() % 3 - 1;
+			if (sol[pick] > maxv || sol[pick] < minv) {
+				if (++times > 10)
+					/** sometimes we can not get solution between given scope
+					 *	we try 10 times, if still no suitable solution, we pick the last one...
+					 */
+					goto solve_again;
+			}
 			//std::cout << "solved the polynomail to get one solution";
 			return 0;
 		}

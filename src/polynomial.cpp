@@ -181,7 +181,8 @@ bool Polynomial::factorNv2Times2(double *B) {
 	z3::context ctx(cfg);
 
 	// Ax^2 + By^2 + Cxy + Dx + Ey + F = 0
-	std::cout << GREEN << B[0] << " * x^2 + " << B[1] << " * y^2 + " << B[2] << " * xy + " << B[3] << " * x + " << B[4] << " * y + " << B[5];
+	std::cout << GREEN << B[0] << " * x^2 + " << B[1] << " * y^2 + " << B[2] 
+		<< " * xy + " << B[3] << " * x + " << B[4] << " * y + " << B[5];
 	std::cout << BLUE << " = " << YELLOW << "(a0x + b0y + c0) (a1x + b1y + c1)\t" << WHITE; 
 
 	z3::expr a0 = ctx.int_const("a0");
@@ -233,9 +234,11 @@ bool Polynomial::factorNv2Times3(double* B) {
 	cfg.set("auto_config", true);
 	z3::context ctx(cfg);
 
-	std::cout << GREEN << B[0] << " * x^3 + " << B[1] << " * y^3 + " << B[2] << " * x^2y + " << B[3] << " * xy^2 + " 
-		<< B[4] << " * x^2 + " << B[5] << " * y^2 + " << B[6] << " * xy + " << B[7] << " * x + " << B[8] << " * y + " << B[9];
-	std::cout << BLUE << " = " << YELLOW << "(a0x + b0y + c0) (a1x + b1y + c1) (a2x + b2y + c2)\t" << WHITE; 
+	std::cout << GREEN << B[0] << " * x^3 + " << B[1] << " * y^3 + " << B[2] 
+		<< " * x^2y + " << B[3] << " * xy^2 + " << B[4] << " * x^2 + " << B[5] 
+		<< " * y^2 + " << B[6] << " * xy + " << B[7] << " * x + " << B[8] << " * y + " << B[9];
+	std::cout << BLUE << " = " << YELLOW 
+		<< "(a0x + b0y + c0) (a1x + b1y + c1) (a2x + b2y + c2)\t" << WHITE; 
 
 	z3::expr a0 = ctx.int_const("a0");
 	z3::expr a1 = ctx.int_const("a1");
@@ -296,8 +299,9 @@ bool Polynomial::factorNv3Times2(double *B) { //, double B, double C, double D, 
 	z3::context ctx(cfg);
 
 	// Ax^2 + By^2 + Cz^2 + Dxy + Exz + Fyz + Gx + Hy + Iz + J = 0
-	std::cout << GREEN << B[0] << " * x^2 + " << B[1] << " * y^2 + " << B[2] << " * z^2 + " << B[3] << " * xy + " 
-		<< B[4] << " * xz + " << B[5] << " * yz + " << B[6] << " * x + " << B[7] << " * y + " << B[8] << " * z + " << B[9];
+	std::cout << GREEN << B[0] << " * x^2 + " << B[1] << " * y^2 + " << B[2] 
+		<< " * z^2 + " << B[3] << " * xy + " << B[4] << " * xz + " << B[5] 
+		<< " * yz + " << B[6] << " * x + " << B[7] << " * y + " << B[8] << " * z + " << B[9];
 	std::cout << BLUE << " = " << YELLOW << "(a0x + b0y + c0z + d0) (a1x + b1y + c1z + d1)\t" << WHITE;
 
 	z3::expr a0 = ctx.int_const("a0");
@@ -576,7 +580,8 @@ int Polynomial::roundoff(Polynomial& e) {
 		min = second_min;
 
 	if ((std::abs(theta[0]) < min) && (1000 * std::abs(theta[0]) >= min))
-		// 100 * theta0 is to keep {0.999999x1 + 0.9999999x2 >= 1.32E-9} from converting to  {BIGNUM x1 + BIGNUM x1  >= 1}
+		// 100 * theta0 is to keep {0.999999x1 + 0.9999999x2 >= 1.32E-9} 
+		// from converting to  {BIGNUM x1 + BIGNUM x1  >= 1}
 		//if ((std::abs(theta0) < min) && (std::abs(theta0) > 1.0E-4))	
 		min = std::abs(theta[0]);
 
@@ -592,6 +597,7 @@ int Polynomial::roundoff(Polynomial& e) {
 	return 0;
 }
 
+/*
 int Polynomial::toCandidates(Candidates* cs) {
 	//std::cout << "ROUND OFF WITHOUT CONST" << *this << " --> ";
 	Polynomial e = *this;
@@ -605,10 +611,10 @@ int Polynomial::toCandidates(Candidates* cs) {
 		}
 	}
 
-	if (min == DBL_MAX) min = 1;	// otherwise we will have */0 operation, return inf or nan...
-	if (min == 0) min = 1;	// otherwise we will have */0 operation, return inf or nan...
-	if (second_min == DBL_MAX) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
-	if (second_min == 0) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
+	if (min == DBL_MAX) min = 1;
+	if (min == 0) min = 1;	
+	if (second_min == DBL_MAX) second_min = 1;
+	if (second_min == 0) second_min = 1;
 
 #ifdef __PRT_polynomial
 	std::cout << GREEN << "Before roundoff: " << *this;
@@ -625,9 +631,9 @@ int Polynomial::toCandidates(Candidates* cs) {
 	//e.theta[0] = ceil(theta[0] / min);
 	e.theta[0] = _roundoff(theta[0] / min);
 #ifdef __PRT_polynomial
-	std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
+	std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
 #endif
-	std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]" << WHITE << std::endl;
+	std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
 #ifdef _multi_candidates_
 	double center = e.theta[0];
 	for (int up = center, down = center - 1; (up <= max_bound) || (down >= min_bound); up++, down--) {
@@ -657,3 +663,4 @@ int Polynomial::toCandidates(Candidates* cs) {
 	std::cout << YELLOW << "Candidates size = " << cs->getSize() << std::endl;
 	return cs->getSize();
 }
+*/

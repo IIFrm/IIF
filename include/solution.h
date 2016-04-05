@@ -59,6 +59,31 @@ class Solution{
 			va_end(ap);
 		}
 
+		Solution(double* values) {
+			for (int i = 0; i < Nv; i++) {
+				val[i] = values[i];
+			}
+		}
+
+		Solution(int* values) {
+			for (int i = 0; i < Nv; i++) {
+				val[i] = values[i];
+			}
+		}
+
+		Solution& operator = (const double* values) {
+			for (int i = 0; i < Nv; i++) {
+				val[i] = values[i];
+			}
+			return *this;
+		}
+
+		Solution& operator = (const int* values) {
+			for (int i = 0; i < Nv; i++) {
+				val[i] = values[i];
+			}
+			return *this;
+		}
 		/** @brief support << operator
 		 *		   simply output its elements as a tuple
 		 *
@@ -85,7 +110,7 @@ class Solution{
 			return val[index];
 		}
 
-	private:
+	//private:
 		/// The data field of Solution, stores all the values as a solution to an Polynomial 
 		double val[Nv];
 };

@@ -12,7 +12,8 @@ while(xa > 0)
 recordi(xa, ya);xa--; 
 ya++;
 }
-recordi(xa, ya);iif_assert(ya >= 0);
+recordi(xa, ya);
+iif_assert(ya >= 0);
 return 0;
 }
 

@@ -26,7 +26,8 @@
 
 class BaseLearner{
 	public:
-		BaseLearner(States* gsets, const char* cntempl_fname = NULL, int (*func)(int*) = target_program): gsets(gsets), func(func) {
+		BaseLearner(States* gsets, const char* cntempl_fname = NULL, int (*func)(int*) = target_program):
+			gsets(gsets), func(func) {
 			//cs = new Candidates();
 			cl = new Classifier();
 			poly = new Polynomial();
@@ -36,7 +37,8 @@ class BaseLearner{
 				if (fin) {
 				Solution s;
 				while (fin >> s) {
-					std::cout << BLUE << BOLD << "Test on Last Counter Example: " << s << " from file " << cntempl_fname << " --> " << NORMAL << WHITE;
+					std::cout << BLUE << BOLD << "Test on Last Counter Example: " << s 
+						<< " from file " << cntempl_fname << " --> " << NORMAL << WHITE;
 					int ret = runTarget(s);
 					printRunResult(ret);
 					std::cout << std::endl << WHITE;
@@ -71,8 +73,7 @@ class BaseLearner{
 
 			int ret = afterLoop(gsets);
 			if (gsets[CNT_EMPL].traces_num() > 0) {
-				//std::cout << RED << "}\nProgram BUG! Program have encountered a Counter-Example trace." << std::endl;
-				std::cout << RED << BOLD << "x.\nProgram BUG! Program have encountered a Counter-Example trace." << std::endl;
+				std::cout << RED << BOLD << "x.\nBUG! Program encountered a Counter-Example trace." << std::endl;
 				std::cout << gsets[CNT_EMPL] << WHITE << std::endl;
 				exit(-2);
 			}

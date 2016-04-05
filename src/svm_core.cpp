@@ -3514,13 +3514,6 @@ int model_solver(const svm_model* m, Solution& sol)
 				break;
 			}
 		}
-		/* if (label[i] < 0) {
-		   if (n_num++ == pick_n)
-		   indexn = i;
-		   }
-		   if ((indexp != -1) && (indexn != -1))
-		   break;
-		   */
 	}
 	double min_dist = DBL_MAX;
 	int min_index = -1;
@@ -3535,19 +3528,6 @@ int model_solver(const svm_model* m, Solution& sol)
 	}
 	assert(min_index != -1);
 	indexn = min_index;
-	/*
-	   std::cout << "{";
-	   for (int i = 0; i < DIMENSION; i++) {
-	   std::cout << m->SV[indexp][i] << ",";
-	   }
-	   std::cout << "}{";
-	   for (int i = 0; i < DIMENSION; i++) {
-	   std::cout << m->SV[indexn][i] << ",";
-	   }
-	   std::cout << "}==>";
-	   */
-	//std::cout << GREEN << pn << "," << nn << "<" << pick_p << "," << pick_n <<">" << WHITE;
-	//std::cout << BLUE << "<" << indexp << "," << indexn <<">" << WHITE;
 	int pieces = rand() % 6 + Nv + 1;
 	double u  = (rand() % (pieces-1) + 1.0) / pieces;
 	//std::cout << "u=" << u;
@@ -3639,38 +3619,6 @@ bool svm_model_approximate(const svm_model *m, int times/*, Classifier* cl*/)
 	z3::model z3m = s.get_model();
 	std::cout << GREEN << "Z3 MODEL: "<< RED << z3m << "\n" << WHITE;
 
-	/*
-	int avalue[2][DIMENSION+1];
-	int index1 = -1;
-	int index2 = -1;
-	// traversing the model
-	for (unsigned i = 0; i < z3m.size(); i++) {
-		func_decl v = z3m[i];
-		// this problem contains only constants
-		//assert(v.arity() == 0); 
-		//std::cout << v.name() << " = " << z3m.get_const_interp(v);
-		sscanf(v.name().str().c_str(), "a%d_%d", &index1, &index2);
-		//std::cout << "\t index=" << index << "\n";
-		assert(z3m.get_const_interp(v).is_int() == true);
-		if(Z3_get_numeral_int(c, z3m.get_const_interp(v), &avalue[index1][index2]) != Z3_TRUE)
-			return false;
-	}
-
-	Polynomial eq;
-	if (cl != NULL) {
-		eq.set(avalue[0]);
-		cl->add(&eq, CONJUNCT);
-		eq.set(avalue[1]);
-		cl->add(&eq, CONJUNCT);
-	}
-#ifdef __PRT_Z3SOLVE
-	std::cout << "[";
-	for (int i = 0; i < 2; i++)
-		for (int j = 0; j < DIMENSION + 1; j++)
-			std::cout << "a" << i << "_" << j << "=" << avalue[i][j] << ", ";
-	std::cout << "]\n";
-#endif
-*/
 #endif
 	return true;
 }

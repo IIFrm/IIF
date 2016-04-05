@@ -18,7 +18,8 @@ iifContext::iifContext (States* ss) {
 	vnum = 0;
 }
 
-iifContext::iifContext(const char* vfilename, int (*func)(int*), const char* func_name, const char* dataset_fname, int timeout) {
+iifContext::iifContext(const char* vfilename, int (*func)(int*), 
+		const char* func_name, const char* dataset_fname, int timeout) {
 	std::ifstream vfile(vfilename);
 	vfile >> vnum;
 	variables = new std::string[Cv0to4];
@@ -48,7 +49,8 @@ iifContext::iifContext(const char* vfilename, int (*func)(int*), const char* fun
 				vparray[index][i]++;
 				vparray[index][j]++;
 				vparray[index][k]++;
-				variables[index++] = "(" + variables[i+1] + "*" + variables[j+1] + "*" + variables[k+1] + ")";
+				variables[index++] = "(" + variables[i+1] + "*" + variables[j+1] 
+					+ "*" + variables[k+1] + ")";
 			}
 		}
 	}
@@ -60,7 +62,8 @@ iifContext::iifContext(const char* vfilename, int (*func)(int*), const char* fun
 					vparray[index][j]++;
 					vparray[index][k]++;
 					vparray[index][l]++;
-					variables[index++] = "(" + variables[i+1] + "*" + variables[j+1] + "*" + variables[k+1] + "*" + variables[l+1] + ")";
+					variables[index++] = "(" + variables[i+1] + "*" + variables[j+1] 
+						+ "*" + variables[k+1] + "*" + variables[l+1] + ")";
 				}
 			}
 		}
@@ -147,6 +150,7 @@ int iifContext::learn(const char* invfilename, int times) {
 	while (p) {
 		int n_cands = p->learner->learn();
 		if (n_cands > 0) {
+
 #ifdef _multi_candidates_
 			std::cout << n_cands << std::endl;
 			for (int i = 0; i < n_cands; i++) {
@@ -161,6 +165,7 @@ int iifContext::learn(const char* invfilename, int times) {
 			invFile << p->learner->invariant(0);
 			invFile.close();
 #endif
+
 			return 0;
 		}
 		else

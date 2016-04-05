@@ -41,7 +41,8 @@ int addStateInt(int first ...)
 
 	state_index++;
 	if (state_index >= 2 * MstatesIn1trace) {
-		std::cout << RED << "\nToo many states (>" << 2 * MstatesIn1trace << ") in one execution. Stop here.\n" << WHITE;
+		std::cout << RED << "\nToo many states (>" << 2 * MstatesIn1trace << 
+			") in one execution. Stop here.\n" << WHITE;
 		exit(-1);
 	}
 	return 0;
@@ -72,7 +73,8 @@ int addStateDouble(double first, ...)
 
 	state_index++;
 	if (state_index >= 2 * MstatesIn1trace) {
-		std::cout << RED << "\nToo many states (>" << 2 * MstatesIn1trace << ") in one execution. Stop here.\n" << WHITE;
+		std::cout << RED << "\nToo many states (>" << 2 * MstatesIn1trace << 
+			") in one execution. Stop here.\n" << WHITE;
 		exit(-1);
 	}
 	return 0;

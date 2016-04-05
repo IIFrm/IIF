@@ -14,7 +14,8 @@ recordi(x); if (x>50) x++;
 			x ++;
 		} else x--;
 }
-recordi(x);iif_assert((x>=0) && (x<=50));
+recordi(x);
+iif_assert((x>=0) && (x<=50));
 return 0;
 }
 

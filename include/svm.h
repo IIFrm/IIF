@@ -123,7 +123,7 @@ class SVM : public MLalgo
 			// training set & label layout:
 			// data :  0 | positive states | negative states | ...
 			// label:    | 1, 1, ..., 1, . | -1, -1, ..., -1, -1, -1, ...
-			// move the negative states from old OFFSET: [pre_positive_size] to new OFFSET: [cur_positive_size]
+			// move negative states from old OFFSET: [pre_positive_size] to new OFFSET: [cur_positive_size]
 			memmove(data + cur_psize, data + pre_psize, pre_nsize * sizeof(double*));
 			//memmove(pdata + cur_psize, pdata + pre_psize, pre_nsize * sizeof(MState));
 
@@ -265,8 +265,6 @@ class SVM : public MLalgo
 #ifdef __PRT
 				std::cout << ".";
 #endif
-				//std::cout << "\t\t" << i << ">";
-				//gsets[QUESTION].print_trace(i);
 				for (int j = qset.t_index[i]; j < qset.t_index[i + 1]; j++) {
 					cur = Polynomial::calc(*classifier, qset.values[j]);
 					//std::cout << ((cur >= 0) ? "+" : "-");
@@ -274,7 +272,7 @@ class SVM : public MLalgo
 						// deal with wrong question trace.
 						// Trace back to print out the whole trace and the predicted labels.
 #ifdef __PRT
-						std::cerr << RED << "\t[FAIL]\n \t  Predict wrongly on Question traces." << std::endl;
+						std::cerr << RED << "\t[FAIL]\n \t  Predict wrongly on Question traces.\n";
 						qset.dumpTrace(i);
 #endif
 						for (int j = qset.t_index[i]; j < qset.t_index[i + 1]; j++) {
@@ -290,7 +288,6 @@ class SVM : public MLalgo
 					}
 					pre = cur;
 				}
-				//std::cout << "END" << std::endl;
 			}
 #ifdef __PRT
 			std::cout << " [PASS]";
@@ -300,10 +297,10 @@ class SVM : public MLalgo
 */
 
 		int converged (void* pre_model, int num =1) {
-			assert ((num == 1) || "SVM::get_converged: Unexpected polyation number parameter.");
+			assert ((num == 1) || "SVM::get_converged: Unexpected equation number parameter.");
 			if (pre_model == NULL) return 1;
-			Polynomial* pre_classifier = (Polynomial*)pre_model;
-			return poly->is_similar(*pre_classifier);
+			Polynomial* pre_poly = (Polynomial*)pre_model;
+			return poly->is_similar(*pre_poly);
 		}
 
 		bool converged_model () {
@@ -319,7 +316,12 @@ class SVM : public MLalgo
 			//out << *model << std::endl;
 			//svm_model_visualization(model, *classifier);
 			//out << *poly; // << std::endl;
+			//svm_model_visualization(model, poly);
 			out << poly->toString(); // << std::endl;
+			/*Polynomial roundoff_poly = *poly;
+			roundoff_poly.roundoff();
+			out << "\n{" << roundoff_poly << "}";
+			*/
 			return out;
 		}
 

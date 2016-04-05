@@ -157,14 +157,20 @@ class FileHelper {
 			cppFile <<"int loopFunction(int a[]) {\n";
 			for (int i = 0; i < vnum; i++) {
 				cppFile << "int " << variables[i] << " = a[" << i << "];\n";
-				//cppFile << "int " + variables[i] + " = a[" + to_string(i) + "];\n";
 			}
 			cppFile << "\n";
 			for (int i = 0; i < confignum; i++) {
-				if (cs[i].key == "loop") { cppFile << "{\n"; writeRecordi(cppFile); }
+				if (cs[i].key == "loop") { 
+					cppFile << "{\n"; 
+					writeRecordi(cppFile); 
+				}
 				if (cs[i].cppstatement.compare("") != 0)
 					cppFile << cs[i].cppstatement << endl;
-				if (cs[i].key == "loop") { cppFile << "}\n"; writeRecordi(cppFile); }
+				if (cs[i].key == "loop") { 
+					cppFile << "}\n"; 
+					writeRecordi(cppFile); 
+					cppFile << "\n"; 
+				}
 			}
 			return true;
 		}
@@ -172,7 +178,8 @@ class FileHelper {
 		inline bool writeCppMain(ofstream& cppFile) {
 			cppFile << "\nint main(int argc, char** argv)\n {\n";
 			if (oldtracefilename)
-				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\", \"../" << oldtracefilename << "\");\n";
+				cppFile << "iifContext context(\"../" << varfilename 
+					<<"\", loopFunction, \"loopFunction\", \"../" << oldtracefilename << "\");\n";
 			else
 				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n";
 
@@ -180,6 +187,7 @@ class FileHelper {
 				cppFile << "context.addLearner(\"linear\", \"../" << testcasefilename << "\");\n";
 			else
 				cppFile << "context.addLearner(\"linear\");\n";
+
 			cppFile << "return context.learn(\"../" << invfileprefix << "\");\n}" << endl;
 			return true;
 
