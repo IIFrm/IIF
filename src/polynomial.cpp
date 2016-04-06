@@ -25,7 +25,7 @@ std::string Polynomial::toString() const {
 	if (theta[0] != 0) {
 		firstplus = true;
 		stm << theta[0];
-		stm << "*" << vparray[0];
+		//stm << "*" << vparray[0];
 	}
 	for (int j = 1; j < dims; j++) {
 		if (theta[j] == 0) continue;
@@ -35,7 +35,7 @@ std::string Polynomial::toString() const {
 			stm << " + ";
 		if (theta[j] != 1) 
 			stm << "(" << theta[j] << ")*";
-		stm << vparray[j];
+		//stm << vparray[j];
 		stm << variables[j];
 	}
 	stm << " >= 0";

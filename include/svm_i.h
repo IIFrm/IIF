@@ -20,6 +20,10 @@ class SVM_I : public MLalgo //SVM
 
 		double* label; // [max_items * 2];
 		double** data; // [max_items * 2];
+		MState* pdata;
+
+		int etimes;
+		int mapping_dimension;
 
 		States* negatives; 
 
@@ -73,6 +77,7 @@ class SVM_I : public MLalgo //SVM
 			polys = new Polynomial[max_poly];
 
 			data = new double*[max_size];
+			pdata = new MState[max_size];
 			label = new double[max_size];
 			for (int i = 0; i < max_size; i++)
 				label[i] = -1;
@@ -80,6 +85,14 @@ class SVM_I : public MLalgo //SVM
 			problem.x = (svm_node**)(data);
 			problem.y = label;
 
+#ifdef __DS_ENABLED
+			problem.np = 0;
+			problem.nn = 0;
+#endif
+
+			model = NULL;
+			etimes = 0;
+			mapping_dimension = 0;
 			negatives = NULL;
 			poly_num = 0;
 		}
@@ -89,6 +102,7 @@ class SVM_I : public MLalgo //SVM
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (polys != NULL) delete []polys;
 			if (data != NULL) delete []data;
+			if (pdata != NULL) delete []pdata;
 			if (label != NULL) delete []label;
 		}
 

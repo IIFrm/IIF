@@ -91,7 +91,6 @@ int LinearLearner::learn()
 
 	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
 		int nexe = (rnd == 1) ? Nexe_init : Nexe_after;
-	init_svm:
 #ifdef __PRT
 		int step = 1;
 		std::cout << RED << "[" << rnd << "]" << WHITE;
@@ -99,13 +98,13 @@ int LinearLearner::learn()
 			<< "}------------------------------------------------------------------------------------\n\t(" 
 			<< YELLOW << step++ << WHITE << ") execute programs... [" << nexe + Nexe_rand << "] ";
 #else
-		std::cout << RED << "[" << rnd << "]" << WHITE;
+		std::cout << RED << "[" << rnd;
 #endif
+
+init_svm:
 		//std::cout << std::endl << "\t-->selective sampling:\n\t";
-		//selectiveSampling(random_exes, nexe, 0, (void*)lastpolyation);
 		//selectiveSampling(random_exes, nexe, 0, lastModel);
 		selectiveSampling(Nexe_rand, nexe, 0, svm->poly);
-		//selectiveSampling(Nexe_rand, nexe, 0, cl);
 		//std::cout << "\t<--selective sampling:\n";
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
@@ -115,6 +114,8 @@ int LinearLearner::learn()
 				std::cout << RED << "\tZero Positive trace, execute program again." << WHITE << std::endl;
 			if (gsets[NEGATIVE].traces_num() == 0) 
 				std::cout << RED << "\tZero Negative trace, execute program again." << WHITE << std::endl;
+#else
+		std::cout << "+";
 #endif
 
 			zero_times++;
@@ -125,6 +126,8 @@ int LinearLearner::learn()
 
 #ifdef __PRT
 		std::cout << "\t(" << YELLOW << step++ << WHITE << ") prepare training data... ";
+#else
+		std::cout << "]" << WHITE;
 #endif
 
 		svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
@@ -162,7 +165,7 @@ int LinearLearner::learn()
 			else
 				std::cout << RED << " [" << pass_rate * 100 << "%]" 
 					<< " [FAIL] \n The problem is not linear separable by mapping "
-				<< etimes << ".. Trying to project to a higher space " << WHITE << std::endl;
+					<< etimes << ".. Trying to project to a higher space " << WHITE << std::endl;
 #endif
 
 			if (pass_rate == 1)

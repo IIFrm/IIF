@@ -19,6 +19,7 @@
 #include "color.h"
 
 #include <iostream>
+#include <iomanip>
 #include <float.h>
 #include <string.h>
 #include <assert.h>
@@ -74,7 +75,9 @@ class BaseLearner{
 			int ret = afterLoop(gsets);
 			if (gsets[CNT_EMPL].traces_num() > 0) {
 				std::cout << RED << BOLD << "x.\nBUG! Program encountered a Counter-Example trace." << std::endl;
-				std::cout << gsets[CNT_EMPL] << WHITE << std::endl;
+				std::cout.setf(std::ios::fixed);
+				std::cout << std::setprecision(0) <<gsets[CNT_EMPL] << WHITE << std::endl;
+				std::cout.unsetf(std::ios::fixed);
 				exit(-2);
 			}
 			return ret;

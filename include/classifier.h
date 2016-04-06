@@ -130,7 +130,9 @@ class Classifier{
 					return true;
 				}
 			} else {
-				poly.factor();
+				this->add(&poly);
+				//poly.factor();
+				return true;
 			}
 
 			return false;

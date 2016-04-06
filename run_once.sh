@@ -54,8 +54,9 @@ echo -e $blue"Running the project to generate invariant candidiate..."$white
 ./$prefix
 ret=$?
 if [ $ret -ne 0 ]; then
-	echo "can not separate using default paramater"
-	echo "try more parameters to get a perfect classifier"
+	echo -e $red$bold"can not get an invariant candidate, read log file to find out more."$normal$white
+	#echo "can not separate using default paramater"
+	#echo "try more parameters to get a perfect classifier"
 	exit 1
 fi
 cd ..

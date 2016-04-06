@@ -58,27 +58,6 @@ struct svm_problem
 		fout.close();
 		return true;
 	}
-
-	/*
-	bool load_from_file(const char* filepath) {
-		std::ifstream fin(filepath);
-		if (!fin) return false;
-		int np, nn;
-		fin >> l >> np >> nn;
-		int tmpint;
-		char tmpchar;
-		for (int i = 0; i < l; i++) {
-			fin >> y[i];
-			for (int j = 0; j < Nv; j++) {
-				fin >> tmpint >> tmpchar >> (x[i][j]).value;
-				assert(tmpint == j);
-				assert(tmpchar == ':');
-			}
-		}
-		fin.close();
-		return true;
-	}
-	*/
 #endif
 };
 
@@ -106,7 +85,6 @@ struct svm_parameter
 	double p;	/* for EPSILON_SVR */
 	int shrinking;	/* use the shrinking heuristics */
 	int probability; /* do probability estimates */
-
 };
 
 //
@@ -125,7 +103,6 @@ struct svm_model
 	int *sv_indices;        /* sv_indices[0,...,nSV-1] are values in [1,...,num_traning_data] to indicate SVs in the training set */
 
 	/* for classification only */
-
 	int *label;		/* label of each class (label[k]) */
 	int *nSV;		/* number of SVs for each class (nSV[k]) */
 	/* nSV[0] + nSV[1] + ... + nSV[k-1] = l */

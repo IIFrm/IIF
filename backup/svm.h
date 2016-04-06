@@ -13,9 +13,9 @@ class SVM : public MLalgo
 		svm_model* last_model;
 		int max_size;
 
-		MState* raw_mapped_data;
-		double** data; // [max_items * 2];
 		double* label; // [max_items * 2];
+		double** data; // [max_items * 2];
+		MState* pdata;
 
 		int etimes;
 
@@ -32,10 +32,10 @@ class SVM : public MLalgo
 			// enlarge max_size exponentially to cover all the data.
 			while (new_size >= max_size) max_size *= 2;
 
-			double ** new_data = new double*[max_size];
-			memmove(new_data, data, valid_size * sizeof(double**));
-			delete []data;
-			data = new_data;
+			double** pre_data = data;
+			data = new double*[max_size];
+			memmove(data, pre_data, valid_size * sizeof(double**));
+			delete []pre_data;
 
 			double* pre_label = label;
 			label = new double[max_size];
@@ -70,7 +70,7 @@ class SVM : public MLalgo
 			poly = NULL;
 
 			data = new double*[max_size];
-			raw_mapped_data = new MState[max_size];
+			pdata = new MState[max_size];
 			label = new double[max_size];
 			etimes = 0;
 			for (int i = 0; i < max_size; i++)
@@ -86,6 +86,7 @@ class SVM : public MLalgo
 		}
 
 		~SVM() {
+			//if (model != NULL) delete model;
 #ifdef __DS_ENABLED
 			problem.save_to_file("../tmp/svm.ds");
 			std::cout << "save to file succeed. ../tmp/svm.ds\n";
@@ -93,8 +94,8 @@ class SVM : public MLalgo
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (last_model != NULL) svm_free_and_destroy_model(&last_model);
 			if (poly != NULL) delete poly;
-			if (raw_mapped_data != NULL) delete[]raw_mapped_data;
 			if (data != NULL) delete []data;
+			if (pdata != NULL) delete[]pdata;
 			if (label != NULL) delete label;
 		}
 
@@ -123,21 +124,21 @@ class SVM : public MLalgo
 			// label:    | 1, 1, ..., 1, . | -1, -1, ..., -1, -1, -1, ...
 			// move negative states from old OFFSET: [pre_positive_size] to new OFFSET: [cur_positive_size]
 			memmove(data + cur_psize, data + pre_psize, pre_nsize * sizeof(double*));
-			//memmove(raw_mapped_data + cur_psize, raw_mapped_data + pre_psize, pre_nsize * sizeof(MState));
+			//memmove(pdata + cur_psize, pdata + pre_psize, pre_nsize * sizeof(MState));
 
 			// add new positive states at OFFSET: [pre_positive_size]
 			int cur_index = pre_psize + pre_nsize;
 			for (int i = 0 ; i < cur_psize - pre_psize; i++) {
-				mappingData(gsets[POSITIVE].values[pre_psize + i], raw_mapped_data[cur_index + i], 4);
-				data[pre_psize + i] = raw_mapped_data[cur_index + i];
+				mappingData(gsets[POSITIVE].values[pre_psize + i], pdata[cur_index + i], 4);
+				data[pre_psize + i] = pdata[cur_index + i];
 				label[pre_psize + i] = 1;
 			}
 
 			// add new negative states at OFFSET: [cur_positive_size + pre_negative_size]
 			cur_index = cur_psize + pre_nsize;
 			for (int i = 0 ; i < cur_nsize - pre_nsize; i++) {
-				mappingData(gsets[NEGATIVE].values[pre_nsize + i], raw_mapped_data[cur_index + i], 4);
-				data[cur_index + i] = raw_mapped_data[cur_index + i];
+				mappingData(gsets[NEGATIVE].values[pre_nsize + i], pdata[cur_index + i], 4);
+				data[cur_index + i] = pdata[cur_index + i];
 				label[cur_index + i] = -1;
 			}
 
@@ -153,10 +154,9 @@ class SVM : public MLalgo
 			return ret;
 		}
 
-		
-		bool setEtimes(int et) {
+		int setEtimes(int et) {
 			if ((et < 1) || (et > 4))
-				return false;
+				return -1;
 			etimes = et;
 			switch (et) {
 				case 1:
@@ -168,7 +168,7 @@ class SVM : public MLalgo
 				case 4:
 					return setDimension(Cv1to4);
 			}
-			return true;
+			return -1;
 		}
 
 		bool mappingData(double* src, double* dst, int et = 4) {
@@ -225,13 +225,19 @@ class SVM : public MLalgo
 					svm_free_and_destroy_model(&last_model);
 				last_model = model;
 			}
-
+			/*if (poly != NULL) {
+				delete poly;
+				poly = NULL;
+			}*/
+			//std::cout << "checking point 1\n";
 			//std::cout << std::endl << problem << std::endl;
 			model = svm_train(&problem, &param);
 			//std::cout << "\n\tmodel --> " << *model << std::endl;
+			//std::cout << "checking point 2\n";
 			if (poly == NULL) poly = new Polynomial();
 			svm_model_visualization(model, poly);
 			//svm_free_and_destroy_model(&model);
+			//model = NULL;
 			return 0;
 		}
 
@@ -239,13 +245,55 @@ class SVM : public MLalgo
 			if (problem.l <= 0) return 0;
 			int pass = 0;
 			for (int i = 0; i < problem.l; i++) {
+				//pass += (Polynomial::calc(*classifier, (double*)problem.x[i]) * problem.y[i] > 0) ? 1 : 0;
 				pass += (predict((double*)problem.x[i]) * problem.y[i] >= 0) ? 1 : 0;
 			}
 			return static_cast<double>(pass) / problem.l;
 		}
 
+/*
+		int checkQuestionSet(States& qset) {
+			if (classifier == NULL) return -1;
+#ifdef __PRT
+			std::cout << " [" << qset.traces_num() << "]";
+#endif
+			for (int i = 0; i < qset.p_index; i++) {
+				int pre = -1, cur = 0;
+#ifdef __PRT
+				std::cout << ".";
+#endif
+				for (int j = qset.t_index[i]; j < qset.t_index[i + 1]; j++) {
+					cur = Polynomial::calc(*classifier, qset.values[j]);
+					//std::cout << ((cur >= 0) ? "+" : "-");
+					if ((pre >= 0) && (cur < 0)) {
+						// deal with wrong question trace.
+						// Trace back to print out the whole trace and the predicted labels.
+#ifdef __PRT
+						std::cerr << RED << "\t[FAIL]\n \t  Predict wrongly on Question traces.\n";
+						qset.dumpTrace(i);
+#endif
+						for (int j = qset.t_index[i]; j < qset.t_index[i + 1]; j++) {
+							cur = Polynomial::calc(*classifier, qset.values[j]);
+#ifdef __PRT
+							std::cout << ((cur >= 0) ? "+" : "-");
+#endif
+						}
+#ifdef __PRT
+						std::cout << std::endl << WHITE;
+#endif
+						return -1;
+					}
+					pre = cur;
+				}
+			}
+#ifdef __PRT
+			std::cout << " [PASS]";
+#endif
+			return 0;
+		}
+*/
+
 		int converged (void* last_model, int num =1) {
-			return converged_model();
 			assert ((num == 1) || "SVM::get_converged: Unexpected equation number parameter.");
 			if (last_model == NULL) return 1;
 			Polynomial* pre_poly = (Polynomial*)last_model;
@@ -253,6 +301,7 @@ class SVM : public MLalgo
 		}
 
 		bool converged_model () {
+			//return converged(last_model, 1);
 			return model_converged(model, last_model);
 		}
 
@@ -267,6 +316,10 @@ class SVM : public MLalgo
 			//out << *poly; // << std::endl;
 			//svm_model_visualization(model, poly);
 			out << poly->toString(); // << std::endl;
+			/*Polynomial roundoff_poly = *poly;
+			roundoff_poly.roundoff();
+			out << "\n{" << roundoff_poly << "}";
+			*/
 			return out;
 		}
 

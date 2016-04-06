@@ -297,7 +297,10 @@ class Polynomial {
 					}
 				}
 			}
+
+#ifdef __PRT_TESTCASE
 			std::cout << sol << "~";
+#endif
 
 			//std::cout << "solved the polynomail to get one solution";
 			return 0;
@@ -328,7 +331,8 @@ class Polynomial {
 		 *		  The default is 4, which means we can bare 0.0001 difference.
 		 *		  In this case 1 ~=1.00001, but 1!~=1.000011
 		 */
-		int is_similar(Polynomial& e2, int precision = PRECISION) {
+		bool is_similar(Polynomial& e2, int precision = PRECISION) {
+			precision += 6;
 			if (dims != e2.getDims()) return -1;
 			double ratio = 0;
 			int i;
@@ -354,14 +358,14 @@ class Polynomial {
 			for (int i = 0; i < dims; i++) {
 				if (e2.theta[i] >= 0) {
 					if ((theta[i] < e2.theta[i] * down) || (theta[i] > e2.theta[i] * up))
-						return -1;
+						return false;
 				}
 				else {
 					if ((theta[i] < e2.theta[i] * up) || (theta[i] > e2.theta[i] * down))
-						return -1;
+						return false;
 				}
 			}
-			return 0;
+			return true;
 		}
 
 		/** @brief Do roundoff job for an polynomail

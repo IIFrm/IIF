@@ -12,6 +12,8 @@
 #include "states.h"
 #include "polynomial.h"
 
+typedef double MState[Cv1to4];
+
 class MLalgo 
 {
 	public:
