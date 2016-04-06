@@ -17,8 +17,6 @@ class SVM : public MLalgo
 		double** data; // [max_items * 2];
 		double* label; // [max_items * 2];
 
-		int etimes;
-
 	public:
 		Polynomial* poly;
 		svm_model* model;
@@ -37,10 +35,10 @@ class SVM : public MLalgo
 			delete []data;
 			data = new_data;
 
-			double* pre_label = label;
-			label = new double[max_size];
-			memmove(label, pre_label, valid_size * sizeof(double*));
-			delete pre_label;
+			double* new_label = new double[max_size];
+			memmove(new_label, label, valid_size * sizeof(double*));
+			delete label;
+			label = new_label;
 			return 0;
 		}
 
@@ -145,71 +143,13 @@ class SVM : public MLalgo
 			problem.np = cur_psize;
 			problem.nn = cur_nsize;
 #endif
+
 			problem.l = cur_psize + cur_nsize;
 
 			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
 			return ret;
-		}
-
-		
-		bool setEtimes(int et) {
-			if ((et < 1) || (et > 4))
-				return false;
-			etimes = et;
-			switch (et) {
-				case 1:
-					return setDimension(Cv1to1);
-				case 2:
-					return setDimension(Cv1to2);
-				case 3:
-					return setDimension(Cv1to3);
-				case 4:
-					return setDimension(Cv1to4);
-			}
-			return true;
-		}
-
-		bool mappingData(double* src, double* dst, int et = 4) {
-			int index = 0;
-			if (et >= 1) {
-				for (int i = 0; i < Nv; i++) {
-					dst[index++] = src[i];
-				}
-			}
-			if (et >= 2) {
-				for (int i = 0; i < Nv; i++) {
-					for (int j = i; j < Nv; j++) {
-						dst[index++] = src[i] * src[j];
-					}
-				}
-			}
-			if (et >= 3) {
-				for (int i = 0; i < Nv; i++) {
-					for (int j = i; j < Nv; j++) {
-						for (int k = j; k < Nv; k++) {
-							dst[index++] = src[i] * src[j] * src[k];
-						}
-					}
-				}
-			}
-			if (et >= 4) {
-				for (int i = 0; i < Nv; i++) {
-					for (int j = i; j < Nv; j++) {
-						for (int k = j; k < Nv; k++) {
-							for (int l = k; l < Nv; l++) {
-								dst[index++] = src[i] * src[j] * src[k] * src[l];
-							}
-						}
-					}
-				}
-			}
-			if (et >= 5) {
-				std::cout << "Unsupported for 5 dimension up.\n";
-				return false;
-			}
-			return true;
 		}
 
 		int train() {

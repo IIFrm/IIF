@@ -9,6 +9,7 @@
 #ifndef _ML_ALGO_H_
 #define _ML_ALGO_H_
 #include <iostream>
+#include "svm_core.h"
 #include "states.h"
 #include "polynomial.h"
 
@@ -17,6 +18,7 @@ typedef double MState[Cv1to4];
 class MLalgo 
 {
 	public:
+		int etimes;
 		MLalgo() {};
 		virtual ~MLalgo() {};
 
@@ -83,6 +85,63 @@ class MLalgo
 			return out;
 		};
 
+		bool mappingData(double* src, double* dst, int et = 4) {
+			int index = 0;
+			if (et >= 1) {
+				for (int i = 0; i < Nv; i++) {
+					dst[index++] = src[i];
+				}
+			}
+			if (et >= 2) {
+				for (int i = 0; i < Nv; i++) {
+					for (int j = i; j < Nv; j++) {
+						dst[index++] = src[i] * src[j];
+					}
+				}
+			}
+			if (et >= 3) {
+				for (int i = 0; i < Nv; i++) {
+					for (int j = i; j < Nv; j++) {
+						for (int k = j; k < Nv; k++) {
+							dst[index++] = src[i] * src[j] * src[k];
+						}
+					}
+				}
+			}
+			if (et >= 4) {
+				for (int i = 0; i < Nv; i++) {
+					for (int j = i; j < Nv; j++) {
+						for (int k = j; k < Nv; k++) {
+							for (int l = k; l < Nv; l++) {
+								dst[index++] = src[i] * src[j] * src[k] * src[l];
+							}
+						}
+					}
+				}
+			}
+			if (et >= 5) {
+				std::cout << "Unsupported for 5 dimension up.\n";
+				return false;
+			}
+			return true;
+		}
+
+		bool setEtimes(int et) {
+			if ((et < 1) || (et > 4))
+				return false;
+			etimes = et;
+			switch (et) {
+				case 1:
+					return setDimension(Cv1to1);
+				case 2:
+					return setDimension(Cv1to2);
+				case 3:
+					return setDimension(Cv1to3);
+				case 4:
+					return setDimension(Cv1to4);
+			}
+			return true;
+		}
 
 		/** @brief This method returns the current problem size (the number of training states).
 		 * 
