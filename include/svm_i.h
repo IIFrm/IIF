@@ -49,31 +49,31 @@ class SVM_I : public MLalgo //SVM
 	public:
 		SVM_I(int type = 0, void(*f) (const char*) = NULL, int size = 10000, int n_poly = 16) 
 			: max_size(size), max_poly(n_poly) {
-			prepare_svm_parameters(param, type);
-			if (f != NULL)
-				svm_set_print_string_function(f);
-			model = NULL;
-			polys = new Polynomial[max_poly];
+				prepare_svm_parameters(param, type);
+				if (f != NULL)
+					svm_set_print_string_function(f);
+				model = NULL;
+				polys = new Polynomial[max_poly];
 
-			raw_mapped_data = new MState[max_size];
-			data = new double*[max_size];
-			label = new double[max_size];
-			for (int i = 0; i < max_size; i++)
-				label[i] = -1;
-			problem.l = 0;
-			problem.x = (svm_node**)(data);
-			problem.y = label;
+				raw_mapped_data = new MState[max_size];
+				data = new double*[max_size];
+				label = new double[max_size];
+				for (int i = 0; i < max_size; i++)
+					label[i] = -1;
+				problem.l = 0;
+				problem.x = (svm_node**)(data);
+				problem.y = label;
 
 #ifdef __DS_ENABLED
-			problem.np = 0;
-			problem.nn = 0;
+				problem.np = 0;
+				problem.nn = 0;
 #endif
 
-			etimes = 0;
-			poly_num = 0;
-			negative_mapped_data = new MState[max_size];
-			negative_size = 0;
-		}
+				etimes = 0;
+				poly_num = 0;
+				negative_mapped_data = new MState[max_size];
+				negative_size = 0;
+			}
 
 		~SVM_I()
 		{
@@ -124,8 +124,8 @@ class SVM_I : public MLalgo //SVM
 			return 0;
 		}
 
-		int train()
-		{
+
+		int train() {
 			if (problem.y == NULL || problem.x == NULL || negative_mapped_data == NULL) return -1;
 
 			for (poly_num = 0; poly_num < max_poly; poly_num++) {
@@ -137,10 +137,6 @@ class SVM_I : public MLalgo //SVM
 #ifdef __PRT
 					std::cout << GREEN << "finish classified..." << WHITE << std::endl;
 #endif				
-#ifdef __PRT_SVM_I
-					std::cout << *this << "\n check implication...\n";
-#endif				
-
 					return 0;
 				}
 
@@ -148,55 +144,8 @@ class SVM_I : public MLalgo //SVM
 				std::cout << "." << poly_num << ">"; // << std::endl;
 #endif
 				// there is some point which is misclassified by current dividers.
-				// "negatives->values[misidx]" 
-
-				label[problem.l] = -1;
-				data[problem.l] = negative_mapped_data[misidx];
-				problem.l++;
-
-#ifdef __PRT_SVM_I
-				std::cout << " NEW TRAINING SET:";
-				for (int i = 0; i < problem.l; i++) {
-					std::cout << "(" << problem.x[i][0].value;
-					for (int j = 1; j < VARS; j++)
-						std::cout << "," << problem.x[i][j].value;
-					std::cout << ")";
-					if (problem.y[i] == 1) std::cout << "+";
-					if (problem.y[i] == -1) std::cout << "-";
-					std::cout << "|";
-				}
-				std::cout << std::endl;
-#endif			
-
-				model = svm_train(&problem, &param);
-				svm_model_visualization(model, polys[poly_num]);
-
-#ifdef __PRT_SVM_I
-				std::cout << polys[poly_num];
-#endif
-				for (int j = 0; j < poly_num; j++) {
-					if (polys[poly_num].imply(polys[j]) == true) {
-						for (int k = j; k < poly_num; k++)
-							polys[k] = polys[k+1];
-						poly_num--;
-						j--;
-					}
-				}
-
-
-#ifdef __PRT_SVM_I
-				double precision = checkStepTrainingData();
-#endif
-				svm_free_and_destroy_model(&model);
-				model = NULL;
-				problem.l--;
-
-				//if (precision == 1) break;
-#ifdef __PRT_SVM_I
-				std::cout << " precision=[" << precision * 100 << "%]." << std::endl;
-				//if (precision < 1) std::cout << "CAN NOT DIVIDE THE PICKED NEGATIVE FROM POSITIVES..." << std::endl;
-				//std::cout << "\n On whole set precision: " << predictOnProblem() * 100 << "%" << std::endl;
-#endif
+				if (stepTrain(misidx) < 0)
+					return -1;
 			}
 			std::cout << RED << "Can not divide all the data by SVM-I with"
 				" equations number limit to " << poly_num + 1 << "." << std::endl;
@@ -220,7 +169,7 @@ class SVM_I : public MLalgo //SVM
 
 		int converged(void* pre_model, int pre_poly_num) {
 			if (pre_poly_num != poly_num) return -1;
-			
+
 			Polynomial* pre_polys = (Polynomial*)pre_model;
 			std::vector<bool> similar_vector(pre_poly_num, false);
 			for (int i = 0; i < pre_poly_num; i++) {	
@@ -286,8 +235,7 @@ class SVM_I : public MLalgo //SVM
 			return equs;
 		}
 
-		int predict(double* v)
-		{
+		int predict(double* v) {
 			if (v == NULL) return -2;
 			/*
 			 * We use conjunction of positive as predictor.
@@ -307,21 +255,78 @@ class SVM_I : public MLalgo //SVM
 		}
 
 	private:
-		//double check_postives_and_one_negative()
-		double checkStepTrainingData()
-		{
-			int total = problem.l;
+		double checkStepTrainingData() {
 			int pass = 0;
-#ifdef __PRT_SVM_I
-			std::cout << "\t";
-#endif
 			for (int i = 0; i < problem.l; i++) {
 				pass += (predict((double*)(problem.x[i])) * problem.y[i] >= 0) ? 1 : 0;
 			}
 #ifdef __PRT_SVM_I
-			std::cout << std::endl << "Check on training set result: " << pass << "/" << total << "..";
+			std::cout << "\t";
+			std::cout << "\nCheck on training set result: " << pass << "/" << problem.l << "..";
 #endif
-			return (double)pass / total;
+			return (double)pass / problem.l;
+		}
+
+		// checkint whether the last polynomial can infer the others
+		bool resolveUniImply() {
+			for (int j = 0; j < poly_num; j++) {
+				if (polys[poly_num].uniImply(polys[j]) == true) {
+					for (int k = j; k < poly_num; k++)
+						polys[k] = polys[k+1];
+					poly_num--;
+					j--;
+				}
+			}
+			return true;
+		}
+
+		int stepTrain(int negative_index) {
+			if ((negative_index < 0) || (negative_index >= negative_size))
+				return -1;
+			label[problem.l] = -1;
+			data[problem.l] = negative_mapped_data[negative_index];
+			problem.l++;
+
+#ifdef __PRT_SVM_I
+			std::cout << " NEW TRAINING SET:";
+			for (int i = 0; i < problem.l; i++) {
+				std::cout << "(" << problem.x[i][0].value;
+				for (int j = 1; j < VARS; j++)
+					std::cout << "," << problem.x[i][j].value;
+				std::cout << ")";
+				if (problem.y[i] == 1) std::cout << "+";
+				if (problem.y[i] == -1) std::cout << "-";
+				std::cout << "|";
+			}
+			std::cout << std::endl;
+#endif			
+
+			double precision = 0;
+			for (int etimes = 1; etimes <= 4; etimes++) {
+				model = svm_train(&problem, &param);
+				svm_model_visualization(model, polys[poly_num]);
+#ifdef __PRT_SVM_I
+				std::cout << polys[poly_num];
+#endif
+
+				double precision = checkStepTrainingData();
+				svm_free_and_destroy_model(&model);
+				resolveUniImply();
+				model = NULL;
+
+				//if (precision == 1) break;
+#ifdef __PRT_SVM_I
+				std::cout << " precision=[" << precision * 100 << "%]." << std::endl;
+				//if (precision < 1) std::cout << "CAN NOT DIVIDE THE PICKED NEGATIVE FROM POSITIVES..." << std::endl;
+				//std::cout << "\n On whole set precision: " << predictOnProblem() * 100 << "%" << std::endl;
+#endif
+				if (precision == 1)
+					break;
+			}
+			problem.l--;
+			if (etimes > 4) 
+				return -1;
+			return 0;
 		}
 
 		int getMisclassified(int& idx) // negative points may be misclassified.
