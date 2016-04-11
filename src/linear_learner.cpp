@@ -27,12 +27,10 @@ int LinearLearner::learn()
 	int rnd;
 	bool similarLast = false;
 	bool converged = false;
-	//svm_model* lastModel = NULL;
 	Classifier pre_cl;
 	int pre_psize = 0, pre_nsize = 0;
 
 	double pass_rate = 1;
-	//int etimes = 1;
 
 	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
 		int zero_times = 0;
@@ -124,11 +122,7 @@ init_svm:
 		std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") check convergence:        ";
 #endif
 
-		//std::cout << "\n\t" << YELLOW << "check convergence:        \n" << WHITE;
-		//if (svm->converged_model() == true) {
 		if (svm->converged(pre_cl) == true) {
-			//std::cout << "\n\t" << YELLOW << "in convergence\n" << WHITE;
-			//std::cout << "\t" << YELLOW << "YY\t" << WHITE;
 			if (similarLast == true) {
 #ifdef __PRT
 				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
@@ -183,14 +177,14 @@ init_svm:
 	}
 
 	return ret;
-	}
+}
 
-	std::string LinearLearner::invariant(int n) {
-		return svm->cl.toString();
-	}
+std::string LinearLearner::invariant(int n) {
+	return svm->cl.toString();
+}
 
-	int LinearLearner::save2file() {
-		svm->problem.save_to_file("../tmp/svm.ds");
-		std::cout << "save to file succeed. ../tmp/svm.ds\n";
-		return 0;
-	}
+int LinearLearner::save2file() {
+	svm->problem.save_to_file("../tmp/svm.ds");
+	std::cout << "save to file succeed. ../tmp/svm.ds\n";
+	return 0;
+}

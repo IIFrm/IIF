@@ -47,7 +47,6 @@ class SVM : public MLalgo
 			prepare_svm_parameters(param, type);
 			if (f != NULL)
 				svm_set_print_string_function(f);
-			//last_model = NULL;
 			model = NULL;
 
 			data = new double*[max_size];
@@ -69,7 +68,6 @@ class SVM : public MLalgo
 
 		~SVM() {
 			if (model != NULL) svm_free_and_destroy_model(&model);
-			//if (last_model != NULL) svm_free_and_destroy_model(&last_model);
 			if (raw_mapped_data != NULL) delete[]raw_mapped_data;
 			if (data != NULL) delete []data;
 			if (label != NULL) delete label;
@@ -165,12 +163,8 @@ class SVM : public MLalgo
 		bool converged (Classifier& pre_cl) {
 			if (pre_cl.size <= 0) return false;
 			return cl[0]->isSimilar(*pre_cl[0]);
-			//return converged_model();
 		}
 
-		/*bool converged_model () {
-			return model_converged(model, last_model);
-		}*/
 
 		friend std::ostream& operator << (std::ostream& out, const SVM& svm) {
 			return svm._print(out);

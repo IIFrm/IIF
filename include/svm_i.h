@@ -213,10 +213,6 @@ class SVM_I : public MLalgo //SVM
 			return true;
 		}
 
-		/*bool converged_model() {
-			return false;
-		}*/
-
 
 		friend std::ostream& operator << (std::ostream& out, const SVM_I& svm_i) {
 			return svm_i._print(out);
