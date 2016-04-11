@@ -12,7 +12,7 @@ static double _roundoff(double x)
 {
 	int inx = nearbyint(x);
 	if ((inx >= x * (1 - UPBOUND) && inx <= x * (1 + UPBOUND))
-		|| (inx <= x * (1 - UPBOUND) && inx >= x * (1 + UPBOUND)))
+			|| (inx <= x * (1 - UPBOUND) && inx >= x * (1 + UPBOUND)))
 		return double(inx);
 	if (std::abs(x) <= UPBOUND)
 		return 0;
@@ -73,6 +73,15 @@ Polynomial& Polynomial::operator=(Polynomial& rhs) {
 	return *this;
 }
 
+bool Polynomial::operator==(const Polynomial& rhs) {
+	if (dims != rhs.getDims())
+		return false;
+	for (int i = 0; i < rhs.getDims(); i++)
+		if (theta[i] != rhs.theta[i])
+			return false;
+	return true;
+}
+
 #if (linux || __MACH__)
 static void output_z3model(z3::model& z3m) {
 	std::cout << "{";
@@ -84,93 +93,94 @@ static void output_z3model(z3::model& z3m) {
 }
 #endif
 
-bool Polynomial::factorNv1Times2(double *B) { //, double B, double C) {
+/*
+   bool Polynomial::factorNv1Times2(double *B) { //, double B, double C) {
 #if (linux || __MACH__)
-	z3::config cfg;
-	cfg.set("auto_config", true);
-	z3::context ctx(cfg);
-	std::cout << GREEN << B[0] << " * x^2 + " << B[1] << " * x + " << B[2];
-	std::cout << BLUE << " = " << YELLOW << "(a0x + b0) (a1x + b1)\t" << WHITE;
+z3::config cfg;
+cfg.set("auto_config", true);
+z3::context ctx(cfg);
+std::cout << GREEN << B[0] << " * x^2 + " << B[1] << " * x + " << B[2];
+std::cout << BLUE << " = " << YELLOW << "(a0x + b0) (a1x + b1)\t" << WHITE;
 
-	// A * x^2 + B * x + C = 0
-	z3::expr a0 = ctx.int_const("a0");
-	z3::expr a1 = ctx.int_const("a1");
-	z3::expr b0 = ctx.int_const("b0");
-	z3::expr b1 = ctx.int_const("b1");
+// A * x^2 + B * x + C = 0
+z3::expr a0 = ctx.int_const("a0");
+z3::expr a1 = ctx.int_const("a1");
+z3::expr b0 = ctx.int_const("b0");
+z3::expr b1 = ctx.int_const("b1");
 
-	char real[65];
-	std::vector<z3::expr> b;
-	for (int i = 0; i < 3; i++) {
-		snprintf(real, 64, "%2.8f", B[i]);
-		b.push_back(ctx.real_val(real));
-	}
+char real[65];
+std::vector<z3::expr> b;
+for (int i = 0; i < 3; i++) {
+snprintf(real, 64, "%2.8f", B[i]);
+b.push_back(ctx.real_val(real));
+}
 
-	z3::solver s(ctx);
-	s.add(a0 * a1 == b[0]);
-	s.add(a0 * b1 + a1 * b0 == b[1]);
-	s.add(b0 * b1 == b[2]);
-	s.add(a0 <= a1);
-	s.add(a1 > 0);
+z3::solver s(ctx);
+s.add(a0 * a1 == b[0]);
+s.add(a0 * b1 + a1 * b0 == b[1]);
+s.add(b0 * b1 == b[2]);
+s.add(a0 <= a1);
+s.add(a1 > 0);
 
-	//std::cout << s << std::endl;
-	z3::check_result retu = s.check();
-	if (retu == unsat) {
-		std::cout << RED << "unSAT" << WHITE << std::endl;
-		return false;
-	}
-	//std::cout << "SAT" << std::endl;
-	z3::model z3m = s.get_model();
-	//std::cout << "Z3 MODEL: "<< RED << z3m << WHITE << "\n";
-	output_z3model(z3m);
-	b.clear();
+//std::cout << s << std::endl;
+z3::check_result retu = s.check();
+if (retu == unsat) {
+std::cout << RED << "unSAT" << WHITE << std::endl;
+return false;
+}
+//std::cout << "SAT" << std::endl;
+z3::model z3m = s.get_model();
+//std::cout << "Z3 MODEL: "<< RED << z3m << WHITE << "\n";
+output_z3model(z3m);
+b.clear();
 #endif
-	return true;
+return true;
 }
 
 
 bool Polynomial::factorNv1Times3(double *B) { //, double B, double C, double D) {
 #if (linux || __MACH__)
-	z3::config cfg;
-	cfg.set("auto_config", true);
-	z3::context ctx(cfg);
-	std::cout << GREEN << B[0] << " * x^3 + " << B[1] << " * x^2 + " << B[2] << " * x + " << B[3]; 
-	std::cout << BLUE << " = " << YELLOW << "(a0x + b0) (a1x + b1) (a2x + b2)\t" << WHITE;
+z3::config cfg;
+cfg.set("auto_config", true);
+z3::context ctx(cfg);
+std::cout << GREEN << B[0] << " * x^3 + " << B[1] << " * x^2 + " << B[2] << " * x + " << B[3]; 
+std::cout << BLUE << " = " << YELLOW << "(a0x + b0) (a1x + b1) (a2x + b2)\t" << WHITE;
 
-	z3::expr a0 = ctx.int_const("a0");
-	z3::expr a1 = ctx.int_const("a1");
-	z3::expr a2 = ctx.int_const("a2");
-	z3::expr b0 = ctx.int_const("b0");
-	z3::expr b1 = ctx.int_const("b1");
-	z3::expr b2 = ctx.int_const("b2");
+z3::expr a0 = ctx.int_const("a0");
+z3::expr a1 = ctx.int_const("a1");
+z3::expr a2 = ctx.int_const("a2");
+z3::expr b0 = ctx.int_const("b0");
+z3::expr b1 = ctx.int_const("b1");
+z3::expr b2 = ctx.int_const("b2");
 
-	char real[65];
-	std::vector<z3::expr> b;
-	for (int i = 0; i < 4; i++) {
-		snprintf(real, 64, "%2.8f", B[i]);
-		b.push_back(ctx.real_val(real));
-	}
+char real[65];
+std::vector<z3::expr> b;
+for (int i = 0; i < 4; i++) {
+snprintf(real, 64, "%2.8f", B[i]);
+b.push_back(ctx.real_val(real));
+}
 
-	z3::solver s(ctx);
-	s.add(a0 * a1 * a2 == b[0]);
-	s.add(a0 * a1 * b2 + a0 * b1 * a2 + b0 * a1 * a2 == b[1]);
-	s.add(a0 * b1 * b2 + b0 * a1 * b2 + b0 * b1 * a2 == b[2]);
-	s.add(b0 * b1 * b2 == b[3]);
-	s.add(a0 <= a1);
-	s.add(a1 <= a2);
-	s.add(a1 > 0);
-	//std::cout << s << std::endl;
-	z3::check_result retu = s.check();
-	if (retu == unsat) {
-		std::cout << RED << "unSAT" << WHITE << std::endl;
-		return false;
-	}
-	//std::cout << "SAT" << std::endl;
-	z3::model z3m = s.get_model();
-	//std::cout << "Z3 MODEL: "<< RED << z3m << WHITE << "\n";
-	output_z3model(z3m);
-	b.clear();
+z3::solver s(ctx);
+s.add(a0 * a1 * a2 == b[0]);
+s.add(a0 * a1 * b2 + a0 * b1 * a2 + b0 * a1 * a2 == b[1]);
+s.add(a0 * b1 * b2 + b0 * a1 * b2 + b0 * b1 * a2 == b[2]);
+s.add(b0 * b1 * b2 == b[3]);
+s.add(a0 <= a1);
+s.add(a1 <= a2);
+s.add(a1 > 0);
+//std::cout << s << std::endl;
+z3::check_result retu = s.check();
+if (retu == unsat) {
+	std::cout << RED << "unSAT" << WHITE << std::endl;
+	return false;
+}
+//std::cout << "SAT" << std::endl;
+z3::model z3m = s.get_model();
+//std::cout << "Z3 MODEL: "<< RED << z3m << WHITE << "\n";
+output_z3model(z3m);
+b.clear();
 #endif
-	return true;
+return true;
 }
 
 
@@ -349,7 +359,7 @@ bool Polynomial::factorNv3Times2(double *B) { //, double B, double C, double D, 
 	return true;
 }
 
-bool Polynomial::toStandardForm(const Polynomial& e, double* coefs/*, int et*/) {
+bool Polynomial::toStandardForm(const Polynomial& e, double* coefs) {
 	int et = e.getEtimes();
 	if (et > 3) return false;
 	if (Nv > 3) return false;
@@ -417,37 +427,41 @@ bool Polynomial::toStandardForm(const Polynomial& e, double* coefs/*, int et*/) 
 	}
 	return false;
 }
+*/
 
 #if (linux || __MACH__)
-z3::expr Polynomial::toZ3expr(char** name, z3::context& c) const
-{
+z3::expr Polynomial::toZ3expr(char** name, z3::context& c) const {
 	char** pname = name;
 	if (pname == NULL) {
-		pname = new char*[Cv1to4];
-		for (int i = 0; i < Cv1to4; i++) {
+		pname = new char*[Nv];
+		for (int i = 0; i < Nv; i++) {
 			pname[i] = new char[8];
 			sprintf(pname[i], "x%d", i);
 		}
 	}
 
-	const Polynomial& e = *this;
 	std::vector<z3::expr> x;
+	for (int i = 0; i < Nv; i++) {
+		x.push_back(c.real_const(pname[i]));
+	}
+
 	std::vector<z3::expr> theta;
-
 	char real[65];
-	snprintf(real, 64, "%2.8f", e.theta[0]);
-	z3::expr expr = c.real_val(real);
-	theta.push_back(expr);
+	for (int i = 0; i < dims; i++) {
+		snprintf(real, 64, "%2.8f", this->theta[i]);
+		theta.push_back(c.real_val(real));
+	}
 
+	z3::expr expr = theta[0];
 	for (int i = 1; i < dims; i++) {
-		z3::expr tmp = c.real_const(pname[i]);
-		x.push_back(tmp);
-
-		snprintf(real, 64, "%2.8f", e.theta[i]);
-		tmp = c.real_val(real);
-		theta.push_back(tmp);
-
-		expr = expr + theta[i] * x[i];
+		z3::expr tmp = theta[i];
+		for (int j = 0; j < Nv; j++) {
+			int power = vparray[i][j];
+			while (power-- > 0) {
+				tmp = tmp * x[j];
+			}
+		}
+		expr = expr + tmp;
 	}
 
 	//std::cout << "expr1: " << expr1 << std::endl;
@@ -455,7 +469,7 @@ z3::expr Polynomial::toZ3expr(char** name, z3::context& c) const
 
 	z3::expr hypo = expr >= 0;
 	if (name == NULL) {
-		for (int i = 0; i < dims; i++) {
+		for (int i = 0; i < Nv; i++) {
 			delete[]pname[i];
 		}
 		delete[]pname;
@@ -465,40 +479,40 @@ z3::expr Polynomial::toZ3expr(char** name, z3::context& c) const
 	return hypo;
 }
 #endif
+
 bool Polynomial::uniImply(const Polynomial& e2) {
 #if (linux || __MACH__)
 #ifdef __PRT_QUERY
-	std::cout << "-------------uni-Imply solving-------------\n";
+	std::cout << BLUE << "-------------uni-Imply solving-------------\n" << WHITE;
+	std::cout << RED << *this << " ==> " << e2 << std::endl << WHITE;
 #endif
-	Polynomial& e1 = *this;
+
 	z3::config cfg;
 	cfg.set("auto_config", true);
 	z3::context c(cfg);
 
-	/*char** name = new char* [1];
-	  name[0] = "asdfg";
-	  z3::expr hypo = e1.to_z3expr(name, c);
-	  z3::expr conc = e2.to_z3expr(name, c);
-	  */
-	z3::expr hypo = e1.toZ3expr(NULL, c);
+	z3::expr hypo = this->toZ3expr(NULL, c);
 	z3::expr conc = e2.toZ3expr(NULL, c);
-#ifdef __PRT_QUERY
-	std::cout << "hypo: " << hypo << std::endl;
-	std::cout << "conc: " << conc << std::endl;
-#endif
 
 	z3::expr query = implies(hypo, conc);
 #ifdef __PRT_QUERY
-	std::cout << "Query : " << query << std::endl;
-	std::cout << "Answer: ";
+	std::cout << "\nhypo: " << hypo << std::endl;
+	std::cout << "conc: " << conc << std::endl;
+	std::cout << BLUE << "Query : " << query << std::endl << WHITE;
 #endif
 
 	z3::solver s(c);
 	s.add(!query);
 	z3::check_result ret = s.check();
 	if (ret == unsat) {
+#ifdef __PRT_QUERY
+		std::cout << "Answer: UNSAT\n";
+#endif
 		return true;
 	}
+#ifdef __PRT_QUERY
+	std::cout << "Answer: SAT\n";
+#endif
 #endif
 	return false;
 }
@@ -598,69 +612,69 @@ int Polynomial::roundoff(Polynomial& e) {
 }
 
 /*
-int Polynomial::toCandidates(Candidates* cs) {
-	//std::cout << "ROUND OFF WITHOUT CONST" << *this << " --> ";
-	Polynomial e = *this;
-	double min = DBL_MAX;
-	double second_min = min;
-	for (int i = 1; i < dims; i++) {
-		if (theta[i] == 0) continue;
-		if (std::abs(theta[i]) < min) {
-			second_min = min;
-			min = std::abs(theta[i]);
-		}
-	}
+   int Polynomial::toCandidates(Candidates* cs) {
+//std::cout << "ROUND OFF WITHOUT CONST" << *this << " --> ";
+Polynomial e = *this;
+double min = DBL_MAX;
+double second_min = min;
+for (int i = 1; i < dims; i++) {
+if (theta[i] == 0) continue;
+if (std::abs(theta[i]) < min) {
+second_min = min;
+min = std::abs(theta[i]);
+}
+}
 
-	if (min == DBL_MAX) min = 1;
-	if (min == 0) min = 1;	
-	if (second_min == DBL_MAX) second_min = 1;
-	if (second_min == 0) second_min = 1;
+if (min == DBL_MAX) min = 1;
+if (min == 0) min = 1;	
+if (second_min == DBL_MAX) second_min = 1;
+if (second_min == 0) second_min = 1;
 
 #ifdef __PRT_polynomial
-	std::cout << GREEN << "Before roundoff: " << *this;
+std::cout << GREEN << "Before roundoff: " << *this;
 #endif
-	if (min / second_min <= UPBOUND)
-		min = second_min;
+if (min / second_min <= UPBOUND)
+min = second_min;
 
-	//double max_bound = ceil((theta[0] + 1) / min);
-	//double min_bound = ceil((theta[0] - 1) / min);
-	double max_bound = _roundoff((theta[0] + 1) / min);
-	double min_bound = _roundoff((theta[0] - 1) / min);
-	for (int i = 1; i < dims; i++)
-		e.theta[i] = _roundoff(theta[i] / min);
-	//e.theta[0] = ceil(theta[0] / min);
-	e.theta[0] = _roundoff(theta[0] / min);
+//double max_bound = ceil((theta[0] + 1) / min);
+//double min_bound = ceil((theta[0] - 1) / min);
+double max_bound = _roundoff((theta[0] + 1) / min);
+double min_bound = _roundoff((theta[0] - 1) / min);
+for (int i = 1; i < dims; i++)
+e.theta[i] = _roundoff(theta[i] / min);
+//e.theta[0] = ceil(theta[0] / min);
+e.theta[0] = _roundoff(theta[0] / min);
 #ifdef __PRT_polynomial
-	std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
+std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
 #endif
-	std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
+std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
 #ifdef _multi_candidates_
-	double center = e.theta[0];
-	for (int up = center, down = center - 1; (up <= max_bound) || (down >= min_bound); up++, down--) {
-		if (up <= max_bound) {
-			e.theta[0] = up;
-			std::cout << "-->factoring up" << up << " ";
-			if (e.factor() == true) {
-				std::cout << "<---Done." << e << std::endl;
-				cs->add(&e);
-				//return 0;
-			}
-		}
-		if (down >= min_bound) {
-			e.theta[0] = down;
-			std::cout << "-->factoring down" << down << " ";
-			if (e.factor() == true) {
-				std::cout << "<---Done." << e << std::endl;
-				cs->add(&e);
-				//return 0;
-			}
-		}
-	}
-	e.theta[0] = center;
+double center = e.theta[0];
+for (int up = center, down = center - 1; (up <= max_bound) || (down >= min_bound); up++, down--) {
+if (up <= max_bound) {
+e.theta[0] = up;
+std::cout << "-->factoring up" << up << " ";
+if (e.factor() == true) {
+std::cout << "<---Done." << e << std::endl;
+cs->add(&e);
+//return 0;
+}
+}
+if (down >= min_bound) {
+e.theta[0] = down;
+std::cout << "-->factoring down" << down << " ";
+if (e.factor() == true) {
+std::cout << "<---Done." << e << std::endl;
+cs->add(&e);
+//return 0;
+}
+}
+}
+e.theta[0] = center;
 #else
-	cs->add(&e);
+cs->add(&e);
 #endif
-	std::cout << YELLOW << "Candidates size = " << cs->getSize() << std::endl;
-	return cs->getSize();
+std::cout << YELLOW << "Candidates size = " << cs->getSize() << std::endl;
+return cs->getSize();
 }
 */

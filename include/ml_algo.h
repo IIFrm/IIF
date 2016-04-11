@@ -12,13 +12,17 @@
 #include "svm_core.h"
 #include "states.h"
 #include "polynomial.h"
+#include "classifier.h"
 
 typedef double MState[Cv1to4];
 
 class MLalgo 
 {
-	public:
+	protected:
 		int etimes;
+
+	public:
+		Classifier cl;
 		MLalgo() {};
 		virtual ~MLalgo() {};
 
@@ -67,7 +71,7 @@ class MLalgo
 		 * @param num is the number of equations get from last training session 
 		 * @return int 0 if converged 
 		 */
-		virtual int converged(void* pre_model, int num) = 0;
+		virtual bool converged(Classifier& pre_cl) = 0;
 		virtual bool converged_model() = 0;
 
 		/** @brief output the current trainig result of a ML_Algo
@@ -157,7 +161,7 @@ class MLalgo
 		 *		   Remember to DELETE them after use by caller.
 		 *		   Otherwise memory leak.
 		 */
-		virtual Polynomial* roundoff(int& equation_num) = 0;
+		//virtual Polynomial* roundoff(int& equation_num) = 0;
 
 
 		/** @brief Predict sample x against the whole training model.(equations)

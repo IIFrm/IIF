@@ -13,8 +13,6 @@ class LinearLearner: public BaseLearner {
 
 		virtual int learn();
 
-		int selectiveSampling(int randn, int exen, int type = 0, void* params = NULL);
-
 		virtual std::string invariant(int n);
 
 	protected:

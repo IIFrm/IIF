@@ -39,18 +39,16 @@ class Connector{
 			return *this;
 		}
 
-	friend std::ostream& operator << (std::ostream& out, const Connector& c) {
+	friend std::ostream& operator<< (std::ostream& out, const Connector& c) {
 		switch (c.type) {
 			case DISJUNCT:
 				out << " || ";
-				//out << " \\/ ";
 				break;
 			case CONJUNCT:
 				out << " && ";
-				//out << " /\\ ";
 				break;
-			default:
-				out << " UNKNOWN CONNECTOR ";
+			default: // unknown connector
+				out << " && false &&  ";
 		}
 		return out;
 	}

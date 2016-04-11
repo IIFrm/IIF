@@ -115,6 +115,8 @@ iifContext& iifContext::addLearner(const char* learnerName, const char* last_cnt
 	BaseLearner* newLearner = NULL;
 	if (strcmp(learnerName, "linear") == 0)
 		newLearner = new LinearLearner(gsets, last_cnt_fname);
+	else if (strcmp(learnerName, "conjunctive") == 0)
+	   newLearner = new ConjunctiveLearner(gsets, last_cnt_fname);
 	/* 
 	   else if (strcmp(learnerName, "poly") == 0)
 	   newLearner = new PolyLearner(gsets);
@@ -148,28 +150,15 @@ int iifContext::learn(const char* invfilename, int times) {
 	LearnerNode* p = first;
 	char filename[65]; 
 	while (p) {
-		int n_cands = p->learner->learn();
-		if (n_cands > 0) {
-
-#ifdef _multi_candidates_
-			std::cout << n_cands << std::endl;
-			for (int i = 0; i < n_cands; i++) {
-				sprintf(filename, "%s_%d.inv", (char*)invfilename, i);
-				std::ofstream invFile(filename);
-				invFile << p->learner->invariant(i);
-				invFile.close();
-			}
-#else
+		if (p->learner->learn() == 0) {
 			sprintf(filename, "%s.inv", (char*)invfilename);
 			std::ofstream invFile(filename);
 			invFile << p->learner->invariant(0);
 			invFile.close();
-#endif
-
 			return 0;
-		}
-		else
+		} else {
 			p = p->next;
+		}
 	}
 	return -1;
 }

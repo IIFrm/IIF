@@ -3390,7 +3390,7 @@ int svm_model_visualization(const svm_model *model, Polynomial* poly)
 	poly->set(theta);
 	//std::cout << BLUE << "Before RoundOFF " << *poly << GREEN << " +[-1, 1]" << WHITE << std::endl;
 	//poly->roundoff();
-	//std::cout << *poly << std::endl;
+	//std::cout << BLUE << "from svm model visualization: " << *poly << std::endl << WHITE;
 	return 0;	
 }
 
@@ -3402,13 +3402,12 @@ struct svm_model *svm_I_train(const struct svm_problem *prob, const struct svm_p
 
 void my_print_func(const char* str) {}
 
-void prepare_svm_parameters(struct svm_parameter& param, int type, int degree)
-{
+void prepare_svm_parameters(struct svm_parameter& param, int type, int degree) {
 	param.svm_type = C_SVC;
 	param.degree = degree;
 	param.gamma = 0;	// 1/num_features
 	if (type == 0) {
-		std::cout << "Using LINEAR kernel...\n";
+		//std::cout << "Using LINEAR kernel...\n";
 		param.kernel_type = LINEAR;
 	} else if (type == 1){
 		std::cout << "Using POLY kernel...\n";

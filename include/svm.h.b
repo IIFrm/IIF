@@ -18,6 +18,7 @@ class SVM : public MLalgo
 		double* label; // [max_items * 2];
 
 	public:
+		//Polynomial* poly;
 		svm_model* model;
 
 	protected:
@@ -64,6 +65,7 @@ class SVM : public MLalgo
 				svm_set_print_string_function(f);
 			last_model = NULL;
 			model = NULL;
+			poly = NULL;
 
 			data = new double*[max_size];
 			raw_mapped_data = new MState[max_size];
@@ -88,6 +90,7 @@ class SVM : public MLalgo
 #endif
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (last_model != NULL) svm_free_and_destroy_model(&last_model);
+			if (poly != NULL) delete poly;
 			if (raw_mapped_data != NULL) delete[]raw_mapped_data;
 			if (data != NULL) delete []data;
 			if (label != NULL) delete label;
@@ -166,9 +169,9 @@ class SVM : public MLalgo
 			//std::cout << std::endl << problem << std::endl;
 			model = svm_train(&problem, &param);
 			//std::cout << "\n\tmodel --> " << *model << std::endl;
-			Polynomial poly;
-			svm_model_visualization(model, &poly);
-			cl = poly;
+			if (poly == NULL) poly = new Polynomial();
+			svm_model_visualization(model, poly);
+			cl = *poly;
 			//svm_free_and_destroy_model(&model);
 			return 0;
 		}
@@ -182,9 +185,12 @@ class SVM : public MLalgo
 			return static_cast<double>(pass) / problem.l;
 		}
 
-		bool converged (Classifier& pre_cl) {
-			return cl[0]->is_similar(*pre_cl[0]);
-			//return converged_model();
+		int converged (void* last_model, int num =1) {
+			return converged_model();
+			assert ((num == 1) || "SVM::get_converged: Unexpected equation number parameter.");
+			if (last_model == NULL) return 1;
+			Polynomial* pre_poly = (Polynomial*)last_model;
+			return poly->is_similar(*pre_poly);
 		}
 
 		bool converged_model () {
@@ -196,16 +202,25 @@ class SVM : public MLalgo
 		}
 
 		std::ostream& _print(std::ostream& out) const {
+			//out << "SVM-model: ";
+			//out << *model << std::endl;
 			//svm_model_visualization(model, *classifier);
 			//out << *poly; // << std::endl;
 			//svm_model_visualization(model, poly);
-			//out << cl << std::endl;
-			out << cl[0]->toString(); // << std::endl;
+			out << cl << std::endl;
+			out << poly->toString(); // << std::endl;
 			return out;
 		}
 
 		int getProblemSize() {
 			return problem.l;
+		}
+
+		Polynomial* roundoff(int& num) {
+			num = 1;
+			Polynomial* newpoly = new Polynomial();
+			poly->roundoff(*newpoly);
+			return newpoly;
 		}
 
 		int predict(double* v) {

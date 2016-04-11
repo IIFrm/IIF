@@ -18,63 +18,9 @@ LinearLearner::LinearLearner(States* gsets, const char* solution_filename,
 }
 
 LinearLearner::~LinearLearner() {
-	delete svm;
+	if (svm != NULL)
+		delete svm;
 }
-
-
-/// type == 0, solve polyations defined by paras....
-//			   if params == NULL, all are random points
-//			   if params != NULL, selective sampling
-int LinearLearner::selectiveSampling(int randn, int exen, int type, void* params)
-{
-#ifdef __PRT
-	std::cout << "{" << GREEN;
-#endif
-
-	if ((type != 0) && (exen > type))
-		randn += exen - type;
-	Solution input;
-	int ret = 0;
-	for (int i = 0; i < randn; i++) {
-		Polynomial::solver(NULL, input);
-		//model_solver(NULL, input);
-		//Classifier::solver(NULL, input);
-		ret = runTarget(input);
-
-#ifdef __PRT
-		std::cout << input;
-		printRunResult(ret);
-		std::cout << "|";
-#endif
-
-	}
-
-#ifdef __PRT
-	std::cout << BLUE;
-#endif
-
-	if (type == 0) {
-		for (int i = 0; i < exen; i++) {
-			//model_solver((svm_model*)params, input);
-			Polynomial::solver((Polynomial*)params, input);
-			//Classifier::solver((Classifier*)params, input);
-			ret = runTarget(input);
-
-#ifdef __PRT
-			std::cout << "|" << input;
-			printRunResult(ret);
-#endif
-
-		}
-	}
-
-#ifdef __PRT
-	std::cout << WHITE << "}" << std::endl;
-#endif
-
-	return randn + exen;
-}
-
 
 int LinearLearner::learn()
 {
@@ -90,6 +36,7 @@ int LinearLearner::learn()
 	int zero_times = 0;
 
 	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
+		
 		int nexe = (rnd == 1) ? Nexe_init : Nexe_after;
 #ifdef __PRT
 		int step = 1;
@@ -103,19 +50,18 @@ int LinearLearner::learn()
 
 init_svm:
 		//std::cout << std::endl << "\t-->selective sampling:\n\t";
-		//selectiveSampling(random_exes, nexe, 0, lastModel);
-		selectiveSampling(Nexe_rand, nexe, 0, svm->poly);
+		selectiveSampling(Nexe_rand, nexe, 0, &(svm->cl));
 		//std::cout << "\t<--selective sampling:\n";
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
 
 #ifdef __PRT
 			if (gsets[POSITIVE].traces_num() == 0) 
-				std::cout << RED << "\tZero Positive trace, execute program again." << WHITE << std::endl;
+				std::cout << RED << "\tZero Positive trace, execute program again.\n" << WHITE;
 			if (gsets[NEGATIVE].traces_num() == 0) 
-				std::cout << RED << "\tZero Negative trace, execute program again." << WHITE << std::endl;
+				std::cout << RED << "\tZero Negative trace, execute program again.\n" << WHITE;
 #else
-		std::cout << "+";
+			std::cout << "+";
 #endif
 
 			zero_times++;
@@ -133,25 +79,19 @@ init_svm:
 		svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
 
 		while (etimes <= 3) {
-			cl->clear();
+			svm->cl.clear();
 
 #ifdef __PRT
 			std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") start training "
 				"with mapping dimension {" << etimes << "}...";
 #endif
-
-			svm->setEtimes(etimes);
-			svm->train();
-
 #ifdef __DS_ENABLED
 			std::cout << "[" << svm->problem.np << ":" << svm->problem.nn << "]";
 #endif
 
-			std::cout << "|-->> " << YELLOW << *svm << WHITE << std::endl;
-			//Polynomial poly;
-			//svm->poly->roundoff(poly);
-			//svm->poly->roundoff();
-			//cl->factor(*(svm->poly));
+			svm->setEtimes(etimes);
+			svm->train();
+			std::cout << "|-->> " << YELLOW << svm->cl << WHITE << std::endl;
 
 #ifdef __PRT
 			std::cout << "\t(" << YELLOW << step++ << WHITE << ") checking training traces.";
@@ -213,24 +153,20 @@ init_svm:
 		std::cout << "  [FAIL] neXt round " << std::endl;
 #endif
 
-		//lastModel = svm->getModel();
 		lastModel = svm->model;
 	} // end of SVM training procedure
 
 	std::cout << "----------------------------------------------------------------------------" 
 		<< "----------------------------------------\n";
 
-	int ret = 1;
+	int ret = 0;
 	if ((converged) && (rnd <= max_iteration)) {
-		svm_model_visualization(lastModel, svm->poly);
-		//ret = poly->toCandidates(cs);
-		//poly->roundoff();
-		//svm_model_approximate(lastModel, poly->getEtimes());
-		//svm_problem_approximate(&svm->problem, poly->getEtimes());
-		//std::cout << GREEN << "generated model" << *lastModel << std::endl << WHITE;
-		//poly->roundoff();
-		std::cout << YELLOW << "  Invariant Candidate: {  ";
-		std::cout << GREEN << svm->poly->toString() << YELLOW;
+		Polynomial* poly = svm->cl[0];	
+		svm->cl.clear();
+		svm->cl.factor(*poly);
+		svm->cl.roundoff();
+		std::cout << YELLOW << "  Invariant Candidate(Linear): {  ";
+		std::cout << GREEN << svm->cl.toString() << YELLOW;
 		std::cout << "  }" << WHITE << std::endl;
 	}
 
@@ -239,19 +175,9 @@ init_svm:
 		ret = -1;
 	}
 
-#ifndef _multi_candidates_
-	if (ret > 0)
-		return 1;
-#endif
-
 	return ret;
 }
 
 std::string LinearLearner::invariant(int n) {
-	svm->poly->roundoff();
-	cl->factor(*svm->poly);
-	return cl->toString();
-	return svm->poly->toString();
-	//return cs->toString(n);
-	//return cl->toString();
+	return svm->cl.toString();
 }

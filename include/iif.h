@@ -24,7 +24,7 @@
 #include "linear_learner.h"
 //#include "poly_learner.h"
 //#include "rbf_learner.h"
-//#include "conjunctive_learner.h"
+#include "conjunctive_learner.h"
 //#include "disjunctive_learner.h"
 #include "iif_assert.h"
 

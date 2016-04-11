@@ -29,36 +29,38 @@ class BaseLearner{
 	public:
 		BaseLearner(States* gsets, const char* cntempl_fname = NULL, int (*func)(int*) = target_program):
 			gsets(gsets), func(func) {
-			//cs = new Candidates();
-			cl = new Classifier();
-			poly = new Polynomial();
-			if (cntempl_fname!= NULL) {
-				//std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
-				std::ifstream fin(cntempl_fname);
-				if (fin) {
-				Solution s;
-				while (fin >> s) {
-					std::cout << BLUE << BOLD << "Test on Last Counter Example: " << s 
-						<< " from file " << cntempl_fname << " --> " << NORMAL << WHITE;
-					int ret = runTarget(s);
-					printRunResult(ret);
-					std::cout << std::endl << WHITE;
-				}
-				fin.close();
-				//std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
+				//cs = new Candidates();
+				//cl = new Classifier();
+				//poly = new Polynomial();
+				if (cntempl_fname!= NULL) {
+					//std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
+					std::ifstream fin(cntempl_fname);
+					if (fin) {
+						Solution s;
+						while (fin >> s) {
+							std::cout.setf(std::ios::fixed);
+							std::cout << BLUE << BOLD << "Test on Last Counter Example: " << std::setprecision(0) 
+								<<s << " from file " << cntempl_fname << " --> " << NORMAL << WHITE;
+							std::cout.unsetf(std::ios::fixed);
+							int ret = runTarget(s);
+							printRunResult(ret);
+							std::cout << std::endl << WHITE;
+						}
+						fin.close();
+						//std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
+					}
 				}
 			}
-		}
 
 		virtual ~BaseLearner() {
-			delete cl;
-			delete poly;
+			//delete cl;
+			//delete poly;
 		} 
 
-/** @brief This function runs the target_program with the given input
- *
- *  @param  input defines input values which are used to call target_program 
- */
+		/** @brief This function runs the target_program with the given input
+		 *
+		 *  @param  input defines input values which are used to call target_program 
+		 */
 		int runTarget(Solution& input) {
 			assert(func != NULL || "Func equals NULL, ERROR!\n");
 			beforeLoop();
@@ -94,7 +96,43 @@ class BaseLearner{
 		 *
 		 *		   You can find details of each parameters in child class.
 		 */
-		virtual int selectiveSampling(int randn, int exen, int type, void* params) = 0;
+		int selectiveSampling(int randn, int exen, int type, Classifier* cl) {
+#ifdef __PRT
+			std::cout << "{" << GREEN;
+#endif
+
+			if ((type != 0) && (exen > type))
+				randn += exen - type;
+			Solution input;
+			int ret = 0;
+			for (int i = 0; i < randn; i++) {
+				Classifier::solver(NULL, input);
+				ret = runTarget(input);
+#ifdef __PRT
+				std::cout << input;
+				printRunResult(ret);
+				std::cout << "|";
+#endif
+			}
+#ifdef __PRT
+			std::cout << BLUE;
+#endif
+			if (type == 0) {
+				for (int i = 0; i < exen; i++) {
+					Classifier::solver(cl, input);
+					ret = runTarget(input);
+#ifdef __PRT
+					std::cout << "|" << input;
+					printRunResult(ret);
+#endif
+				}
+			}
+
+#ifdef __PRT
+			std::cout << WHITE << "}" << std::endl;
+#endif
+			return randn + exen;
+		}
 
 		/** @brief This method try to return a readable string which describe the generated invariant.
 		 *		   The returned method is also required to be a valid expression which can be used in C program,
@@ -106,8 +144,8 @@ class BaseLearner{
 		States* gsets;
 		int (*func)(int*);
 		//Candidates* cs;
-		Classifier* cl;
-		Polynomial* poly;
+		//Classifier* cl;
+		//Polynomial* poly;
 };
 
 

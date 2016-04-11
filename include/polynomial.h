@@ -47,7 +47,6 @@ class Polynomial {
 		int dims;
 		int etimes;
 
-
 	public:
 		/** @brief Default constructor.
 		 *		   Set all its elements to value 0
@@ -107,6 +106,7 @@ class Polynomial {
 		 *	@param rhs The right-hand-side polynomail of assignment
 		 */
 		Polynomial& operator=(Polynomial& rhs);
+		bool operator==(const Polynomial& rhs);
 
 		std::string toString() const;
 
@@ -187,20 +187,31 @@ class Polynomial {
 		inline bool solvePolynomial(double* results) {
 			bool res = false;
 			int pickX = rand()%Nv;
+			bool need_repickX = true;
 			if (Nv == 1) {
 				res = gslSolvePolynomial(theta, etimes, results);
 				results[pickX] += rand() % (5 - etimes) - 2 + etimes / 2;
 			} else {
 				// Nv >= 2
+repickX:
 				double* uni_coefs = new double [etimes + 1];
-				for (int power = 0; power <= etimes; power++)
+				for (int power = 0; power <= etimes; power++) {
 					uni_coefs[power] = evaluateCoef(pickX, power, results);
+					if (uni_coefs[power] >= pow(0.1, PRECISION) || uni_coefs[power]<= -1 * pow(0.1, PRECISION))
+						need_repickX = false;
+				}
+				if (need_repickX) {
+					pickX = (pickX + 1)%Nv;
+					goto repickX;
+				}
+
 				res = gslSolvePolynomial(uni_coefs, etimes, &results[pickX]);
 				delete []uni_coefs;
 			}
 			return res;
 		}
 
+		/*
 		static bool factorNv1Times2(double *B);
 		static bool factorNv1Times3(double *B);
 		static bool factorNv2Times2(double *B);
@@ -212,10 +223,12 @@ class Polynomial {
 		bool toStandardForm(double* coefs) {
 			return Polynomial::toStandardForm(*this, coefs);
 		}
+		*/
 
 		bool factor() {
+			return true;
 			//std::cout << "\t  <<Factoring Polynomial>> \n";
-			if (getEtimes() == 1) return true;
+			/*if (getEtimes() == 1) return true;
 			double coefs[Cv0to4];
 			this->toStandardForm(coefs);
 			switch(Nv) {
@@ -235,6 +248,7 @@ class Polynomial {
 					return true;
 			}
 			return false;
+			*/
 		}
 
 
@@ -266,21 +280,6 @@ class Polynomial {
 					sol[i] = rand() % (maxv - minv + 1) + minv;
 				return 0;
 			}
-
-			/*
-			   if (Nv == 1) { 
-			   double* results = new double[poly->getEtimes()];
-			   std::cout << "*";
-			   int num_rational_solution = poly->solvePolynomial(results);
-			   if (num_rational_solution >= 1)
-			   sol[0] = results[rand() % num_rational_solution] + rand() % 3 - 1;
-			   else
-			   sol[0] = rand() % (maxv - minv + 1) + minv;
-			   std::cout << sol[0] << "*";
-			   delete []results;
-			   return 0;
-			   }
-			   */
 
 			int times = 0;
 			bool retry = true;
@@ -317,9 +316,15 @@ class Polynomial {
 		static double calc(Polynomial& poly, double* sol) {
 			if (sol == NULL) return -1;
 			//if (&poly == NULL) return -1;
-			double res = poly.theta[0];
-			for (int i = 0; i < Nv; i++) {
-				res += poly.theta[i+1] * sol[i];
+			double res = 0;
+			for (int i = 0; i < poly.getDims(); i++) {
+				double tmp = poly.theta[i];
+				for (int j = 0; j < Nv; j++) {
+					int power = vparray[i][j];
+					while (power-->0)
+						tmp *= sol[j];
+				}
+				res += tmp;
 			}
 			return res;
 		}
@@ -386,7 +391,7 @@ class Polynomial {
 
 		Polynomial* roundoff();
 
-		int toCandidates(Candidates* cs);
+		//int toCandidates(Candidates* cs);
 
 		inline double getTheta(int i) const {
 			assert((i < dims) || "parameter for getTheta is out of boundary.");
@@ -426,7 +431,7 @@ class Polynomial {
 			return false;
 		}
 
-		inline int getDims() {
+		inline int getDims() const {
 			return dims;
 		}
 
