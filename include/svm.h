@@ -43,21 +43,6 @@ class SVM : public MLalgo
 
 
 	public:
-		/*
-		inline Polynomial* getClassifier() {
-			return poly;
-		}
-
-		inline svm_model* getModel() {
-			return model;
-		}
-
-		inline int setClassifier(Polynomial* e) {
-			*poly = *e;
-			return 0;
-		}
-		*/
-
 		SVM(int type = 0, void (*f) (const char*) = NULL, int size = 1000000) : max_size(size) {
 			prepare_svm_parameters(param, type);
 			if (f != NULL)
@@ -82,10 +67,6 @@ class SVM : public MLalgo
 		}
 
 		~SVM() {
-#ifdef __DS_ENABLED
-			problem.save_to_file("../tmp/svm.ds");
-			std::cout << "save to file succeed. ../tmp/svm.ds\n";
-#endif
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (last_model != NULL) svm_free_and_destroy_model(&last_model);
 			if (raw_mapped_data != NULL) delete[]raw_mapped_data;

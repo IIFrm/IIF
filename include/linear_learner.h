@@ -11,6 +11,8 @@ class LinearLearner: public BaseLearner {
 
 		~LinearLearner();
 
+		virtual int save2file();
+
 		virtual int learn();
 
 		virtual std::string invariant(int n);

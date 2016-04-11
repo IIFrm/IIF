@@ -57,6 +57,7 @@ class BaseLearner{
 			//delete poly;
 		} 
 
+		virtual int save2file() = 0;
 		/** @brief This function runs the target_program with the given input
 		 *
 		 *  @param  input defines input values which are used to call target_program 

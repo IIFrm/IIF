@@ -11,6 +11,8 @@ class ConjunctiveLearner: public BaseLearner {
 
 		~ConjunctiveLearner();
 
+		virtual int save2file();
+		
 		virtual int learn();
 
 		virtual std::string invariant(int n);

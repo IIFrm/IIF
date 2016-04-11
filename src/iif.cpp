@@ -151,6 +151,9 @@ int iifContext::learn(const char* invfilename, int times) {
 	char filename[65]; 
 	while (p) {
 		if (p->learner->learn() == 0) {
+#ifdef __DS_ENABLED
+			p->learner->save2file();
+#endif
 			sprintf(filename, "%s.inv", (char*)invfilename);
 			std::ofstream invFile(filename);
 			invFile << p->learner->invariant(0);

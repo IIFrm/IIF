@@ -20,7 +20,6 @@ class SVM_I : public MLalgo //SVM
 		double** data; // [max_items * 2];
 		double* label; // [max_items * 2];
 
-		MState* negative_mapped_data; 
 
 		int resize(int new_size) {
 			if (new_size <= max_size) return 0;
@@ -44,6 +43,7 @@ class SVM_I : public MLalgo //SVM
 
 	public:
 		svm_problem problem;
+		MState* negative_mapped_data; 
 		int negative_size;
 
 		SVM_I(int type = 0, void(*f) (const char*) = NULL, int size = 10000, int n_poly = 16) 
@@ -75,24 +75,6 @@ class SVM_I : public MLalgo //SVM
 			}
 
 		~SVM_I() {
-#ifdef __DS_ENABLED
-			std::ofstream fout("../tmp/svm.ds");
-			fout << problem.np + negative_size  << "\t" << problem.np << "\t" << negative_size << "\n";
-			for (int i = 0; i < problem.np; i++) {
-				fout << 1;
-				for (int j = 0; j < Nv; j++)
-					fout << "\t" << j << ":" << (problem.x[i][j]).value;
-				fout << "\n";
-			}
-			for (int i = 0; i < negative_size; i++) {
-				fout << -1;
-				for (int j = 0; j < Nv; j++)
-					fout << "\t" << j << ":" << negative_mapped_data[i][j];
-				fout << "\n";
-			}
-			fout.close();
-			std::cout << "save to file succeed. ../tmp/svm.ds\n";
-#endif
 			if (model != NULL) svm_free_and_destroy_model(&model);
 			if (raw_mapped_data != NULL) delete []raw_mapped_data;
 			if (data != NULL) delete []data;

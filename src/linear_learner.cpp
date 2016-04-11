@@ -181,3 +181,9 @@ init_svm:
 std::string LinearLearner::invariant(int n) {
 	return svm->cl.toString();
 }
+
+int LinearLearner::save2file() {
+	svm->problem.save_to_file("../tmp/svm.ds");
+	std::cout << "save to file succeed. ../tmp/svm.ds\n";
+	return 0;
+}
