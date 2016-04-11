@@ -336,8 +336,8 @@ repickX:
 		 *		  The default is 4, which means we can bare 0.0001 difference.
 		 *		  In this case 1 ~=1.00001, but 1!~=1.000011
 		 */
-		bool is_similar(Polynomial& e2, int precision = PRECISION) {
-			precision += 6;
+		bool isSimilar(Polynomial& e2, int precision = PRECISION) {
+			//precision += 6;
 			if (dims != e2.getDims()) return -1;
 			double ratio = 0;
 			int i;
@@ -349,7 +349,7 @@ repickX:
 			}
 			if (i >= dims)
 				return -1;
-			//std::cout << "[ratio=" << ratio <<"]";
+			//std::cout << "1[ratio=" << ratio <<"]\n";
 			double down, up;
 			if (ratio >= 0) {
 				down = ratio * (1 - pow(0.1, precision));

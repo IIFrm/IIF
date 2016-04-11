@@ -10,14 +10,14 @@ class SVM : public MLalgo
 	public:
 		svm_parameter param;
 		svm_problem problem;
-		svm_model* last_model;
+		//svm_model* last_model;
 		int max_size;
 
 		MState* raw_mapped_data;
 		double** data; // [max_items * 2];
 		double* label; // [max_items * 2];
+		int etimes;
 
-	public:
 		svm_model* model;
 
 	protected:
@@ -47,7 +47,7 @@ class SVM : public MLalgo
 			prepare_svm_parameters(param, type);
 			if (f != NULL)
 				svm_set_print_string_function(f);
-			last_model = NULL;
+			//last_model = NULL;
 			model = NULL;
 
 			data = new double*[max_size];
@@ -59,6 +59,7 @@ class SVM : public MLalgo
 			problem.l = 0;
 			problem.x = (svm_node**)(data);
 			problem.y = label;
+			etimes = 1;
 
 #ifdef __DS_ENABLED
 			problem.np = 0;
@@ -68,16 +69,11 @@ class SVM : public MLalgo
 
 		~SVM() {
 			if (model != NULL) svm_free_and_destroy_model(&model);
-			if (last_model != NULL) svm_free_and_destroy_model(&last_model);
+			//if (last_model != NULL) svm_free_and_destroy_model(&last_model);
 			if (raw_mapped_data != NULL) delete[]raw_mapped_data;
 			if (data != NULL) delete []data;
 			if (label != NULL) delete label;
 		}
-
-		/*void setDegree(int degree) {
-			if (degree <= 0) return;
-			param.degree = degree;
-		}*/
 
 
 		int makeTrainingSet(States* gsets, int& pre_psize, int& pre_nsize) {
@@ -85,7 +81,7 @@ class SVM : public MLalgo
 			int cur_nsize = gsets[NEGATIVE].getSize();
 			if (cur_psize + cur_nsize > max_size) 
 				resize(cur_psize + cur_nsize);
-			
+
 #ifdef __PRT
 			std::cout << "+[" << cur_psize - pre_psize << "|"
 				<< cur_nsize - pre_nsize  << "] ==> ["
@@ -138,19 +134,22 @@ class SVM : public MLalgo
 				return -1; 
 			}
 
-			if (model != NULL) {
-				if (last_model != NULL)
-					svm_free_and_destroy_model(&last_model);
-				last_model = model;
-			}
-
-			//std::cout << std::endl << problem << std::endl;
-			model = svm_train(&problem, &param);
-			//std::cout << "\n\tmodel --> " << *model << std::endl;
 			Polynomial poly;
-			svm_model_visualization(model, &poly);
-			cl = poly;
+
+			while (etimes <= 3) {
+				setEtimes(etimes);
+				model = svm_train(&problem, &param);
+				svm_model_visualization(model, &poly);
+				double pass_rate = checkTrainingSet();
+
+				if (pass_rate == 1)
+					break;
+				etimes++;
+			}
+			if (etimes >= 4) return -1;
 			//svm_free_and_destroy_model(&model);
+			//model = NULL;
+			cl = poly;
 			return 0;
 		}
 
@@ -164,13 +163,14 @@ class SVM : public MLalgo
 		}
 
 		bool converged (Classifier& pre_cl) {
-			return cl[0]->is_similar(*pre_cl[0]);
+			if (pre_cl.size <= 0) return false;
+			return cl[0]->isSimilar(*pre_cl[0]);
 			//return converged_model();
 		}
 
-		bool converged_model () {
+		/*bool converged_model () {
 			return model_converged(model, last_model);
-		}
+		}*/
 
 		friend std::ostream& operator << (std::ostream& out, const SVM& svm) {
 			return svm._print(out);

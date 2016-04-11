@@ -187,7 +187,7 @@ class SVM_I : public MLalgo //SVM
 				// for all the equations in current state
 				for (int j = 0; j < pre_cl.size; j++) {	
 					// check all the equations in last state
-					if ((similar_vector[j] == false) && (cl[i]->is_similar(*pre_cl[j]) == true))  {	
+					if ((similar_vector[j] == false) && (cl[i]->isSimilar(*pre_cl[j]) == true))  {	
 						// the equation in last has not been set
 						// and it is similar to the current equation 
 #ifdef __PRT
@@ -213,9 +213,9 @@ class SVM_I : public MLalgo //SVM
 			return true;
 		}
 
-		bool converged_model() {
+		/*bool converged_model() {
 			return false;
-		}
+		}*/
 
 
 		friend std::ostream& operator << (std::ostream& out, const SVM_I& svm_i) {

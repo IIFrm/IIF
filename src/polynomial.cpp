@@ -82,6 +82,7 @@ bool Polynomial::operator==(const Polynomial& rhs) {
 	return true;
 }
 
+/*
 #if (linux || __MACH__)
 static void output_z3model(z3::model& z3m) {
 	std::cout << "{";
@@ -92,6 +93,7 @@ static void output_z3model(z3::model& z3m) {
 	std::cout << "}\n";
 }
 #endif
+*/
 
 /*
    bool Polynomial::factorNv1Times2(double *B) { //, double B, double C) {

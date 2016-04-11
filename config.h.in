@@ -81,7 +81,7 @@ const int MstatesIn1trace = 10240;
 /** @brief defines the number of tests runs initially. Should be a positive integer.
 */
 const int Nexe_init = 8 * Nv;
-const int Nretry_init = 128;
+const int Nretry_init = 32;
 
 /** @brief defines the number of tests runs after the first time. Should be a positive integer.
 */

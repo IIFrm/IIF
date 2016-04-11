@@ -35,9 +35,8 @@ int ConjunctiveLearner::learn()
 	int pre_psize = 0, pre_nsize = 0; // , pre_question_size = 0;
 	double pass_rate = 1;
 
-	int zero_times = 0;
-
 	for (rnd = 1; ((rnd <= max_iteration) && (pass_rate >= 1)); rnd++) {
+		int zero_times = 0;
 		//std::cout << "[" << rnd << "]";
 		int nexe = (rnd == 1) ? Nexe_init : Nexe_after;
 #ifdef __PRT
@@ -71,7 +70,10 @@ init_svm_i:
 #else
 		std::cout << "]" << WHITE;
 #endif
-		svm_i->makeTrainingSet(gsets, pre_psize, pre_nsize);
+		if (svm_i->makeTrainingSet(gsets, pre_psize, pre_nsize) == 0) {
+			if (++zero_times < Nretry_init)
+				goto init_svm_i;
+		}
 
 #ifdef __PRT
 		std::cout << "\n\t(" << step++ << ") start training... ";
@@ -93,8 +95,6 @@ init_svm_i:
 		 */
 #ifdef __PRT
 		std::cout << "\t(" << step++ << ") checking training traces.";
-#else
-		//std::cout << "]" << WHITE;
 #endif
 		pass_rate = svm_i->checkTrainingSet();
 

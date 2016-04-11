@@ -72,7 +72,7 @@ class MLalgo
 		 * @return int 0 if converged 
 		 */
 		virtual bool converged(Classifier& pre_cl) = 0;
-		virtual bool converged_model() = 0;
+		//virtual bool converged_model() = 0;
 
 		/** @brief output the current trainig result of a ML_Algo
 		 *

@@ -27,16 +27,16 @@ int LinearLearner::learn()
 	int rnd;
 	bool similarLast = false;
 	bool converged = false;
-	svm_model* lastModel = NULL;
+	//svm_model* lastModel = NULL;
+	Classifier pre_cl;
 	int pre_psize = 0, pre_nsize = 0;
 
 	double pass_rate = 1;
-	int etimes = 1;
-
-	int zero_times = 0;
+	//int etimes = 1;
 
 	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
-		
+		int zero_times = 0;
+
 		int nexe = (rnd == 1) ? Nexe_init : Nexe_after;
 #ifdef __PRT
 		int step = 1;
@@ -50,7 +50,7 @@ int LinearLearner::learn()
 
 init_svm:
 		//std::cout << std::endl << "\t-->selective sampling:\n\t";
-		selectiveSampling(Nexe_rand, nexe, 0, &(svm->cl));
+		selectiveSampling(Nexe_rand, nexe, 0, &pre_cl);
 		//std::cout << "\t<--selective sampling:\n";
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
@@ -64,8 +64,7 @@ init_svm:
 			std::cout << "+";
 #endif
 
-			zero_times++;
-			if (zero_times >= Nretry_init)
+			if (++zero_times >= Nretry_init)
 				exit(-1);
 			goto init_svm;
 		}
@@ -76,43 +75,45 @@ init_svm:
 		std::cout << "]" << WHITE;
 #endif
 
-		svm->makeTrainingSet(gsets, pre_psize, pre_nsize);
-
-		while (etimes <= 3) {
-			svm->cl.clear();
+		if (svm->makeTrainingSet(gsets, pre_psize, pre_nsize) == 0) {
+			if (++zero_times < Nretry_init)
+				goto init_svm;
+		}
 
 #ifdef __PRT
-			std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") start training "
-				"with mapping dimension {" << etimes << "}...";
+		std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") start training ...";
 #endif
 #ifdef __DS_ENABLED
-			std::cout << "[" << svm->problem.np << ":" << svm->problem.nn << "]";
+		std::cout << "[" << svm->problem.np << ":" << svm->problem.nn << "]";
 #endif
 
-			svm->setEtimes(etimes);
-			svm->train();
-			std::cout << "|-->> " << YELLOW << svm->cl << WHITE << std::endl;
-
+		if (svm->train() != 0) {
 #ifdef __PRT
-			std::cout << "\t(" << YELLOW << step++ << WHITE << ") checking training traces.";
+			std::cout << RED  << " [FAIL] \n Can not divided by SVM " << WHITE << std::endl;
 #endif
-
-			pass_rate = svm->checkTrainingSet();
-
-#ifdef __PRT
-			if (pass_rate == 1)
-				std::cout << GREEN << " [100%] [PASS]" << WHITE;
-			else
-				std::cout << RED << " [" << pass_rate * 100 << "%]" 
-					<< " [FAIL] \n The problem is not linear separable by mapping "
-					<< etimes << ".. Trying to project to a higher space " << WHITE << std::endl;
-#endif
-
-			if (pass_rate == 1)
-				break;
-			etimes++;
+			return -1;
 		}
-		if (etimes > 3) break;
+		std::cout << "|-->> " << YELLOW << svm->cl << WHITE << std::endl;
+#ifdef __PRT
+		std::cout << "\t(" << step++ << ") checking training traces.";
+#endif
+		pass_rate = svm->checkTrainingSet();
+
+#ifdef __PRT
+		if (pass_rate == 1) 
+			std::cout << GREEN << " [" << pass_rate * 100 << "%]" << WHITE;
+		else 
+			std::cout << RED << " [" << pass_rate * 100 << "%]" << WHITE;
+#endif
+
+		if (pass_rate < 1) {
+			std::cerr << RED << "[FAIL] ..... Can not dividey by SVM." << std::endl << WHITE;
+			rnd++;
+			break;	
+		}
+#ifdef __PRT
+		std::cout << GREEN << " [PASS]" << std::endl << WHITE;
+#endif
 
 		/*
 		 *	similarLast is used to store the convergence check return value for the last time.
@@ -123,7 +124,11 @@ init_svm:
 		std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") check convergence:        ";
 #endif
 
-		if (svm->converged_model() == true) {
+		//std::cout << "\n\t" << YELLOW << "check convergence:        \n" << WHITE;
+		//if (svm->converged_model() == true) {
+		if (svm->converged(pre_cl) == true) {
+			//std::cout << "\n\t" << YELLOW << "in convergence\n" << WHITE;
+			//std::cout << "\t" << YELLOW << "YY\t" << WHITE;
 			if (similarLast == true) {
 #ifdef __PRT
 				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
@@ -153,7 +158,9 @@ init_svm:
 		std::cout << "  [FAIL] neXt round " << std::endl;
 #endif
 
-		lastModel = svm->model;
+		//lastModel = svm->model;
+		pre_cl = svm->cl;
+		svm->cl.clear();
 	} // end of SVM training procedure
 
 	std::cout << "----------------------------------------------------------------------------" 
@@ -176,14 +183,14 @@ init_svm:
 	}
 
 	return ret;
-}
+	}
 
-std::string LinearLearner::invariant(int n) {
-	return svm->cl.toString();
-}
+	std::string LinearLearner::invariant(int n) {
+		return svm->cl.toString();
+	}
 
-int LinearLearner::save2file() {
-	svm->problem.save_to_file("../tmp/svm.ds");
-	std::cout << "save to file succeed. ../tmp/svm.ds\n";
-	return 0;
-}
+	int LinearLearner::save2file() {
+		svm->problem.save_to_file("../tmp/svm.ds");
+		std::cout << "save to file succeed. ../tmp/svm.ds\n";
+		return 0;
+	}
