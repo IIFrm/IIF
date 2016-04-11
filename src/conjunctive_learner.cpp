@@ -68,7 +68,9 @@ init_svm_i:
 #ifdef __PRT
 		std::cout << "\t(" << step++ << ") prepare training data... ";
 #else
-		std::cout << "]" << WHITE;
+		if (zero_times == 0) {
+			std::cout << "]" << WHITE;
+		}
 #endif
 		if (svm_i->makeTrainingSet(gsets, pre_psize, pre_nsize) == 0) {
 			if (++zero_times < Nretry_init)

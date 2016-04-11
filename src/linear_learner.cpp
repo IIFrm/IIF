@@ -52,7 +52,6 @@ init_svm:
 		//std::cout << "\t<--selective sampling:\n";
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
-
 #ifdef __PRT
 			if (gsets[POSITIVE].traces_num() == 0) 
 				std::cout << RED << "\tZero Positive trace, execute program again.\n" << WHITE;
