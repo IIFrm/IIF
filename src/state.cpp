@@ -83,7 +83,7 @@ void States::dumpTrace(int num) {
 	std::cout << "end.";
 }
 
-std::ostream& operator << (std::ostream& out, const States& ss) {
+std::ostream& operator<< (std::ostream& out, const States& ss) {
 	//std::cout << "lable[" << ss.label << "]:" << std::endl;
 	for (int i = 0; i < ss.p_index; i++) {
 		std::cout << "\tTr." << i << ":";

@@ -121,6 +121,7 @@ class SVM : public MLalgo
 			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
+			//std::cout << "makeTrainingSet => " << ret << "\n";
 			return ret;
 		}
 

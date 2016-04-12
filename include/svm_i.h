@@ -116,9 +116,10 @@ class SVM_I : public MLalgo //SVM
 #endif
 
 			problem.l = cur_psize;
+			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
-			return 0;
+			return ret;
 		}
 
 

@@ -18,10 +18,10 @@ int state_index;
 #include "color.h"
 int addStateInt(int first ...)
 {
-	if (state_index >= 1.5 * MstatesIn1trace)
+	if (state_index >= 0.9 * MstatesIn1trace)
 		if (rand() % (100 * state_index / MstatesIn1trace) > 1)
 			return 0;
-	if (state_index >= 1.999 * MstatesIn1trace)
+	if (state_index >= 0.999 * MstatesIn1trace)
 		return 0;
 	va_list ap;
 	va_start(ap, first);
@@ -40,8 +40,8 @@ int addStateInt(int first ...)
 #endif
 
 	state_index++;
-	if (state_index >= 2 * MstatesIn1trace) {
-		std::cout << RED << "\nToo many states (>" << 2 * MstatesIn1trace << 
+	if (state_index >= MstatesIn1trace) {
+		std::cout << RED << "\nToo many states (>" << MstatesIn1trace << 
 			") in one execution. Stop here.\n" << WHITE;
 		exit(-1);
 	}
@@ -50,10 +50,10 @@ int addStateInt(int first ...)
 
 int addStateDouble(double first, ...)
 {
-	if (state_index >= 1.5 * MstatesIn1trace)
+	if (state_index >= 0.9 * MstatesIn1trace)
 		if (rand() % (100 * state_index / MstatesIn1trace) > 1)
 			return 0;
-	if (state_index >= 1.999 * MstatesIn1trace)
+	if (state_index >= 0.999 * MstatesIn1trace)
 		return 0;
 	va_list ap;
 	va_start(ap, first);
@@ -72,8 +72,8 @@ int addStateDouble(double first, ...)
 #endif
 
 	state_index++;
-	if (state_index >= 2 * MstatesIn1trace) {
-		std::cout << RED << "\nToo many states (>" << 2 * MstatesIn1trace << 
+	if (state_index >= MstatesIn1trace) {
+		std::cout << RED << "\nToo many states (>" << MstatesIn1trace << 
 			") in one execution. Stop here.\n" << WHITE;
 		exit(-1);
 	}
@@ -105,6 +105,7 @@ int afterLoop(States* gsets)
 		label = NEGATIVE; 
 	} else if (!_passP && _passQ) {
 		label = QUESTION; 
+		//label = POSITIVE; 
 	} else if (_passP && !_passQ) {
 		label = CNT_EMPL;
 	}

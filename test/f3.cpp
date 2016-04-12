@@ -14,7 +14,8 @@ recordi(x, y, z);x++;
 y++;
 z-=2;
 }
-recordi(x, y, z);iif_assert(x + y >= 0);
+recordi(x, y, z);
+iif_assert(x + y >= 0);
 return 0;
 }
 
@@ -22,5 +23,6 @@ int main(int argc, char** argv)
  {
 iifContext context("../tmp/f3.var", loopFunction, "loopFunction", "../tmp/f3.ds");
 context.addLearner("linear", "../tmp/f3.cnt");
+context.addLearner("conjunctive", "../tmp/f3.cnt");
 return context.learn("../tmp/f3");
 }
