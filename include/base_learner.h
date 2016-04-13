@@ -29,19 +29,19 @@ class BaseLearner{
 	public:
 		BaseLearner(States* gsets, const char* cntempl_fname = NULL, int (*func)(int*) = target_program):
 			gsets(gsets), func(func) {
-				//cs = new Candidates();
-				//cl = new Classifier();
-				//poly = new Polynomial();
+				std::cout.unsetf(std::ios::fixed);
 				if (cntempl_fname!= NULL) {
 					//std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
 					std::ifstream fin(cntempl_fname);
 					if (fin) {
 						Solution s;
 						while (fin >> s) {
-							std::cout.setf(std::ios::fixed);
-							std::cout << BLUE << BOLD << "Test on Last Counter Example: " << std::setprecision(0) 
-								<<s << " from file " << cntempl_fname << " --> " << NORMAL << WHITE;
-							std::cout.unsetf(std::ios::fixed);
+							//std::cout.setf(std::ios::fixed);
+							//std::cout << BLUE << BOLD << "Test on Last Counter Example: " << std::setprecision(0) 
+							std::cout << BLUE << BOLD << "Test on Last Counter Example: "
+								<< s << " from file " << cntempl_fname << " --> " << NORMAL << WHITE;
+							//std::cout.unsetf(std::ios::fixed);
+							//std::cout.unsetf(std::ios::floatfield);
 							int ret = runTarget(s);
 							printRunResult(ret);
 							std::cout << std::endl << WHITE;
@@ -53,8 +53,6 @@ class BaseLearner{
 			}
 
 		virtual ~BaseLearner() {
-			//delete cl;
-			//delete poly;
 		} 
 
 		virtual int save2file() = 0;
@@ -144,9 +142,6 @@ class BaseLearner{
 	protected:
 		States* gsets;
 		int (*func)(int*);
-		//Candidates* cs;
-		//Classifier* cl;
-		//Polynomial* poly;
 };
 
 

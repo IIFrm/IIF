@@ -81,7 +81,7 @@ init_svm_i:
 		std::cout << "\n\t(" << step++ << ") start training... ";
 #endif
 #ifdef __DS_ENABLED
-		std::cout << "[" << svm_i->problem.np << ":" << svm_i->negative_size << "]";
+		std::cout << "[" << svm_i->problem.np << "+:" << svm_i->negative_size << "-]";
 #endif
 		int ret = svm_i->train();
 		if (ret == -1) {

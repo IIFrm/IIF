@@ -185,10 +185,10 @@ class FileHelper {
 
 			if (testcasefilename) {
 				cppFile << "context.addLearner(\"linear\", \"../" << testcasefilename << "\");\n";
-				cppFile << "context.addLearner(\"conjunctive\", \"../" << testcasefilename << "\");\n";
+				//cppFile << "context.addLearner(\"conjunctive\", \"../" << testcasefilename << "\");\n";
 			} else {
 				cppFile << "context.addLearner(\"linear\");\n";
-				cppFile << "context.addLearner(\"conjunctive\");\n";
+				//cppFile << "context.addLearner(\"conjunctive\");\n";
 			}
 
 			cppFile << "return context.learn(\"../" << invfileprefix << "\");\n}" << endl;

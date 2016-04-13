@@ -298,7 +298,7 @@ repickX:
 			}
 
 #ifdef __PRT_TESTCASE
-			std::cout << sol << "~";
+			//std::cout << sol << "~";
 #endif
 
 			//std::cout << "solved the polynomail to get one solution";

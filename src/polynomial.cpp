@@ -604,8 +604,14 @@ int Polynomial::roundoff(Polynomial& e) {
 
 	for (int i = 1; i < dims; i++)
 		e.theta[i] = _roundoff(theta[i] / min);
-	//e.theta[0] = ceil(theta[0] / min);
-	e.theta[0] = _roundoff(theta[0] / min);
+	if (etimes == 1 && Nv == 1) {
+		if (e.theta[1] > 0)
+			e.theta[0] = floor(theta[0] / min);
+		else
+			e.theta[0] = ceil(theta[0] / min);
+	} else {
+		e.theta[0] = _roundoff(theta[0] / min);
+	}
 #ifdef __PRT_polynomial
 	std::cout << "\tAfter roundoff: " << e << WHITE << std::endl;
 #endif

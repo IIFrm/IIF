@@ -33,7 +33,7 @@ int addStateInt(int first ...)
 
 #ifdef __PRT_TRACE
 	std::cout << BLUE << "(" << program_states[state_index][0];
-	for (int i = 1; i < VARS; i++) {
+	for (int i = 1; i < Nv; i++) {
 	    std::cout << "," << program_states[state_index][i];
 	}
 	std::cout << ")" << WHITE;
@@ -65,7 +65,7 @@ int addStateDouble(double first, ...)
 
 #ifdef __PRT_TRACE
 	std::cout << BLUE << "(" << program_states[state_index][0];
-	for (int i = 1; i < VARS; i++) {
+	for (int i = 1; i < Nv; i++) {
 	    std::cout << "," << program_states[state_index][i];
 	}
 	std::cout << ")" << WHITE;
@@ -114,7 +114,7 @@ int afterLoop(States* gsets)
 	std::cout << BLUE << "TRACE: ";
 	for (int i = 0; i < state_index; i++) {
 		std::cout << "(" << program_states[i][0];
-		for (int j = 1; j < D; j++)
+		for (int j = 1; j < Nv; j++)
 			std::cout << "," << program_states[i][j];
 		std::cout << ")->";
 	}
@@ -129,16 +129,16 @@ void printRunResult(int rr) {
 	switch (rr) {
 		case NEGATIVE:
 			std::cout << "-";
-			break;
+			return;
 		case QUESTION:
 			std::cout << "?";
-			break;
+			return;
 		case POSITIVE:
 			std::cout << "+";
-			break;
+			return;
 		case CNT_EMPL:
 			std::cout << "x";
-			break;
+			return;
 	}
 }
 

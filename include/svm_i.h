@@ -89,7 +89,7 @@ class SVM_I : public MLalgo //SVM
 				resize(cur_psize + 1);
 
 #ifdef __PRT
-			std::cout << "+[" << cur_psize - pre_psize << "|"
+			std::cout << "++[" << cur_psize - pre_psize << "|"
 				<< cur_nsize - pre_nsize  << "] ==> ["
 				<< cur_psize << "+|" << cur_nsize << "-]";
 #endif
