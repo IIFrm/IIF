@@ -3,7 +3,7 @@ set(Nv 1)
 project(InvariantInferenceFramework)
 set(PRECISION 3)
 
-add_definitions (-D__PRT)
+#add_definitions (-D__PRT)
 #add_definitions (-D__PRT_TESTCASE)
 #add_definitions (-D__PRT_Z3SOLVE)
 #add_definitions (-D__PRT_TRACE)

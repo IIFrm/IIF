@@ -172,7 +172,9 @@ class FileHelper {
 				case 2:
 					cppFile << "klee_assume(" << cs[LOOPC].value <<");\n"; 
 					cppFile << "klee_assume(" << cs[INV].value <<");\n"; 
+					cppFile << "do {\n";
 					cppFile << cs[LOOP].value << "\n";
+					cppFile << "} while(0);\n";
 					cppFile << "klee_Massert(" << cs[INV].value <<");\n"; 
 					break;
 				case 3:

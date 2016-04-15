@@ -37,17 +37,19 @@ path_cnt_lib=$dir_temp""$file_cnt_lib
 
 file_verif=$prefix".c"
 path_verif=$dir_temp""$file_verif
-file_c_verif=$prefix"_klee1.c"
+file_c_verif=$prefix"_klee.c"
 file_c1_verif=$prefix"_klee1.c"
 file_c2_verif=$prefix"_klee2.c"
 file_c3_verif=$prefix"_klee3.c"
-file_o_verif=$prefix"_klee1.o"
+file_o_verif=$prefix"_klee.o"
 
 
 function func_findSmtForZ3(){
 smtname="failAssert0000";
+#smtname="test00000";
 n=99
 i=1
+#cp ./klee-last/*.smt2 .
 tmpfile="result"
 while [ $i -lt $n ]; do
 	if [ ! -f $smtname""$i".smt2" ]; then
@@ -56,7 +58,7 @@ while [ $i -lt $n ]; do
 	fi
 	path_smt2=$smtname""$i".smt2"
 	path_model=$smtname""$i".model"
-	echo -n "Solving "$path_smt2" by z3 --> "
+	echo -n "  |-- z3 "$path_smt2" ---> "
 	## delete the last line, exit
 	sed '$d' -i  $smtname""$i".smt2"
 	echo "(get-model)" >> $path_smt2
@@ -85,9 +87,10 @@ u=$1
 cd $prefix"_klee"$u 
 rm -rf klee-*
 rm -rf *.smt2
-echo -e $blue"Compiling the C files and Run KLEE..."$u$white
+echo -e $green"Compiling the C files and Run KLEE..."$u$white
 llvm-gcc --emit-llvm -c -g $file_c_verif > /dev/null
-klee -write-smt2s $file_o_verif #2>&- 1>&-
+klee -write-smt2s $file_o_verif > /dev/null 2>&1
+#klee -write-smt2s $file_o_verif #> /dev/null 2>&1
 ret=$?
 func_findSmtForZ3
 ret=$?

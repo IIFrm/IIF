@@ -94,6 +94,8 @@ bool Classifier::factor(Polynomial& poly) {
 	}
 
 	if (Nv == 1) {
+		this->add(poly);
+		return true;
 		if (etimes == 2) {
 			// univariant quadratic function
 			//std::cout << "univariant quadratic function: " << poly << "\n";
@@ -118,11 +120,11 @@ bool Classifier::factor(Polynomial& poly) {
 			if (x1 > x2) std::swap(x1, x2);
 			//std::cout << "x1=" << x1 << ", x2=" << x2 << "\n";
 			if (A > 0) {
-				this->add(*(new Polynomial(x1, -1.0)));
-				this->add(*(new Polynomial(-1 * x2, 1.0)), DISJUNCT);
+				this->add(*(new Polynomial(floor(x1), -1.0)));
+				this->add(*(new Polynomial(-1 * ceil(x2), 1.0)), DISJUNCT);
 			} else {
-				this->add(*(new Polynomial(-1 * x1, 1.0)));
-				this->add(*(new Polynomial(x2, -1.0)));
+				this->add(*(new Polynomial(-1 * ceil(x1), 1.0)));
+				this->add(*(new Polynomial(floor(x2), -1.0)));
 			}
 			//std::cout << *this << std::endl;
 			return true;

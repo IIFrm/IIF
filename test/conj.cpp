@@ -7,9 +7,10 @@ int x = a[0];
 
 int loop_times = 10;
 iif_assume((x>=0) && (x<=50));
-while(loop_times-- > 0)
+while(1)
 {
-recordi(x); if (x>50) x++;
+recordi(x); if (loop_times--<=0) break;
+		if (x>50) x++;
 		if (x == 0) {
 			x ++;
 		} else x--;
@@ -23,5 +24,6 @@ int main(int argc, char** argv)
  {
 iifContext context("../tmp/conj.var", loopFunction, "loopFunction", "../tmp/conj.ds");
 context.addLearner("linear", "../tmp/conj.cnt");
+context.addLearner("conjunctive", "../tmp/conj.cnt");
 return context.learn("../tmp/conj");
 }
