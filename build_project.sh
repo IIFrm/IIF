@@ -61,7 +61,7 @@ echo -n -e $blue"Generating CMakeLists file for further construction..."$white
 cmakefile="./CMakeLists.txt"
 echo "cmake_minimum_required (VERSION 2.8)" > $cmakefile
 echo "set(Nv "$Nv")" >> $cmakefile
-cat ./cmake.base >> $cmakefile
+cat ./cmake.in >> $cmakefile
 echo "add_executable("$prefix" "$path_cpp" \${DIR_SRCS} \${HEADER})" >> $cmakefile
 echo "target_link_libraries("$prefix" \${Z3_LIBRARY})" >> $cmakefile
 echo "target_link_libraries("$prefix" \${GSL_LIBRARIES})" >> $cmakefile
