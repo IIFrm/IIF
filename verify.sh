@@ -59,23 +59,25 @@ while [ $i -lt $n ]; do
 	path_smt2=$smtname""$i".smt2"
 	path_model=$smtname""$i".model"
 	echo -n "  |-- z3 "$path_smt2" ---> "
+	"../../tools/smt2_bv2int.sh" $path_smt2 
+	python "../../tools/smt2solver.py" $path_smt2 > $path_model
+	result=$?
 	## delete the last line, exit
-	sed '$d' -i  $smtname""$i".smt2"
-	echo "(get-model)" >> $path_smt2
-	echo "(exit)" >> $path_smt2
+	#sed '$d' -i  $smtname""$i".smt2"
+	#echo "(get-model)" >> $path_smt2
+	#echo "(exit)" >> $path_smt2
 
-	z3 $path_smt2 > $path_model
+	#z3 $path_smt2 > $path_model
 
 	"../../"$dir_tool"model_parser" "../../"$path_var $path_model "../../"$path_cnt
-	result=$?
-	if [ $result -eq 0 ]; then
+	if [ $result -ne 0 ]; then
 		# unsat
 		echo -e $green$bold" [unsat] [PASS]"$white
 		i=$(($i+1))
 	else
 		echo -n -e $red$bold" [sat] [FAIL]"$white
 		echo -e " >>> counter example is stored at "$yellow$path_cnt$white
-		cat "../../"$path_cnt >> "../../"$path_cnt_lib
+		#cat "../../"$path_cnt >> "../../"$path_cnt_lib
 		return 1
 	fi
 done
@@ -159,4 +161,10 @@ mv $file_c3_verif $prefix"_klee3/"$file_c_verif
 KleeVerify 1
 KleeVerify 2
 KleeVerify 3
+
+cd ..
+echo -e $bold$green"--------------------------------finish proving--------------------------------------"$white
+echo -n -e $green"The invariant can be "$yellow
+cat $path_inv
+echo -e $green".\nEND"$white
 exit 0
