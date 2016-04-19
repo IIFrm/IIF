@@ -69,7 +69,6 @@ while [ $iteration -le 32 ]; do
 	ret=$?
 	if [ $ret -ne 0 ]; then
 		echo -e $red$bold"can not get an invariant candidate, read log file to find out more."$normal$white
-		#echo "try more parameters to get a perfect classifier"
 		exit 1
 	fi
 	cd ..
@@ -80,8 +79,8 @@ while [ $iteration -le 32 ]; do
 	#**********************************************************************************************
 	./verify.sh $1
 	if [ $? -eq 0 ]; then
-		echo -n -e $green$bold"------------------------------------------------------------- Iteration "
-		echo -e " Done -------------------------------------------------------------------"$normal$white
+		#echo -n -e $green$bold"------------------------------------------------------------- Iteration "
+		#echo -e " Done -------------------------------------------------------------------"$normal$white
 		exit 0
 	else
 		iteration=$(($iteration+1))
