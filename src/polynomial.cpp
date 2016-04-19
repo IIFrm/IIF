@@ -8,17 +8,29 @@
 #include "polynomial.h"
 
 const double UPBOUND = pow(0.1, PRECISION);
-static double _roundoff(double x)
+static bool _roundoff(double x, double& roundx)
 {
+	if (std::abs(x) <= UPBOUND) {
+		roundx = 0;
+		return true;
+	}
 	int inx = nearbyint(x);
 	if ((inx >= x * (1 - UPBOUND) && inx <= x * (1 + UPBOUND))
-			|| (inx <= x * (1 - UPBOUND) && inx >= x * (1 + UPBOUND)))
-		return double(inx);
-	if (std::abs(x) <= UPBOUND)
-		return 0;
-	return double(inx);
+			|| (inx <= x * (1 - UPBOUND) && inx >= x * (1 + UPBOUND))) {
+		roundx = double(inx);
+		return true;
+	}
+	return false;
 }
 
+static bool scale(Polynomial& poly, double times) {
+	if (times == 0) return false;
+	for (int i = 0; i < poly.getDims(); i++)
+		poly[i] *= times;
+	return true;
+}
+
+#if 0
 std::string Polynomial::toString() const {
 	std::ostringstream stm;
 	bool firstplus = false;
@@ -42,26 +54,38 @@ std::string Polynomial::toString() const {
 
 	return stm.str();
 }
+#endif
+
+std::string Polynomial::toString() const {
+	std::ostringstream stm;
+	stm << std::setprecision(16);
+	bool firstplus = false;
+	for (int j = 0; j < dims; j++) {
+		if (theta[j] == 0) continue;
+		if (firstplus == false) {
+			firstplus = true;
+			if (theta[j] < 0) stm << "0 - ";
+		} else {
+			if (theta[j] < 0) stm << " - ";
+			else stm << " + ";
+		}
+		if (j == 0) {
+			stm << std::abs(theta[j]);
+			continue;
+		}
+		if (std::abs(theta[j]) != 1)
+			stm << std::abs(theta[j]) << "*";
+		stm << variables[j];
+	}
+	stm << " >= 0";
+
+	return stm.str();
+}
 
 std::ostream& operator<< (std::ostream& out, const Polynomial& poly) {
 	out << std::setprecision(16);
-	bool firstplus = false;
-	if (poly.theta[0] != 0) {
-		firstplus = true;
-		out << poly.theta[0];
-	}
-	for (int j = 1; j < poly.dims; j++) {
-		if (poly.theta[j] == 0) continue;
-		if (firstplus == false) 
-			firstplus = true;
-		else 
-			out << " + ";
-		if (poly.theta[j] != 1) 
-			out << "(" << poly.theta[j] << ")*";
-		//out << vparray[j];
-		out << variables[j];
-	}
-	out << " >= 0";
+	out << poly.toString();
+	return out;
 	return out;
 }
 
@@ -85,12 +109,12 @@ bool Polynomial::operator==(const Polynomial& rhs) {
 /*
 #if (linux || __MACH__)
 static void output_z3model(z3::model& z3m) {
-	std::cout << "{";
-	for (unsigned s = 0; s < z3m.size(); s++) {
-		z3::func_decl v = z3m[s];
-		std::cout << "  " << v.name() << "=" << z3m.get_const_interp(v);
-	}
-	std::cout << "}\n";
+std::cout << "{";
+for (unsigned s = 0; s < z3m.size(); s++) {
+z3::func_decl v = z3m[s];
+std::cout << "  " << v.name() << "=" << z3m.get_const_interp(v);
+}
+std::cout << "}\n";
 }
 #endif
 */
@@ -568,7 +592,9 @@ bool Polynomial::multiImply(const Polynomial* e1, int e1_num, const Polynomial& 
 }
 
 Polynomial* Polynomial::roundoff() {
-	roundoff(*this);
+	Polynomial poly;
+	this->roundoff(poly);
+	*this = poly;
 	return this;
 }
 
@@ -589,9 +615,6 @@ int Polynomial::roundoff(Polynomial& e) {
 	if (second_min == DBL_MAX) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
 	if (second_min == 0) second_min = 1;	// otherwise we will have */0 operation, return inf or nan...
 
-#ifdef __PRT_polynomial
-	std::cout << GREEN << "Before roundoff: " << *this;
-#endif
 	if (min / second_min <= UPBOUND)
 		min = second_min;
 
@@ -601,88 +624,116 @@ int Polynomial::roundoff(Polynomial& e) {
 		//if ((std::abs(theta0) < min) && (std::abs(theta0) > 1.0E-4))	
 		min = std::abs(theta[0]);
 
+#ifdef __PRT_POLYNOMIAL
+	std::cout << GREEN << "Before roundoff: " << *this;
+	std::cout << " min=" << min << std::endl;
+#endif
 
-	for (int i = 1; i < dims; i++)
-		e.theta[i] = _roundoff(theta[i] / min);
-	if (etimes == 1 && Nv == 1) {
-		if (e.theta[1] > 0)
-			e.theta[0] = floor(theta[0] / min);
-		else
-			e.theta[0] = ceil(theta[0] / min);
-	} else {
-		e.theta[0] = _roundoff(theta[0] / min);
+	e = *this;
+	double scale_up = 2;
+	while(scale_up <= 100) {
+		int i;
+		for (i = 0; i < dims; i++) {
+			if (_roundoff(theta[i] / min, e.theta[i]) == false) {
+				//std::cout << RED << "scale X10:" << GREEN << *this << std::endl;
+				scale(*this, scale_up/(scale_up-1));
+				scale_up++;
+				break;
+			} 
+			/*else {
+				std::cout << e.theta[i] << "\t";
+			}
+			*/
+		}
+		/*
+		std::cout << "\n" << *this;
+		std::cout << " --> " << e << std::endl;
+		std::cout << e.getDims() << std::endl;
+		*/
+		if (i >= dims)
+			break;
 	}
-#ifdef __PRT_polynomial
+	/*
+	   if (etimes == 1 && Nv == 1) {
+	   if (e.theta[1] > 0)
+	   e.theta[0] = floor(theta[0] / min);
+	   else
+	   e.theta[0] = ceil(theta[0] / min);
+	   } else {
+	   e.theta[0] = _roundoff(theta[0] / min);
+	   }
+	   */
+#ifdef __PRT_POLYNOMIAL
 	std::cout << "\tAfter roundoff: " << e << WHITE << std::endl;
 #endif
 	//std::cout << e << std::endl;
 	return 0;
 }
 
-/*
-   int Polynomial::toCandidates(Candidates* cs) {
-//std::cout << "ROUND OFF WITHOUT CONST" << *this << " --> ";
-Polynomial e = *this;
-double min = DBL_MAX;
-double second_min = min;
-for (int i = 1; i < dims; i++) {
-if (theta[i] == 0) continue;
-if (std::abs(theta[i]) < min) {
-second_min = min;
-min = std::abs(theta[i]);
-}
-}
+#if 0
+int Polynomial::toCandidates(Candidates* cs) {
+	//std::cout << "ROUND OFF WITHOUT CONST" << *this << " --> ";
+	Polynomial e = *this;
+	double min = DBL_MAX;
+	double second_min = min;
+	for (int i = 1; i < dims; i++) {
+		if (theta[i] == 0) continue;
+		if (std::abs(theta[i]) < min) {
+			second_min = min;
+			min = std::abs(theta[i]);
+		}
+	}
 
-if (min == DBL_MAX) min = 1;
-if (min == 0) min = 1;	
-if (second_min == DBL_MAX) second_min = 1;
-if (second_min == 0) second_min = 1;
+	if (min == DBL_MAX) min = 1;
+	if (min == 0) min = 1;	
+	if (second_min == DBL_MAX) second_min = 1;
+	if (second_min == 0) second_min = 1;
 
-#ifdef __PRT_polynomial
-std::cout << GREEN << "Before roundoff: " << *this;
+#ifdef __PRT_POLYNOMIAL
+	std::cout << GREEN << "Before roundoff: " << *this;
 #endif
-if (min / second_min <= UPBOUND)
-min = second_min;
+	if (min / second_min <= UPBOUND)
+		min = second_min;
 
-//double max_bound = ceil((theta[0] + 1) / min);
-//double min_bound = ceil((theta[0] - 1) / min);
-double max_bound = _roundoff((theta[0] + 1) / min);
-double min_bound = _roundoff((theta[0] - 1) / min);
-for (int i = 1; i < dims; i++)
-e.theta[i] = _roundoff(theta[i] / min);
-//e.theta[0] = ceil(theta[0] / min);
-e.theta[0] = _roundoff(theta[0] / min);
-#ifdef __PRT_polynomial
-std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
+	//double max_bound = ceil((theta[0] + 1) / min);
+	//double min_bound = ceil((theta[0] - 1) / min);
+	double max_bound = _roundoff((theta[0] + 1) / min);
+	double min_bound = _roundoff((theta[0] - 1) / min);
+	for (int i = 1; i < dims; i++)
+		e.theta[i] = _roundoff(theta[i] / min);
+	//e.theta[0] = ceil(theta[0] / min);
+	e.theta[0] = _roundoff(theta[0] / min);
+#ifdef __PRT_POLYNOMIAL
+	std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
 #endif
-std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
+	std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
 #ifdef _multi_candidates_
-double center = e.theta[0];
-for (int up = center, down = center - 1; (up <= max_bound) || (down >= min_bound); up++, down--) {
-if (up <= max_bound) {
-e.theta[0] = up;
-std::cout << "-->factoring up" << up << " ";
-if (e.factor() == true) {
-std::cout << "<---Done." << e << std::endl;
-cs->add(&e);
-//return 0;
-}
-}
-if (down >= min_bound) {
-e.theta[0] = down;
-std::cout << "-->factoring down" << down << " ";
-if (e.factor() == true) {
-std::cout << "<---Done." << e << std::endl;
-cs->add(&e);
-//return 0;
-}
-}
-}
-e.theta[0] = center;
+	double center = e.theta[0];
+	for (int up = center, down = center - 1; (up <= max_bound) || (down >= min_bound); up++, down--) {
+		if (up <= max_bound) {
+			e.theta[0] = up;
+			std::cout << "-->factoring up" << up << " ";
+			if (e.factor() == true) {
+				std::cout << "<---Done." << e << std::endl;
+				cs->add(&e);
+				//return 0;
+			}
+		}
+		if (down >= min_bound) {
+			e.theta[0] = down;
+			std::cout << "-->factoring down" << down << " ";
+			if (e.factor() == true) {
+				std::cout << "<---Done." << e << std::endl;
+				cs->add(&e);
+				//return 0;
+			}
+		}
+	}
+	e.theta[0] = center;
 #else
-cs->add(&e);
+	cs->add(&e);
 #endif
-std::cout << YELLOW << "Candidates size = " << cs->getSize() << std::endl;
-return cs->getSize();
+	std::cout << YELLOW << "Candidates size = " << cs->getSize() << std::endl;
+	return cs->getSize();
 }
-*/
+#endif

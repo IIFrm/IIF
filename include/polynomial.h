@@ -435,6 +435,10 @@ repickX:
 			return dims;
 		}
 
+		double& operator[](int index) {
+			assert (index < dims); 
+			return theta[index];
+		}
 		//protected:
 	public:
 		double theta[Cv0to4];
