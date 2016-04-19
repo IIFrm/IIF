@@ -46,11 +46,8 @@ file_o_verif=$prefix"_klee.o"
 
 function func_findSmtForZ3(){
 smtname="failAssert0000";
-#smtname="test00000";
 n=99
 i=1
-#cp ./klee-last/*.smt2 .
-tmpfile="result"
 while [ $i -lt $n ]; do
 	if [ ! -f $smtname""$i".smt2" ]; then
 		#echo  "No such file."
@@ -58,22 +55,29 @@ while [ $i -lt $n ]; do
 	fi
 	path_smt2=$smtname""$i".smt2"
 	path_model=$smtname""$i".model"
-	echo -n "  |-- z3 "$path_smt2" ---> "
+	echo -n "  |-- processing "$path_smt2" ---> "
 	"../../tools/smt2_bv2int.sh" $path_smt2 
-	python "../../tools/smt2solver.py" $path_smt2 > $path_model
+	"../../tools/smt2solver.py" $path_smt2 > $path_model
 	result=$?
-	## delete the last line, exit
-	#sed '$d' -i  $smtname""$i".smt2"
-	#echo "(get-model)" >> $path_smt2
-	#echo "(exit)" >> $path_smt2
+	if [ $result -gt 1 ]; then
+		echo -e $red$bold"A Error Occurs during smt2solver"$white
+		exit 2 
+	fi
 
-	#z3 $path_smt2 > $path_model
+	sed -i 's/\[//g' $path_model
+	sed -i 's/\]//g' $path_model
+	sed -i 's/,/\n/g' $path_model
+	sed -i 's/=//g' $path_model
 
-	"../../"$dir_tool"model_parser" "../../"$path_var $path_model "../../"$path_cnt
-	if [ $result -ne 0 ]; then
+	cat $path_model | "../../"$dir_tool"model_parser" "../../"$path_var "../../"$path_cnt
+	result=$?
+	if [ $result -eq 0 ]; then
 		# unsat
 		echo -e $green$bold" [unsat] [PASS]"$white
 		i=$(($i+1))
+	elif [ $result -eq 2 ]; then
+		echo -e $red$bold"Error Occurs during model parsing"$white
+		exit 2 
 	else
 		echo -n -e $red$bold" [sat] [FAIL]"$white
 		echo -e " >>> counter example is stored at "$yellow$path_cnt$white
@@ -97,18 +101,17 @@ ret=$?
 func_findSmtForZ3
 ret=$?
 #echo -n -e $red$ret$white
-if [ $ret -ne 0 ]; then
+if [ $ret -eq 2 ]; then
+	exit $ret
+fi
+if [ $ret -eq 1 ]; then
 	echo -n -e $red">>>NOT A VALID INVARIVANT..."
 	if [ $u -eq 1 ]; then
 		echo -e "Reason: Property I (precondition ==> invariant) FAILED. stop here..."$white
-	else 
-		if [ $u -eq 2 ]; then
-			echo -e "Reason: Property II (invariant && loopcondition =S=> invariant) FAILED. stop here..."$white
-		else 
-			if [ $u -eq 3 ]; then
-				echo -e "Reason: Property III (invariant && ~loopcondition ==> postcondition) FAILED. stop here..."$white
-			fi
-		fi
+	elif [ $u -eq 2 ]; then
+		echo -e "Reason: Property II (invariant && loopcondition =S=> invariant) FAILED. stop here..."$white 
+	elif [ $u -eq 3 ]; then
+		echo -e "Reason: Property III (invariant && ~loopcondition ==> postcondition) FAILED. stop here..."$white
 	fi
 	exit $ret
 fi

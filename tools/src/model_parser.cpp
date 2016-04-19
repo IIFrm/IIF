@@ -19,7 +19,6 @@ class Model_Var{
 			out << mv.value; 
 			return out;
 		}
-
 };
 
 Model_Var* model;
@@ -36,81 +35,47 @@ bool save_to_file(const char* filename) {
 }
 
 bool parse_var_file(const char* varfile) {
+	//cout << "parsing var file\n";
 	ifstream inf(varfile);
 	inf >> Nv;
 	model = new Model_Var[Nv];
 	for (int i = 0; i < Nv; i++)
 		inf >> model[i].name;
+	//for (int i = 0; i < Nv; i++)
+	//	cout << model[i].name << endl;;
 	inf.close();
-	return true;
-}
-
-bool parse_item(string str) {
-	int start = 0;
-	int end = str.find("[", start);
-	char name[32];
-	int value;
-	while (end <= str.length()) {
-		start = end + 1;
-		/*end = str.find("=", start);
-		string name = str.substr(start, end - start);
-		int index = 0;
-		while (index < Nv) {
-			if (name != model[index].name)
-				index++;
-			else
-				break;
-		}
-		if (index >= Nv)
-			return false;
-		start = end + 2;
-		model[index].value = stoi(str.substr(start), nullptr, 10);
-		*/
-		end = str.find(",", start);
-		if (end == string::npos)
-			end = str.find("]", start);
-		if (end == string::npos)
-			return false;
-			
-		sscanf(str.substr(start, end-start).c_str(), "%s = %d", name, &value);
-		//cout << name << " = " << value << endl;
-		string vname(name);
-		int index = 0;
-		while (index < Nv) {
-			if (name != model[index].name)
-				index++;
-			else
-				break;
-		}
-		if (index >= Nv)
-			return false;
-		model[index].value = value;
-	}
-
 	return true;
 }
 
 
 int main(int argc, char** argv) {
-	assert ((argc < 3) || "# of arguments is less than 3.");
+	assert ((argc < 2) || "# of arguments is less than 2.");
 	parse_var_file(argv[1]);
-	ifstream modelfile(argv[2]);
-
-	string strline;
-	string fun_name;
-	getline(modelfile, strline, '\n');
-	if (strline.find("unsat") != string::npos) return 0;
-	while (getline(modelfile, strline, '\n')) {
-		cout << strline << endl;
-		parse_item(strline);
+	string name;
+	int value;
+	//cout << "parsing input...\n";
+	cin >> name;
+	//cout << name << endl;
+	if (name.find("unsat", 0) != string::npos) return 0;
+	for(int i = 0; i < Nv; i++) {
+		cin >> name >> value;
+		//cout << name << " -> " << value << endl;
+		for (int j = 0; j < Nv; j++) {
+			if (name == model[j].name) {
+				model[j].value = value;
+				break;
+			}
+		}
 	}
-	modelfile.close();
 
-	//cout << "-->model:\n";
-	if (argc > 3)
-		save_to_file(argv[3]);
+	/*cout << "-->model:\n";
+	for (int j = 0; j < Nv; j++)
+		cout << model[j] << "\t";
+	cout << endl;
+	*/
+	if (argc > 2)
+		save_to_file(argv[2]);
 
-	//cout << *model << endl;
-
+	// sat
 	return 1;
 }
