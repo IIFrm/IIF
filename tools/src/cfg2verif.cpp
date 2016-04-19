@@ -12,7 +12,7 @@
 #include <vector>
 using namespace std;
 
-enum category {NAME=0, BEFL, PREC, LOOPC, LOOP, POSTC, AFTL, INV};
+enum category {NAME=0, BEFL, BEFLI, PREC, LOOPC, LOOP, POSTC, AFTL, INV};
 
 class Config {
 	public:
@@ -29,6 +29,7 @@ class Config {
 			//cout << "processing <" + key + ", " + value + ">......\n";
 			if (key == "precondition") { cppstatement = "iif_assume(" + value + ");";
 			} else if (key == "beforeloop") { cppstatement = value;
+			} else if (key == "beforeloopinit") { cppstatement = value;
 			} else if (key == "loop") { cppstatement = value;
 			} else if (key == "loopcondition") { cppstatement = "while(" + value + ")";
 			} else if (key == "loop") { cppstatement = value;
@@ -53,16 +54,17 @@ class FileHelper {
 			cppfilename[len-2] = '\0';
 			strcat(cppfilename, "_klee0.c");
 
-			confignum = 8;
+			confignum = 9;
 			cs = new Config[confignum];
 			cs[0].key = "names";
 			cs[1].key = "beforeloop";
-			cs[2].key = "precondition";
-			cs[3].key = "loopcondition";
-			cs[4].key = "loop";
-			cs[5].key = "postcondition";
-			cs[6].key = "afterloop";
-			cs[7].key = "invariant";
+			cs[2].key = "beforeloopinit";
+			cs[3].key = "precondition";
+			cs[4].key = "loopcondition";
+			cs[5].key = "loop";
+			cs[6].key = "postcondition";
+			cs[7].key = "afterloop";
+			cs[8].key = "invariant";
 			//variables = NULL;
 			vnum = 0;
 		}
@@ -166,10 +168,14 @@ class FileHelper {
 
 			switch (choice) {
 				case 1:
+					if (cs[BEFLI].value.compare("") != 0)
+						cppFile << cs[BEFLI].value << std::endl;
 					cppFile << "klee_assume(" << cs[PREC].value <<");\n"; 
 					cppFile << "klee_Massert(" << cs[INV].value <<");\n"; 
 					break;
 				case 2:
+					if (cs[BEFLI].value.compare("") != 0)
+						cppFile << cs[BEFLI].value << std::endl;
 					cppFile << "klee_assume(" << cs[LOOPC].value <<");\n"; 
 					cppFile << "klee_assume(" << cs[INV].value <<");\n"; 
 					cppFile << "do {\n";

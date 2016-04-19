@@ -21,6 +21,7 @@ class Config {
 			//cout << "processing <" + key + ", " + value + ">......\n";
 			if (key == "precondition") { cppstatement = "iif_assume(" + value + ");";
 			} else if (key == "beforeloop") { cppstatement = value;
+			} else if (key == "beforeloopinit") { cppstatement = value;
 			} else if (key == "loop") { cppstatement = value;
 			} else if (key == "loopcondition") { cppstatement = "while(" + value + ")";
 			} else if (key == "loop") { cppstatement = value;
@@ -42,15 +43,16 @@ class FileHelper {
 			this->invfileprefix = invfileprefix;
 			this->testcasefilename = testcasefilename;
 			this->oldtracefilename = oldtracefilename;
-			confignum = 7;
+			confignum = 8;
 			cs = new Config[confignum];
 			cs[0].key = "names";
 			cs[1].key = "beforeloop";
-			cs[2].key = "precondition";
-			cs[3].key = "loopcondition";
-			cs[4].key = "loop";
-			cs[5].key = "postcondition";
-			cs[6].key = "afterloop";
+			cs[2].key = "beforeloopinit";
+			cs[3].key = "precondition";
+			cs[4].key = "loopcondition";
+			cs[5].key = "loop";
+			cs[6].key = "postcondition";
+			cs[7].key = "afterloop";
 			vnum = 0;
 		}
 

@@ -5,12 +5,12 @@ using namespace iif;
 int loopFunction(int a[]) {
 int x = a[0];
 
-int loop_times = 10;
+int loop_times;
+loop_times = 10;
 iif_assume((x>=0) && (x<=50));
-while(1)
+while(loop_times-->0)
 {
-recordi(x); if (loop_times--<=0) break;
-		if (x>50) x++;
+recordi(x); if (x>50) x++;
 		if (x == 0) {
 			x ++;
 		} else x--;

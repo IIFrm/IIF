@@ -166,7 +166,7 @@ KleeVerify 2
 KleeVerify 3
 
 cd ..
-echo -e $bold$green"--------------------------------finish proving--------------------------------------"$white
+echo -e $bold$green"-----------------------------------------------finish proving-----------------------------------------------------"$white
 echo -n -e $green"The invariant can be "$yellow
 cat $path_inv
 echo -e $green".\nEND"$white
