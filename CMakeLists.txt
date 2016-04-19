@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.8)
-set(Nv 1)
+set(Nv 3)
 project(InvariantInferenceFramework)
 set(PRECISION 3)
 
@@ -176,6 +176,6 @@ include_directories (include)
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 AUX_SOURCE_DIRECTORY(test DIR_TEST)
 
-add_executable(conj test/conj.cpp ${DIR_SRCS} ${HEADER})
-target_link_libraries(conj ${Z3_LIBRARY})
-target_link_libraries(conj ${GSL_LIBRARIES})
+add_executable(interproc_test3 test/interproc_test3.cpp ${DIR_SRCS} ${HEADER})
+target_link_libraries(interproc_test3 ${Z3_LIBRARY})
+target_link_libraries(interproc_test3 ${GSL_LIBRARIES})

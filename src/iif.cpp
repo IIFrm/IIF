@@ -111,14 +111,14 @@ iifContext::~iifContext() {
 }
 
 
-iifContext& iifContext::addLearner(const char* learnerName, const char* last_cnt_fname) {
+iifContext& iifContext::addLearner(const char* learnerName) {
 	BaseLearner* newLearner = NULL;
 	if (strcmp(learnerName, "linear") == 0)
-		newLearner = new LinearLearner(gsets, last_cnt_fname);
+		newLearner = new LinearLearner(gsets);
 	else if (strcmp(learnerName, "poly") == 0)
-	   newLearner = new PolyLearner(gsets, last_cnt_fname);
+	   newLearner = new PolyLearner(gsets);
 	else if (strcmp(learnerName, "conjunctive") == 0)
-	   newLearner = new ConjunctiveLearner(gsets, last_cnt_fname);
+	   newLearner = new ConjunctiveLearner(gsets);
 	/* 
 	   else if (strcmp(learnerName, "poly") == 0)
 	   newLearner = new PolyLearner(gsets);
@@ -141,7 +141,7 @@ iifContext& iifContext::addLearner(const char* learnerName, const char* last_cnt
 	return *this;
 }
 
-int iifContext::learn(const char* invfilename, int times) {
+int iifContext::learn(const char* last_cnt_fname, const char* invfilename, int times) {
 #ifdef linux
 	// we only support timeout in LINUX system
 	// Because don't know how to easily implement the same function in windows system...:( 
@@ -151,6 +151,9 @@ int iifContext::learn(const char* invfilename, int times) {
 #endif
 	LearnerNode* p = first;
 	char filename[65]; 
+	if (p && last_cnt_fname) 
+		p->learner->runCounterExampleFile(last_cnt_fname);
+
 	while (p) {
 		if (p->learner->learn() == 0) {
 #ifdef __DS_ENABLED

@@ -28,6 +28,9 @@ sed -i 's/bvsub/-/g' $file
 sed -i 's/bvmul/*/g' $file
 sed -i 's/bvdiv/\//g' $file
 
+# (bvxor -1 m) == (- -1 m)
+sed -i 's/(bvxor\ 4294967295\ /(-\ -1\ /g' $file
+
 sed -i 's/\([2-4][0-9]\{9\}\)/(-\ \1\ 4294967296)/g' $file
 #sed -i 's/(+\ 4294967295\ \([a-zA-Z_][a-zA-Z0-9_]*\))/(-\ \1 1)/g' $file
 #sed -i 's/(+\ 4294967294\ \([a-zA-Z_][a-zA-Z0-9_]*\))/(-\ \1 2)/g' $file

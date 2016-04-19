@@ -18,7 +18,8 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/xle10.var", loopFunction, "loopFunction", "../tmp/xle10.ds");
-context.addLearner("linear", "../tmp/xle10.cnt");
-context.addLearner("conjunctive", "../tmp/xle10.cnt");
-return context.learn("../tmp/xle10");
+context.addLearner("linear");
+context.addLearner("poly");
+context.addLearner("conjunctive");
+return context.learn("../tmp/xle10.cnt", "../tmp/xle10");
 }

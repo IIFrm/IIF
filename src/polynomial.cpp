@@ -30,7 +30,7 @@ static bool scale(Polynomial& poly, double times) {
 	return true;
 }
 
-#if 0
+#if 1
 std::string Polynomial::toString() const {
 	std::ostringstream stm;
 	bool firstplus = false;
@@ -56,6 +56,7 @@ std::string Polynomial::toString() const {
 }
 #endif
 
+#if 0
 std::string Polynomial::toString() const {
 	std::ostringstream stm;
 	stm << std::setprecision(16);
@@ -81,6 +82,7 @@ std::string Polynomial::toString() const {
 
 	return stm.str();
 }
+#endif
 
 std::ostream& operator<< (std::ostream& out, const Polynomial& poly) {
 	out << std::setprecision(16);

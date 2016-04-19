@@ -73,9 +73,9 @@ namespace iif{
 
 			~iifContext();
 
-			iifContext& addLearner(const char* learnerName, const char* solution_filename = NULL);
+			iifContext& addLearner(const char* learnerName);
 
-			int learn(const char* invfilename = "noname", int times = 1);
+			int learn(const char* solution_filename = NULL, const char* invfilename = "noname", int times = 1);
 
 		private:
 			States* gsets;

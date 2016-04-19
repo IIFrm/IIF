@@ -185,17 +185,17 @@ class FileHelper {
 			else
 				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n";
 
-			if (testcasefilename) {
-				cppFile << "context.addLearner(\"linear\", \"../" << testcasefilename << "\");\n";
-				cppFile << "context.addLearner(\"poly\", \"../" << testcasefilename << "\");\n";
-				cppFile << "context.addLearner(\"conjunctive\", \"../" << testcasefilename << "\");\n";
-			} else {
+			{
 				cppFile << "context.addLearner(\"linear\");\n";
 				cppFile << "context.addLearner(\"poly\");\n";
 				cppFile << "context.addLearner(\"conjunctive\");\n";
 			}
 
-			cppFile << "return context.learn(\"../" << invfileprefix << "\");\n}" << endl;
+			if (testcasefilename) {
+				cppFile << "return context.learn(\"../" << testcasefilename << "\", \"../" << invfileprefix << "\");\n}" << endl;
+			} else {
+				cppFile << "return context.learn(NULL, \"../" << invfileprefix << "\");\n}" << endl;
+			}
 			return true;
 
 			/*cppFile << "int main(int argc, char** argv)\n {\n" 

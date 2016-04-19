@@ -7,7 +7,7 @@
 
 class ConjunctiveLearner: public BaseLearner {
 	public:
-		ConjunctiveLearner(States* gsets, const char* solution_filename = NULL, int (*func)(int*) = target_program, int max_iteration = Miter);
+		ConjunctiveLearner(States* gsets, /*const char* solution_filename = NULL,*/ int (*func)(int*) = target_program, int max_iteration = Miter);
 
 		~ConjunctiveLearner();
 

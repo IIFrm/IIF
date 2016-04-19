@@ -11,8 +11,8 @@
 
 static void print_null(const char *s) {}
 
-PolyLearner::PolyLearner(States* gsets, const char* solution_filename, 
-		int (*func)(int*), int max_iteration) : BaseLearner(gsets, solution_filename, func) {
+PolyLearner::PolyLearner(States* gsets, int (*func)(int*), int max_iteration) 
+	: BaseLearner(gsets, func) {
 	svm = new SVM(0, print_null);
 	this->max_iteration = max_iteration;
 }

@@ -11,8 +11,8 @@
 
 static void print_null(const char *s) {}
 
-LinearLearner::LinearLearner(States* gsets, const char* solution_filename, 
-		int (*func)(int*), int max_iteration) : BaseLearner(gsets, solution_filename, func) {
+LinearLearner::LinearLearner(States* gsets, int (*func)(int*), int max_iteration) 
+	: BaseLearner(gsets, func) {
 	svm = new SVM(0, print_null);
 	this->max_iteration = max_iteration;
 }

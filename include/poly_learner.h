@@ -7,7 +7,7 @@
 
 class PolyLearner: public BaseLearner {
 	public:
-		PolyLearner(States* gsets, const char* solution_filename = NULL, int (*func)(int*) = target_program, int max_iteration = Miter);
+		PolyLearner(States* gsets, /*const char* solution_filename = NULL,*/ int (*func)(int*) = target_program, int max_iteration = Miter);
 
 		~PolyLearner();
 
