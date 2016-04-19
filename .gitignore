@@ -8,3 +8,5 @@ bin
 data
 build
 tags
+./CMakeLists.txt
+./include/config.h
