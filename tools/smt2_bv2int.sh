@@ -4,14 +4,14 @@ file=$1
 sed -i 's/\ \ /\ /g' $file
 sed -i 's/(\ /(/g' $file
 sed -i 's/\ )/)/g' $file
-sed -i 's/)\ (/)(/g' $file
+#sed -i 's/)\ (/)(/g' $file
 sed -i 's/\n\n/\n/g' $file
 
 sed -i 's/\?//g' $file
 
 sed -i 's/(set-logic/;(set-logic/g' $file
 #sed -i '1d' $file
-sed -i 's/(Array\ (_\ BitVec\ 32)(_\ BitVec\ 8)))/\ Int)/g' $file
+sed -i 's/(Array\ (_\ BitVec\ 32)\ (_\ BitVec\ 8)))/\ Int)/g' $file
 
 # remove (_ bv12 32)
 sed -i 's/(_\ bv\([0-9]*\)\ 32)/\1/g' $file
@@ -61,7 +61,7 @@ sed -i 's/(+\ 4294967266\ \([a-zA-Z_][a-zA-Z0-9_]*\))/(-\ \1 31)/g' $file
 sed -i 's/(+\ 4294967265\ \([a-zA-Z_][a-zA-Z0-9_]*\))/(-\ \1 32)/g' $file
 
 #replace concat of bitvector vector with int 
-sed -i 's/(concat\ (select\ \([a-zA-Z][a-zA-A0-9_]*\)\ 3)(concat\ (select\ \([a-zA-Z][a-zA-A0-9_]*\)\ 2)(concat\ (select\ \([a-zA-Z][a-zA-A0-9_]*\)\ 1)(select\ \([a-zA-Z][a-zA-A0-9_]*\)\ 0))))/\1\ /g' $file
+sed -i 's/(concat\ (select\ \([a-zA-Z][a-zA-A0-9_]*\)\ 3)\ (concat\ (select\ \([a-zA-Z][a-zA-A0-9_]*\)\ 2)\ (concat\ (select\ \([a-zA-Z][a-zA-A0-9_]*\)\ 1)\ (select\ \([a-zA-Z][a-zA-A0-9_]*\)\ 0))))/\1\ /g' $file
 
 # remove (check-sat)
 sed -i 's/(check-sat)/;(check-sat)/g' $file
@@ -74,5 +74,5 @@ sed -i 's/(exit)/;(exit)/g' $file
 sed -i 's/\ \ /\ /g' $file
 sed -i 's/(\ /(/g' $file
 sed -i 's/\ )/)/g' $file
-sed -i 's/)\ (/)(/g' $file
+#sed -i 's/)\ (/)(/g' $file
 sed -i 's/\n\n/\n/g' $file
