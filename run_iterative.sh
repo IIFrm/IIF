@@ -56,15 +56,15 @@ cd ..
 ./build_project.sh $1 $path_cnt $path_dataset
 
 iteration=1
+echo -e $blue"Running the project to generate invariant candidiate..."$white
 while [ $iteration -le 32 ]; do
-	echo -n -e $green$bold"--------------------------------------------------- Iteration "
+	echo -n -e $green$bold"--------------------------------------------- Iteration "
 	echo -n -e $iteration
-	echo -e " --------------------------------------------------------------"$normal$white
+	echo -e " --------------------------------------------------------"$normal$white
 	##########################################################################
 	# Run the target to get Invariant Candidates
 	##########################################################################
 	cd build
-	echo -e $blue"Running the project to generate invariant candidiate..."$white
 	./$prefix
 	ret=$?
 	if [ $ret -ne 0 ]; then

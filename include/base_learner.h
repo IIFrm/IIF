@@ -71,15 +71,16 @@ class BaseLearner{
 			func(a);
 			//std::cout << "\t<---- run the loop function.\n";
 
-			int ret = afterLoop(gsets);
-			if (gsets[CNT_EMPL].traces_num() > 0) {
-				std::cout << RED << BOLD << "x.\nBUG! Program encountered a Counter-Example trace." << std::endl;
+			int label = afterLoop(gsets);
+			//if (gsets[CNT_EMPL].traces_num() > 0) {
+			if (label == CNT_EMPL) {
+				std::cout << RED << BOLD << "] x.\nBUG! Program encountered a Counter-Example trace." << std::endl;
 				std::cout.setf(std::ios::fixed);
 				std::cout << std::setprecision(0) <<gsets[CNT_EMPL] << WHITE << std::endl;
 				std::cout.unsetf(std::ios::fixed);
 				exit(-2);
 			}
-			return ret;
+			return label;
 		}
 
 		/** @brief This method is the entrance for the whole learning procedure.

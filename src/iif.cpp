@@ -69,12 +69,11 @@ iifContext::iifContext(const char* vfilename, int (*func)(int*),
 		}
 	}
 
-	States* ss = new States[4];
-	gsets = &ss[1];
-	gsets[NEGATIVE].label = -1;
-	gsets[QUESTION].label = 0;
-	gsets[POSITIVE].label = 1;
-	gsets[CNT_EMPL].label = 2;
+	gsets = new States[2];
+	gsets[NEGATIVE].label = NEGATIVE;
+	gsets[POSITIVE].label = POSITIVE;
+	//gsets[QUESTION].label = QUESTION;
+	//gsets[CNT_EMPL].label = CNT_EMPL;
 	if (dataset_fname != NULL) {
 		std::ifstream fin(dataset_fname);
 		if (fin) {
@@ -102,8 +101,7 @@ iifContext::~iifContext() {
 		delete p;
 		p = pp;
 	}
-	States* ss = &gsets[NEGATIVE];
-	delete []ss;
+	delete []gsets;
 	if (variables != NULL)
 		delete []variables;
 	if (vparray != NULL)

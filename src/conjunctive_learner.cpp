@@ -152,7 +152,7 @@ init_svm_i:
 	} // end of SVM_I training procedure
 
 
-	std::cout << "--------------------------------------------------------------------------------------------------------------------" << std::endl;
+	std::cout << "---------------------------------------------------\n";
 	std::cout << "Finish running svm_i for " << rnd - 1 << " times." << std::endl;
 
 	int ret = 0;
@@ -164,7 +164,7 @@ init_svm_i:
 	}
 
 	if ((pass_rate < 1) || (rnd > max_iteration)) {
-		std::cout << RED << "  Cannot divide by SVM_I perfectly.\n" << WHITE;
+		//std::cout << RED << "  Cannot divide by SVM_I perfectly.\n" << WHITE;
 		std::cout << pass_rate << "\t" << rnd << std::endl;
 		ret = -1;
 	}

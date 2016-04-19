@@ -121,7 +121,8 @@ int afterLoop(States* gsets)
 	std::cout << "END[" << label << "]" << WHITE << std::endl;
 #endif
 	
-	gsets[label].addStates(program_states, state_index);
+	if (label == POSITIVE || label == NEGATIVE)
+		gsets[label].addStates(program_states, state_index);
 	return label;
 }
 

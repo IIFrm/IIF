@@ -16,7 +16,8 @@
  * Negative = -1 because we want to compatible with natural meaning and svm labels.
  *				 This also cause a problem to reassign states point in each test file which is ugly
  */
-enum {NEGATIVE = -1, QUESTION, POSITIVE, CNT_EMPL};	/* trace_type */
+//enum {NEGATIVE = -1, QUESTION, POSITIVE, CNT_EMPL};	/* trace_type */
+enum {NEGATIVE = 0, POSITIVE, QUESTION, CNT_EMPL};	/* trace_type */
 
 int addStateInt(int first, ...);
 int addStateDouble(double first, ...);
