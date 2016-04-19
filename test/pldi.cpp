@@ -11,13 +11,16 @@ while(x < 0)
 {
 recordi(x, y);x=x+y; y++;
 }
-recordi(x, y);iif_assert(y>=0);
+recordi(x, y);
+iif_assert(y>=0);
 return 0;
 }
 
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/pldi.var", loopFunction, "loopFunction", "../tmp/pldi.ds");
-context.addLearner("linear", "../tmp/pldi.cnt");
-return context.learn("../tmp/pldi");
+context.addLearner("linear");
+context.addLearner("poly");
+context.addLearner("conjunctive");
+return context.learn("../tmp/pldi.cnt", "../tmp/pldi");
 }
