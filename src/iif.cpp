@@ -115,6 +115,8 @@ iifContext& iifContext::addLearner(const char* learnerName, const char* last_cnt
 	BaseLearner* newLearner = NULL;
 	if (strcmp(learnerName, "linear") == 0)
 		newLearner = new LinearLearner(gsets, last_cnt_fname);
+	else if (strcmp(learnerName, "poly") == 0)
+	   newLearner = new PolyLearner(gsets, last_cnt_fname);
 	else if (strcmp(learnerName, "conjunctive") == 0)
 	   newLearner = new ConjunctiveLearner(gsets, last_cnt_fname);
 	/* 

@@ -17,6 +17,7 @@ class SVM : public MLalgo
 		double** data; // [max_items * 2];
 		double* label; // [max_items * 2];
 		int etimes;
+		int kernel;
 
 		svm_model* model;
 
@@ -59,11 +60,16 @@ class SVM : public MLalgo
 			problem.x = (svm_node**)(data);
 			problem.y = label;
 			etimes = 1;
+			kernel = 0;
 
 #ifdef __DS_ENABLED
 			problem.np = 0;
 			problem.nn = 0;
 #endif
+		}
+
+		void setKernel(int kn) {
+			kernel = kn;
 		}
 
 		~SVM() {
@@ -133,8 +139,15 @@ class SVM : public MLalgo
 				return -1; 
 			}
 
+			int res = 0;
+			if (kernel == 0) {
+				res = trainLinear();
+			} else {
+				res = trainPoly();
+			}
+			return res;
+			/*
 			Polynomial poly;
-
 			while (etimes <= 3) {
 				setEtimes(etimes);
 				model = svm_train(&problem, &param);
@@ -150,7 +163,9 @@ class SVM : public MLalgo
 			//model = NULL;
 			cl = poly;
 			return 0;
+			*/
 		}
+
 
 		double checkTrainingSet() {
 			if (problem.l <= 0) return 0;
@@ -191,6 +206,31 @@ class SVM : public MLalgo
 
 			if (res >= 0) return 1;
 			else return -1;
+		}
+
+		int trainLinear() {
+			Polynomial poly;
+			model = svm_train(&problem, &param);
+			svm_model_visualization(model, &poly);
+			cl = poly;
+			return 0;
+		}
+
+		int trainPoly() {
+			Polynomial poly;
+			while (etimes <= 3) {
+				setEtimes(etimes);
+				model = svm_train(&problem, &param);
+				svm_model_visualization(model, &poly);
+				double pass_rate = checkTrainingSet();
+
+				if (pass_rate == 1)
+					break;
+				etimes++;
+			}
+			if (etimes >= 4) return -1;
+			cl = poly;
+			return 0;
 		}
 };
 

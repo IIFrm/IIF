@@ -185,9 +185,11 @@ class FileHelper {
 
 			if (testcasefilename) {
 				cppFile << "context.addLearner(\"linear\", \"../" << testcasefilename << "\");\n";
+				cppFile << "context.addLearner(\"poly\", \"../" << testcasefilename << "\");\n";
 				cppFile << "context.addLearner(\"conjunctive\", \"../" << testcasefilename << "\");\n";
 			} else {
 				cppFile << "context.addLearner(\"linear\");\n";
+				cppFile << "context.addLearner(\"poly\");\n";
 				cppFile << "context.addLearner(\"conjunctive\");\n";
 			}
 

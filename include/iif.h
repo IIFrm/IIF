@@ -22,7 +22,7 @@
 #include "states.h"
 #include "base_learner.h"
 #include "linear_learner.h"
-//#include "poly_learner.h"
+#include "poly_learner.h"
 //#include "rbf_learner.h"
 #include "conjunctive_learner.h"
 //#include "disjunctive_learner.h"

@@ -2,7 +2,7 @@
 #include "color.h"
 #include "polynomial.h"
 #include "classifier.h"
-#include "linear_learner.h"
+#include "poly_learner.h"
 
 #include <iostream>
 //#include <float.h>
@@ -11,18 +11,18 @@
 
 static void print_null(const char *s) {}
 
-LinearLearner::LinearLearner(States* gsets, const char* solution_filename, 
+PolyLearner::PolyLearner(States* gsets, const char* solution_filename, 
 		int (*func)(int*), int max_iteration) : BaseLearner(gsets, solution_filename, func) {
 	svm = new SVM(0, print_null);
 	this->max_iteration = max_iteration;
 }
 
-LinearLearner::~LinearLearner() {
+PolyLearner::~PolyLearner() {
 	if (svm != NULL)
 		delete svm;
 }
 
-int LinearLearner::learn()
+int PolyLearner::learn()
 {
 	int rnd;
 	bool similarLast = false;
@@ -31,7 +31,7 @@ int LinearLearner::learn()
 	int pre_psize = 0, pre_nsize = 0;
 
 	double pass_rate = 1;
-	svm->setKernel(0);
+	svm->setKernel(1);
 
 	for (rnd = 1; ((rnd <= max_iteration) /*&& (pass_rate >= 1)*/); rnd++) {
 		int zero_times = 0;
@@ -40,7 +40,7 @@ int LinearLearner::learn()
 #ifdef __PRT
 		int step = 1;
 		std::cout << RED << "[" << rnd << "]" << WHITE;
-		std::cout << RED << "Linear SVM------------------------{" << svm->etimes 
+		std::cout << RED << "Polynomail SVM------------------------{" << svm->etimes 
 			<< "}------------------------------------------------------------------------------------\n\t(" 
 			<< YELLOW << step++ << WHITE << ") execute programs... [" << nexe + Nexe_rand << "] ";
 #else
@@ -87,7 +87,7 @@ init_svm:
 
 		if (svm->train() != 0) {
 #ifdef __PRT
-			std::cout << RED  << " [FAIL] \n Can not divided by Linear SVM " << WHITE << std::endl;
+			std::cout << RED  << " [FAIL] \n Can not divided by polynomial SVM " << WHITE << std::endl;
 #endif
 			return -1;
 		}
@@ -105,7 +105,7 @@ init_svm:
 #endif
 
 		if (pass_rate < 1) {
-			std::cerr << RED << "[FAIL] ..... Can not dividey by Linear SVM." << std::endl << WHITE;
+			std::cerr << RED << "[FAIL] ..... Can not dividey by polynomial SVM." << std::endl << WHITE;
 			rnd++;
 			break;	
 		}
@@ -166,24 +166,24 @@ init_svm:
 		svm->cl.clear();
 		svm->cl.factor(*poly);
 		svm->cl.roundoff();
-		std::cout << YELLOW << "  Invariant Candidate(Linear): {  ";
+		std::cout << YELLOW << "  Invariant Candidate(Polynomial): {  ";
 		std::cout << GREEN << svm->cl.toString() << YELLOW;
 		std::cout << "  }" << WHITE << std::endl;
 	}
 
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {
-		//std::cout << RED << "  Cannot divide by SVM perfectly.\n" << WHITE;
+		//std::cout << RED << "  Cannot divide by polynomial SVM perfectly.\n" << WHITE;
 		ret = -1;
 	}
 
 	return ret;
 }
 
-std::string LinearLearner::invariant(int n) {
+std::string PolyLearner::invariant(int n) {
 	return svm->cl.toString();
 }
 
-int LinearLearner::save2file() {
+int PolyLearner::save2file() {
 	svm->problem.save_to_file("../tmp/svm.ds");
 	std::cout << "save to file succeed. ../tmp/svm.ds\n";
 	return 0;
