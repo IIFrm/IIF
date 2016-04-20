@@ -128,7 +128,7 @@ z3::config cfg;
 cfg.set("auto_config", true);
 z3::context ctx(cfg);
 std::cout << GREEN << B[0] << " * x^2 + " << B[1] << " * x + " << B[2];
-std::cout << BLUE << " = " << YELLOW << "(a0x + b0) (a1x + b1)\t" << WHITE;
+std::cout << BLUE << " = " << YELLOW << "(a0x + b0) (a1x + b1)\t" << NORMAL;
 
 // A * x^2 + B * x + C = 0
 z3::expr a0 = ctx.int_const("a0");
@@ -153,12 +153,12 @@ s.add(a1 > 0);
 //std::cout << s << std::endl;
 z3::check_result retu = s.check();
 if (retu == unsat) {
-std::cout << RED << "unSAT" << WHITE << std::endl;
+std::cout << RED << "unSAT" << NORMAL << std::endl;
 return false;
 }
 //std::cout << "SAT" << std::endl;
 z3::model z3m = s.get_model();
-//std::cout << "Z3 MODEL: "<< RED << z3m << WHITE << "\n";
+//std::cout << "Z3 MODEL: "<< RED << z3m << NORMAL << "\n";
 output_z3model(z3m);
 b.clear();
 #endif
@@ -172,7 +172,7 @@ z3::config cfg;
 cfg.set("auto_config", true);
 z3::context ctx(cfg);
 std::cout << GREEN << B[0] << " * x^3 + " << B[1] << " * x^2 + " << B[2] << " * x + " << B[3]; 
-std::cout << BLUE << " = " << YELLOW << "(a0x + b0) (a1x + b1) (a2x + b2)\t" << WHITE;
+std::cout << BLUE << " = " << YELLOW << "(a0x + b0) (a1x + b1) (a2x + b2)\t" << NORMAL;
 
 z3::expr a0 = ctx.int_const("a0");
 z3::expr a1 = ctx.int_const("a1");
@@ -199,12 +199,12 @@ s.add(a1 > 0);
 //std::cout << s << std::endl;
 z3::check_result retu = s.check();
 if (retu == unsat) {
-	std::cout << RED << "unSAT" << WHITE << std::endl;
+	std::cout << RED << "unSAT" << NORMAL << std::endl;
 	return false;
 }
 //std::cout << "SAT" << std::endl;
 z3::model z3m = s.get_model();
-//std::cout << "Z3 MODEL: "<< RED << z3m << WHITE << "\n";
+//std::cout << "Z3 MODEL: "<< RED << z3m << NORMAL << "\n";
 output_z3model(z3m);
 b.clear();
 #endif
@@ -221,7 +221,7 @@ bool Polynomial::factorNv2Times2(double *B) {
 	// Ax^2 + By^2 + Cxy + Dx + Ey + F = 0
 	std::cout << GREEN << B[0] << " * x^2 + " << B[1] << " * y^2 + " << B[2] 
 		<< " * xy + " << B[3] << " * x + " << B[4] << " * y + " << B[5];
-	std::cout << BLUE << " = " << YELLOW << "(a0x + b0y + c0) (a1x + b1y + c1)\t" << WHITE; 
+	std::cout << BLUE << " = " << YELLOW << "(a0x + b0y + c0) (a1x + b1y + c1)\t" << NORMAL; 
 
 	z3::expr a0 = ctx.int_const("a0");
 	z3::expr a1 = ctx.int_const("a1");
@@ -252,13 +252,13 @@ bool Polynomial::factorNv2Times2(double *B) {
 	//std::cout << s << std::endl;
 	z3::check_result retu = s.check();
 	if (retu == unsat) {
-		std::cout << RED << "unSAT" << WHITE << std::endl;
+		std::cout << RED << "unSAT" << NORMAL << std::endl;
 		return false;
 	}
 	b.clear();
 	//std::cout << "SAT" << std::endl;
 	z3::model z3m = s.get_model();
-	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << WHITE << "\n";
+	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << NORMAL << "\n";
 	output_z3model(z3m);
 	b.clear();
 #endif
@@ -276,7 +276,7 @@ bool Polynomial::factorNv2Times3(double* B) {
 		<< " * x^2y + " << B[3] << " * xy^2 + " << B[4] << " * x^2 + " << B[5] 
 		<< " * y^2 + " << B[6] << " * xy + " << B[7] << " * x + " << B[8] << " * y + " << B[9];
 	std::cout << BLUE << " = " << YELLOW 
-		<< "(a0x + b0y + c0) (a1x + b1y + c1) (a2x + b2y + c2)\t" << WHITE; 
+		<< "(a0x + b0y + c0) (a1x + b1y + c1) (a2x + b2y + c2)\t" << NORMAL; 
 
 	z3::expr a0 = ctx.int_const("a0");
 	z3::expr a1 = ctx.int_const("a1");
@@ -317,12 +317,12 @@ bool Polynomial::factorNv2Times3(double* B) {
 	//std::cout << s << std::endl;
 	z3::check_result retu = s.check();
 	if (retu == unsat) {
-		std::cout << RED << "unSAT" << WHITE << std::endl;
+		std::cout << RED << "unSAT" << NORMAL << std::endl;
 		return false;
 	}
 	//std::cout << "SAT" << std::endl;
 	z3::model z3m = s.get_model();
-	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << WHITE << "\n";
+	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << NORMAL << "\n";
 	output_z3model(z3m);
 	b.clear();
 #endif
@@ -340,7 +340,7 @@ bool Polynomial::factorNv3Times2(double *B) { //, double B, double C, double D, 
 	std::cout << GREEN << B[0] << " * x^2 + " << B[1] << " * y^2 + " << B[2] 
 		<< " * z^2 + " << B[3] << " * xy + " << B[4] << " * xz + " << B[5] 
 		<< " * yz + " << B[6] << " * x + " << B[7] << " * y + " << B[8] << " * z + " << B[9];
-	std::cout << BLUE << " = " << YELLOW << "(a0x + b0y + c0z + d0) (a1x + b1y + c1z + d1)\t" << WHITE;
+	std::cout << BLUE << " = " << YELLOW << "(a0x + b0y + c0z + d0) (a1x + b1y + c1z + d1)\t" << NORMAL;
 
 	z3::expr a0 = ctx.int_const("a0");
 	z3::expr a1 = ctx.int_const("a1");
@@ -375,12 +375,12 @@ bool Polynomial::factorNv3Times2(double *B) { //, double B, double C, double D, 
 	//std::cout << s << std::endl;
 	z3::check_result retu = s.check();
 	if (retu == unsat) {
-		std::cout << RED << "unSAT" << WHITE << std::endl;
+		std::cout << RED << "unSAT" << NORMAL << std::endl;
 		return false;
 	}
 	//std::cout << "SAT" << std::endl;
 	z3::model z3m = s.get_model();
-	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << WHITE << "\n";
+	//std::cout << "Z3 MODEL: \n"<< GREEN << z3m << NORMAL << "\n";
 	output_z3model(z3m);
 	b.clear();
 #endif
@@ -511,8 +511,8 @@ z3::expr Polynomial::toZ3expr(char** name, z3::context& c) const {
 bool Polynomial::uniImply(const Polynomial& e2) {
 #if (linux || __MACH__)
 #ifdef __PRT_QUERY
-	std::cout << BLUE << "-------------uni-Imply solving-------------\n" << WHITE;
-	std::cout << RED << *this << " ==> " << e2 << std::endl << WHITE;
+	std::cout << BLUE << "-------------uni-Imply solving-------------\n" << NORMAL;
+	std::cout << RED << *this << " ==> " << e2 << std::endl << NORMAL;
 #endif
 
 	z3::config cfg;
@@ -526,7 +526,7 @@ bool Polynomial::uniImply(const Polynomial& e2) {
 #ifdef __PRT_QUERY
 	std::cout << "\nhypo: " << hypo << std::endl;
 	std::cout << "conc: " << conc << std::endl;
-	std::cout << BLUE << "Query : " << query << std::endl << WHITE;
+	std::cout << BLUE << "Query : " << query << std::endl << NORMAL;
 #endif
 
 	z3::solver s(c);
@@ -666,7 +666,7 @@ int Polynomial::roundoff(Polynomial& e) {
 	   }
 	   */
 #ifdef __PRT_POLYNOMIAL
-	std::cout << "\tAfter roundoff: " << e << WHITE << std::endl;
+	std::cout << "\tAfter roundoff: " << e << NORMAL << std::endl;
 #endif
 	//std::cout << e << std::endl;
 	return 0;
@@ -706,9 +706,9 @@ int Polynomial::toCandidates(Candidates* cs) {
 	//e.theta[0] = ceil(theta[0] / min);
 	e.theta[0] = _roundoff(theta[0] / min);
 #ifdef __PRT_POLYNOMIAL
-	std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
+	std::cout << "\tAfter roundoff: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << NORMAL;
 #endif
-	std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << WHITE;
+	std::cout << "--->: " << e << GREEN << "[" << min_bound << "," << max_bound << "]\n" << NORMAL;
 #ifdef _multi_candidates_
 	double center = e.theta[0];
 	for (int up = center, down = center - 1; (up <= max_bound) || (down >= min_bound); up++, down--) {

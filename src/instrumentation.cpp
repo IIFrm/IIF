@@ -36,13 +36,13 @@ int addStateInt(int first ...)
 	for (int i = 1; i < Nv; i++) {
 	    std::cout << "," << program_states[state_index][i];
 	}
-	std::cout << ")" << WHITE;
+	std::cout << ")" << NORMAL;
 #endif
 
 	state_index++;
 	if (state_index >= MstatesIn1trace) {
 		std::cout << RED << "\nToo many states (>" << MstatesIn1trace << 
-			") in one execution. Stop here.\n" << WHITE;
+			") in one execution. Stop here.\n" << NORMAL;
 		exit(-1);
 	}
 	return 0;
@@ -68,13 +68,13 @@ int addStateDouble(double first, ...)
 	for (int i = 1; i < Nv; i++) {
 	    std::cout << "," << program_states[state_index][i];
 	}
-	std::cout << ")" << WHITE;
+	std::cout << ")" << NORMAL;
 #endif
 
 	state_index++;
 	if (state_index >= MstatesIn1trace) {
 		std::cout << RED << "\nToo many states (>" << MstatesIn1trace << 
-			") in one execution. Stop here.\n" << WHITE;
+			") in one execution. Stop here.\n" << NORMAL;
 		exit(-1);
 	}
 	return 0;
@@ -118,7 +118,7 @@ int afterLoop(States* gsets)
 			std::cout << "," << program_states[i][j];
 		std::cout << ")->";
 	}
-	std::cout << "END[" << label << "]" << WHITE << std::endl;
+	std::cout << "END[" << label << "]" << NORMAL << std::endl;
 #endif
 	
 	if (label == POSITIVE || label == NEGATIVE)

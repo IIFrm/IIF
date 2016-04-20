@@ -3388,9 +3388,9 @@ int svm_model_visualization(const svm_model *model, Polynomial* poly)
 	}
 	poly->setDims(DIMENSION + 1);
 	poly->set(theta);
-	//std::cout << BLUE << "Before RoundOFF " << *poly << GREEN << " +[-1, 1]" << WHITE << std::endl;
+	//std::cout << BLUE << "Before RoundOFF " << *poly << GREEN << " +[-1, 1]" << NORMAL << std::endl;
 	//poly->roundoff();
-	//std::cout << BLUE << "from svm model visualization: " << *poly << std::endl << WHITE;
+	//std::cout << BLUE << "from svm model visualization: " << *poly << std::endl << NORMAL;
 	return 0;	
 }
 
@@ -3452,7 +3452,7 @@ bool model_converged(struct svm_model *m1, struct svm_model *m2)
 	std::cout << " sv[" << m1->l << "," << m2->l <<"] ";
 #endif
 	//std::cout << "\n" << BLUE << "\tfirst model:"<< *m1 << std::endl;
-	//std::cout << "\tsecond model:"<< *m2 << WHITE << std::endl;
+	//std::cout << "\tsecond model:"<< *m2 << NORMAL << std::endl;
 	if (m1->nr_class != m2->nr_class) return false;
 	if (m1->l != m2->l) return false;
 	if (fabs(*(m1->rho) - *(m2->rho)) > 0.001) return false;
@@ -3616,7 +3616,7 @@ bool svm_model_approximate(const svm_model *m, int times/*, Classifier* cl*/)
 	}
 
 	z3::model z3m = s.get_model();
-	std::cout << GREEN << "Z3 MODEL: "<< RED << z3m << "\n" << WHITE;
+	std::cout << GREEN << "Z3 MODEL: "<< RED << z3m << "\n" << NORMAL;
 
 #endif
 	return true;
@@ -3696,7 +3696,7 @@ bool svm_problem_approximate(const svm_problem *sp, int times/*, Classifier* cl*
 	}
 
 	z3::model z3m = s.get_model();
-	std::cout << GREEN << "Z3 MODEL: "<< RED << z3m << "\n" << WHITE;
+	std::cout << GREEN << "Z3 MODEL: "<< RED << z3m << "\n" << NORMAL;
 
 #endif
 	return true;

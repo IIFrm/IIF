@@ -25,7 +25,8 @@ void setColor(std::ostream& out, int choice) {
 		case BLUE: // blue
 			SetConsoleTextAttribute(hOut, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 			break;
-		case WHITE: // white
+		//case WHITE: // white
+		case NORMAL: // normal
 			SetConsoleTextAttribute(hOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 			break;
 	}
@@ -46,7 +47,7 @@ void setColor(std::ostream& out, int choice) {
 		case BLUE: // blue
 			out << "\e[34m";
 			break;
-		case WHITE: // white
+		//case WHITE: // white
 		case NORMAL: // normal
 			out << "\e[0m";
 			break;

@@ -42,11 +42,11 @@ class BaseLearner{
 					while (fin >> s) {
 						//std::cout.setf(std::ios::fixed);
 						std::cout << BLUE << BOLD << "Test on Last Counter Example: "
-							<< s << " from file " << cntempl_fname << " --> " << NORMAL << WHITE;
+							<< s << " from file " << cntempl_fname << " --> " << NORMAL << NORMAL;
 						//std::cout.unsetf(std::ios::fixed);
 						int ret = runTarget(s);
 						printRunResult(ret);
-						std::cout << std::endl << WHITE;
+						std::cout << std::endl << NORMAL;
 					}
 					fin.close();
 				}
@@ -76,7 +76,7 @@ class BaseLearner{
 			if (label == CNT_EMPL) {
 				std::cout << RED << BOLD << "] x.\nBUG! Program encountered a Counter-Example trace." << std::endl;
 				std::cout.setf(std::ios::fixed);
-				std::cout << std::setprecision(0) <<gsets[CNT_EMPL] << WHITE << std::endl;
+				std::cout << std::setprecision(0) <<gsets[CNT_EMPL] << NORMAL << std::endl;
 				std::cout.unsetf(std::ios::fixed);
 				exit(-2);
 			}
@@ -127,7 +127,7 @@ class BaseLearner{
 			}
 
 #ifdef __PRT
-			std::cout << WHITE << "}" << std::endl;
+			std::cout << NORMAL << "}" << std::endl;
 #endif
 			return randn + exen;
 		}

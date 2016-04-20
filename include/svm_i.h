@@ -133,7 +133,7 @@ class SVM_I : public MLalgo //SVM
 				if ((ret == 0) && (misidx == -1)) {	// can divide all the negative points correctly
 
 #ifdef __PRT
-					std::cout << GREEN << "finish classified..." << WHITE << std::endl;
+					std::cout << GREEN << "finish classified..." << NORMAL << std::endl;
 #endif				
 					return 0;
 				}
@@ -150,7 +150,7 @@ class SVM_I : public MLalgo //SVM
 			std::cout << RED << "Can not divide all the data by SVM-I with"
 				" equations number limit to " << cl.size + 1 << "." << std::endl;
 			std::cerr << "You need to increase the limit by modifying [classname::methodname]"
-				"=SVM-I::SVM-I(..., int equ = **) " << WHITE << std::endl;
+				"=SVM-I::SVM-I(..., int equ = **) " << NORMAL << std::endl;
 			return -1;
 		}
 
@@ -163,7 +163,7 @@ class SVM_I : public MLalgo //SVM
 				   std::cout << problem.x[i][0];
 				   for (int j = 1; j < Nv; j++)
 				   std::cout << "," << problem.x[i][j];
-				   std::cout << GREEN << "-1" << "->" << predict((double*)problem.x[i]) << WHITE << " ";
+				   std::cout << GREEN << "-1" << "->" << predict((double*)problem.x[i]) << NORMAL << " ";
 				   */
 				pass += (predict((double*)problem.x[i]) >= 0) ? 1 : 0;
 			}
@@ -172,7 +172,7 @@ class SVM_I : public MLalgo //SVM
 				   std::cout << negative_mapped_data[i][0];
 				   for (int j = 1; j < Nv; j++)
 				   std::cout << "," << negative_mapped_data[i][j];
-				   std::cout << GREEN << "-1" << "->" << predict(negative_mapped_data[i]) << WHITE << " ";
+				   std::cout << GREEN << "-1" << "->" << predict(negative_mapped_data[i]) << NORMAL << " ";
 				   */
 				pass += (predict(negative_mapped_data[i]) < 0) ? 1 : 0;
 			}
@@ -192,14 +192,14 @@ class SVM_I : public MLalgo //SVM
 						// the equation in last has not been set
 						// and it is similar to the current equation 
 #ifdef __PRT
-						std::cout << GREEN <<  "<" << i << "-" << j << "> " << WHITE;
+						std::cout << GREEN <<  "<" << i << "-" << j << "> " << NORMAL;
 #endif 
 						similar_vector[j] = true;
 						break;
 					} 
 #ifdef __PRT
 					else {
-						std::cout << RED << "<" << i << "-" << j << "> " << WHITE;
+						std::cout << RED << "<" << i << "-" << j << "> " << NORMAL;
 					}
 #endif 
 				}
@@ -267,7 +267,7 @@ class SVM_I : public MLalgo //SVM
 					std::cout << RED << "Predict fault on: [" << problem.x[i][0];
 					for (int j = 1; j < Nv; j++)
 						std::cout << "," << problem.x[i][j];
-					std::cout << "]" << predict_result << ":" << problem.y[i] << WHITE;
+					std::cout << "]" << predict_result << ":" << problem.y[i] << NORMAL;
 				}
 #endif
 			}
@@ -311,7 +311,7 @@ class SVM_I : public MLalgo //SVM
 				svm_free_and_destroy_model(&model);
 
 #ifdef __PRT_SVM_I
-				std::cout << GREEN <<  poly << "\n" << WHITE;
+				std::cout << GREEN <<  poly << "\n" << NORMAL;
 				//std::cout << cl;
 				std::cout << " precision=[" << precision * 100 << "%]." << std::endl;
 				if (precision < 1) {
@@ -339,7 +339,7 @@ class SVM_I : public MLalgo //SVM
 			cl.resolveUniImplication();
 			//std::cout << " ---> < cl.size=" << cl.size << ">" << cl << std::endl;
 			model = NULL;
-			//std::cout << negative_index << BLUE << ">>" <<cl.toString() << std::endl << WHITE;
+			//std::cout << negative_index << BLUE << ">>" <<cl.toString() << std::endl << NORMAL;
 			return 0;
 		}
 
@@ -357,7 +357,7 @@ class SVM_I : public MLalgo //SVM
 						std::cout << "," << negative_mapped_data[i][j];
 					std::cout << ")  \t add it to training set... ==>" << std::endl;
 #endif
-					//std::cout << RED << "x@" << i << " " << WHITE;
+					//std::cout << RED << "x@" << i << " " << NORMAL;
 					idx = i;
 					return 0;
 				}
@@ -368,7 +368,7 @@ class SVM_I : public MLalgo //SVM
 			std::cout << "\n [PASS] @all";
 #endif
 			idx = -1;
-			//std::cout << RED << "x@" << -1 << " " << WHITE;
+			//std::cout << RED << "x@" << -1 << " " << NORMAL;
 			return 0;
 		}
 };

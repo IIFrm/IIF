@@ -85,7 +85,7 @@ int Classifier::add(Polynomial& poly, int type) {
 
 bool Classifier::factor(Polynomial& poly) {
 	//std::cout << "\tFactorization Process >>>>\n";
-	//std::cout << GREEN << poly << WHITE <<std::endl;
+	//std::cout << GREEN << poly << NORMAL <<std::endl;
 	int etimes = poly.getEtimes();
 	if (etimes == 1) {
 		//std::cout << "univariant linear function: " << poly << "\n";
@@ -162,13 +162,13 @@ bool Classifier::resolveUniImplication() {
 	for (int i = 0; i < size - 1; i++) {
 		//std::cout << RED << "\t??" << polys[size - 1] << " ==> " << polys[i] << "??";
 		if (polys[size - 1].uniImply(polys[i]) == true) {
-			//std::cout << "\tV\n" << WHITE;
+			//std::cout << "\tV\n" << NORMAL;
 			for (int j = i; j < size - 1; j++)
 				polys[j] = polys[j+1];
 			size--;
 			i--;
 		} else {
-			//std::cout << "\tX\n" << WHITE;
+			//std::cout << "\tX\n" << NORMAL;
 		}
 	}
 #ifdef __PRT_SVM_I

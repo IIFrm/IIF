@@ -53,9 +53,9 @@ init_svm_i:
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
 #ifdef __PRT
 			if (gsets[POSITIVE].traces_num() == 0) 
-				std::cout << RED << "\tZero Positive trace, execute program again." << WHITE << std::endl;
+				std::cout << RED << "\tZero Positive trace, execute program again." << NORMAL << std::endl;
 			if (gsets[NEGATIVE].traces_num() == 0) 
-				std::cout << RED << "\tZero Negative trace, execute program again." << WHITE << std::endl;
+				std::cout << RED << "\tZero Negative trace, execute program again." << NORMAL << std::endl;
 #else
 			std::cout << "+";
 #endif
@@ -69,7 +69,7 @@ init_svm_i:
 		std::cout << "\t(" << step++ << ") prepare training data... ";
 #else
 		if (zero_times == 0) {
-			std::cout << "]" << WHITE;
+			std::cout << "]" << NORMAL;
 		}
 #endif
 		if (svm_i->makeTrainingSet(gsets, pre_psize, pre_nsize) == 0) {
@@ -85,11 +85,11 @@ init_svm_i:
 #endif
 		int ret = svm_i->train();
 		if (ret == -1) {
-			std::cerr << RED << "[FAIL] ..... Can not dividey by SVM_I." << std::endl << WHITE;
+			std::cerr << RED << "[FAIL] ..... Can not dividey by SVM_I." << std::endl << NORMAL;
 			return -1;
 		}
 		//svm_i->cl.roundoff();
-		std::cout << "|-->> " << YELLOW << *svm_i << std::endl << WHITE;
+		std::cout << "|-->> " << YELLOW << *svm_i << std::endl << NORMAL;
 
 		/*
 		 *	check on its own training data.
@@ -102,18 +102,18 @@ init_svm_i:
 
 #ifdef __PRT
 		if (pass_rate == 1) 
-			std::cout << GREEN << " [" << pass_rate * 100 << "%]" << WHITE;
+			std::cout << GREEN << " [" << pass_rate * 100 << "%]" << NORMAL;
 		else 
-			std::cout << RED << " [" << pass_rate * 100 << "%]" << WHITE;
+			std::cout << RED << " [" << pass_rate * 100 << "%]" << NORMAL;
 #endif
 
 		if (pass_rate < 1) {
-			std::cerr << RED << "[FAIL] ..... Can not dividey by SVM_I." << std::endl << WHITE;
+			std::cerr << RED << "[FAIL] ..... Can not dividey by SVM_I." << std::endl << NORMAL;
 			rnd++;
 			break;	
 		}
 #ifdef __PRT
-		std::cout << GREEN << " [PASS]" << std::endl << WHITE;
+		std::cout << GREEN << " [PASS]" << std::endl << NORMAL;
 #endif
 
 		/*
@@ -160,11 +160,11 @@ init_svm_i:
 		svm_i->cl.roundoff();
 		std::cout << YELLOW << "  Hypothesis Invairant(Conjunctive): { ";
 		std::cout << GREEN << svm_i->cl << YELLOW;
-		std::cout << " }" << WHITE << std::endl;
+		std::cout << " }" << NORMAL << std::endl;
 	}
 
 	if ((pass_rate < 1) || (rnd > max_iteration)) {
-		//std::cout << RED << "  Cannot divide by SVM_I perfectly.\n" << WHITE;
+		//std::cout << RED << "  Cannot divide by SVM_I perfectly.\n" << NORMAL;
 		std::cout << pass_rate << "\t" << rnd << std::endl;
 		ret = -1;
 	}

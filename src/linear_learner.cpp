@@ -39,10 +39,10 @@ int LinearLearner::learn()
 		int nexe = (rnd == 1) ? Nexe_init : Nexe_after;
 #ifdef __PRT
 		int step = 1;
-		std::cout << RED << "[" << rnd << "]" << WHITE;
+		std::cout << RED << "[" << rnd << "]" << NORMAL;
 		std::cout << RED << "Linear SVM------------------------{" << svm->etimes 
 			<< "}------------------------------------------------------------------------------------\n\t(" 
-			<< YELLOW << step++ << WHITE << ") execute programs... [" << nexe + Nexe_rand << "] ";
+			<< YELLOW << step++ << NORMAL << ") execute programs... [" << nexe + Nexe_rand << "] ";
 #else
 		std::cout << RED << "[" << rnd;
 #endif
@@ -55,9 +55,9 @@ init_svm:
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
 #ifdef __PRT
 			if (gsets[POSITIVE].traces_num() == 0) 
-				std::cout << RED << "\tZero Positive trace, execute program again.\n" << WHITE;
+				std::cout << RED << "\tZero Positive trace, execute program again.\n" << NORMAL;
 			if (gsets[NEGATIVE].traces_num() == 0) 
-				std::cout << RED << "\tZero Negative trace, execute program again.\n" << WHITE;
+				std::cout << RED << "\tZero Negative trace, execute program again.\n" << NORMAL;
 #else
 			std::cout << "+";
 #endif
@@ -68,9 +68,9 @@ init_svm:
 		}
 
 #ifdef __PRT
-		std::cout << "\t(" << YELLOW << step++ << WHITE << ") prepare training data... ";
+		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") prepare training data... ";
 #else
-		std::cout << "]" << WHITE;
+		std::cout << "]" << NORMAL;
 #endif
 
 		if (svm->makeTrainingSet(gsets, pre_psize, pre_nsize) == 0) {
@@ -79,7 +79,7 @@ init_svm:
 		}
 
 #ifdef __PRT
-		std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") start training ...";
+		std::cout << "\n\t(" << YELLOW << step++ << NORMAL << ") start training ...";
 #endif
 #ifdef __DS_ENABLED
 		std::cout << "[" << svm->problem.np << "+:" << svm->problem.nn << "-]";
@@ -87,11 +87,11 @@ init_svm:
 
 		if (svm->train() != 0) {
 #ifdef __PRT
-			std::cout << RED  << " [FAIL] \n Can not divided by Linear SVM " << WHITE << std::endl;
+			std::cout << RED  << " [FAIL] \n Can not divided by Linear SVM " << NORMAL << std::endl;
 #endif
 			return -1;
 		}
-		std::cout << "|-->> " << YELLOW << svm->cl << WHITE << std::endl;
+		std::cout << "|-->> " << YELLOW << svm->cl << NORMAL << std::endl;
 #ifdef __PRT
 		std::cout << "\t(" << step++ << ") checking training traces.";
 #endif
@@ -99,18 +99,18 @@ init_svm:
 
 #ifdef __PRT
 		if (pass_rate == 1) 
-			std::cout << GREEN << " [" << pass_rate * 100 << "%]" << WHITE;
+			std::cout << GREEN << " [" << pass_rate * 100 << "%]" << NORMAL;
 		else 
-			std::cout << RED << " [" << pass_rate * 100 << "%]" << WHITE;
+			std::cout << RED << " [" << pass_rate * 100 << "%]" << NORMAL;
 #endif
 
 		if (pass_rate < 1) {
-			std::cerr << RED << "[FAIL] ..... Can not dividey by Linear SVM." << std::endl << WHITE;
+			std::cerr << RED << "[FAIL] ..... Can not dividey by Linear SVM." << std::endl << NORMAL;
 			rnd++;
 			break;	
 		}
 #ifdef __PRT
-		std::cout << GREEN << " [PASS]" << std::endl << WHITE;
+		std::cout << GREEN << " [PASS]" << std::endl << NORMAL;
 #endif
 
 		/*
@@ -119,7 +119,7 @@ init_svm:
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
 #ifdef __PRT
-		std::cout << "\n\t(" << YELLOW << step++ << WHITE << ") check convergence:        ";
+		std::cout << "\n\t(" << YELLOW << step++ << NORMAL << ") check convergence:        ";
 #endif
 
 		if (svm->converged(pre_cl) == true) {
@@ -167,11 +167,11 @@ init_svm:
 		svm->cl.roundoff();
 		std::cout << YELLOW << "  Invariant Candidate(Linear): {  ";
 		std::cout << GREEN << svm->cl.toString() << YELLOW;
-		std::cout << "  }" << WHITE << std::endl;
+		std::cout << "  }" << NORMAL << std::endl;
 	}
 
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {
-		//std::cout << RED << "  Cannot divide by SVM perfectly.\n" << WHITE;
+		//std::cout << RED << "  Cannot divide by SVM perfectly.\n" << NORMAL;
 		ret = -1;
 	}
 
