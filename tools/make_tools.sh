@@ -20,6 +20,7 @@ function handle_exit() {
 	return 0
 }
 
+mkdir -p bin
 
 echo -n -e "[ 25%] "$blue"Compiling cfg2test..."$normal
 g++ $dir_src"cfg2test.cpp" -std=c++11 -o $dir_bin"cfg2test"
