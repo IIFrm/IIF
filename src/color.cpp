@@ -35,23 +35,23 @@ void setColor(std::ostream& out, int choice) {
 void setColor(std::ostream& out, int choice) {
 	switch (choice) {
 		case RED: // red
-			out << "\033[33;\x1b[31m";
+			out << "\e[31m";
 			break;
 		case YELLOW: // yellow
-			out << "\033[33;\x1b[33m";
+			out << "\e[33m";
 			break;
 		case GREEN: // green
-			out << "\033[33;\x1b[32m";
+			out << "\e[32m";
 			break;
 		case BLUE: // blue
-			out << "\033[33;\x1b[34m";
+			out << "\e[34m";
 			break;
 		case WHITE: // white
 		case NORMAL: // normal
-			out << "\033[0m";
+			out << "\e[0m";
 			break;
 		case BOLD: // bold 
-			out << "\033[1m";
+			out << "\e[1m";
 			break;
 	}	
 }

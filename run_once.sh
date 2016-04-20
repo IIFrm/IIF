@@ -1,11 +1,10 @@
 #!/bin/bash
-red="\033[33;\x1b[31m"
-green="\033[33;\x1b[32m"
-yellow="\033[33;\x1b[33m"
-blue="\033[33;\x1b[34m"
-white="\033[0m"
-bold="\033[1m"
-normal="\033[0m"
+red="\e[31m"
+green="\e[32m"
+yellow="\e[33m"
+blue="\e[34m"
+bold="\e[1m"
+normal="\e[0m"
 
 if [ $# -lt 1 ]
 then
@@ -50,11 +49,11 @@ cd ..
 # Run the target to get Invariant Candidates
 ##########################################################################
 cd build
-echo -e $blue"Running the project to generate invariant candidiate..."$white
+echo -e $blue"Running the project to generate invariant candidiate..."$normal
 ./$prefix
 ret=$?
 if [ $ret -ne 0 ]; then
-	echo -e $red$bold"can not get an invariant candidate, read log file to find out more."$normal$white
+	echo -e $red$bold"can not get an invariant candidate, read log file to find out more."$normal$normal
 	#echo "can not separate using default paramater"
 	#echo "try more parameters to get a perfect classifier"
 	exit 1

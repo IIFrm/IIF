@@ -1,13 +1,10 @@
 #!/bin/bash
-red="\033[33;\x1b[31m"
-green="\033[33;\x1b[32m"
-yellow="\033[33;\x1b[33m"
-blue="\033[33;\x1b[34m"
-white="\033[0m"
-#bold=$(tput bold)
-#normal=$(tput sgr0)
-bold="\033[1m"
-normal="\033[0m"
+red="\e[31m"
+green="\e[32m"
+yellow="\e[33m"
+blue="\e[34m"
+normal="\e[0m"
+bold="\e[1m"
 
 
 if [ $# -lt 1 ]
@@ -56,11 +53,11 @@ cd ..
 ./build_project.sh $1 $path_cnt $path_dataset
 
 iteration=1
-echo -e $blue"Running the project to generate invariant candidiate..."$white
+echo -e $blue"Running the project to generate invariant candidiate..."$normal
 while [ $iteration -le 32 ]; do
 	echo -n -e $green$bold"--------------------------------------------- Iteration "
 	echo -n -e $iteration
-	echo -e " --------------------------------------------------------"$normal$white
+	echo -e " --------------------------------------------------------"$normal$normal
 	##########################################################################
 	# Run the target to get Invariant Candidates
 	##########################################################################
@@ -68,7 +65,7 @@ while [ $iteration -le 32 ]; do
 	./$prefix
 	ret=$?
 	if [ $ret -ne 0 ]; then
-		echo -e $red$bold"can not get an invariant candidate, read log file to find out more."$normal$white
+		echo -e $red$bold"can not get an invariant candidate, read log file to find out more."$normal$normal
 		exit 1
 	fi
 	cd ..
@@ -80,7 +77,7 @@ while [ $iteration -le 32 ]; do
 	./verify.sh $1
 	if [ $? -eq 0 ]; then
 		#echo -n -e $green$bold"------------------------------------------------------------- Iteration "
-		#echo -e " Done -------------------------------------------------------------------"$normal$white
+		#echo -e " Done -------------------------------------------------------------------"$normal$normal
 		exit 0
 	else
 		iteration=$(($iteration+1))

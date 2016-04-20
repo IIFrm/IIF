@@ -1,16 +1,16 @@
 #!/bin/bash
-red="\033[33;\x1b[31m"
-green="\033[33;\x1b[32m"
-yellow="\033[33;\x1b[33m"
-blue="\033[33;\x1b[34m"
-white="\033[0m"
-bold="\033[1m"
-normal="\033[0m"
+red="\e[31m"
+green="\e[32m"
+yellow="\e[33m"
+blue="\e[34m"
+white="\e[0m"
+bold="\e[1m"
+normal="\e[0m"
 
 if [ $# -lt 1 ]
 then
-	echo "./test.sh needs more parameters"
-	echo "./test.sh cofig_prefix"
+	echo "./verify.sh needs more parameters"
+	echo "./verify.sh cofig_prefix"
 	echo "try it again..."
 	exit 1
 fi
@@ -138,6 +138,7 @@ echo ""
 echo -n -e $blue"Generating a new config file contains the invariant candidate..."$white
 path_tmp_cfg="tmp/tmp.cfg"
 cp $path_cfg $path_tmp_cfg
+echo "" >> $path_tmp_cfg
 echo -n "invariant=" >> $path_tmp_cfg
 cat $path_inv >> $path_tmp_cfg
 echo -e $green$bold"[Done]"$white

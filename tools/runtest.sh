@@ -1,9 +1,9 @@
 #!/bin/bash
-red="\033[33;\x1b[31m"
-green="\033[33;\x1b[32m"
-yellow="\033[33;\x1b[33m"
-blue="\033[33;\x1b[34m"
-white="\033[0m"
+red="\e[31m"
+green="\e[32m"
+yellow="\e[33m"
+blue="\e[34m"
+white="\e[0m"
 
 if [ $# -lt 1 ]
 then

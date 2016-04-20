@@ -1,11 +1,10 @@
 #!/bin/bash
-red="\033[33;\x1b[31m"
-green="\033[33;\x1b[32m"
-yellow="\033[33;\x1b[33m"
-blue="\033[33;\x1b[34m"
-white="\033[0m"
-bold="\033[1m"
-normal="\033[0m"
+red="\e[31m"
+green="\e[32m"
+yellow="\e[33m"
+blue="\e[34m"
+bold="\e[1m"
+normal="\e[0m"
 
 if [ $# -lt 1 ]
 then
@@ -40,7 +39,7 @@ prefix_path_inv=$dir_temp""$prefix
 ##########################################################################
 # Prepare the target loop program
 ##########################################################################
-echo -n -e $blue"Converting the given config file to a valid cplusplus file..."$white
+echo -n -e $blue"Converting the given config file to a valid cplusplus file..."$normal
 if [ $# -ge 2 ]; then
 	if [ $# -ge 3 ]; then
 		$dir_tool"cfg2test" $path_cfg $path_cpp $path_var $prefix_path_inv $2 $3
@@ -51,13 +50,13 @@ else
 	$dir_tool"cfg2test" $path_cfg $path_cpp $path_var $prefix_path_inv
 fi
 Nv=$?
-echo -e $green$bold"[DONE]"$white
+echo -e $green$bold"[DONE]"$normal
 
 
 ##########################################################################
 # Generate CMakeLists from cmake.base and Nv value
 ##########################################################################
-echo -n -e $blue"Generating CMakeLists file for further construction..."$white
+echo -n -e $blue"Generating CMakeLists file for further construction..."$normal
 cmakefile="./CMakeLists.txt"
 echo "cmake_minimum_required (VERSION 2.8)" > $cmakefile
 echo "set(Nv "$Nv")" >> $cmakefile
@@ -65,24 +64,24 @@ cat ./cmake.in >> $cmakefile
 echo "add_executable("$prefix" "$path_cpp" \${DIR_SRCS} \${HEADER})" >> $cmakefile
 echo "target_link_libraries("$prefix" \${Z3_LIBRARY})" >> $cmakefile
 echo "target_link_libraries("$prefix" \${GSL_LIBRARIES})" >> $cmakefile
-echo -e $green$bold"[DONE]"$white
+echo -e $green$bold"[DONE]"$normal
 
 
 
 ##########################################################################
 # Build the project
 ##########################################################################
-echo -e $blue"Build the project..."$white
+echo -e $blue"Build the project..."$normal
 cd build
 #rm -rf *
 cmake .. > /dev/null
 make $prefix
 if [ $? -ne 0 ]; then
-	echo -e $red$bold"[FAIL]make error, contact developer to fix project source code first..."$white
+	echo -e $red$bold"[FAIL]make error, contact developer to fix project source code first..."$normal
 	cd ..
 	exit 1
 fi
-echo -e $green$bold"[DONE]"$white
+echo -e $green$bold"[DONE]"$normal
 
 cd ..
 exit 0
