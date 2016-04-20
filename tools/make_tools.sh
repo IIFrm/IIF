@@ -21,13 +21,23 @@ function handle_exit() {
 }
 
 
-echo -n -e "[ 33%] "$blue"Compiling cfg2test..."$normal
+echo -n -e "[ 25%] "$blue"Compiling cfg2test..."$normal
 g++ $dir_src"cfg2test.cpp" -std=c++11 -o $dir_bin"cfg2test"
 handle_exit $?
 
-echo -n -e "[ 66%] "$blue"Compiling cfg2verif..."$normal
+echo -n -e "[ 50%] "$blue"Compiling cfg2verif..."$normal
 g++ $dir_src"cfg2verif.cpp" -std=c++11 -o $dir_bin"cfg2verif"
 handle_exit $?
+
+echo -n -e "[ 75%] "$blue"Compiling smt2solver..."$normal
+mkdir -p build
+cd build
+cmake .. > /dev/null
+make > /dev/null
+handle_exit $?
+cp smt2solver ../bin
+cd ..
+rm -rf build
 
 echo -n -e "[100%] "$blue"Compiling model_parse..."$normal
 g++ $dir_src"model_parser.cpp" -std=c++11 -o $dir_bin"model_parser"

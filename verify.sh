@@ -57,17 +57,25 @@ while [ $i -lt $n ]; do
 	path_model=$smtname""$i".model"
 	echo -n "  |-- processing "$path_smt2" ---> "
 	"../../tools/smt2_bv2int.sh" $path_smt2 
-	"../../tools/smt2solver.py" $path_smt2 > $path_model
+	"../../tools/bin/smt2solver" $path_smt2 > $path_model
 	result=$?
 	if [ $result -gt 1 ]; then
 		echo -e $red$bold"A Error Occurs during smt2solver"$white
 		exit 2 
 	fi
 
-	sed -i 's/\[//g' $path_model
-	sed -i 's/\]//g' $path_model
-	sed -i 's/,/\n/g' $path_model
-	sed -i 's/=//g' $path_model
+	#sed -i 's/\[//g' $path_model
+	#sed -i 's/\]//g' $path_model
+	#sed -i 's/,/\n/g' $path_model
+	#sed -i 's/=//g' $path_model
+
+	sed -i 's/\ \ /\ /g' $path_model
+	sed -i 's/(define-fun\ \([a-zA-Z_][a-zA-Z_0-9]*\)\ ()\ Int/\1/g' $path_model
+	sed -i 's/()//g' $path_model
+	sed -i 's/Int//g' $path_model
+	sed -i 's/(-\ \([1-9][0-9]*\))/-\1/g' $path_model
+	sed -i 's/)//g' $path_model
+	sed -i 's/\ \ /\ /g' $path_model
 
 	cat $path_model | "../../"$dir_tool"model_parser" "../../"$path_var "../../"$path_cnt
 	result=$?
