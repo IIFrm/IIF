@@ -305,11 +305,11 @@ class SVM_I : public MLalgo //SVM
 				model = svm_train(&problem, &param);
 				Polynomial poly;
 				svm_model_visualization(model, &poly);
-				cl += poly;
-				//if (cl.add(poly, CONJUNCT) <= 0) {
-					//std::cout << "Bug point\n";
-					//return -1;
-				//}
+				//cl += poly;
+				if (cl.add(poly, CONJUNCT) <= 0) {
+					std::cout << "Exceed the max number of polynomials.\n";
+					return -1;
+				}
 				precision = checkStepTrainingData();
 				svm_free_and_destroy_model(&model);
 
