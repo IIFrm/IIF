@@ -228,7 +228,7 @@ class SVM : public MLalgo
 					break;
 				etimes++;
 			}
-			if (etimes >= 4) return -1;
+			if (etimes > 4) return -1;
 			cl = poly;
 			return 0;
 		}

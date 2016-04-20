@@ -205,6 +205,12 @@ repickX:
 					goto repickX;
 				}
 
+#ifdef __PRT_GSLSOLVE
+				std::cout << " >" << pickX << "{";
+				for (int i = 0; i < etimes + 1; i++)
+					std::cout << uni_coefs[i] << ", ";
+				std::cout << "} ";
+#endif
 				res = gslSolvePolynomial(uni_coefs, etimes, &results[pickX]);
 				delete []uni_coefs;
 			}

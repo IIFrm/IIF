@@ -14,7 +14,6 @@ class SVM_I : public MLalgo //SVM
 		int poly_num;
 
 		int max_size;
-		int max_poly;
 
 		MState* raw_mapped_data;
 		double** data; // [max_items * 2];
@@ -46,8 +45,8 @@ class SVM_I : public MLalgo //SVM
 		MState* negative_mapped_data; 
 		int negative_size;
 
-		SVM_I(int type = 0, void(*f) (const char*) = NULL, int size = 10000, int n_poly = 16) 
-			: max_size(size), max_poly(n_poly) {
+		SVM_I(int type = 0, void(*f) (const char*) = NULL, int size = 1000000) 
+			: max_size(size) {
 				prepare_svm_parameters(param, type);
 				if (f != NULL)
 					svm_set_print_string_function(f);
@@ -148,9 +147,9 @@ class SVM_I : public MLalgo //SVM
 				}
 			}
 			std::cout << RED << "Can not divide all the data by SVM-I with"
-				" equations number limit to " << cl.size + 1 << "." << std::endl;
-			std::cerr << "You need to increase the limit by modifying [classname::methodname]"
-				"=SVM-I::SVM-I(..., int equ = **) " << NORMAL << std::endl;
+				" equations number limit to " << cl.size  << "." << NORMAL << std::endl;
+			//std::cerr << RED << "You need to increase the limit by modifying [classname::methodname]"
+			//	"=SVM-I::SVM-I(..., int equ = **) " << NORMAL << std::endl;
 			return -1;
 		}
 
@@ -307,6 +306,10 @@ class SVM_I : public MLalgo //SVM
 				Polynomial poly;
 				svm_model_visualization(model, &poly);
 				cl += poly;
+				//if (cl.add(poly, CONJUNCT) <= 0) {
+					//std::cout << "Bug point\n";
+					//return -1;
+				//}
 				precision = checkStepTrainingData();
 				svm_free_and_destroy_model(&model);
 

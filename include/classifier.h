@@ -27,7 +27,7 @@ class Classifier{
 	public:
 		int size;
 		int max_size;
-		Classifier(int maxsize = 32);
+		Classifier(int maxsize = 16);
 		~Classifier();
 
 		int clear();

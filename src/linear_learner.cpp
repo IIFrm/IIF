@@ -24,6 +24,7 @@ LinearLearner::~LinearLearner() {
 
 int LinearLearner::learn()
 {
+	std::cout << YELLOW << ">>>> Linear Learner-----------------------\n" << NORMAL;  
 	int rnd;
 	bool similarLast = false;
 	bool converged = false;
@@ -40,7 +41,7 @@ int LinearLearner::learn()
 #ifdef __PRT
 		int step = 1;
 		std::cout << RED << "[" << rnd << "]" << NORMAL;
-		std::cout << RED << "Linear SVM------------------------{" << svm->etimes 
+		std::cout << RED << "Linear SVM------------------------{" 
 			<< "}------------------------------------------------------------------------------------\n\t(" 
 			<< YELLOW << step++ << NORMAL << ") execute programs... [" << nexe + Nexe_rand << "] ";
 #else
@@ -62,8 +63,14 @@ init_svm:
 			std::cout << "+";
 #endif
 
-			if (++zero_times >= Nretry_init)
+			if (++zero_times >= Nretry_init) {
+				if (gsets[POSITIVE].traces_num() == 0) 
+					std::cout << RED << "Can not get any positive trace. " << std::endl;
+				else
+					std::cout << RED << "Can not get any negative trace. " << std::endl;
+				std::cout << " re-Run the system again OR modify your loop program.\n" << NORMAL;
 				exit(-1);
+			}
 			goto init_svm;
 		}
 

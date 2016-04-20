@@ -14,10 +14,9 @@ static bool _roundoff(double x, double& roundx)
 		roundx = 0;
 		return true;
 	}
-	int inx = nearbyint(x);
-	if ((inx >= x * (1 - UPBOUND) && inx <= x * (1 + UPBOUND))
-			|| (inx <= x * (1 - UPBOUND) && inx >= x * (1 + UPBOUND))) {
-		roundx = double(inx);
+	roundx = nearbyint(x);
+	if ((roundx  >= x * (1 - UPBOUND) && roundx  <= x * (1 + UPBOUND))
+			|| (roundx  <= x * (1 - UPBOUND) && roundx  >= x * (1 + UPBOUND))) {
 		return true;
 	}
 	return false;
@@ -25,12 +24,13 @@ static bool _roundoff(double x, double& roundx)
 
 static bool scale(Polynomial& poly, double times) {
 	if (times == 0) return false;
+	//std::cout << poly.getDims() << "--";
 	for (int i = 0; i < poly.getDims(); i++)
 		poly[i] *= times;
 	return true;
 }
 
-#if 1
+#if 0
 std::string Polynomial::toString() const {
 	std::ostringstream stm;
 	bool firstplus = false;
@@ -56,7 +56,7 @@ std::string Polynomial::toString() const {
 }
 #endif
 
-#if 0
+#if 1
 std::string Polynomial::toString() const {
 	std::ostringstream stm;
 	stm << std::setprecision(16);
@@ -65,7 +65,7 @@ std::string Polynomial::toString() const {
 		if (theta[j] == 0) continue;
 		if (firstplus == false) {
 			firstplus = true;
-			if (theta[j] < 0) stm << "0 - ";
+			if (theta[j] < 0) stm << " -";
 		} else {
 			if (theta[j] < 0) stm << " - ";
 			else stm << " + ";
@@ -654,6 +654,12 @@ int Polynomial::roundoff(Polynomial& e) {
 		*/
 		if (i >= dims)
 			break;
+	}
+	if (scale_up > 100) {
+		//std::cout << "Hard roundoff\n";
+		for (int i = 0; i < dims; i++) {
+			_roundoff(theta[i] / min, e.theta[i]);
+		}
 	}
 	/*
 	   if (etimes == 1 && Nv == 1) {

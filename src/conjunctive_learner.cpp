@@ -25,6 +25,7 @@ ConjunctiveLearner::~ConjunctiveLearner() {
 
 int ConjunctiveLearner::learn()
 {
+	std::cout << YELLOW << ">>>> Conjunctive Learner-----------------------\n" << NORMAL;  
 	Solution inputs;
 	srand(time(NULL)); // initialize seed for rand() function
 
@@ -41,6 +42,7 @@ int ConjunctiveLearner::learn()
 		int nexe = (rnd == 1) ? Nexe_init : Nexe_after;
 #ifdef __PRT
 		int step = 1;
+		std::cout << RED << "[" << rnd << "]" << NORMAL;
 		std::cout << "SVM-I----------------------------------------------------------"
 			"------------------------------------------------";
 		std::cout << "\n\t(" << step++ << ") execute programs... [" << nexe + Nexe_rand << "] ";
@@ -59,9 +61,14 @@ init_svm_i:
 #else
 			std::cout << "+";
 #endif
-			zero_times++;
-			if (zero_times >= Nretry_init)
+			if (++zero_times >= Nretry_init) {
+				if (gsets[POSITIVE].traces_num() == 0) 
+					std::cout << RED << "Can not get any positive trace. " << std::endl;
+				else
+					std::cout << RED << "Can not get any negative trace. " << std::endl;
+				std::cout << " re-Run the system again OR modify your loop program.\n" << NORMAL;
 				exit(-1);
+			}
 			goto init_svm_i;
 		}
 

@@ -40,7 +40,7 @@ iifContext::iifContext(const char* vfilename, int (*func)(int*),
 		for (int j = i; j < Nv; j++) {
 			vparray[index][i]++;
 			vparray[index][j]++;
-			variables[index++] = "(" + variables[i+1] + "*" + variables[j+1] + ")";
+			variables[index++] = /*"(" +*/ variables[i+1] + "*" + variables[j+1] /*+ ")"*/;
 		}
 	}
 	for (int i = 0; i < Nv; i++) {
@@ -49,8 +49,8 @@ iifContext::iifContext(const char* vfilename, int (*func)(int*),
 				vparray[index][i]++;
 				vparray[index][j]++;
 				vparray[index][k]++;
-				variables[index++] = "(" + variables[i+1] + "*" + variables[j+1] 
-					+ "*" + variables[k+1] + ")";
+				variables[index++] = /*"(" +*/ variables[i+1] + "*" + variables[j+1] 
+					+ "*" + variables[k+1] /*+ ")"*/;
 			}
 		}
 	}
@@ -62,8 +62,8 @@ iifContext::iifContext(const char* vfilename, int (*func)(int*),
 					vparray[index][j]++;
 					vparray[index][k]++;
 					vparray[index][l]++;
-					variables[index++] = "(" + variables[i+1] + "*" + variables[j+1] 
-						+ "*" + variables[k+1] + "*" + variables[l+1] + ")";
+					variables[index++] = /*"(" +*/ variables[i+1] + "*" + variables[j+1] 
+						+ "*" + variables[k+1] + "*" + variables[l+1]/* + ")"*/;
 				}
 			}
 		}

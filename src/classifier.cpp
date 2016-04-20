@@ -46,13 +46,17 @@ Polynomial* Classifier::operator[] (int index) const {
 */
 
 Classifier& Classifier::operator+= (Polynomial& poly) {
-	add(poly, CONJUNCT);
+	int res = add(poly, CONJUNCT);
+	//assert(res >= 1);
+	if (res <= 0)
+		std::cout << "Bug here?\n";
 	return *this;
 }
 
 Classifier& Classifier::operator= (Polynomial& poly) {
 	clear();
-	add(poly, CONJUNCT);
+	int res = add(poly, CONJUNCT);
+	assert(res >= 1);
 	return *this;
 }
 

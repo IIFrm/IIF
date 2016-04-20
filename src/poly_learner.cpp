@@ -24,6 +24,7 @@ PolyLearner::~PolyLearner() {
 
 int PolyLearner::learn()
 {
+	std::cout << YELLOW << ">>>> Polynomial Learner-----------------------\n" << NORMAL;  
 	int rnd;
 	bool similarLast = false;
 	bool converged = false;
@@ -62,8 +63,14 @@ init_svm:
 			std::cout << "+";
 #endif
 
-			if (++zero_times >= Nretry_init)
+			if (++zero_times >= Nretry_init) {
+				if (gsets[POSITIVE].traces_num() == 0) 
+					std::cout << RED << "Can not get any positive trace. " << std::endl;
+				else
+					std::cout << RED << "Can not get any negative trace. " << std::endl;
+				std::cout << " re-Run the system again OR modify your loop program.\n" << NORMAL;
 				exit(-1);
+			}
 			goto init_svm;
 		}
 
@@ -86,9 +93,9 @@ init_svm:
 #endif
 
 		if (svm->train() != 0) {
-#ifdef __PRT
+//#ifdef __PRT
 			std::cout << RED  << " [FAIL] \n Can not divided by polynomial SVM " << NORMAL << std::endl;
-#endif
+//#endif
 			return -1;
 		}
 		std::cout << "|-->> " << YELLOW << svm->cl << NORMAL << std::endl;
@@ -171,7 +178,7 @@ init_svm:
 	}
 
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {
-		//std::cout << RED << "  Cannot divide by polynomial SVM perfectly.\n" << NORMAL;
+		std::cout << RED << "  Cannot divide by polynomial SVM perfectly.\n" << NORMAL;
 		ret = -1;
 	}
 
