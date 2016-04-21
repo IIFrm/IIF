@@ -20,6 +20,8 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/interproc_test9.var", loopFunction, "loopFunction", "../tmp/interproc_test9.ds");
+context.addLearner("linear");
+context.addLearner("poly");
 context.addLearner("conjunctive");
 return context.learn("../tmp/interproc_test9.cnt", "../tmp/interproc_test9");
 }
