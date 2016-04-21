@@ -602,6 +602,60 @@ Polynomial* Polynomial::roundoff() {
 
 int Polynomial::roundoff(Polynomial& e) {
 	//std::cout << "ROUND OFF " << *this << " --> ";
+	double max = 0;
+	for (int i = 0; i < dims; i++) {
+		if (std::abs(theta[i]) > max) {
+			max = std::abs(theta[i]);
+		}
+	}
+	double min = max;
+	for (int i = 0; i < dims; i++) {
+		if (std::abs(theta[i]) == 0) continue;
+		if (std::abs(theta[i]) * pow(10, PRECISION) < max) {
+			theta[i] = 0;
+			continue;
+		}
+		if (std::abs(theta[i]) < min) {
+			min = std::abs(theta[i]);
+		}
+	}
+
+
+#ifdef __PRT_POLYNOMIAL
+	std::cout << GREEN << "Before roundoff: " << *this;
+	std::cout << " min=" << min << std::endl;
+#endif
+
+	e = *this;
+	double scale_up = 2;
+	while(scale_up <= 100) {
+		int i;
+		for (i = 0; i < dims; i++) {
+			if (_roundoff(theta[i] / min, e.theta[i]) == false) {
+				//std::cout << RED << "scale X10:" << GREEN << *this << std::endl;
+				scale(*this, scale_up/(scale_up-1));
+				scale_up++;
+				break;
+			} 
+		}
+		if (i >= dims)
+			break;
+	}
+	if (scale_up > 100) {
+		for (int i = 0; i < dims; i++) {
+			_roundoff(theta[i] / min, e.theta[i]);
+		}
+	}
+#ifdef __PRT_POLYNOMIAL
+	std::cout << "\tAfter roundoff: " << e << NORMAL << std::endl;
+#endif
+	//std::cout << e << std::endl;
+	return 0;
+}
+
+#if 0
+int Polynomial::roundoff(Polynomial& e) {
+	//std::cout << "ROUND OFF " << *this << " --> ";
 	double min = DBL_MAX;
 	double second_min = min;
 	for (int i = 1; i < dims; i++) {
@@ -620,7 +674,7 @@ int Polynomial::roundoff(Polynomial& e) {
 	if (min / second_min <= UPBOUND)
 		min = second_min;
 
-	if ((std::abs(theta[0]) < min) && (1000 * std::abs(theta[0]) >= min))
+	if ((std::abs(theta[0]) < min) && (pow(10, PRECISION) * std::abs(theta[0]) >= min))
 		// 100 * theta0 is to keep {0.999999x1 + 0.9999999x2 >= 1.32E-9} 
 		// from converting to  {BIGNUM x1 + BIGNUM x1  >= 1}
 		//if ((std::abs(theta0) < min) && (std::abs(theta0) > 1.0E-4))	
@@ -642,41 +696,22 @@ int Polynomial::roundoff(Polynomial& e) {
 				scale_up++;
 				break;
 			} 
-			/*else {
-				std::cout << e.theta[i] << "\t";
-			}
-			*/
 		}
-		/*
-		std::cout << "\n" << *this;
-		std::cout << " --> " << e << std::endl;
-		std::cout << e.getDims() << std::endl;
-		*/
 		if (i >= dims)
 			break;
 	}
 	if (scale_up > 100) {
-		//std::cout << "Hard roundoff\n";
 		for (int i = 0; i < dims; i++) {
 			_roundoff(theta[i] / min, e.theta[i]);
 		}
 	}
-	/*
-	   if (etimes == 1 && Nv == 1) {
-	   if (e.theta[1] > 0)
-	   e.theta[0] = floor(theta[0] / min);
-	   else
-	   e.theta[0] = ceil(theta[0] / min);
-	   } else {
-	   e.theta[0] = _roundoff(theta[0] / min);
-	   }
-	   */
 #ifdef __PRT_POLYNOMIAL
 	std::cout << "\tAfter roundoff: " << e << NORMAL << std::endl;
 #endif
 	//std::cout << e << std::endl;
 	return 0;
 }
+#endif
 
 #if 0
 int Polynomial::toCandidates(Candidates* cs) {

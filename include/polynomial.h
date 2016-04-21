@@ -304,6 +304,11 @@ class Polynomial {
 					}
 				}
 			}
+			if (retry == true) {
+				for (int i = 0; i < Nv; i++) {
+					sol[i] = rand() % (10 * (maxv - minv + 1)) + 10 * minv;
+				}
+			}
 
 #ifdef __PRT_TESTCASE
 			//std::cout << sol << "~";

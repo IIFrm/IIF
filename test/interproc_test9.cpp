@@ -6,7 +6,8 @@ int loopFunction(int a[]) {
 int i = a[0];
 int j = a[1];
 
-iif_assume(i*i < j);
+if(i < 0) i = -i; i = i + 1;
+iif_assume(i*i < j && i > 1);
 while(i*i < j)
 {
 recordi(i, j); i = i + 1;

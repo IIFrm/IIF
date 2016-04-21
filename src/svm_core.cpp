@@ -532,7 +532,9 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 	int iter = 0;
 	//std::cout << "oprimization step 1.\n";
 	int max_iter = max(10000000, l>INT_MAX/100 ? INT_MAX : 100*l);
-	max_iter/=100; 
+	//max_iter/=10; 
+	//max_iter = INT_MAX;
+	////max_iter/=100; 
 	int counter = min(l,1000)+1;
 	//std::cout << "oprimization step 2.\n";
 
@@ -713,7 +715,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 			active_size = l;
 			info("*");
 		}
-		//fprintf(stderr,"\nWARNING: $$reaching max number of iterations\n");
+		fprintf(stderr,"\nWARNING: $$reaching max number of iterations\n");
 	}
 
 	// calculate rho
@@ -3421,8 +3423,8 @@ void prepare_svm_parameters(struct svm_parameter& param, int type, int degree) {
 	param.coef0 = 0;
 	param.nu = 0.5;
 	param.cache_size = 100;
-	//param.C = 10000;
-	param.C = DBL_MAX;
+	param.C = 100000000;
+	//param.C = DBL_MAX;
 	//param.C = 1000;
 	param.eps = 1e-3;
 	param.p = 0.1;

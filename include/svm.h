@@ -147,18 +147,18 @@ class SVM : public MLalgo
 			}
 			return res;
 			/*
-			Polynomial poly;
-			while (etimes <= 3) {
-				setEtimes(etimes);
-				model = svm_train(&problem, &param);
-				svm_model_visualization(model, &poly);
-				double pass_rate = checkTrainingSet();
+			   Polynomial poly;
+			   while (etimes <= 3) {
+			   setEtimes(etimes);
+			   model = svm_train(&problem, &param);
+			   svm_model_visualization(model, &poly);
+			   double pass_rate = checkTrainingSet();
 
-				if (pass_rate == 1)
-					break;
-				etimes++;
-			}
-			if (etimes >= 4) return -1;
+			   if (pass_rate == 1)
+			   break;
+			   etimes++;
+			   }
+			   if (etimes >= 4) return -1;
 			//svm_free_and_destroy_model(&model);
 			//model = NULL;
 			cl = poly;
@@ -170,9 +170,24 @@ class SVM : public MLalgo
 		double checkTrainingSet() {
 			if (problem.l <= 0) return 0;
 			int pass = 0;
+#ifdef __PRT_POLYSVM
+			std::cout << RED << BOLD << " PREDICT WRONGLY>>> >>" << NORMAL << BLUE;
+#endif
 			for (int i = 0; i < problem.l; i++) {
+#ifdef __PRT_POLYSVM
+				double predict_result = predict((double*)problem.x[i]);
+				if (predict_result * problem.y[i] < 0) {
+					std::cout << RED << BOLD << "([" << problem.x[i][0];
+					for (int j = 1; j < Nv; j++)
+						std::cout << "," << problem.x[i][j];
+					std::cout << "]" << problem.y[i] << "->" << predict_result << ")  >>";
+				}
+#endif
 				pass += (predict((double*)problem.x[i]) * problem.y[i] >= 0) ? 1 : 0;
 			}
+#ifdef __PRT_POLYSVM
+			std::cout << RED << BOLD << " >>>>>END CHECKING\n" << NORMAL;
+#endif
 			return static_cast<double>(pass) / problem.l;
 		}
 
@@ -204,6 +219,7 @@ class SVM : public MLalgo
 			if (v == NULL) return -2;
 			double res = svm_predict(model, (svm_node*)v); 
 
+			return res;
 			if (res >= 0) return 1;
 			else return -1;
 		}
@@ -218,12 +234,17 @@ class SVM : public MLalgo
 
 		int trainPoly() {
 			Polynomial poly;
+#ifdef __PRT_POLYSVM
+			std::cout << RED  << "\ntrying from etimes = " << etimes << " $$$$$$ "<< NORMAL;
+#endif
 			while (etimes <= 4) {
 				setEtimes(etimes);
 				model = svm_train(&problem, &param);
 				svm_model_visualization(model, &poly);
 				double pass_rate = checkTrainingSet();
-
+#ifdef __PRT_POLYSVM
+				std::cout << BLUE << "   [" << etimes << "] " << pass_rate*100 << "% --> " << NORMAL << poly << std::endl;
+#endif
 				if (pass_rate == 1)
 					break;
 				etimes++;

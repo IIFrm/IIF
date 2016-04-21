@@ -3,7 +3,6 @@ red="\e[31m"
 green="\e[32m"
 yellow="\e[33m"
 blue="\e[34m"
-white="\e[0m"
 bold="\e[1m"
 normal="\e[0m"
 
@@ -60,7 +59,7 @@ while [ $i -lt $n ]; do
 	"../../tools/bin/smt2solver" $path_smt2 > $path_model
 	result=$?
 	if [ $result -gt 1 ]; then
-		echo -e $red$bold"A Error Occurs during smt2solver"$white
+		echo -e $red$bold"A Error Occurs during smt2solver"$normal
 		exit 2 
 	fi
 
@@ -81,14 +80,14 @@ while [ $i -lt $n ]; do
 	result=$?
 	if [ $result -eq 0 ]; then
 		# unsat
-		echo -e $green$bold" [unsat] [PASS]"$white
+		echo -e $green$bold" [unsat] [PASS]"$normal
 		i=$(($i+1))
 	elif [ $result -eq 2 ]; then
-		echo -e $red$bold"Error Occurs during model parsing"$white
+		echo -e $red$bold"Error Occurs during model parsing"$normal
 		exit 2 
 	else
-		echo -n -e $red$bold" [sat] [FAIL]"$white
-		echo -e " >>> counter example is stored at "$yellow$path_cnt$white
+		echo -n -e $red$bold" [sat] [FAIL]"$normal
+		echo -e " >>> counter example is stored at "$yellow$path_cnt$normal
 		#cat "../../"$path_cnt >> "../../"$path_cnt_lib
 		return 1
 	fi
@@ -101,30 +100,30 @@ u=$1
 cd $prefix"_klee"$u 
 rm -rf klee-*
 rm -rf *.smt2
-echo -e $green"Compiling the C files and Run KLEE..."$u$white
+echo -e $green"Compiling the C files and Run KLEE..."$u$normal
 llvm-gcc --emit-llvm -c -g $file_c_verif > /dev/null
-#echo -e $blue"Running KLEE to generate path condition"$white
+#echo -e $blue"Running KLEE to generate path condition"$normal
 klee -write-smt2s $file_o_verif > /dev/null 2>&1
 #klee -write-smt2s $file_o_verif #> /dev/null 2>&1
 ret=$?
 func_findSmtForZ3
 ret=$?
-#echo -n -e $red$ret$white
+#echo -n -e $red$ret$normal
 if [ $ret -eq 2 ]; then
 	exit $ret
 fi
 if [ $ret -eq 1 ]; then
 	echo -n -e $red">>>NOT A VALID INVARIVANT..."
 	if [ $u -eq 1 ]; then
-		echo -e "Reason: Property I (precondition ==> invariant) FAILED. stop here..."$white
+		echo -e $bold"Reason: Property I (precondition ==> invariant) FAILED. stop here..."$normal
 	elif [ $u -eq 2 ]; then
-		echo -e "Reason: Property II (invariant && loopcondition =S=> invariant) FAILED. stop here..."$white 
+		echo -e $bold"Reason: Property II (invariant && loopcondition =S=> invariant) FAILED. stop here..."$normal 
 	elif [ $u -eq 3 ]; then
-		echo -e "Reason: Property III (invariant && ~loopcondition ==> postcondition) FAILED. stop here..."$white
+		echo -e $bold"Reason: Property III (invariant && ~loopcondition ==> postcondition) FAILED. stop here..."$normal
 	fi
 	exit $ret
 fi
-#echo -e $blue"[PASS]"$white
+#echo -e $blue"[PASS]"$normal
 cd ..
 return 0
 }
@@ -136,7 +135,7 @@ return 0
 ##########################################################################
 # From inv files to prepare for verification step
 ##########################################################################
-echo -n -e $blue"Invariant file is located at "$path_inv" >>> "$white
+echo -n -e $blue"Invariant file is located at "$path_inv" >>> "$normal
 cat $path_inv
 echo ""
 
@@ -144,21 +143,21 @@ echo ""
 ##########################################################################
 # Generating a new config file contains the invariant candidate...
 ##########################################################################
-echo -n -e $blue"Generating a new config file contains the invariant candidate..."$white
+echo -n -e $blue"Generating a new config file contains the invariant candidate..."$normal
 path_tmp_cfg="tmp/tmp.cfg"
 cp $path_cfg $path_tmp_cfg
 echo "" >> $path_tmp_cfg
 echo -n "invariant=" >> $path_tmp_cfg
 cat $path_inv >> $path_tmp_cfg
-echo -e $green$bold"[Done]"$white
+echo -e $green$bold"[Done]"$normal
 
 
 ##########################################################################
 # Generate C files to verify using cfg file and inv file
 ##########################################################################
-echo -n -e $blue"Generating three C files to do the verification by KLEE..."$white
+echo -n -e $blue"Generating three C files to do the verification by KLEE..."$normal
 $dir_tool"cfg2verif" $path_tmp_cfg $path_verif
-echo -e $green$bold"[Done]"$white
+echo -e $green$bold"[Done]"$normal
 
 
 ##########################################################################
@@ -176,8 +175,8 @@ KleeVerify 2
 KleeVerify 3
 
 cd ..
-echo -e $bold$green"-----------------------------------------------------------finish proving---------------------------------------------------------------"$white
+echo -e $bold$green"-----------------------------------------------------------finish proving---------------------------------------------------------------"$normal
 echo -n -e $green"The invariant can be "$yellow
 cat $path_inv
-echo -e $green".\nEND"$white
+echo -e $green".\nEND"$normal
 exit 0
