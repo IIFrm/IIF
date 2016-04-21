@@ -112,7 +112,7 @@ init_svm:
 #endif
 
 		if (pass_rate < 1) {
-			std::cerr << RED << "[FAIL] ..... Can not dividey by polynomial SVM." << std::endl << NORMAL;
+			std::cerr << RED << "[FAIL] ..... Can not divided by polynomial SVM." << std::endl << NORMAL;
 			rnd++;
 			break;	
 		}

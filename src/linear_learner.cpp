@@ -112,7 +112,7 @@ init_svm:
 #endif
 
 		if (pass_rate < 1) {
-			std::cerr << RED << "[FAIL] ..... Can not dividey by Linear SVM." << std::endl << NORMAL;
+			std::cerr << RED << "[FAIL] ..... Can not divided by Linear SVM." << std::endl << NORMAL;
 			rnd++;
 			break;	
 		}
@@ -178,7 +178,7 @@ init_svm:
 	}
 
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {
-		//std::cout << RED << "  Cannot divide by SVM perfectly.\n" << NORMAL;
+		//std::cout << RED << "  Cannot divided by SVM perfectly.\n" << NORMAL;
 		ret = -1;
 	}
 

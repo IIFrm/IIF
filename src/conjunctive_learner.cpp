@@ -92,7 +92,7 @@ init_svm_i:
 #endif
 		int ret = svm_i->train();
 		if (ret == -1) {
-			std::cerr << RED << "[FAIL] ..... Can not dividey by SVM_I." << std::endl << NORMAL;
+			std::cerr << RED << "[FAIL] ..... Can not divided by SVM_I." << std::endl << NORMAL;
 			return -1;
 		}
 		//svm_i->cl.roundoff();
@@ -115,7 +115,7 @@ init_svm_i:
 #endif
 
 		if (pass_rate < 1) {
-			std::cerr << RED << "[FAIL] ..... Can not dividey by SVM_I." << std::endl << NORMAL;
+			std::cerr << RED << "[FAIL] ..... Can not divided by SVM_I." << std::endl << NORMAL;
 			rnd++;
 			break;	
 		}
@@ -171,7 +171,7 @@ init_svm_i:
 	}
 
 	if ((pass_rate < 1) || (rnd > max_iteration)) {
-		//std::cout << RED << "  Cannot divide by SVM_I perfectly.\n" << NORMAL;
+		//std::cout << RED << "  Cannot divided by SVM_I perfectly.\n" << NORMAL;
 		std::cout << pass_rate << "\t" << rnd << std::endl;
 		ret = -1;
 	}
