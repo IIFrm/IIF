@@ -187,24 +187,26 @@ class Polynomial {
 		inline bool solvePolynomial(double* results) {
 			bool res = false;
 			int pickX = rand()%Nv;
-			bool need_repickX = true;
+			int repickX = 0;
 			if (Nv == 1) {
 				res = gslSolvePolynomial(theta, etimes, results);
 				results[pickX] += rand() % (5 - etimes) - 2 + etimes / 2;
 			} else {
 				// Nv >= 2
-repickX:
 				double* uni_coefs = new double [etimes + 1];
-				for (int power = 0; power <= etimes; power++) {
-					uni_coefs[power] = evaluateCoef(pickX, power, results);
-					if (uni_coefs[power] >= pow(0.1, PRECISION) || uni_coefs[power]<= -1 * pow(0.1, PRECISION))
-						need_repickX = false;
+				while (true) {
+					for (int power = 0; power <= etimes; power++) {
+						uni_coefs[power] = evaluateCoef(pickX, power, results);
+					}
+					if (std::abs(uni_coefs[etimes]) <= pow(0.01, PRECISION)) {
+						if(++repickX >= Nv) {
+							delete []uni_coefs;
+							return true;
+						}
+					} else {
+						break;
+					}
 				}
-				if (need_repickX) {
-					pickX = (pickX + 1)%Nv;
-					goto repickX;
-				}
-
 #ifdef __PRT_GSLSOLVE
 				std::cout << " >" << pickX << "{";
 				for (int i = 0; i < etimes + 1; i++)
@@ -218,40 +220,40 @@ repickX:
 		}
 
 		/*
-		static bool factorNv1Times2(double *B);
-		static bool factorNv1Times3(double *B);
-		static bool factorNv2Times2(double *B);
-		static bool factorNv2Times3(double *B);
-		static bool factorNv3Times2(double *B);
+		   static bool factorNv1Times2(double *B);
+		   static bool factorNv1Times3(double *B);
+		   static bool factorNv2Times2(double *B);
+		   static bool factorNv2Times3(double *B);
+		   static bool factorNv3Times2(double *B);
 
-		static bool toStandardForm(const Polynomial& e, double* coefs);
+		   static bool toStandardForm(const Polynomial& e, double* coefs);
 
-		bool toStandardForm(double* coefs) {
-			return Polynomial::toStandardForm(*this, coefs);
-		}
-		*/
+		   bool toStandardForm(double* coefs) {
+		   return Polynomial::toStandardForm(*this, coefs);
+		   }
+		   */
 
 		bool factor() {
 			return true;
 			//std::cout << "\t  <<Factoring Polynomial>> \n";
 			/*if (getEtimes() == 1) return true;
-			double coefs[Cv0to4];
-			this->toStandardForm(coefs);
-			switch(Nv) {
-				case 1:
-					//solve_univariate_polynomial()
-					if (getEtimes() == 2) return factorNv1Times2(coefs);
-					if (getEtimes() == 3) return factorNv1Times3(coefs);
-					return false;
-				case 2:
-					if (getEtimes() == 2) return factorNv2Times2(coefs);
-					if (getEtimes() == 3) return factorNv2Times3(coefs);
-					return false;
-				case 3:
-					if (getEtimes() == 2) return factorNv3Times2(coefs);
-					return false;
-				case 4:
-					return true;
+			  double coefs[Cv0to4];
+			  this->toStandardForm(coefs);
+			  switch(Nv) {
+			  case 1:
+			//solve_univariate_polynomial()
+			if (getEtimes() == 2) return factorNv1Times2(coefs);
+			if (getEtimes() == 3) return factorNv1Times3(coefs);
+			return false;
+			case 2:
+			if (getEtimes() == 2) return factorNv2Times2(coefs);
+			if (getEtimes() == 3) return factorNv2Times3(coefs);
+			return false;
+			case 3:
+			if (getEtimes() == 2) return factorNv3Times2(coefs);
+			return false;
+			case 4:
+			return true;
 			}
 			return false;
 			*/

@@ -218,7 +218,7 @@ class SVM : public MLalgo
 
 		int trainPoly() {
 			Polynomial poly;
-			while (etimes <= 3) {
+			while (etimes <= 4) {
 				setEtimes(etimes);
 				model = svm_train(&problem, &param);
 				svm_model_visualization(model, &poly);
