@@ -41,8 +41,8 @@ int LinearLearner::learn()
 #ifdef __PRT
 		int step = 1;
 		std::cout << RED << "[" << rnd << "]" << NORMAL;
-		std::cout << RED << "Linear SVM------------------------{" 
-			<< "}------------------------------------------------------------------------------------\n\t(" 
+		std::cout << RED << "Linear SVM------------------------" 
+			<< "------------------------------------------------------------------------------------\n\t(" 
 			<< YELLOW << step++ << NORMAL << ") execute programs... [" << nexe + Nexe_rand << "] ";
 #else
 		std::cout << RED << "[" << rnd;

@@ -401,6 +401,7 @@ class Polynomial {
 		 *	@return int 0 if no error.
 		 */
 		int roundoff(Polynomial& e);
+		bool alreadyRoundoff();
 
 		Polynomial* roundoff();
 

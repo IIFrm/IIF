@@ -47,8 +47,10 @@ class Classifier{
 
 		bool roundoff();
 
+		bool simplify(); 
+		bool checkRedundancy(int l);
 		// checkint whether the last polynomial can infer the others
-		bool resolveUniImplication();
+		//bool resolveUniImplication();
 
 		std::string toString() const;
 

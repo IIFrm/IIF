@@ -186,9 +186,9 @@ class FileHelper {
 				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n";
 
 			{
-				cppFile << "context.addLearner(\"linear\");\n";
-				cppFile << "context.addLearner(\"poly\");\n";
 				cppFile << "context.addLearner(\"conjunctive\");\n";
+				//cppFile << "context.addLearner(\"linear\");\n";
+				//cppFile << "context.addLearner(\"poly\");\n";
 			}
 
 			if (testcasefilename) {

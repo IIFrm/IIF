@@ -550,11 +550,9 @@ bool Polynomial::multiImply(const Polynomial* e1, int e1_num, const Polynomial& 
 #ifdef __PRT_QUERY
 	std::cout << "-------------Multi-Imply solving-------------\n";
 #endif
-
 	z3::config cfg;
 	cfg.set("auto_config", true);
 	z3::context c(cfg);
-
 
 	z3::expr hypo = e1[0].toZ3expr(NULL, c);
 	for (int i = 1; i < e1_num; i++) {
@@ -575,7 +573,6 @@ bool Polynomial::multiImply(const Polynomial* e1, int e1_num, const Polynomial& 
 	z3::solver s(c);
 	s.add(!query);
 	z3::check_result ret = s.check();
-
 
 	if (ret == unsat) {
 #ifdef __PRT_QUERY
@@ -600,8 +597,19 @@ Polynomial* Polynomial::roundoff() {
 	return this;
 }
 
+bool Polynomial::alreadyRoundoff() {
+	for (int i = 0; i < dims; i++)
+		if (int(theta[i]) != theta[i]) 
+			return false;
+	return true;
+}
+
 int Polynomial::roundoff(Polynomial& e) {
 	//std::cout << "ROUND OFF " << *this << " --> ";
+	if (alreadyRoundoff() == true) {
+		e = *this;
+		return 0;
+	}
 	double max = 0;
 	for (int i = 0; i < dims; i++) {
 		if (std::abs(theta[i]) > max) {

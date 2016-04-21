@@ -23,8 +23,6 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/conj.var", loopFunction, "loopFunction", "../tmp/conj.ds");
-context.addLearner("linear");
-context.addLearner("poly");
 context.addLearner("conjunctive");
 return context.learn("../tmp/conj.cnt", "../tmp/conj");
 }

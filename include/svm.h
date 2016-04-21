@@ -145,6 +145,9 @@ class SVM : public MLalgo
 			} else {
 				res = trainPoly();
 			}
+			/*if (res == 0)
+				cl.roundoff();
+				*/
 			return res;
 			/*
 			   Polynomial poly;

@@ -165,6 +165,7 @@ init_svm_i:
 	int ret = 0;
 	if ((converged) && (rnd <= max_iteration)) {
 		svm_i->cl.roundoff();
+		svm_i->cl.simplify();
 		std::cout << YELLOW << "  Hypothesis Invairant(Conjunctive): { ";
 		std::cout << GREEN << svm_i->cl << YELLOW;
 		std::cout << " }" << NORMAL << std::endl;

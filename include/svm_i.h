@@ -134,6 +134,8 @@ class SVM_I : public MLalgo //SVM
 #ifdef __PRT
 					std::cout << GREEN << "finish classified..." << NORMAL << std::endl;
 #endif				
+					cl.simplify();
+					//cl.roundoff();
 					return 0;
 				}
 
@@ -339,7 +341,8 @@ class SVM_I : public MLalgo //SVM
 				std::cout << "et = " << et << "\n";
 				return -1;
 			}
-			cl.resolveUniImplication();
+			//cl.resolveUniImplication();
+			//cl.simplify();
 			//std::cout << " ---> < cl.size=" << cl.size << ">" << cl << std::endl;
 			model = NULL;
 			//std::cout << negative_index << BLUE << ">>" <<cl.toString() << std::endl << NORMAL;
@@ -352,16 +355,19 @@ class SVM_I : public MLalgo //SVM
 			if (cl.size < 0) return -1;
 			if (cl.size == 0) return 0;
 
+			//int start = rand() % negative_size;
+			int start = 0;
 			for (int i = 0; i < negative_size; i++) {
-				if (predict(negative_mapped_data[i]) >= 0) {
+				int k = (i + start) % negative_size;
+				if (predict(negative_mapped_data[k]) >= 0) {
 #ifdef __PRT_SVM_I
-					std::cout << "\n [FAIL] @" << i << ": (" << negative_mapped_data[i][0];
+					std::cout << "\n [FAIL] @" << k << ": (" << negative_mapped_data[k][0];
 					for (int j = 1; j < Nv; j++)
-						std::cout << "," << negative_mapped_data[i][j];
+						std::cout << "," << negative_mapped_data[k][j];
 					std::cout << ")  \t add it to training set... ==>" << std::endl;
 #endif
-					//std::cout << RED << "x@" << i << " " << NORMAL;
-					idx = i;
+					//std::cout << RED << "x@" << k << " " << NORMAL;
+					idx = k;
 					return 0;
 				}
 			}
