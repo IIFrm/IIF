@@ -33,7 +33,7 @@ extern int minv;
 extern std::string* variables;
 extern VariablePowerArray* vparray;
 extern int vnum;
-class Candidates;
+//class Candidates;
 
 
 /** \class Polynomial

@@ -17,7 +17,7 @@
 #include <string.h>
 #include <assert.h>
 
-class Polynomial;
+//class Polynomial;
 
 class Classifier{
 	protected:

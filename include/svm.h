@@ -45,7 +45,7 @@ class SVM : public MLalgo
 
 	public:
 		SVM(int type = 0, void (*f) (const char*) = NULL, int size = 1000000) : max_size(size) {
-			prepare_svm_parameters(param, type);
+			prepare_svm_parameters(&param, type);
 			if (f != NULL)
 				svm_set_print_string_function(f);
 			model = NULL;

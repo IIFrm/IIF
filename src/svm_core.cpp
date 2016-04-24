@@ -3404,36 +3404,36 @@ struct svm_model *svm_I_train(const struct svm_problem *prob, const struct svm_p
 
 void my_print_func(const char* str) {}
 
-void prepare_svm_parameters(struct svm_parameter& param, int type, int degree) {
-	param.svm_type = C_SVC;
-	param.degree = degree;
-	param.gamma = 0;	// 1/num_features
+void prepare_svm_parameters(struct svm_parameter* param, int type, int degree) {
+	param->svm_type = C_SVC;
+	param->degree = degree;
+	param->gamma = 0;	// 1/num_features
 	if (type == 0) {
 		//std::cout << "Using LINEAR kernel...\n";
-		param.kernel_type = LINEAR;
+		param->kernel_type = LINEAR;
 	} else if (type == 1){
 		std::cout << "Using POLY kernel...\n";
-		param.kernel_type = POLY;
-		param.gamma = 8;//1.0/DIMENSION;	// 1/num_features
+		param->kernel_type = POLY;
+		param->gamma = 8;//1.0/DIMENSION;	// 1/num_features
 	} else if (type == 2){
 		std::cout << "Using RBF kernel...\n";
-		param.kernel_type = RBF;
-		param.gamma = 20; ///DIMENSION; //0;	// 1/num_features
+		param->kernel_type = RBF;
+		param->gamma = 20; ///DIMENSION; //0;	// 1/num_features
 	}
-	param.coef0 = 0;
-	param.nu = 0.5;
-	param.cache_size = 100;
-	param.C = 100000000;
-	//param.C = DBL_MAX;
-	//param.C = 1000;
-	param.eps = 1e-3;
-	param.p = 0.1;
-	param.shrinking = 1;
-	param.probability = 0;
-	param.nr_weight = 0;
-	param.weight_label = NULL;
-	param.weight = NULL;
-	param.shrinking = 0;
+	param->coef0 = 0;
+	param->nu = 0.5;
+	param->cache_size = 100;
+	param->C = 100000000;
+	//param->C = DBL_MAX;
+	//param->C = 1000;
+	param->eps = 1e-3;
+	param->p = 0.1;
+	param->shrinking = 1;
+	param->probability = 0;
+	param->nr_weight = 0;
+	param->weight_label = NULL;
+	param->weight = NULL;
+	param->shrinking = 0;
 	svm_set_print_string_function(my_print_func);
 }
 
@@ -3483,6 +3483,7 @@ bool model_converged(struct svm_model *m1, struct svm_model *m2)
 	return true;
 }
 
+#if 0
 static inline double sqrDistance(svm_node* a1, svm_node* b1, int size=DIMENSION)
 {
 	double distance = 0;
@@ -3490,8 +3491,10 @@ static inline double sqrDistance(svm_node* a1, svm_node* b1, int size=DIMENSION)
 		distance += (a1[i].value - b1[i].value) * (a1[i].value - b1[i].value);
 	return distance;
 }
+#endif
 
 
+#if 0
 int model_solver(const svm_model* m, Solution& sol)
 {
 	//std::cout << "\n-->>>model_solver ";
@@ -3538,6 +3541,7 @@ int model_solver(const svm_model* m, Solution& sol)
 	}
 	return 0;
 } 
+#endif
 
 int setDimension(int d) {
 	DIMENSION = d;
