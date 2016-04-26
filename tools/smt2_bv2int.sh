@@ -27,6 +27,7 @@ sed -i 's/bvadd/+/g' $file
 sed -i 's/bvsub/-/g' $file
 sed -i 's/bvmul/*/g' $file
 sed -i 's/bvdiv/\//g' $file
+sed -i 's/(bvand\ \([a-zA-Z0-9_]*\)\ 1)/(mod\ \1\ 2)/g' $file
 
 # (bvxor -1 m) == (- -1 m)
 sed -i 's/(bvxor\ 4294967295\ /(-\ -1\ /g' $file
