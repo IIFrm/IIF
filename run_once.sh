@@ -43,8 +43,15 @@ cd tools
 ./make_tools.sh
 cd ..
 
-./build_project.sh $1
+./build_project.sh $prefix
 
+echo -e $blue"Using precondition as the invariant candidiate..."$normal
+grep '^precondition=*' $path_cfg > $path_inv
+sed -i 's/precondition=*//g' $path_inv
+./verify.sh $prefix
+if [ $? -eq 0 ]; then
+	exit 0
+fi
 ##########################################################################
 # Run the target to get Invariant Candidates
 ##########################################################################
@@ -64,6 +71,6 @@ cd ..
 #**********************************************************************************************
 # verification phase
 #**********************************************************************************************
-./verify.sh $1
+./verify.sh $prefix
 
 exit $?

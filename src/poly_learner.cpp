@@ -30,6 +30,8 @@ int PolyLearner::learn()
 	bool converged = false;
 	Classifier pre_cl;
 	int pre_psize = 0, pre_nsize = 0;
+	int base_maxv = maxv;
+	int base_minv = minv;
 
 	double pass_rate = 1;
 	svm->setKernel(1);
@@ -71,6 +73,8 @@ init_svm:
 				std::cout << " re-Run the system again OR modify your loop program.\n" << NORMAL;
 				exit(-1);
 			}
+			if (maxv <= 10000000) {maxv+=base_maxv;}
+			if (minv >= -10000000) {minv+=base_minv;}
 			goto init_svm;
 		}
 

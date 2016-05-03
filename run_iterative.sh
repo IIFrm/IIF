@@ -50,7 +50,16 @@ cd tools
 ./make_tools.sh
 cd ..
 
-./build_project.sh $1 $path_cnt $path_dataset
+./build_project.sh $prefix $path_cnt $path_dataset
+
+
+echo -e $blue"Using precondition as the invariant candidiate..."$normal
+grep '^precondition=*' $path_cfg > $path_inv
+sed -i 's/precondition=*//g' $path_inv
+./verify.sh $prefix
+if [ $? -eq 0 ]; then
+	exit 0
+fi
 
 iteration=1
 echo -e $blue"Running the project to generate invariant candidiate..."$normal
@@ -74,7 +83,7 @@ while [ $iteration -le 32 ]; do
 	#**********************************************************************************************
 	# verification phase
 	#**********************************************************************************************
-	./verify.sh $1
+	./verify.sh $prefix
 	if [ $? -eq 0 ]; then
 		#echo -n -e $green$bold"------------------------------------------------------------- Iteration "
 		#echo -e " Done -------------------------------------------------------------------"$normal$normal
