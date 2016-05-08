@@ -65,6 +65,8 @@ class FileHelper {
 			cs[6].key = "postcondition";
 			cs[7].key = "afterloop";
 			cs[8].key = "invariant";
+			for (int i = 0; i < confignum; i++)
+				cs[i].value= string("");
 			//variables = NULL;
 			vnum = 0;
 		}
@@ -176,7 +178,8 @@ class FileHelper {
 				case 2:
 					if (cs[BEFLI].value.compare("") != 0)
 						cppFile << cs[BEFLI].value << std::endl;
-					cppFile << "klee_assume(" << cs[LOOPC].value <<");\n"; 
+					if (cs[LOOPC].value.compare("") != 0)
+						cppFile << "klee_assume(" << cs[LOOPC].value <<");\n"; 
 					cppFile << "klee_assume(" << cs[INV].value <<");\n"; 
 					cppFile << "do {\n";
 					cppFile << cs[LOOP].value << "\n";
@@ -184,7 +187,8 @@ class FileHelper {
 					cppFile << "klee_Massert(" << cs[INV].value <<");\n"; 
 					break;
 				case 3:
-					cppFile << "klee_assume(!(" << cs[LOOPC].value <<"));\n"; 
+					if (cs[LOOPC].value.compare("") != 0)
+						cppFile << "klee_assume(!(" << cs[LOOPC].value <<"));\n"; 
 					cppFile << "klee_assume(" << cs[INV].value <<");\n"; 
 					cppFile << "klee_Massert(" << cs[POSTC].value <<");\n"; 
 					break;

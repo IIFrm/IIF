@@ -52,7 +52,7 @@ int LinearLearner::learn()
 
 init_svm:
 		//std::cout << std::endl << "\t-->selective sampling:\n\t";
-		selectiveSampling(Nexe_rand, nexe, 0, &pre_cl);
+		selectiveSampling(Nexe_rand, nexe, &pre_cl);
 		//std::cout << "\t<--selective sampling:\n";
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
@@ -130,7 +130,7 @@ init_svm:
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
 #ifdef __PRT
-		std::cout << "\n\t(" << YELLOW << step++ << NORMAL << ") check convergence:        ";
+		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") check convergence:        ";
 #endif
 
 		if (svm->converged(pre_cl) == true) {

@@ -2,16 +2,17 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int a[]) {
-int xa = a[0];
-int ya = a[1];
+int loopFunction(int _reverved_input_[]) {
+int xa = _reverved_input_[0];
+int ya = _reverved_input_[1];
 
 int loop_times; int branch;int x, y;
 loop_times = rand()%5; branch = 1;
 iif_assume(xa + 2 * ya >= 0);
 while(loop_times-->=0)
 {
-recordi(xa, ya); x = xa + 2 * ya;
+recordi(xa, ya);
+ x = xa + 2 * ya;
 		y = -2 * xa + ya;
 
 		x++;

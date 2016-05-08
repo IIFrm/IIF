@@ -2,27 +2,26 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int a[]) {
-int xa = a[0];
-int ya = a[1];
-int loop_times = a[2];
+int loopFunction(int _reverved_input_[]) {
+int xa = _reverved_input_[0];
+int ya = _reverved_input_[1];
 
-loop_times%=5; int branch=1;int x, y;
+int x, y;
 iif_assume(xa + 2 * ya >= 0);
-while(loop_times-->=0)
+while(rand() % 2)
 {
-recordi(xa, ya, loop_times); x = xa + 2 * ya;
+recordi(xa, ya);
+ x = xa + 2 * ya;
 		y = -2 * xa + ya;
 
 		x++;
-		if (branch) y = y + x;
+		if (rand()%2) y = y + x;
 		else y = y - x;
-		branch = 1 - branch;
 
 		xa = x - 2 * y;
 		ya = 2 * x + y;
 }
-recordi(xa, ya, loop_times);
+recordi(xa, ya);
 iif_assert(xa + 2 * ya >= 0);
 return 0;
 }

@@ -150,7 +150,13 @@ int iifContext::learn(const char* last_cnt_fname, const char* invfilename, int t
 	LearnerNode* p = first;
 	char filename[65]; 
 	if (p && last_cnt_fname) 
+#ifdef __PRT
+		std::cout << "Test on counter example ...\n";
+#endif
 		p->learner->runCounterExampleFile(last_cnt_fname);
+#ifdef __PRT
+		std::cout << "Test on counter example DONE...\n";
+#endif
 
 	while (p) {
 		if (p->learner->learn() == 0) {

@@ -122,6 +122,7 @@ class SVM : public MLalgo
 			problem.nn = cur_nsize;
 #endif
 
+			//problem.l = cur_psize + cur_nsize;
 			problem.l = cur_psize + cur_nsize;
 
 			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;

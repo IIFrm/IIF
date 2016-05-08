@@ -2,15 +2,16 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int a[]) {
-int i = a[0];
-int j = a[1];
+int loopFunction(int _reverved_input_[]) {
+int i = _reverved_input_[0];
+int j = _reverved_input_[1];
 
 if(i < 0) i = -i; i = i + 1;
-iif_assume(i*i < j && i > 1);
+iif_assume(i*i < j && i >= 1);
 while(i*i < j)
 {
-recordi(i, j); i = i + 1;
+recordi(i, j);
+ i = i + 1;
 }
 recordi(i, j);
 iif_assert((i - 1) * (i - 1) < j && j <= i * i);

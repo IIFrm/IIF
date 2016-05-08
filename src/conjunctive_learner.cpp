@@ -52,7 +52,7 @@ int ConjunctiveLearner::learn()
 		std::cout << RED << "[" << rnd;
 #endif
 init_svm_i:
-		selectiveSampling(Nexe_rand, nexe, 0, &(pre_cl));
+		selectiveSampling(Nexe_rand, nexe, &pre_cl);
 
 		if ((rnd == 1) && (gsets[POSITIVE].traces_num() == 0 || gsets[NEGATIVE].traces_num() == 0)) {
 #ifdef __PRT

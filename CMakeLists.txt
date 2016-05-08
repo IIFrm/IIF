@@ -3,6 +3,8 @@ set(Nv 2)
 project(InvariantInferenceFramework)
 set(PRECISION 3)
 
+add_definitions (-D__SELECTIVE_SAMPLING_ENABLED)
+
 add_definitions (-D__PRT)
 #add_definitions (-D__PRT_TESTCASE)
 #add_definitions (-D__PRT_GSLSOLVE)
@@ -179,6 +181,6 @@ include_directories (include)
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 AUX_SOURCE_DIRECTORY(test DIR_TEST)
 
-add_executable(diamond_true-unreach-call1 test/diamond_true-unreach-call1.cpp ${DIR_SRCS} ${HEADER})
-target_link_libraries(diamond_true-unreach-call1 ${Z3_LIBRARY})
-target_link_libraries(diamond_true-unreach-call1 ${GSL_LIBRARIES})
+add_executable(ex1 test/ex1.cpp ${DIR_SRCS} ${HEADER})
+target_link_libraries(ex1 ${Z3_LIBRARY})
+target_link_libraries(ex1 ${GSL_LIBRARIES})

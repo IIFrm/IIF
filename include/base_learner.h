@@ -94,13 +94,16 @@ class BaseLearner{
 		 *
 		 *		   You can find details of each parameters in child class.
 		 */
-		int selectiveSampling(int randn, int exen, int type, Classifier* cl) {
+		int selectiveSampling(int randn, int exen, Classifier* cl) {
 #ifdef __PRT
 			std::cout << "{" << GREEN;
 #endif
 
-			if ((type != 0) && (exen > type))
-				randn += exen - type;
+#ifndef __SELECTIVE_SAMPLING_ENABLED
+			std::cout << "Pure Random";
+			randn += exen;
+			exen = 0;
+#endif
 			Solution input;
 			int ret = 0;
 			for (int i = 0; i < randn; i++) {
@@ -115,15 +118,13 @@ class BaseLearner{
 #ifdef __PRT
 			std::cout << BLUE;
 #endif
-			if (type == 0) {
-				for (int i = 0; i < exen; i++) {
-					Classifier::solver(cl, input);
-					ret = runTarget(input);
+			for (int i = 0; i < exen; i++) {
+				Classifier::solver(cl, input);
+				ret = runTarget(input);
 #ifdef __PRT
-					std::cout << "|" << input;
-					printRunResult(ret);
+				std::cout << "|" << input;
+				printRunResult(ret);
 #endif
-				}
 			}
 
 #ifdef __PRT
@@ -138,10 +139,10 @@ class BaseLearner{
 		 */
 		virtual std::string invariant(int n) = 0;
 
-	protected:
+			protected:
 		States* gsets;
 		int (*func)(int*);
-};
+		};
 
 
 #endif

@@ -23,7 +23,11 @@ class Config {
 			} else if (key == "beforeloop") { cppstatement = value;
 			} else if (key == "beforeloopinit") { cppstatement = value;
 			} else if (key == "loop") { cppstatement = value;
-			} else if (key == "loopcondition") { cppstatement = "while(" + value + ")";
+			} else if (key == "loopcondition") { 
+				if (value.compare("") == 0) 
+					cppstatement = "while(rand() % 2)";
+				else
+					cppstatement = "while(" + value + ")";
 			} else if (key == "loop") { cppstatement = value;
 			} else if (key == "postcondition") { 
 				cppstatement = "iif_assert(" + value + ");\n"; 
@@ -156,15 +160,16 @@ class FileHelper {
 		}
 
 		bool writeCppLoopFunction(ofstream& cppFile) {
-			cppFile <<"int loopFunction(int a[]) {\n";
+			cppFile <<"int loopFunction(int _reverved_input_[]) {\n";
 			for (int i = 0; i < vnum; i++) {
-				cppFile << "int " << variables[i] << " = a[" << i << "];\n";
+				cppFile << "int " << variables[i] << " = _reverved_input_[" << i << "];\n";
 			}
 			cppFile << "\n";
 			for (int i = 0; i < confignum; i++) {
 				if (cs[i].key == "loop") { 
 					cppFile << "{\n"; 
 					writeRecordi(cppFile); 
+					cppFile << "\n"; 
 				}
 				if (cs[i].cppstatement.compare("") != 0)
 					cppFile << cs[i].cppstatement << endl;

@@ -53,12 +53,14 @@ cd ..
 ./build_project.sh $prefix $path_cnt $path_dataset
 
 
-echo -e $blue"Using precondition as the invariant candidiate..."$normal
-grep '^precondition=*' $path_cfg > $path_inv
-sed -i 's/precondition=*//g' $path_inv
-./verify.sh $prefix
-if [ $? -eq 0 ]; then
-	exit 0
+if [ $# -ge 2 ]; then
+	echo -e $blue"Using precondition as the invariant candidiate..."$normal
+	grep '^precondition=*' $path_cfg > $path_inv
+	sed -i 's/precondition=*//g' $path_inv
+	./verify.sh $prefix
+	if [ $? -eq 0 ]; then
+		exit 0
+	fi
 fi
 
 iteration=1
