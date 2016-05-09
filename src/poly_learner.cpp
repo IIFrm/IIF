@@ -193,10 +193,8 @@ std::string PolyLearner::invariant(int n) {
 	return svm->cl.toString();
 }
 
-int PolyLearner::save2file(char* filename) {
-	svm->problem.save_to_file(filename);
-	std::cout << "save to file succeed. " << filename << "\n";
-	//svm->problem.save_to_file("../tmp/svm.ds");
-	//std::cout << "save to file succeed. ../tmp/svm.ds\n";
+int PolyLearner::save2file() {
+	svm->problem.save_to_file("../tmp/svm.ds");
+	std::cout << "save to file succeed. ../tmp/svm.ds\n";
 	return 0;
 }

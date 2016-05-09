@@ -75,12 +75,12 @@ iifContext::iifContext(const char* vfilename, int (*func)(int*),
 	//gsets[QUESTION].label = QUESTION;
 	//gsets[CNT_EMPL].label = CNT_EMPL;
 	if (dataset_fname != NULL) {
-		std::cout << "dataset filename := " << dataset_fname << std::endl;
+		//std::cout << "dataset filename := " << dataset_fname << std::endl;
 		std::ifstream fin(dataset_fname);
 		if (fin) {
 			int l, pn, nn;
 			fin >> l >> pn >> nn;
-			std::cout << "l:= " << l << "  pn:=" << pn << "  nn:=" << nn << std::endl;
+			//std::cout << "l:= " << l << "  pn:=" << pn << "  nn:=" << nn << std::endl;
 			gsets[POSITIVE].initFromFile(pn, fin);
 			gsets[NEGATIVE].initFromFile(nn, fin);
 			fin.close();
@@ -163,9 +163,8 @@ int iifContext::learn(const char* last_cnt_fname, const char* invfilename, int t
 	while (p) {
 		if (p->learner->learn() == 0) {
 #ifdef __DS_ENABLED
-			sprintf(filename, "%s.ds", (char*)invfilename);
 			//p->learner->save2file(filename);
-			p->learner->save2file("../tmp/svm.ds");
+			p->learner->save2file();
 #endif
 			sprintf(filename, "%s.inv", (char*)invfilename);
 			std::ofstream invFile(filename);
