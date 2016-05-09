@@ -53,6 +53,7 @@ class MLalgo
 		 * @return double Return precision we can get. Should be a value between 0 and 1.
 		 */
 		virtual double checkTrainingSet() = 0;
+		virtual int checkQuestionTraces(States&) = 0;
 
 		/** @brief test on question state sets to see if there is an invalidation 
 		 *

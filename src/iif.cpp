@@ -69,10 +69,10 @@ iifContext::iifContext(const char* vfilename, int (*func)(int*),
 		}
 	}
 
-	gsets = new States[2];
+	gsets = new States[3];
 	gsets[NEGATIVE].label = NEGATIVE;
 	gsets[POSITIVE].label = POSITIVE;
-	//gsets[QUESTION].label = QUESTION;
+	gsets[QUESTION].label = QUESTION;
 	//gsets[CNT_EMPL].label = CNT_EMPL;
 	if (dataset_fname != NULL) {
 		//std::cout << "dataset filename := " << dataset_fname << std::endl;

@@ -124,12 +124,19 @@ init_svm:
 		std::cout << GREEN << " [PASS]" << std::endl << NORMAL;
 #endif
 
+#ifdef __PRT
+		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") check Question Traces:   ";
+#endif
+		if (svm->checkQuestionTraces(gsets[QUESTION]) != 0)
+			continue;
+
 		/*
 		 *	similarLast is used to store the convergence check return value for the last time.
 		 *	We only admit convergence if the three consecutive round are converged.
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
 #ifdef __PRT
+		std::cout << "\n";
 		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") check convergence:        ";
 #endif
 

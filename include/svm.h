@@ -195,6 +195,45 @@ class SVM : public MLalgo
 			return static_cast<double>(pass) / problem.l;
 		}
 
+		int checkQuestionTraces(States& qset) {
+#ifdef __PRT
+			std::cout << " [" << qset.traces_num() << "]";
+#endif
+			for (int i = 0; i < qset.p_index; i++) {
+				int pre = -1, cur = 0;
+#ifdef __PRT
+				std::cout << ".";
+#endif
+				for (int j = qset.t_index[i]; j < qset.t_index[i + 1]; j++) {
+					cur = predict(qset.values[j]);
+					//std::cout << ((cur >= 0) ? "+" : "-");
+					if ((pre >= 0) && (cur < 0)) {
+						// deal with wrong question trace.
+						// Trace back to print out the whole trace and the predicted labels.
+#ifdef __PRT
+						std::cerr << RED << "\t[FAIL]\n \t  Predict wrongly on Question traces.\n";
+						qset.dumpTrace(i);
+#endif
+						for (int j = qset.t_index[i]; j < qset.t_index[i + 1]; j++) {
+							cur = predict(qset.values[j]);
+#ifdef __PRT
+							std::cout << ((cur >= 0) ? "+" : "-");
+#endif
+						}
+#ifdef __PRT
+						std::cout << std::endl << NORMAL;
+#endif
+						return -1;
+					}
+					pre = cur;
+				}
+			}
+#ifdef __PRT
+			std::cout << " [PASS]";
+#endif
+			return 0;
+		}
+
 		bool converged (Classifier& pre_cl) {
 			if (pre_cl.size <= 0) return false;
 			return cl[0]->isSimilar(*pre_cl[0]);

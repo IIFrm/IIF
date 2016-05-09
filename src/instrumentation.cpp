@@ -129,7 +129,7 @@ int afterLoop(States* gsets)
 	std::cout << "END[" << label << "]" << NORMAL << std::endl;
 #endif
 
-	if (label == POSITIVE || label == NEGATIVE)
+	if (label == POSITIVE || label == NEGATIVE || label == QUESTION)
 		gsets[label].addStates(program_states, state_index);
 	return label;
 }

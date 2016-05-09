@@ -251,7 +251,6 @@ class SVM : public MLalgo
 			return static_cast<double>(pass) / problem.l;
 		}
 
-/*
 		int checkQuestionSet(States& qset) {
 			if (classifier == NULL) return -1;
 #ifdef __PRT
@@ -291,7 +290,6 @@ class SVM : public MLalgo
 #endif
 			return 0;
 		}
-*/
 
 		int converged (void* last_model, int num =1) {
 			assert ((num == 1) || "SVM::get_converged: Unexpected equation number parameter.");
