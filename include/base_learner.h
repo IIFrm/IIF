@@ -53,7 +53,7 @@ class BaseLearner{
 			}
 		}
 
-		virtual int save2file() = 0;
+		virtual int save2file(char*) = 0;
 		/** @brief This function runs the target_program with the given input
 		 *
 		 *  @param  input defines input values which are used to call target_program 
@@ -74,10 +74,12 @@ class BaseLearner{
 			int label = afterLoop(gsets);
 			//if (gsets[CNT_EMPL].traces_num() > 0) {
 			if (label == CNT_EMPL) {
-				std::cout << RED << BOLD << "] x.\nBUG! Program encountered a Counter-Example trace." << std::endl;
-				std::cout.setf(std::ios::fixed);
-				std::cout << std::setprecision(0) <<gsets[CNT_EMPL] << NORMAL << std::endl;
-				std::cout.unsetf(std::ios::fixed);
+				std::cout << RED << BOLD << " \nBUG! Program encountered a Counter-Example trace." << std::endl;
+				//std::cout << "here78.\n";
+				//std::cout.setf(std::ios::fixed);
+				//std::cout << std::setprecision(0) <<gsets[CNT_EMPL] << NORMAL << std::endl;
+				//std::cout.unsetf(std::ios::fixed);
+				//std::cout << "here82.\n";
 				exit(-2);
 			}
 			return label;
@@ -139,10 +141,9 @@ class BaseLearner{
 		 */
 		virtual std::string invariant(int n) = 0;
 
-			protected:
+	protected:
 		States* gsets;
 		int (*func)(int*);
-		};
-
+};
 
 #endif

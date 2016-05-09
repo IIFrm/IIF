@@ -2,18 +2,19 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int a[]) {
-int i = a[0];
-int j = a[1];
-int k = a[2];
+int loopFunction(int _reverved_input_[]) {
+int i = _reverved_input_[0];
+int j = _reverved_input_[1];
+int k = _reverved_input_[2];
 
-iif_assume(i<j&&k>0);
+iif_assume(i<j && k>i-j);
 while(i<j)
 {
-recordi(i, j, k);k=k+1;i=i+1;
+recordi(i, j, k);
+k=k+1; i=i+1;
 }
 recordi(i, j, k);
-iif_assert(k>j-i);
+iif_assert(k > 0);
 return 0;
 }
 

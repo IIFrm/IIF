@@ -532,7 +532,9 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 	int iter = 0;
 	//std::cout << "oprimization step 1.\n";
 	int max_iter = max(10000000, l>INT_MAX/100 ? INT_MAX : 100*l);
-	//max_iter/=10; 
+	//int max_iter = max(1000000, l>INT_MAX/100 ? INT_MAX : 100*l);
+	//int max_iter = INT_MAX;
+	max_iter/=10; 
 	//max_iter = INT_MAX;
 	////max_iter/=100; 
 	int counter = min(l,1000)+1;
@@ -715,7 +717,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
 			active_size = l;
 			info("*");
 		}
-		fprintf(stderr,"\nWARNING: $$reaching max number of iterations\n");
+		fprintf(stderr,"\e[31mWARNING: $$reaching max number of iterations\e[0m\n");
 	}
 
 	// calculate rho

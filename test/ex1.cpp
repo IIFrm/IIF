@@ -15,7 +15,7 @@ recordi(xa, ya);
 		y = -2 * xa + ya;
 
 		x++;
-		if (rand()%2) y = y + x;
+		if (y%2) y = y + x;
 		else y = y - x;
 
 		xa = x - 2 * y;

@@ -193,8 +193,10 @@ std::string LinearLearner::invariant(int n) {
 	return svm->cl.toString();
 }
 
-int LinearLearner::save2file() {
-	svm->problem.save_to_file("../tmp/svm.ds");
-	std::cout << "save to file succeed. ../tmp/svm.ds\n";
+int LinearLearner::save2file(char* filename) {
+	svm->problem.save_to_file(filename);
+	std::cout << "save to file succeed. " << filename << "\n";
+	//svm->problem.save_to_file("../tmp/svm.ds");
+	//std::cout << "save to file succeed. ../tmp/svm.ds\n";
 	return 0;
 }

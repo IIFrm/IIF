@@ -11,7 +11,7 @@ class PolyLearner: public BaseLearner {
 
 		~PolyLearner();
 
-		virtual int save2file();
+		virtual int save2file(char*);
 
 		virtual int learn();
 

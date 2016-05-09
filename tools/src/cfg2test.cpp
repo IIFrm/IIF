@@ -160,9 +160,9 @@ class FileHelper {
 		}
 
 		bool writeCppLoopFunction(ofstream& cppFile) {
-			cppFile <<"int loopFunction(int _reverved_input_[]) {\n";
+			cppFile <<"int loopFunction(int _reserved_input_[]) {\n";
 			for (int i = 0; i < vnum; i++) {
-				cppFile << "int " << variables[i] << " = _reverved_input_[" << i << "];\n";
+				cppFile << "int " << variables[i] << " = _reserved_input_[" << i << "];\n";
 			}
 			cppFile << "\n";
 			for (int i = 0; i < confignum; i++) {

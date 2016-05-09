@@ -191,8 +191,9 @@ std::string ConjunctiveLearner::invariant(int n) {
 	return svm_i->cl.toString();
 }
 
-int ConjunctiveLearner::save2file() {
-	std::ofstream fout("../tmp/svm.ds");
+int ConjunctiveLearner::save2file(char* filename) {
+	//std::ofstream fout("../tmp/svm.ds");
+	std::ofstream fout(filename);
 	fout << svm_i->problem.np + svm_i->negative_size  << "\t" << svm_i->problem.np << "\t" << svm_i->negative_size << "\n";
 	for (int i = 0; i < svm_i->problem.np; i++) {
 		fout << 1;
@@ -207,6 +208,6 @@ int ConjunctiveLearner::save2file() {
 		fout << "\n";
 	}
 	fout.close();
-	std::cout << "save to file succeed. ../tmp/svm.ds\n";
+	std::cout << "save to file succeed. " << filename << "\n";
 	return 0;
 }

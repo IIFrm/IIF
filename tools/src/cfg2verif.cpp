@@ -105,6 +105,7 @@ class FileHelper {
 				if (get_record == true)
 					continue;
 				else 
+					//cs[lastidx].value += line;
 					cs[lastidx].value += "\n" + line;
 			}
 

@@ -2,14 +2,15 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int a[]) {
-int x = a[0];
-int y = a[1];
+int loopFunction(int _reverved_input_[]) {
+int x = _reverved_input_[0];
+int y = _reverved_input_[1];
 
 iif_assume(x < 0);
 while(x < 0)
 {
-recordi(x, y);x=x+y; y++;
+recordi(x, y);
+x=x+y; y++;
 }
 recordi(x, y);
 iif_assert(y>=0);

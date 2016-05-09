@@ -34,7 +34,7 @@ int addStateInt(int first ...)
 #ifdef __PRT_TRACE
 	std::cout << BLUE << "(" << program_states[state_index][0];
 	for (int i = 1; i < Nv; i++) {
-	    std::cout << "," << program_states[state_index][i];
+		std::cout << "," << program_states[state_index][i];
 	}
 	std::cout << ")" << NORMAL;
 #endif
@@ -66,7 +66,7 @@ int addStateDouble(double first, ...)
 #ifdef __PRT_TRACE
 	std::cout << BLUE << "(" << program_states[state_index][0];
 	for (int i = 1; i < Nv; i++) {
-	    std::cout << "," << program_states[state_index][i];
+		std::cout << "," << program_states[state_index][i];
 	}
 	std::cout << ")" << NORMAL;
 #endif
@@ -108,6 +108,14 @@ int afterLoop(States* gsets)
 		//label = POSITIVE; 
 	} else if (_passP && !_passQ) {
 		label = CNT_EMPL;
+		std::cout << RED << "\ncounter-example trace:  ";
+		for (int i = 0; i < state_index; i++) {
+			std::cout << "(" << program_states[i][0];
+			for (int j = 1; j < Nv; j++)
+				std::cout << "," << program_states[i][j];
+			std::cout << ")->";
+		}
+		std::cout << "END[x]" << NORMAL << std::endl;
 	}
 
 #ifdef __PRT_TRACE
@@ -120,7 +128,7 @@ int afterLoop(States* gsets)
 	}
 	std::cout << "END[" << label << "]" << NORMAL << std::endl;
 #endif
-	
+
 	if (label == POSITIVE || label == NEGATIVE)
 		gsets[label].addStates(program_states, state_index);
 	return label;

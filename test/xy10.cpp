@@ -7,24 +7,22 @@ int x = _reverved_input_[0];
 int y = _reverved_input_[1];
 int z = _reverved_input_[2];
 
-iif_assume(x + y + z >= 0);
-while(z > 0)
+iif_assume(x==y);
+while(rand() % 2)
 {
 recordi(x, y, z);
-x++; 
-y++;
-z-=2;
+x+=10; y+=1;
 }
 recordi(x, y, z);
-iif_assert(x + y >= 0);
+iif_assert(x>z || y<z+1);
 return 0;
 }
 
 int main(int argc, char** argv)
  {
-iifContext context("../tmp/f3.var", loopFunction, "loopFunction", "../tmp/f3.ds");
+iifContext context("../tmp/xy10.var", loopFunction, "loopFunction", "../tmp/xy10.ds");
 context.addLearner("linear");
 context.addLearner("poly");
 context.addLearner("conjunctive");
-return context.learn("../tmp/f3.cnt", "../tmp/f3");
+return context.learn("../tmp/xy10.cnt", "../tmp/xy10");
 }
