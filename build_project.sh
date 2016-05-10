@@ -60,6 +60,14 @@ echo -n -e $blue"Generating CMakeLists file for further construction..."$normal
 cmakefile="./CMakeLists.txt"
 echo "cmake_minimum_required (VERSION 2.8)" > $cmakefile
 echo "set(Nv "$Nv")" >> $cmakefile
+if [ $# -ge 4 ]; then
+	if [ $4 -eq 1 ]; then
+		echo "add_definitions(-D__QAS_POSITIVE)" >> $cmakefile
+	fi
+	if [ $4 -eq -1 ]; then
+		echo "add_definitions(-D__QAS_NEGATIVE)" >> $cmakefile
+	fi
+fi
 cat ./cmake.in >> $cmakefile
 echo "add_executable("$prefix" "$path_cpp" \${DIR_SRCS} \${HEADER})" >> $cmakefile
 echo "target_link_libraries("$prefix" \${Z3_LIBRARY})" >> $cmakefile

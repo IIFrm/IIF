@@ -2,13 +2,13 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int _reverved_input_[]) {
-int xa = _reverved_input_[0];
-int ya = _reverved_input_[1];
+int loopFunction(int _reserved_input_[]) {
+int xa = _reserved_input_[0];
+int ya = _reserved_input_[1];
 
 int x, y;
 iif_assume(xa + 2 * ya >= 0);
-while(rand() % 2)
+while(rand() % 4)
 {
 recordi(xa, ya);
  x = xa + 2 * ya;
@@ -28,9 +28,8 @@ return 0;
 
 int main(int argc, char** argv)
  {
-iifContext context("../tmp/ex1.var", loopFunction, "loopFunction", "../tmp/ex1.ds");
+iifContext context("../tmp/ex1.var", loopFunction, "loopFunction", "../1");
 context.addLearner("linear");
-context.addLearner("poly");
 context.addLearner("conjunctive");
 return context.learn("../tmp/ex1.cnt", "../tmp/ex1");
 }

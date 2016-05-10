@@ -23,6 +23,7 @@ dir_tool="tools/bin/"
 
 prefix=$1
 mkdir -p tmp
+mkdir -p build
 file_cfg=$prefix".cfg"
 path_cfg=$dir_cfg""$file_cfg
 file_cpp=$prefix".cpp"
@@ -39,7 +40,7 @@ path_cnt_lib=$dir_temp""$file_cnt_lib
 file_dataset=$prefix".ds"
 path_dataset=$dir_temp""$file_dataset
 
-rm -f $path_cnt
+#rm -f $path_cnt
 rm -f $path_dataset
 rm -f $path_cnt_lib
 
@@ -50,10 +51,9 @@ cd tools
 ./make_tools.sh
 cd ..
 
-./build_project.sh $prefix $path_cnt $path_dataset
+./build_project.sh $prefix $path_cnt $path_dataset $2
 
-
-if [ $# -ge 2 ]; then
+if [ $# -ge 3 ]; then
 	echo -e $blue"Using precondition as the invariant candidiate..."$normal
 	grep '^precondition=*' $path_cfg > $path_inv
 	sed -i 's/precondition=*//g' $path_inv

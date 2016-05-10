@@ -2,23 +2,25 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int a[]) {
-int x = a[0];
-int y = a[1];
+int loopFunction(int _reserved_input_[]) {
+int x = _reserved_input_[0];
+int y = _reserved_input_[1];
 
-iif_assume(x == y);
-while(x < 999999)
+iif_assume(x == 0 && y == 0 );
+while(rand() % 4)
 {
-recordi(x, y);x++;y++;
+recordi(x, y);
+x++;y++;
 }
 recordi(x, y);
-iif_assert(x==y);
+iif_assert(x == y && x >= 0);
 return 0;
 }
 
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/cav12foo1.var", loopFunction, "loopFunction", "../tmp/cav12foo1.ds");
-context.addLearner("linear", "../tmp/cav12foo1.cnt");
-return context.learn("../tmp/cav12foo1");
+context.addLearner("linear");
+context.addLearner("conjunctive");
+return context.learn("../tmp/cav12foo1.cnt", "../tmp/cav12foo1");
 }

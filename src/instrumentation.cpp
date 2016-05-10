@@ -104,8 +104,16 @@ int afterLoop(States* gsets)
 	} else if (!_passP && !_passQ) {
 		label = NEGATIVE; 
 	} else if (!_passP && _passQ) {
+#ifdef __QAS_POSITIVE
+		//std::cout << "?->+ ";
+		label = POSITIVE; 
+#elif __QAS_NEGATIVE
+		//std::cout << "?->- ";
+		label = NEGATIVE;
+#else
+		//std::cout << "?->? ";
 		label = QUESTION; 
-		//label = POSITIVE; 
+#endif
 	} else if (_passP && !_passQ) {
 		label = CNT_EMPL;
 		std::cout << RED << "\ncounter-example trace:  ";

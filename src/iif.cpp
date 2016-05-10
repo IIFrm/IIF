@@ -153,11 +153,11 @@ int iifContext::learn(const char* last_cnt_fname, const char* invfilename, int t
 	char filename[256]; 
 	if (p && last_cnt_fname) 
 #ifdef __PRT
-		std::cout << "Test on counter example ...\n";
+		//std::cout << "Test on counter example ...\n";
 #endif
 		p->learner->runCounterExampleFile(last_cnt_fname);
 #ifdef __PRT
-		std::cout << "Test on counter example DONE...\n";
+		//std::cout << "Test on counter example DONE...\n";
 #endif
 
 	while (p) {

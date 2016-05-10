@@ -25,7 +25,7 @@ class Config {
 			} else if (key == "loop") { cppstatement = value;
 			} else if (key == "loopcondition") { 
 				if (value.compare("") == 0) 
-					cppstatement = "while(rand() % 2)";
+					cppstatement = "while(rand() % 4)";
 				else
 					cppstatement = "while(" + value + ")";
 			} else if (key == "loop") { cppstatement = value;
@@ -192,7 +192,7 @@ class FileHelper {
 
 			{
 				cppFile << "context.addLearner(\"linear\");\n";
-				cppFile << "context.addLearner(\"poly\");\n";
+				//cppFile << "context.addLearner(\"poly\");\n";
 				cppFile << "context.addLearner(\"conjunctive\");\n";
 			}
 
