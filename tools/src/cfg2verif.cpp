@@ -56,15 +56,16 @@ class FileHelper {
 
 			confignum = 9;
 			cs = new Config[confignum];
-			cs[0].key = "names";
-			cs[1].key = "beforeloop";
-			cs[2].key = "beforeloopinit";
-			cs[3].key = "precondition";
-			cs[4].key = "loopcondition";
-			cs[5].key = "loop";
-			cs[6].key = "postcondition";
-			cs[7].key = "afterloop";
-			cs[8].key = "invariant";
+			int i = 0;
+			cs[i++].key = "names";
+			cs[i++].key = "beforeloop";
+			cs[i++].key = "beforeloopinit";
+			cs[i++].key = "precondition";
+			cs[i++].key = "loopcondition";
+			cs[i++].key = "loop";
+			cs[i++].key = "postcondition";
+			cs[i++].key = "afterloop";
+			cs[i++].key = "invariant";
 			for (int i = 0; i < confignum; i++)
 				cs[i].value= string("");
 			//variables = NULL;

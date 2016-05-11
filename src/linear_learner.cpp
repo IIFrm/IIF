@@ -73,8 +73,8 @@ init_svm:
 				std::cout << " re-Run the system again OR modify your loop program.\n" << NORMAL;
 				exit(-1);
 			}
-			if (maxv <= 10000000) {maxv+=base_step;}
-			if (minv >= -10000000) {minv-=base_step;}
+			if (maxv <= 100000) {maxv+=base_step;}
+			if (minv >= -100000) {minv-=base_step;}
 			goto init_svm;
 		}
 
@@ -88,9 +88,10 @@ init_svm:
 			if (++zero_times < Nretry_init)
 				goto init_svm;
 		}
-		while (pre_psize + pre_nsize >= density * pow(maxv-minv, Nv)) {
-			if (maxv <= 10000000) {maxv+=base_step;}
-			if (minv >= -10000000) {minv-=base_step;}
+		//while (pre_psize + pre_nsize >= density * pow(maxv-minv, Nv)) {
+		while (gsets[POSITIVE].getSize() + gsets[NEGATIVE].getSize() >= density * pow(maxv-minv, Nv)) {
+			if (maxv <= 100000) {maxv+=base_step;}
+			if (minv >= -100000) {minv-=base_step;}
 		}
 
 #ifdef __PRT

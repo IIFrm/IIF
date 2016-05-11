@@ -45,7 +45,7 @@ class SVM : public MLalgo
 
 	public:
 #ifdef __TRAINSET_SIZE_RESTRICTED
-		SVM(int type = 0, void (*f) (const char*) = NULL, int size = restricted_trainset_size+1) : max_size(size) {
+		SVM(int type = 0, void (*f) (const char*) = NULL, int size = 2 * restricted_trainset_size+1) : max_size(size) {
 #else
 		SVM(int type = 0, void (*f) (const char*) = NULL, int size = 1000000) : max_size(size) {
 #endif
@@ -78,17 +78,29 @@ class SVM : public MLalgo
 
 		~SVM() {
 			if (model != NULL) svm_free_and_destroy_model(&model);
-			if (raw_mapped_data != NULL) delete[]raw_mapped_data;
+#ifdef __PRT_DEBUG
+			std::cout << "SVM deleted model\n";
+#endif
+			if (raw_mapped_data != NULL) delete []raw_mapped_data;
+#ifdef __PRT_DEBUG
+			std::cout << "SVM deleted raw_mapped_data\n";
+#endif
 			if (data != NULL) delete []data;
-			if (label != NULL) delete label;
+#ifdef __PRT_DEBUG
+			std::cout << "SVM deleted data\n";
+#endif
+			if (label != NULL) delete []label;
+#ifdef __PRT_DEBUG
+			std::cout << "SVM deleted label\n";
+#endif
 		}
 
 
 		int makeTrainingSet(States* gsets, int& pre_psize, int& pre_nsize) {
 			int cur_psize = gsets[POSITIVE].getSize();
 			int cur_nsize = gsets[NEGATIVE].getSize();
-			if (cur_psize + cur_nsize > max_size) 
-				resize(cur_psize + cur_nsize);
+			//if (cur_psize + cur_nsize > max_size) 
+			//	resize(cur_psize + cur_nsize);
 
 #ifdef __PRT
 			std::cout << "++[" << cur_psize - pre_psize << "|"
@@ -112,9 +124,13 @@ class SVM : public MLalgo
 				data[plength + i] = raw_mapped_data[plength + i];
 				label[plength + i] = -1;
 			}
+			pre_psize = cur_psize;
+			pre_nsize = cur_nsize;
 			cur_psize = plength;
 			cur_nsize = nlength;
-			std::cout << RED << " RESTRICTED2[" << cur_psize << "+|" << cur_nsize << "-]" << NORMAL;
+#ifdef __PRT
+			std::cout << RED << " RESTRICTED[" << plength << "+|" << nlength << "-]" << NORMAL;
+#endif
 			ret = plength + nlength;
 #else
 			//POINTER
@@ -141,6 +157,8 @@ class SVM : public MLalgo
 				data[cur_index + i] = raw_mapped_data[cur_index + i];
 				label[cur_index + i] = -1;
 			}
+			pre_psize = cur_psize;
+			pre_nsize = cur_nsize;
 #endif
 
 #ifdef __DS_ENABLED
@@ -148,11 +166,8 @@ class SVM : public MLalgo
 			problem.nn = cur_nsize;
 #endif
 
-			//problem.l = cur_psize + cur_nsize;
 			problem.l = cur_psize + cur_nsize;
 
-			pre_psize = cur_psize;
-			pre_nsize = cur_nsize;
 			//std::cout << "makeTrainingSet => " << ret << "\n";
 			return ret;
 		}

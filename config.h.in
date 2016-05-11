@@ -76,7 +76,7 @@ const int Mitems = 10000000;
 /** @brief defines max number of states contains in one executionn. 
  *		   Better to be a number larger than 128 
  */
-const int MstatesIn1trace = 10240;
+const int MstatesIn1trace = 1024;
 
 /** @brief defines the number of tests runs initially. Should be a positive integer.
 */
@@ -98,9 +98,9 @@ const int Nexe_rand = 2 * Nv;
  */
 const int Miter = 512;
 
-const double density = 0.1;
+const double density = 0.2;
 const int base_step = 100;
-const int restricted_trainset_size = 1000;
+const int restricted_trainset_size = 2000;
 
 /** @brief This function register the test program to the framework.
  *

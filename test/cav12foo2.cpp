@@ -20,7 +20,6 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/cav12foo2.var", loopFunction, "loopFunction", "../tmp/cav12foo2.ds");
-context.addLearner("linear");
 context.addLearner("conjunctive");
 return context.learn("../tmp/cav12foo2.cnt", "../tmp/cav12foo2");
 }

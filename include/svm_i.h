@@ -46,7 +46,7 @@ class SVM_I : public MLalgo //SVM
 		int negative_size;
 
 #ifdef __TRAINSET_SIZE_RESTRICTED
-		SVM_I(int type = 0, void (*f) (const char*) = NULL, int size = restricted_trainset_size+1) : max_size(size) {
+		SVM_I(int type = 0, void (*f) (const char*) = NULL, int size = restricted_trainset_size+1) : max_size(2 * size) {
 #else
 		SVM_I(int type = 0, void (*f) (const char*) = NULL, int size = 1000000) : max_size(size) {
 #endif
@@ -80,17 +80,33 @@ class SVM_I : public MLalgo //SVM
 
 		~SVM_I() {
 			if (model != NULL) svm_free_and_destroy_model(&model);
+#ifdef __PRT_DEBUG
+			std::cout << "SVM_I deleted model\n";
+#endif
 			if (raw_mapped_data != NULL) delete []raw_mapped_data;
+#ifdef __PRT_DEBUG
+			std::cout << "SVM_I deleted raw_mapped_data\n";
+#endif
+			if (negative_mapped_data != NULL) delete []negative_mapped_data;
+#ifdef __PRT_DEBUG
+			std::cout << "SVM_I deleted negative_mapped_data\n";
+#endif
 			if (data != NULL) delete []data;
+#ifdef __PRT_DEBUG
+			std::cout << "SVM_I deleted data\n";
+#endif
 			if (label != NULL) delete []label;
+#ifdef __PRT_DEBUG
+			std::cout << "SVM_I deleted label\n";
+#endif
 		}
 
 		int makeTrainingSet(States* gsets, int& pre_psize, int& pre_nsize) {
 			int cur_psize = gsets[POSITIVE].getSize();
 			int cur_nsize = gsets[NEGATIVE].getSize();
 
-			if (cur_psize + 1 >= max_size)
-				resize(cur_psize + 1);
+			//if (cur_psize + 1 >= max_size)
+			//	resize(cur_psize + 1);
 
 #ifdef __PRT
 			std::cout << "++[" << cur_psize - pre_psize << "|"
@@ -110,12 +126,16 @@ class SVM_I : public MLalgo //SVM
 			int nstart = cur_nsize > restricted_trainset_size ? cur_nsize - restricted_trainset_size : 0;
 			int nlength = cur_nsize - nstart;
 			for (int i = 0; i < nlength; i++) {
-				mappingData(gsets[NEGATIVE].values[nstart + i], negative_mapped_data[nstart + i], 4);
+				mappingData(gsets[NEGATIVE].values[nstart + i], negative_mapped_data[i], 4);
 			}
 			negative_size = nlength;
+			pre_psize = cur_psize;
+			pre_nsize = cur_nsize;
 			cur_psize = plength;
 			cur_nsize = nlength;
-			std::cout << RED << " RESTRICTED2[" << cur_psize << "+|" << cur_nsize << "-]" << NORMAL;
+#ifdef __PRT
+			std::cout << RED << " RESTRICTED[" << cur_psize << "+|" << cur_nsize << "-]" << NORMAL;
+#endif
 			ret = plength + nlength;
 #else
 			// prepare new training data set
@@ -133,6 +153,8 @@ class SVM_I : public MLalgo //SVM
 				mappingData(gsets[NEGATIVE].values[pre_nsize + i], negative_mapped_data[cur_index + i], 4);
 			}
 			negative_size = cur_nsize;
+			pre_psize = cur_psize;
+			pre_nsize = cur_nsize;
 #endif
 
 #ifdef __DS_ENABLED
@@ -141,8 +163,6 @@ class SVM_I : public MLalgo //SVM
 #endif
 
 			problem.l = cur_psize;
-			pre_psize = cur_psize;
-			pre_nsize = cur_nsize;
 			return ret;
 		}
 
@@ -169,7 +189,11 @@ class SVM_I : public MLalgo //SVM
 #endif
 				// there is some point which is misclassified by current dividers.
 				if (stepTrain(misidx) < 0) {
-					std::cout << "step train (" << misidx << ") return < 0, " << problem.l + negative_size << "\n";
+					std::cout << "Can not classify state [index" << misidx << "](" << negative_mapped_data[misidx][0];
+					for (int i = 1; i < Nv; i++) {
+						std::cout << ", " << negative_mapped_data[misidx][i];
+					}
+					std::cout << ") against other " << problem.l << " positive states.\n";
 					return -1;
 				}
 			}
