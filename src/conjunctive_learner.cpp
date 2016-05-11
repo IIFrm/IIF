@@ -14,9 +14,9 @@ static void print_null(const char *s) {}
 
 ConjunctiveLearner::ConjunctiveLearner(States* gsets, int (*func)(int*), int max_iteration) 
 	: BaseLearner(gsets, func) { 
-	svm_i = new SVM_I(0, print_null);
-	this->max_iteration = max_iteration;
-}
+		svm_i = new SVM_I(0, print_null);
+		this->max_iteration = max_iteration;
+	}
 
 ConjunctiveLearner::~ConjunctiveLearner() { 
 	if (svm_i != NULL)
@@ -34,8 +34,6 @@ int ConjunctiveLearner::learn()
 	bool converged = false;
 	Classifier pre_cl;
 	int pre_psize = 0, pre_nsize = 0; // , pre_question_size = 0;
-	int base_maxv = maxv;
-	int base_minv = minv;
 	double pass_rate = 1;
 
 	for (rnd = 1; ((rnd <= max_iteration) && (pass_rate >= 1)); rnd++) {
@@ -71,8 +69,8 @@ init_svm_i:
 				std::cout << " re-Run the system again OR modify your loop program.\n" << NORMAL;
 				exit(-1);
 			}
-			if (maxv <= 10000000) {maxv+=base_maxv;}
-			if (minv >= -10000000) {minv+=base_minv;}
+			if (maxv <= 10000000) {maxv+=base_step;}
+			if (minv >= -10000000) {minv-=base_step;}
 			goto init_svm_i;
 		}
 
@@ -86,6 +84,10 @@ init_svm_i:
 		if (svm_i->makeTrainingSet(gsets, pre_psize, pre_nsize) == 0) {
 			if (++zero_times < Nretry_init)
 				goto init_svm_i;
+		}
+		while (pre_psize + pre_nsize >= density * pow(maxv-minv, Nv)) {
+			if (maxv <= 10000000) {maxv+=base_step;}
+			if (minv >= -10000000) {minv-=base_step;}
 		}
 
 #ifdef __PRT
@@ -127,12 +129,15 @@ init_svm_i:
 		std::cout << GREEN << " [PASS]" << std::endl << NORMAL;
 #endif
 
-#if 0
+#ifdef __QUESTION_TRACE_CHECK_ENABLED
 #ifdef __PRT
 		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") check Question Traces:   ";
 #endif
 		if (svm_i->checkQuestionTraces(gsets[QUESTION]) != 0)
 			continue;
+#ifdef __PRT
+		std::cout << "\n";
+#endif
 #endif
 
 		/*
@@ -141,7 +146,6 @@ init_svm_i:
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
 #ifdef __PRT
-		//std::cout << "\n";
 		std::cout << "\t(" << step++ << ") check convergence:        ";
 #endif
 		if (svm_i->converged(pre_cl) == true) {
@@ -200,8 +204,9 @@ std::string ConjunctiveLearner::invariant(int n) {
 	return svm_i->cl.toString();
 }
 
-int ConjunctiveLearner::save2file() {
-	std::ofstream fout("../tmp/svm.ds");
+int ConjunctiveLearner::save2file(const char* dsfilename) {
+	//std::ofstream fout("../tmp/svm.ds");
+	std::ofstream fout(dsfilename);
 	fout << svm_i->problem.np + svm_i->negative_size  << "\t" << svm_i->problem.np << "\t" << svm_i->negative_size << "\n";
 	for (int i = 0; i < svm_i->problem.np; i++) {
 		fout << 1;
@@ -216,6 +221,7 @@ int ConjunctiveLearner::save2file() {
 		fout << "\n";
 	}
 	fout.close();
-	std::cout << "save to file succeed. ../tmp//svm.ds\n";
+	//std::cout << "save to file succeed. ../tmp/svm.ds\n";
+	std::cout << "save the training dataset to file " << dsfilename << "\n";
 	return 0;
 }

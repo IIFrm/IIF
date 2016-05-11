@@ -11,7 +11,7 @@ class ConjunctiveLearner: public BaseLearner {
 
 		~ConjunctiveLearner();
 
-		virtual int save2file();
+		virtual int save2file(const char*);
 		
 		virtual int learn();
 

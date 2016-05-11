@@ -6,22 +6,21 @@ int loopFunction(int _reserved_input_[]) {
 int x = _reserved_input_[0];
 int y = _reserved_input_[1];
 
-iif_assume(x == y && y >= 0 );
-while(rand() % 2)
+iif_assume(x == 0 && y == 0 );
+while(rand() % 16)
 {
 recordi(x, y);
 x++;y++;
 }
 recordi(x, y);
-iif_assert(x == y && x >= 0);
+iif_assert(x >= 0);
 return 0;
 }
 
 int main(int argc, char** argv)
  {
-iifContext context("../tmp/cav12foo1.var", loopFunction, "loopFunction", "../tmp/cav12foo1.ds");
+iifContext context("../tmp/cav12foo1_2.var", loopFunction, "loopFunction", "../tmp/cav12foo1_2.ds");
 context.addLearner("linear");
-context.addLearner("poly");
 context.addLearner("conjunctive");
-return context.learn("../tmp/cav12foo1.cnt", "../tmp/cav12foo1");
+return context.learn("../tmp/cav12foo1_2.cnt", "../tmp/cav12foo1_2");
 }

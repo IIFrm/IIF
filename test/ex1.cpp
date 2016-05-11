@@ -28,8 +28,9 @@ return 0;
 
 int main(int argc, char** argv)
  {
-iifContext context("../tmp/ex1.var", loopFunction, "loopFunction", "../1");
+iifContext context("../tmp/ex1.var", loopFunction, "loopFunction", "../tmp/ex1.ds");
 context.addLearner("linear");
+context.addLearner("poly");
 context.addLearner("conjunctive");
 return context.learn("../tmp/ex1.cnt", "../tmp/ex1");
 }

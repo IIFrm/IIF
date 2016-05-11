@@ -22,10 +22,15 @@ class Config {
 			if (key == "precondition") { cppstatement = "iif_assume(" + value + ");";
 			} else if (key == "beforeloop") { cppstatement = value;
 			} else if (key == "beforeloopinit") { cppstatement = value;
+			} else if (key == "symbolic") { 
+				if (value.compare("") != 0) 
+					cppstatement = "int " + value + ";\n";
+				else 
+					cppstatement = "";
 			} else if (key == "loop") { cppstatement = value;
 			} else if (key == "loopcondition") { 
 				if (value.compare("") == 0) 
-					cppstatement = "while(rand() % 4)";
+					cppstatement = "while(rand() % 2)";
 				else
 					cppstatement = "while(" + value + ")";
 			} else if (key == "loop") { cppstatement = value;
@@ -47,16 +52,18 @@ class FileHelper {
 			this->invfileprefix = invfileprefix;
 			this->testcasefilename = testcasefilename;
 			this->oldtracefilename = oldtracefilename;
-			confignum = 8;
+			confignum = 9;
 			cs = new Config[confignum];
-			cs[0].key = "names";
-			cs[1].key = "beforeloop";
-			cs[2].key = "beforeloopinit";
-			cs[3].key = "precondition";
-			cs[4].key = "loopcondition";
-			cs[5].key = "loop";
-			cs[6].key = "postcondition";
-			cs[7].key = "afterloop";
+			int i = 0;
+			cs[i++].key = "names";
+			cs[i++].key = "beforeloop";
+			cs[i++].key = "beforeloopinit";
+			cs[i++].key = "symbolic";
+			cs[i++].key = "precondition";
+			cs[i++].key = "loopcondition";
+			cs[i++].key = "loop";
+			cs[i++].key = "postcondition";
+			cs[i++].key = "afterloop";
 			vnum = 0;
 		}
 
@@ -192,7 +199,7 @@ class FileHelper {
 
 			{
 				cppFile << "context.addLearner(\"linear\");\n";
-				//cppFile << "context.addLearner(\"poly\");\n";
+				cppFile << "context.addLearner(\"poly\");\n";
 				cppFile << "context.addLearner(\"conjunctive\");\n";
 			}
 

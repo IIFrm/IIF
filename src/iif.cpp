@@ -164,7 +164,8 @@ int iifContext::learn(const char* last_cnt_fname, const char* invfilename, int t
 		if (p->learner->learn() == 0) {
 #ifdef __DS_ENABLED
 			//p->learner->save2file(filename);
-			p->learner->save2file();
+			sprintf(filename, "%s.ds", (char*)invfilename);
+			p->learner->save2file(filename);
 #endif
 			sprintf(filename, "%s.inv", (char*)invfilename);
 			std::ofstream invFile(filename);

@@ -93,6 +93,26 @@ class SVM_I : public MLalgo //SVM
 				<< cur_psize << "+|" << cur_nsize << "-]";
 #endif
 
+			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
+#ifdef __TRAINSET_SIZE_RESTRICTED
+			int pstart = cur_psize > trainsetsize? cur_psize - trainsetsize: 0;
+			int plength = cur_psize - pstart;
+			for (int i = 0; i < plength; i++) {
+				mappingData(gsets[POSITIVE].values[pstart + i], raw_mapped_data[i], 4);
+				data[i] = raw_mapped_data[i];
+				label[i] = 1;
+			}
+			int nstart = cur_nsize > trainsetsize? cur_nsize - trainsetsize: 0;
+			int nlength = cur_nsize - nstart;
+			for (int i = 0; i < nlength; i++) {
+				mappingData(gsets[NEGATIVE].values[nstart + i], negative_mapped_data[nstart + i], 4);
+			}
+			negative_size = nlength;
+			cur_psize = plength;
+			cur_nsize = nlength;
+			std::cout << RED << " RESTRICTED2[" << cur_psize << "+|" << cur_nsize << "-]" << NORMAL;
+			ret = plength + nlength;
+#else
 			// prepare new training data set
 			// training set & label layout:
 			// data :  0 | positive states ...
@@ -108,6 +128,7 @@ class SVM_I : public MLalgo //SVM
 				mappingData(gsets[NEGATIVE].values[pre_nsize + i], negative_mapped_data[cur_index + i], 4);
 			}
 			negative_size = cur_nsize;
+#endif
 
 #ifdef __DS_ENABLED
 			problem.np = cur_psize;
@@ -115,7 +136,6 @@ class SVM_I : public MLalgo //SVM
 #endif
 
 			problem.l = cur_psize;
-			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
 			return ret;
@@ -131,7 +151,7 @@ class SVM_I : public MLalgo //SVM
 				if (ret == -1) return -1;  // something wrong in misclassified.
 				if ((ret == 0) && (misidx == -1)) {	// can divide all the negative points correctly
 
-#ifdef __PRT
+#ifdef __PRT_SVM_I
 					std::cout << GREEN << "finish classified..." << NORMAL << std::endl;
 #endif				
 					cl.simplify();
@@ -232,14 +252,14 @@ class SVM_I : public MLalgo //SVM
 						// the equation in last has not been set
 						// and it is similar to the current equation 
 #ifdef __PRT
-						std::cout << GREEN <<  "<" << i << "-" << j << "> " << NORMAL;
+						std::cout << GREEN <<  "<" << i << ":" << j << ">" << NORMAL;
 #endif 
 						similar_vector[j] = true;
 						break;
 					} 
 #ifdef __PRT
 					else {
-						std::cout << RED << "<" << i << "-" << j << "> " << NORMAL;
+						std::cout << RED << "<" << i << "-" << j << ">" << NORMAL;
 					}
 #endif 
 				}

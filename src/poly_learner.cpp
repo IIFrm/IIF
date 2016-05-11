@@ -13,9 +13,9 @@ static void print_null(const char *s) {}
 
 PolyLearner::PolyLearner(States* gsets, int (*func)(int*), int max_iteration) 
 	: BaseLearner(gsets, func) {
-	svm = new SVM(0, print_null);
-	this->max_iteration = max_iteration;
-}
+		svm = new SVM(0, print_null);
+		this->max_iteration = max_iteration;
+	}
 
 PolyLearner::~PolyLearner() {
 	if (svm != NULL)
@@ -30,8 +30,6 @@ int PolyLearner::learn()
 	bool converged = false;
 	Classifier pre_cl;
 	int pre_psize = 0, pre_nsize = 0;
-	int base_maxv = maxv;
-	int base_minv = minv;
 
 	double pass_rate = 1;
 	svm->setKernel(1);
@@ -73,8 +71,8 @@ init_svm:
 				std::cout << " re-Run the system again OR modify your loop program.\n" << NORMAL;
 				exit(-1);
 			}
-			if (maxv <= 10000000) {maxv+=base_maxv;}
-			if (minv >= -10000000) {minv+=base_minv;}
+			if (maxv <= 10000000) {maxv+=base_step;}
+			if (minv >= -10000000) {minv-=base_step;}
 			goto init_svm;
 		}
 
@@ -88,6 +86,10 @@ init_svm:
 			if (++zero_times < Nretry_init)
 				goto init_svm;
 		}
+		while (pre_psize + pre_nsize >= density * pow(maxv-minv, Nv)) {
+			if (maxv <= 10000000) {maxv+=base_step;}
+			if (minv >= -10000000) {minv-=base_step;}
+		}
 
 #ifdef __PRT
 		std::cout << "\n\t(" << YELLOW << step++ << NORMAL << ") start training ...";
@@ -97,9 +99,9 @@ init_svm:
 #endif
 
 		if (svm->train() != 0) {
-//#ifdef __PRT
+			//#ifdef __PRT
 			std::cout << RED  << " [FAIL] \n Can not divided by polynomial SVM " << NORMAL << std::endl;
-//#endif
+			//#endif
 			return -1;
 		}
 		std::cout << "|-->> " << YELLOW << svm->cl << NORMAL << std::endl;
@@ -124,12 +126,15 @@ init_svm:
 		std::cout << GREEN << " [PASS]" << std::endl << NORMAL;
 #endif
 
-#if 0
+#ifdef __QUESTION_TRACE_CHECK_ENABLED
 #ifdef __PRT
 		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") check Question Traces:   ";
 #endif
 		if (svm->checkQuestionTraces(gsets[QUESTION]) != 0)
 			continue;
+#ifdef __PRT
+		std::cout << "\n";
+#endif
 #endif
 
 		/*
@@ -138,7 +143,6 @@ init_svm:
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
 #ifdef __PRT
-		//std::cout << "\n";
 		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") check convergence:        ";
 #endif
 
@@ -202,8 +206,10 @@ std::string PolyLearner::invariant(int n) {
 	return svm->cl.toString();
 }
 
-int PolyLearner::save2file() {
-	svm->problem.save_to_file("../tmp/svm.ds");
-	std::cout << "save to file succeed. ../tmp/svm.ds\n";
+int PolyLearner::save2file(const char* dsfilename) {
+	//svm->problem.save_to_file("../tmp/svm.ds");
+	//std::cout << "save to file succeed. ../tmp/svm.ds\n";
+	svm->problem.save_to_file(dsfilename);
+	std::cout << "save the training dataset to file " << dsfilename << "\n";
 	return 0;
 }

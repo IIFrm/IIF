@@ -44,7 +44,11 @@ class SVM : public MLalgo
 
 
 	public:
+#ifdef __TRAINSET_SIZE_RESTRICTED
 		SVM(int type = 0, void (*f) (const char*) = NULL, int size = 1000000) : max_size(size) {
+#else
+		SVM(int type = 0, void (*f) (const char*) = NULL, int size = trainsetsize+1) : max_size(size) {
+#endif
 			prepare_svm_parameters(&param, type);
 			if (f != NULL)
 				svm_set_print_string_function(f);
@@ -92,6 +96,27 @@ class SVM : public MLalgo
 				<< cur_psize << "+|" << cur_nsize << "-]";
 #endif
 
+			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
+#ifdef __TRAINSET_SIZE_RESTRICTED
+			int pstart = cur_psize > trainsetsize? cur_psize - trainsetsize: 0;
+			int plength = cur_psize - pstart;
+			for (int i = 0; i < plength; i++) {
+				mappingData(gsets[POSITIVE].values[pstart + i], raw_mapped_data[i], 4);
+				data[i] = raw_mapped_data[i];
+				label[i] = 1;
+			}
+			int nstart = cur_nsize > trainsetsize? cur_nsize - trainsetsize: 0;
+			int nlength = cur_nsize - nstart;
+			for (int i = 0; i < nlength; i++) {
+				mappingData(gsets[NEGATIVE].values[nstart + i], raw_mapped_data[plength + i], 4);
+				data[plength + i] = raw_mapped_data[plength + i];
+				label[plength + i] = -1;
+			}
+			cur_psize = plength;
+			cur_nsize = nlength;
+			std::cout << RED << " RESTRICTED2[" << cur_psize << "+|" << cur_nsize << "-]" << NORMAL;
+			ret = plength + nlength;
+#else
 			//POINTER
 			// prepare new training data set
 			// training set & label layout:
@@ -116,6 +141,7 @@ class SVM : public MLalgo
 				data[cur_index + i] = raw_mapped_data[cur_index + i];
 				label[cur_index + i] = -1;
 			}
+#endif
 
 #ifdef __DS_ENABLED
 			problem.np = cur_psize;
@@ -125,7 +151,6 @@ class SVM : public MLalgo
 			//problem.l = cur_psize + cur_nsize;
 			problem.l = cur_psize + cur_nsize;
 
-			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 			pre_psize = cur_psize;
 			pre_nsize = cur_nsize;
 			//std::cout << "makeTrainingSet => " << ret << "\n";

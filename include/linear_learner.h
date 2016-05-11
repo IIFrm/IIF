@@ -11,7 +11,7 @@ class LinearLearner: public BaseLearner {
 
 		~LinearLearner();
 
-		virtual int save2file();
+		virtual int save2file(const char*);
 
 		virtual int learn();
 

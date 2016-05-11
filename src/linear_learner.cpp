@@ -13,9 +13,9 @@ static void print_null(const char *s) {}
 
 LinearLearner::LinearLearner(States* gsets, int (*func)(int*), int max_iteration) 
 	: BaseLearner(gsets, func) {
-	svm = new SVM(0, print_null);
-	this->max_iteration = max_iteration;
-}
+		svm = new SVM(0, print_null);
+		this->max_iteration = max_iteration;
+	}
 
 LinearLearner::~LinearLearner() {
 	if (svm != NULL)
@@ -30,8 +30,8 @@ int LinearLearner::learn()
 	bool converged = false;
 	Classifier pre_cl;
 	int pre_psize = 0, pre_nsize = 0;
-	int base_maxv = maxv;
-	int base_minv = minv;
+	//int base_maxv = maxv;
+	//int base_minv = minv;
 
 	double pass_rate = 1;
 	svm->setKernel(0);
@@ -73,8 +73,8 @@ init_svm:
 				std::cout << " re-Run the system again OR modify your loop program.\n" << NORMAL;
 				exit(-1);
 			}
-			if (maxv <= 10000000) {maxv+=base_maxv;}
-			if (minv >= -10000000) {minv+=base_minv;}
+			if (maxv <= 10000000) {maxv+=base_step;}
+			if (minv >= -10000000) {minv-=base_step;}
 			goto init_svm;
 		}
 
@@ -87,6 +87,10 @@ init_svm:
 		if (svm->makeTrainingSet(gsets, pre_psize, pre_nsize) == 0) {
 			if (++zero_times < Nretry_init)
 				goto init_svm;
+		}
+		while (pre_psize + pre_nsize >= density * pow(maxv-minv, Nv)) {
+			if (maxv <= 10000000) {maxv+=base_step;}
+			if (minv >= -10000000) {minv-=base_step;}
 		}
 
 #ifdef __PRT
@@ -124,20 +128,22 @@ init_svm:
 		std::cout << GREEN << " [PASS]" << std::endl << NORMAL;
 #endif
 
-#if 0
+#ifdef __QUESTION_TRACE_CHECK_ENABLED
 #ifdef __PRT
 		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") check question rraces:   ";
 #endif
+		if (svm->checkQuestionTraces(gsets[QUESTION]) != 0)
+			continue;
+#ifdef __PRT
+		std::cout << "\n";
 #endif
-		//if (svm->checkQuestionTraces(gsets[QUESTION]) != 0)
-		//	continue;
+#endif
 		/*
 		 *	similarLast is used to store the convergence check return value for the last time.
 		 *	We only admit convergence if the three consecutive round are converged.
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
 #ifdef __PRT
-		//std::cout << "\n";
 		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") check convergence:        ";
 #endif
 
@@ -201,8 +207,10 @@ std::string LinearLearner::invariant(int n) {
 	return svm->cl.toString();
 }
 
-int LinearLearner::save2file() {
-	svm->problem.save_to_file("../tmp/svm.ds");
-	std::cout << "save to file succeed. ../tmp/svm.ds\n";
+int LinearLearner::save2file(const char* dsfilename) {
+	//svm->problem.save_to_file("../tmp/svm.ds");
+	//std::cout << "save to file succeed. ../tmp/svm.ds\n";
+	svm->problem.save_to_file(dsfilename);
+	std::cout << "save the training dataset to file " << dsfilename << "\n";
 	return 0;
 }
