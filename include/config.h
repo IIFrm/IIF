@@ -100,7 +100,7 @@ const int Miter = 512;
 
 const double density = 0.1;
 const int base_step = 100;
-const int trainsetsize = 1000;
+const int restricted_trainset_size = 1000;
 
 /** @brief This function register the test program to the framework.
  *

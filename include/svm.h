@@ -45,9 +45,9 @@ class SVM : public MLalgo
 
 	public:
 #ifdef __TRAINSET_SIZE_RESTRICTED
-		SVM(int type = 0, void (*f) (const char*) = NULL, int size = 1000000) : max_size(size) {
+		SVM(int type = 0, void (*f) (const char*) = NULL, int size = restricted_trainset_size+1) : max_size(size) {
 #else
-		SVM(int type = 0, void (*f) (const char*) = NULL, int size = trainsetsize+1) : max_size(size) {
+		SVM(int type = 0, void (*f) (const char*) = NULL, int size = 1000000) : max_size(size) {
 #endif
 			prepare_svm_parameters(&param, type);
 			if (f != NULL)
@@ -98,14 +98,14 @@ class SVM : public MLalgo
 
 			int ret = cur_psize + cur_nsize - pre_psize - pre_nsize;
 #ifdef __TRAINSET_SIZE_RESTRICTED
-			int pstart = cur_psize > trainsetsize? cur_psize - trainsetsize: 0;
+			int pstart = cur_psize > restricted_trainset_size? cur_psize - restricted_trainset_size : 0;
 			int plength = cur_psize - pstart;
 			for (int i = 0; i < plength; i++) {
 				mappingData(gsets[POSITIVE].values[pstart + i], raw_mapped_data[i], 4);
 				data[i] = raw_mapped_data[i];
 				label[i] = 1;
 			}
-			int nstart = cur_nsize > trainsetsize? cur_nsize - trainsetsize: 0;
+			int nstart = cur_nsize > restricted_trainset_size? cur_nsize - restricted_trainset_size : 0;
 			int nlength = cur_nsize - nstart;
 			for (int i = 0; i < nlength; i++) {
 				mappingData(gsets[NEGATIVE].values[nstart + i], raw_mapped_data[plength + i], 4);
