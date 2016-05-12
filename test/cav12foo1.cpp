@@ -6,7 +6,7 @@ int loopFunction(int _reserved_input_[]) {
 int x = _reserved_input_[0];
 int y = _reserved_input_[1];
 
-iif_assume(x == y && y >= 0 );
+iif_assume(x == y && y == 0 );
 while(rand() % 8)
 {
 recordi(x, y);
