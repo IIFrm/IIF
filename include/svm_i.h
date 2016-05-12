@@ -215,7 +215,12 @@ class SVM_I : public MLalgo //SVM
 				   std::cout << "," << problem.x[i][j];
 				   std::cout << GREEN << "-1" << "->" << predict((double*)problem.x[i]) << NORMAL << " ";
 				   */
-				pass += (predict((double*)problem.x[i]) >= 0) ? 1 : 0;
+				int presult = predict((double*)problem.x[i]);
+				if (presult == 0) {
+					std::cout << "predict error in checkTrainingSet function.\n";
+					return 0;
+				}
+				pass += (presult == 1) ? 1 : 0;
 			}
 			for (int i = 0; i < negative_size; i++) {
 				/*
@@ -224,9 +229,63 @@ class SVM_I : public MLalgo //SVM
 				   std::cout << "," << negative_mapped_data[i][j];
 				   std::cout << GREEN << "-1" << "->" << predict(negative_mapped_data[i]) << NORMAL << " ";
 				   */
-				pass += (predict(negative_mapped_data[i]) < 0) ? 1 : 0;
+				//pass += (predict(negative_mapped_data[i]) < 0) ? 1 : 0;
+				int presult = predict(negative_mapped_data[i]);
+				if (presult == 0) {
+					std::cout << "predict error in checkTrainingSet function.\n";
+					return 0;
+				}
+				pass += (presult == -1) ? 1 : 0;
 			}
 			//std::cout << "<total=" << total << " pass=" << pass << ">" << std::endl;
+			return (double)pass / total;
+		}
+
+		bool pointwiseSimplify()
+		{
+#ifdef __PRT_DEBUG
+			std::cout << "point wise simplify classifiers...\n";
+#endif
+			for(int i = 0; i < cl.size; i++) {
+#ifdef __PRT_DEBUG
+				std::cout << "try [" << i << "] " << cl.polys[i] << "-->";
+#endif
+				if (cl.size <= 1) return true;
+				if(partialCheckTrainingSet(i) == 1) {
+					cl.polys[i--] = cl.polys[--cl.size];
+#ifdef __PRT_DEBUG
+					std::cout << RED << "removed\n" << NORMAL;
+#endif
+				}
+#ifdef __PRT_DEBUG
+				else {
+					std::cout << GREEN << "keeped.\n" << NORMAL;
+				}
+#endif
+			}
+			return true;
+		}
+
+		double partialCheckTrainingSet(int removed_cl)
+		{
+			int total = problem.l + negative_size;
+			int pass = 0;
+			for (int i = 0; i < problem.l; i++) {
+				int presult = partialPredict((double*)problem.x[i], removed_cl);
+				if (presult == 0) {
+					std::cout << "predict error in partialCheckTrainingSet function.\n";
+					return 0;
+				}
+				pass += (presult == 1) ? 1 : 0;
+			}
+			for (int i = 0; i < negative_size; i++) {
+				int presult = partialPredict(negative_mapped_data[i], removed_cl);
+				if (presult == 0) {
+					std::cout << "predict error in partialCheckTrainingSet function.\n";
+					return 0;
+				}
+				pass += (presult == -1) ? 1 : 0;
+			}
 			return (double)pass / total;
 		}
 
@@ -337,6 +396,29 @@ class SVM_I : public MLalgo //SVM
 			double res = 0;
 			if (res >= 0) {
 				for (int i = 0; i < cl.size; i++) {
+					res = Polynomial::calc(*cl[i], v);
+					if (res < 0) break;
+				}
+			}
+
+			return (res >= 0) ? 1 : -1;
+		}
+
+		int partialPredict(double* v, int removed_cl) {
+			if (v == NULL) return 0;
+			if (cl.size <= 1) return 0;
+			if (removed_cl < 0 || removed_cl >= cl.size) return 0;
+			/*
+			 * We use conjunction of positive as predictor.
+			 * For example, (A >= 0) /\ (B >= 0) /\ (C >= 0) /\ ...
+			 * Only when the give input pass all the equationss, it returns 1;
+			 * Otherwise, -1 will be returned.
+			 */
+			double res = 0;
+			if (res >= 0) {
+				for (int i = 0; i < cl.size; i++) {
+					if (i == removed_cl)
+						continue;
 					res = Polynomial::calc(*cl[i], v);
 					if (res < 0) break;
 				}

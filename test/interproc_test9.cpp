@@ -2,9 +2,9 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int _reverved_input_[]) {
-int i = _reverved_input_[0];
-int j = _reverved_input_[1];
+int loopFunction(int _reserved_input_[]) {
+int i = _reserved_input_[0];
+int j = _reserved_input_[1];
 
 if(i < 0) i = -i; i = i + 1;
 iif_assume(i*i < j && i >= 1);

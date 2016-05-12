@@ -12,7 +12,7 @@
 #include <vector>
 using namespace std;
 
-enum category {NAME=0, BEFL, BEFLI, PREC, LOOPC, LOOP, POSTC, AFTL, INV};
+enum category {NAME=0, BEFL, BEFLI, SYM, PREC, LOOPC, LOOP, POSTC, AFTL, INV};
 
 class Config {
 	public:
@@ -25,6 +25,7 @@ class Config {
 			return out;
 		}
 
+		/*
 		bool toCppStatement() {
 			//cout << "processing <" + key + ", " + value + ">......\n";
 			if (key == "precondition") { cppstatement = "iif_assume(" + value + ");";
@@ -40,6 +41,7 @@ class Config {
 			}
 			return true;
 		}
+		*/
 };
 
 
@@ -54,12 +56,13 @@ class FileHelper {
 			cppfilename[len-2] = '\0';
 			strcat(cppfilename, "_klee0.c");
 
-			confignum = 9;
+			confignum = 10;
 			cs = new Config[confignum];
 			int i = 0;
 			cs[i++].key = "names";
 			cs[i++].key = "beforeloop";
 			cs[i++].key = "beforeloopinit";
+			cs[i++].key = "symbolic";
 			cs[i++].key = "precondition";
 			cs[i++].key = "loopcondition";
 			cs[i++].key = "loop";
@@ -165,7 +168,10 @@ class FileHelper {
 				cppFile << "int " + variables[i] + ";\n";
 			for (int i = 0; i < vnum; i++) 
 				cppFile << "klee_make_symbolic(&" << variables[i] <<", sizeof(" << variables[i] << "), \"" << variables[i] << "\");\n";
-
+			if (cs[SYM].value.compare("") != 0) {
+				cppFile << "int " + cs[SYM].value + ";\n";
+				cppFile << "klee_make_symbolic(&" << cs[SYM].value <<", sizeof(" << cs[SYM].value << "), \"" << cs[SYM].value << "\");\n";
+			}
 			// before loop statements;
 			if (cs[BEFL].value.compare("") != 0)
 				cppFile << cs[BEFL].value << std::endl;

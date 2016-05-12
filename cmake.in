@@ -7,7 +7,7 @@ add_definitions (-D__DS_ENABLED)
 add_definitions (-D__TRAINSET_SIZE_RESTRICTED)
 
 add_definitions (-D__PRT)
-#add_definitions (-D__PRT_DEBUG)
+add_definitions (-D__PRT_DEBUG)
 #add_definitions (-D__PRT_TESTCASE)
 #add_definitions (-D__PRT_GSLSOLVE)
 #add_definitions (-D__PRT_Z3SOLVE)

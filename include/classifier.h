@@ -21,6 +21,7 @@
 
 class Classifier{
 	protected:
+	public:
 		Polynomial* polys;
 		Connector* cts;
 

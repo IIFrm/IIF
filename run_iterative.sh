@@ -65,7 +65,7 @@ fi
 
 iteration=1
 echo -e $blue"Running the project to generate invariant candidiate..."$normal
-while [ $iteration -le 32 ]; do
+while [ $iteration -le 128 ]; do
 	echo -n -e $green$bold"--------------------------------------------- Iteration "
 	echo -n -e $iteration
 	echo -e " --------------------------------------------------------"$normal$normal
