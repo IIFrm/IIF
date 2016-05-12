@@ -109,7 +109,7 @@ init_svm:
 		}
 		std::cout << "|-->> " << YELLOW << svm->cl << NORMAL << std::endl;
 #ifdef __PRT
-		std::cout << "\t(" << step++ << ") checking training traces.";
+		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") checking training traces.";
 #endif
 		pass_rate = svm->checkTrainingSet();
 

@@ -5,6 +5,7 @@
 #include <vector>
 using namespace std;
 
+const int max_confignum = 32;
 
 class Config {
 	public:
@@ -52,8 +53,7 @@ class FileHelper {
 			this->invfileprefix = invfileprefix;
 			this->testcasefilename = testcasefilename;
 			this->oldtracefilename = oldtracefilename;
-			confignum = 9;
-			cs = new Config[confignum];
+			cs = new Config[max_confignum];
 			int i = 0;
 			cs[i++].key = "names";
 			cs[i++].key = "beforeloop";
@@ -64,6 +64,8 @@ class FileHelper {
 			cs[i++].key = "loop";
 			cs[i++].key = "postcondition";
 			cs[i++].key = "afterloop";
+			cs[i++].key = "learners";
+			confignum = i;
 			vnum = 0;
 		}
 
@@ -71,6 +73,7 @@ class FileHelper {
 			if (cs != NULL)
 				delete []cs;
 			variables.clear();
+			learners.clear();
 		}
 
 		bool readConfigFile() {
@@ -111,8 +114,24 @@ class FileHelper {
 				start = end + 1;
 				end = cs[0].value.find(' ', start);
 			}
-			variables.push_back(cs[0].value.substr(start, end-start));
+			if (start != end)
+				variables.push_back(cs[0].value.substr(start, end-start));
 			vnum = variables.size();
+
+			int index = confignum - 1;
+			start = 0;
+			end = cs[index].value.find(' ');
+			while (end == start) {
+				end = cs[index].value.find(' ', end+1);
+				start++;
+			}
+			for (int i = 0; end != std::string::npos; i++) {
+				learners.push_back(cs[index].value.substr(start, end-start));
+				start = end + 1;
+				end = cs[index].value.find(' ', start);
+			}
+			if (start != end)
+				learners.push_back(cs[index].value.substr(start, end-start));
 
 			return true;
 		}
@@ -198,9 +217,33 @@ class FileHelper {
 				cppFile << "iifContext context(\"../" << varfilename <<"\", loopFunction, \"loopFunction\");\n";
 
 			{
-				//cppFile << "context.addLearner(\"linear\");\n";
-				//cppFile << "context.addLearner(\"poly\");\n";
-				cppFile << "context.addLearner(\"conjunctive\");\n";
+				/*std::cout << "size=" << learners.size() << std::endl;
+				for (int i = 0; i < learners.size(); i++) {
+					std::cout << "-|-> \"" << learners[i] << "\" ";
+				}*/
+				
+				std::cout << "Learners [["; // "size=" << learners.size() << std::endl;
+				int size = learners.size();
+				if (size == 0 || learners[0].compare("") == 0 || learners[0].find("def") != string::npos) {
+					std::cout << "--> linear --> polynomial --> conjunctive";
+					cppFile << "context.addLearner(\"linear\");\n";
+					cppFile << "context.addLearner(\"poly\");\n";
+					cppFile << "context.addLearner(\"conjunctive\");\n";
+				} else {
+					for (int i = 0; i < size; i++) {
+						if (learners[i].find("lin") != string::npos) {
+							std::cout << "--> linear";
+							cppFile << "context.addLearner(\"linear\");\n";
+						} else if (learners[i].find("poly") != string::npos) {
+							std::cout << "--> polynomial";
+							cppFile << "context.addLearner(\"poly\");\n";
+						} else if (learners[i].find("conj") != string::npos) {
+							std::cout << "--> conjunctive";
+							cppFile << "context.addLearner(\"conjunctive\");\n";
+						}
+					}
+				}
+				std::cout << "]]";
 			}
 
 			if (testcasefilename) {
@@ -230,6 +273,7 @@ class FileHelper {
 		Config* cs;
 		int confignum;
 		vector<string> variables;
+		vector<string> learners;
 		int vnum;
 };
 

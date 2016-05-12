@@ -110,7 +110,7 @@ init_svm_i:
 		 *	There should be no prediction errors.
 		 */
 #ifdef __PRT
-		std::cout << "\t(" << step++ << ") checking training traces.";
+		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") checking training traces.";
 #endif
 		pass_rate = svm_i->checkTrainingSet();
 
@@ -140,6 +140,7 @@ init_svm_i:
 		std::cout << "\n";
 #endif
 #endif
+		svm_i->pointwiseSimplify();
 
 		/*
 		 *	lastSimilar is used to store the convergence check return value for the last time.
@@ -182,7 +183,7 @@ init_svm_i:
 
 	int ret = 0;
 	if ((converged) && (rnd <= max_iteration)) {
-		svm_i->pointwiseSimplify();
+		//svm_i->pointwiseSimplify();
 		svm_i->cl.roundoff();
 		svm_i->cl.simplify();
 		std::cout << YELLOW << "  Hypothesis Invairant(Conjunctive): { ";

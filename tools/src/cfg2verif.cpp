@@ -12,7 +12,8 @@
 #include <vector>
 using namespace std;
 
-enum category {NAME=0, BEFL, BEFLI, SYM, PREC, LOOPC, LOOP, POSTC, AFTL, INV};
+const int max_confignum = 32;
+enum category {NAME=0, BEFL, BEFLI, SYM, PREC, LOOPC, LOOP, POSTC, AFTL, INV, LEARNERS};
 
 class Config {
 	public:
@@ -56,8 +57,7 @@ class FileHelper {
 			cppfilename[len-2] = '\0';
 			strcat(cppfilename, "_klee0.c");
 
-			confignum = 10;
-			cs = new Config[confignum];
+			cs = new Config[max_confignum];
 			int i = 0;
 			cs[i++].key = "names";
 			cs[i++].key = "beforeloop";
@@ -69,6 +69,8 @@ class FileHelper {
 			cs[i++].key = "postcondition";
 			cs[i++].key = "afterloop";
 			cs[i++].key = "invariant";
+			cs[i++].key = "learners";
+			confignum = i;
 			for (int i = 0; i < confignum; i++)
 				cs[i].value= string("");
 			//variables = NULL;

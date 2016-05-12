@@ -2,9 +2,9 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int _reverved_input_[]) {
-int x = _reverved_input_[0];
-int y = _reverved_input_[1];
+int loopFunction(int _reserved_input_[]) {
+int x = _reserved_input_[0];
+int y = _reserved_input_[1];
 
 iif_assume(x < 0);
 while(x < 0)
@@ -20,8 +20,6 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/pldi.var", loopFunction, "loopFunction", "../tmp/pldi.ds");
-context.addLearner("linear");
-context.addLearner("poly");
 context.addLearner("conjunctive");
 return context.learn("../tmp/pldi.cnt", "../tmp/pldi");
 }

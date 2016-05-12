@@ -178,5 +178,6 @@ cd ..
 echo -e $bold$green"-----------------------------------------------------------finish proving---------------------------------------------------------------"$normal
 echo -n -e $green"The invariant can be "$yellow
 cat $path_inv
-echo -e $green".\nEND"$normal
+echo -e "\n"$normal
+#echo -e $green".\nEND"$normal
 exit 0

@@ -2,15 +2,16 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int a[]) {
-int i = a[0];
-int j = a[1];
-int k = a[2];
+int loopFunction(int _reserved_input_[]) {
+int i = _reserved_input_[0];
+int j = _reserved_input_[1];
+int k = _reserved_input_[2];
 
 iif_assume(i<j && k> 0);
 while(i<j)
 {
-recordi(i, j, k); k=k+1;i=i+1;
+recordi(i, j, k);
+ k=k+1;i=i+1;
 }
 recordi(i, j, k);
 iif_assert(k > j - i);
@@ -20,7 +21,8 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/lili2.var", loopFunction, "loopFunction", "../tmp/lili2.ds");
-context.addLearner("linear", "../tmp/lili2.cnt");
-context.addLearner("conjunctive", "../tmp/lili2.cnt");
-return context.learn("../tmp/lili2");
+context.addLearner("linear");
+context.addLearner("poly");
+context.addLearner("conjunctive");
+return context.learn("../tmp/lili2.cnt", "../tmp/lili2");
 }

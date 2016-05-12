@@ -347,7 +347,7 @@ class SVM_I : public MLalgo //SVM
 					} 
 #ifdef __PRT
 					else {
-						std::cout << RED << "<" << i << "-" << j << ">" << NORMAL;
+						std::cout << RED << "<" << i << ":" << j << ">" << NORMAL;
 					}
 #endif 
 				}

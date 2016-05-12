@@ -98,9 +98,9 @@ const int Nexe_rand = 2 * Nv;
  */
 const int Miter = 512;
 
-const double density = 0.2;
+const double density = 0.4;
 const int base_step = 200;
-const int restricted_trainset_size = 1000;
+const int restricted_trainset_size = 2000;
 
 /** @brief This function register the test program to the framework.
  *

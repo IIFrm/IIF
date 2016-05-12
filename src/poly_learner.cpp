@@ -106,7 +106,7 @@ init_svm:
 		}
 		std::cout << "|-->> " << YELLOW << svm->cl << NORMAL << std::endl;
 #ifdef __PRT
-		std::cout << "\t(" << step++ << ") checking training traces.";
+		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") checking training traces.";
 #endif
 		pass_rate = svm->checkTrainingSet();
 
@@ -142,6 +142,7 @@ init_svm:
 		 *	We only admit convergence if the three consecutive round are converged.
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
+		//svm->cl.roundoff();
 #ifdef __PRT
 		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") check convergence:        ";
 #endif

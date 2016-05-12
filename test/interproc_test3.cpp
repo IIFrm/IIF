@@ -2,10 +2,10 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int _reverved_input_[]) {
-int i = _reverved_input_[0];
-int j = _reverved_input_[1];
-int k = _reverved_input_[2];
+int loopFunction(int _reserved_input_[]) {
+int i = _reserved_input_[0];
+int j = _reserved_input_[1];
+int k = _reserved_input_[2];
 
 iif_assume(i<j && k>i-j);
 while(i<j)

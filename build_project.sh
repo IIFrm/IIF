@@ -89,7 +89,7 @@ if [ $? -ne 0 ]; then
 	cd ..
 	exit 1
 fi
-echo -e $green$bold"[DONE]"$normal
+#echo -e $green$bold"[DONE]"$normal
 
 cd ..
 exit 0
