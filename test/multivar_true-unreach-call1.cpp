@@ -2,14 +2,15 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int a[]) {
-int x = a[0];
-int y = a[1];
+int loopFunction(int _reserved_input_[]) {
+int x = _reserved_input_[0];
+int y = _reserved_input_[1];
 
 iif_assume( y == x);
-while( x < 1024)
+while(rand() % 8)
 {
-recordi(x, y); x++; y++;
+recordi(x, y);
+ x++; y++;
 }
 recordi(x, y);
 iif_assert(x == y);

@@ -2,14 +2,15 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int a[]) {
-int x = a[0];
-int y = a[1];
+int loopFunction(int _reserved_input_[]) {
+int x = _reserved_input_[0];
+int y = _reserved_input_[1];
 
 iif_assume( x == 0 && y >= 0);
 while( x < 99)
 {
-recordi(x, y); if (y%2 == 0) x+=2; else x++;
+recordi(x, y);
+ if (y%2 == 0) x+=2; else x++;
 }
 recordi(x, y);
 iif_assert( x%2 == y%2);

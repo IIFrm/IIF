@@ -2,13 +2,13 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int _reverved_input_[]) {
-int x = _reverved_input_[0];
-int y = _reverved_input_[1];
-int z = _reverved_input_[2];
+int loopFunction(int _reserved_input_[]) {
+int x = _reserved_input_[0];
+int y = _reserved_input_[1];
+int z = _reserved_input_[2];
 
 iif_assume(x==y);
-while(rand() % 2)
+while(rand() % 8)
 {
 recordi(x, y, z);
 x+=10; y+=1;

@@ -2,18 +2,18 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int _reverved_input_[]) {
-int x = _reverved_input_[0];
-int y = _reverved_input_[1];
+int loopFunction(int _reserved_input_[]) {
+int x = _reserved_input_[0];
+int y = _reserved_input_[1];
 
-iif_assume( y < 1024 && y > 0);
+iif_assume( y > 0);
 while(x < 100)
 {
 recordi(x, y);
 x = x + y;
 }
 recordi(x, y);
-iif_assert((y <= 0 || (y > 0 && x >= 100)));
+iif_assert((y > 0 && x >= 100));
 return 0;
 }
 

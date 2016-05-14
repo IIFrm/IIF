@@ -2,18 +2,20 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int _reverved_input_[]) {
-int a = _reverved_input_[0];
-int b = _reverved_input_[1];
-int n = _reverved_input_[2];
+int loopFunction(int _reserved_input_[]) {
+int a = _reserved_input_[0];
+int b = _reserved_input_[1];
+int n = _reserved_input_[2];
 
 int i;
  i = 0;
+int cond;
+
 iif_assume((a == 0) && (b == 0) && (n >= 0));
 while(i < n)
 {
 recordi(a, b, n);
-if (rand()%2) {a = a + 1; b = b + 2;}
+if (cond) {a = a + 1; b = b + 2;}
 else {a = a + 2; b = b + 1;}
 i = i + 1;
 }

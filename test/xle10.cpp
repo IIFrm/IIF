@@ -2,13 +2,14 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int a[]) {
-int x = a[0];
+int loopFunction(int _reserved_input_[]) {
+int x = _reserved_input_[0];
 
 iif_assume(x>=0);
 while((x>=0) && (x<10) )
 {
-recordi(x); x=x+1;
+recordi(x);
+ x=x+1;
 }
 recordi(x);
 iif_assert(x>=10);

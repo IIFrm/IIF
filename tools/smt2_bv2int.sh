@@ -51,3 +51,4 @@ sed -i 's/\ )/)/g' $file
 sed -i 's/\n\n/\n/g' $file
 
 sed -i 's/(bvand\ \([a-zA-Z0-9_]*\)\ 1)/(mod\ \1\ 2)/g' $file
+sed -i 's/(bvand\ \([a-zA-Z0-9_]*\)\ 3)/(mod\ \1\ 4)/g' $file

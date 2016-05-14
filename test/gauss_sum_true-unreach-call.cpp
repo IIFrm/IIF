@@ -2,9 +2,9 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int _reverved_input_[]) {
-int n = _reverved_input_[0];
-int sum = _reverved_input_[1];
+int loopFunction(int _reserved_input_[]) {
+int n = _reserved_input_[0];
+int sum = _reserved_input_[1];
 
 int i;
 i = 1;

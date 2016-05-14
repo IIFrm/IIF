@@ -2,9 +2,9 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int _reverved_input_[]) {
-int x = _reverved_input_[0];
-int y = _reverved_input_[1];
+int loopFunction(int _reserved_input_[]) {
+int x = _reserved_input_[0];
+int y = _reserved_input_[1];
 
 iif_assume(x<=4*y && x >= 0);
 while(x>0)

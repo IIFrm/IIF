@@ -2,10 +2,10 @@
 #include <iostream>
 using namespace iif;
 
-int loopFunction(int _reverved_input_[]) {
-int low = _reverved_input_[0];
-int mid = _reverved_input_[1];
-int high = _reverved_input_[2];
+int loopFunction(int _reserved_input_[]) {
+int low = _reserved_input_[0];
+int mid = _reserved_input_[1];
+int high = _reserved_input_[2];
 
 iif_assume(low == 0 && mid >= 1 && high == 2*mid);
 while(mid > 0)
