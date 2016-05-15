@@ -50,10 +50,14 @@ class BaseLearner{
 					}
 					int newscope = maxv;
 					for (int i = 0; i < Nv; i++) {
-						while(std::abs(s[i]) > newscope)
-							newscope *= 2;
+						while(std::abs(s[i]) > newscope) {
+							if (newscope * 2 >= 0)
+								newscope *= 2;
+							else 
+								break;
+						}
 					}
-					if (newscope != maxv) {
+					if (newscope > maxv) {
 						maxv = newscope;
 						minv = -1 * maxv;
 #ifdef __PRT
