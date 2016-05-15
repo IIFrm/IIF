@@ -48,6 +48,18 @@ class BaseLearner{
 						printRunResult(ret);
 						std::cout << std::endl << NORMAL;
 					}
+					int newscope = maxv;
+					for (int i = 0; i < Nv; i++) {
+						while(std::abs(s[i]) > newscope)
+							newscope *= 2;
+					}
+					if (newscope != maxv) {
+						maxv = newscope;
+						minv = -1 * maxv;
+#ifdef __PRT
+						std::cout << YELLOW << "new scope:=[" << minv << "," << maxv << "]" << NORMAL << std::endl;
+#endif
+					}
 					fin.close();
 				}
 			}
