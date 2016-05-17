@@ -19,7 +19,7 @@
  *		   This should be set in /CMakeLists.txt file
  *		   If it is not set correctly, you may come across a runtime error
  */
-#define Nv 2 
+#define Nv 3 
 
 /*#define Cv(i) do {int return_num##i = 1;\
   for (int tempi = 0; tempi < i; i++) return_num##i *= (Nv + i);\
@@ -102,7 +102,11 @@ const int Miter = 512;
 
 const double density = 0.4;
 const int base_step = 200;
-const int restricted_trainset_size = 2000;
+const int restricted_trainset_size = 2000*Nv;
+
+// @brief converged_std defines the standard times for consecutive convergence before 
+//		  the learnt classifier is regarded as candidate invariant
+const int converged_std = 1;
 
 /** @brief This function register the test program to the framework.
  *

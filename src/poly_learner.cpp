@@ -26,8 +26,9 @@ int PolyLearner::learn()
 {
 	std::cout << YELLOW << ">>>> Polynomial Learner-----------------------\n" << NORMAL;  
 	int rnd;
-	bool similarLast = false;
+	//bool similarLast = false;
 	bool converged = false;
+	int converged_time = 0;
 	Classifier pre_cl;
 	int pre_psize = 0, pre_nsize = 0;
 
@@ -148,36 +149,31 @@ init_svm:
 #endif
 
 		if (svm->converged(pre_cl) == true) {
-			if (similarLast == true) {
+			converged_time++;
 #ifdef __PRT
-				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
+			std::cout << "[";
+			for (int j = 0; j < converged_std - converged_time; j++)
+				std::cout << "F";
+			for (int j = 0; j < converged_time; j++)
+				std::cout << "T";
+			std::cout << "]  ";
+#endif
+
+			if (converged_time >= converged_std) {
+#ifdef __PRT
+				std::cout << "[SUCCESS] rounding off" << std::endl;
 #endif
 				converged = true;
 				rnd++;
 				break;
 			}
-
-#ifdef __PRT
-			std::cout << "[FT]";
-			Nexe_after *= 2;
-#endif
-
-			similarLast = true;
 		} else {
-
-#ifdef __PRT
-			std::cout << ((similarLast == true) ? "[T" : "[F") << "F] ";
-			if (similarLast == true)
-				Nexe_after /= 2;
-#endif
-
-			similarLast = false;
+			converged_time = 0;
 		}
 #ifdef __PRT
-		std::cout << "  [FAIL] neXt round " << std::endl;
+		std::cout << "[FAIL] neXt round " << std::endl;
 #endif
 
-		//lastModel = svm->model;
 		pre_cl = svm->cl;
 		svm->cl.clear();
 	} // end of SVM training procedure

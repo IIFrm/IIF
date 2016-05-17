@@ -25,7 +25,7 @@ class Config {
 			} else if (key == "beforeloopinit") { cppstatement = value;
 			} else if (key == "symbolic") { 
 				if (value.compare("") != 0) 
-					cppstatement = "int " + value + ";\n";
+					cppstatement = value;
 				else 
 					cppstatement = "";
 			} else if (key == "loop") { cppstatement = value;
@@ -191,15 +191,26 @@ class FileHelper {
 				cppFile << "int " << variables[i] << " = _reserved_input_[" << i << "];\n";
 			}
 			cppFile << "\n";
+			//bool inloop = false;
+			int symb = -1;
 			for (int i = 0; i < confignum; i++) {
 				if (cs[i].key == "loop") { 
 					cppFile << "{\n"; 
 					writeRecordi(cppFile); 
 					cppFile << "\n"; 
+					//inloop = true;
+				}
+				if (cs[i].key == "symbolic") {
+					if (cs[i].value.compare("") == 0) continue;
+					symb = i;
+					//if (!inloop) 
+					cppFile << "int " << cs[i].cppstatement << " = rand()%2;\n";
+					continue;
 				}
 				if (cs[i].cppstatement.compare("") != 0)
 					cppFile << cs[i].cppstatement << endl;
 				if (cs[i].key == "loop") { 
+					if (symb >= 0) cppFile << cs[symb].cppstatement << " = rand()%2;\n";
 					cppFile << "}\n"; 
 					writeRecordi(cppFile); 
 					cppFile << "\n"; 

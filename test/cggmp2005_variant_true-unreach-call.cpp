@@ -21,8 +21,6 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/cggmp2005_variant_true-unreach-call.var", loopFunction, "loopFunction", "../tmp/cggmp2005_variant_true-unreach-call.ds");
-context.addLearner("linear");
-context.addLearner("poly");
 context.addLearner("conjunctive");
 return context.learn("../tmp/cggmp2005_variant_true-unreach-call.cnt", "../tmp/cggmp2005_variant_true-unreach-call");
 }

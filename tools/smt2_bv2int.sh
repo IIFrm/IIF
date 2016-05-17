@@ -28,6 +28,11 @@ sed -i 's/bvsub/-/g' $file
 sed -i 's/bvmul/*/g' $file
 sed -i 's/bvdiv/\//g' $file
 
+sed -i 's/bvsadd/+/g' $file
+sed -i 's/bvssub/-/g' $file
+sed -i 's/bvsmul/*/g' $file
+sed -i 's/bvsdiv/\//g' $file
+
 # (bvxor -1 m) == (- -1 m)
 sed -i 's/(bvxor\ 4294967295\ /(-\ -1\ /g' $file
 

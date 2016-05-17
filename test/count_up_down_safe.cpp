@@ -7,7 +7,7 @@ int x = _reserved_input_[0];
 int y = _reserved_input_[1];
 int n = _reserved_input_[2];
 
-iif_assume(n>=0 && x==n && y==0);
+iif_assume(n>=0 && x+y==n && x>=0);
 while(x>0)
 {
 recordi(x, y, n);

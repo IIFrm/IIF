@@ -30,8 +30,9 @@ int ConjunctiveLearner::learn()
 	srand(time(NULL)); // initialize seed for rand() function
 
 	int rnd;
-	bool lastSimilar = false;
+	//bool lastSimilar = false;
 	bool converged = false;
+	int converged_time = 0;
 	Classifier pre_cl;
 	int pre_psize = 0, pre_nsize = 0; // , pre_question_size = 0;
 	double pass_rate = 1;
@@ -148,29 +149,33 @@ init_svm_i:
 		 *	This is to prevent in some round the points are too right to adjust the classifier.
 		 */
 #ifdef __PRT
-		std::cout << "\t(" << step++ << ") check convergence:        ";
+		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") check convergence:        ";
 #endif
+
 		if (svm_i->converged(pre_cl) == true) {
-			if (lastSimilar == true) {
+			converged_time++;
 #ifdef __PRT
-				std::cout << "[TT]  [SUCCESS] rounding off" << std::endl;
+			std::cout << "[";
+			for (int j = 0; j < converged_std - converged_time; j++)
+				std::cout << "F";
+			for (int j = 0; j < converged_time; j++)
+				std::cout << "T";
+			std::cout << "]  ";
+#endif
+
+			if (converged_time >= converged_std) {
+#ifdef __PRT
+				std::cout << "[SUCCESS] rounding off" << std::endl;
 #endif
 				converged = true;
 				rnd++;
 				break;
 			}
-#ifdef __PRT
-			std::cout << "[FT]";
-#endif
-			lastSimilar = true;
 		} else {
-#ifdef __PRT
-			std::cout << ((lastSimilar == true) ? "[T" : "[F") << "F] ";
-#endif
-			lastSimilar = false;
+			converged_time = 0;
 		}
 #ifdef __PRT
-		std::cout << "  [FAIL] neXt round " << std::endl;
+		std::cout << "[FAIL] neXt round " << std::endl;
 #endif
 
 		pre_cl = svm_i->cl;
