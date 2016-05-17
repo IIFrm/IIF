@@ -54,6 +54,9 @@ void setColor(std::ostream& out, int choice) {
 		case BOLD: // bold 
 			out << "\e[1m";
 			break;
+		case UNDERLINE: // bold 
+			out << "\e[4m";
+			break;
 	}	
 }
 #endif

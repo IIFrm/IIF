@@ -205,6 +205,7 @@ std::string LinearLearner::invariant(int n) {
 }
 
 int LinearLearner::save2file(const char* dsfilename) {
+	printStatistics();
 	//svm->problem.save_to_file("../tmp/svm.ds");
 	//std::cout << "save to file succeed. ../tmp/svm.ds\n";
 	svm->problem.save_to_file(dsfilename);

@@ -33,6 +33,10 @@ sed -i 's/bvssub/-/g' $file
 sed -i 's/bvsmul/*/g' $file
 sed -i 's/bvsdiv/\//g' $file
 
+#sed -i 's/(bvsrem\ \([a-zA-Z0-9_]*\)\ \([0-9]*\))/(mod\ \1\ \2)/g' $file
+sed -i 's/(bvsrem\ /(mod\ /g' $file
+#sed -i 's/(bvand\ \(([^()]*)\)\ \([0-9]*\))/(mod\ \1\ \2)/g' $file
+
 # (bvxor -1 m) == (- -1 m)
 sed -i 's/(bvxor\ 4294967295\ /(-\ -1\ /g' $file
 
@@ -57,3 +61,6 @@ sed -i 's/\n\n/\n/g' $file
 
 sed -i 's/(bvand\ \([a-zA-Z0-9_]*\)\ 1)/(mod\ \1\ 2)/g' $file
 sed -i 's/(bvand\ \([a-zA-Z0-9_]*\)\ 3)/(mod\ \1\ 4)/g' $file
+sed -i 's/(bvand\ \(([^()]*)\)\ 1)/(mod\ \1\ 2)/g' $file
+sed -i 's/(bvand\ \(([^()]*)\)\ 3)/(mod\ \1\ 4)/g' $file
+

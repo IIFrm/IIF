@@ -11,6 +11,9 @@ int minv = -1 * base_step, maxv = base_step;
 std::string* variables;
 VariablePowerArray* vparray;
 int vnum;
+#ifdef __PRT_STATISTICS
+int random_samples = 0, selective_samples = 0;
+#endif
 
 bool check_target_program(int (*func)(int*))
 {

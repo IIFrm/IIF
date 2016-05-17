@@ -63,6 +63,8 @@ if [ $# -ge 3 ]; then
 	fi
 fi
 
+echo "-----------------------"$prefix"--------------------------" >> tmp/statistics
+
 iteration=1
 echo -e $blue"Running the project to generate invariant candidiate..."$normal
 while [ $iteration -le 128 ]; do

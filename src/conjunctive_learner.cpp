@@ -213,6 +213,7 @@ std::string ConjunctiveLearner::invariant(int n) {
 }
 
 int ConjunctiveLearner::save2file(const char* dsfilename) {
+	printStatistics();
 	//std::ofstream fout("../tmp/svm.ds");
 	std::ofstream fout(dsfilename);
 	fout << svm_i->problem.np + svm_i->negative_size  << "\t" << svm_i->problem.np << "\t" << svm_i->negative_size << "\n";

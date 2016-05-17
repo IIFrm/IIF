@@ -23,7 +23,12 @@
 #include <float.h>
 #include <string.h>
 #include <assert.h>
+#include <sys/time.h>
+#include <unistd.h>
 
+#ifdef __PRT_STATISTICS
+extern int random_samples, selective_samples;
+#endif
 
 class BaseLearner{
 	public:
@@ -126,6 +131,9 @@ class BaseLearner{
 			int ret = 0;
 			for (int i = 0; i < randn; i++) {
 				Classifier::solver(NULL, input);
+#ifdef __PRT_STATISTICS
+				random_samples++;
+#endif
 				ret = runTarget(input);
 #ifdef __PRT
 				std::cout << input;
@@ -138,6 +146,9 @@ class BaseLearner{
 #endif
 			for (int i = 0; i < exen; i++) {
 				Classifier::solver(cl, input);
+#ifdef __PRT_STATISTICS
+				selective_samples++;
+#endif
 				ret = runTarget(input);
 #ifdef __PRT
 				std::cout << "|" << input;
@@ -157,6 +168,23 @@ class BaseLearner{
 		 */
 		virtual std::string invariant(int n) = 0;
 
+		void printStatistics() {
+#ifdef __PRT_STATISTICS
+			std::cout << GREEN << BOLD << "***********************STATISTICS*********************\n";
+			std::cout << GREEN << BOLD << "|*\t\t   " << RED << "random_samples= " << random_samples << "\n";
+			std::cout << GREEN << BOLD << "|*\t\t   " << RED << "selective_samples= " << selective_samples << "\n";
+			std::cout << GREEN << BOLD << "******************************************************\n" << NORMAL;
+			std::ofstream of1("../tmp/statistics", std::ofstream::app);
+			struct timeval tv;
+			gettimeofday(&tv, NULL);
+			//time_t nowtime = tv.tv_sec;
+			struct tm* nowtm = localtime(&tv.tv_sec);
+			char tmbuf[64];
+			strftime(tmbuf, sizeof(tmbuf), "%Y-%m-%d %H:%M:%S", nowtm);
+			of1 << tmbuf << "\t" << "random_samples=" <<random_samples << "\tselective_samples=" << selective_samples << std::endl;
+			of1.close();
+#endif
+		}
 	protected:
 		States* gsets;
 		int (*func)(int*);
