@@ -21,7 +21,5 @@ int main(int argc, char** argv)
  {
 iifContext context("../tmp/terminator_03_true-unreach-call_true-termination.var", loopFunction, "loopFunction", "../tmp/terminator_03_true-unreach-call_true-termination.ds");
 context.addLearner("linear");
-context.addLearner("poly");
-context.addLearner("conjunctive");
 return context.learn("../tmp/terminator_03_true-unreach-call_true-termination.cnt", "../tmp/terminator_03_true-unreach-call_true-termination");
 }

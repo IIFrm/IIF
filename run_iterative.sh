@@ -53,6 +53,9 @@ cd ..
 
 ./build_project.sh $prefix $path_cnt $path_dataset $2
 
+echo "-----------------------"$prefix"--------------------------" >> tmp/statistics
+./gen_init.sh $prefix
+
 if [ $# -ge 3 ]; then
 	echo -e $blue"Using precondition as the invariant candidiate..."$normal
 	grep '^precondition=*' $path_cfg > $path_inv
@@ -63,7 +66,6 @@ if [ $# -ge 3 ]; then
 	fi
 fi
 
-echo "-----------------------"$prefix"--------------------------" >> tmp/statistics
 
 iteration=1
 echo -e $blue"Running the project to generate invariant candidiate..."$normal
