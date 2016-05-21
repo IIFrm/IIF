@@ -1,5 +1,5 @@
 #!/bin/sh
-
+if [ $# -ge 1 ]; then
 	echo "\n--"$1"------------------------------------------------------------------------------" >> tmp/statistics
 	echo -n "   ||----SELECTIVE---------------------------------------------------" >> tmp/statistics
 	echo "   ||----SELECTIVE---------------------------------------------------"
@@ -10,6 +10,7 @@
 	{ time -p timeout 600 ./run_iterative.sh $1 ; } 1> result/"$1".unselective.out.txt 2>> tmp/statistics
 	date >> tmp/statistics
 	exit 0
+fi
 
 
 i=0
