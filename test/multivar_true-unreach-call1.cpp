@@ -20,8 +20,6 @@ return 0;
 int main(int argc, char** argv)
  {
 iifContext context("../tmp/multivar_true-unreach-call1.var", loopFunction, "loopFunction", "../tmp/multivar_true-unreach-call1.ds");
-context.addLearner("linear");
-context.addLearner("poly");
 context.addLearner("conjunctive");
 return context.learn("../tmp/multivar_true-unreach-call1.cnt", "../tmp/multivar_true-unreach-call1");
 }

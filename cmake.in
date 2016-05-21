@@ -1,12 +1,12 @@
 project(InvariantInferenceFramework)
 set(PRECISION 3)
 
-add_definitions (-D__SELECTIVE_SAMPLING_ENABLED)
+#add_definitions (-D__SELECTIVE_SAMPLING_ENABLED)
 add_definitions (-D__DS_ENABLED)
 #add_definitions (-D__QUESTION_TRACE_CHECK_ENABLED)
 #add_definitions (-D__TRAINSET_SIZE_RESTRICTED)
 
-add_definitions (-D__PRT)
+#add_definitions (-D__PRT)
 #add_definitions (-D__PRT_DEBUG)
 #add_definitions (-D__PRT_TRACE)
 #add_definitions (-D__PRT_TESTCASE)
@@ -18,6 +18,7 @@ add_definitions (-D__PRT)
 #add_definitions (-D__PRT_INFER)
 #add_definitions (-D__PRT_QUERY)
 add_definitions (-D__PRT_STATISTICS)
+#add_definitions (-DSCRIPT)
 
 #option(PRINT_ALL "Print All Message" ON)
 option(PRINT_ALL "Print All Message" OFF)

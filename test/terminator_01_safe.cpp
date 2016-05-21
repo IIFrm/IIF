@@ -20,7 +20,5 @@ int main(int argc, char** argv)
  {
 iifContext context("../tmp/terminator_01_safe.var", loopFunction, "loopFunction", "../tmp/terminator_01_safe.ds");
 context.addLearner("linear");
-context.addLearner("poly");
-context.addLearner("conjunctive");
 return context.learn("../tmp/terminator_01_safe.cnt", "../tmp/terminator_01_safe");
 }

@@ -170,18 +170,21 @@ class BaseLearner{
 
 		void printStatistics() {
 #ifdef __PRT_STATISTICS
-			std::cout << GREEN << BOLD << "***********************STATISTICS*********************\n";
-			std::cout << GREEN << BOLD << "|*\t\t   " << RED << "random_samples= " << random_samples << "\n";
-			std::cout << GREEN << BOLD << "|*\t\t   " << RED << "selective_samples= " << selective_samples << "\n";
-			std::cout << GREEN << BOLD << "******************************************************\n" << NORMAL;
+			//std::cout << GREEN << BOLD << "***********************STATISTICS*********************\n";
+			//std::cout << GREEN << BOLD << "|*\t\t   " << RED << "random_samples= " << random_samples << "\n";
+			//std::cout << GREEN << BOLD << "|*\t\t   " << RED << "selective_samples= " << selective_samples << "\n";
+			//std::cout << GREEN << BOLD << "******************************************************\n" << NORMAL;
 			std::ofstream of1("../tmp/statistics", std::ofstream::app);
 			struct timeval tv;
 			gettimeofday(&tv, NULL);
 			//time_t nowtime = tv.tv_sec;
 			struct tm* nowtm = localtime(&tv.tv_sec);
-			char tmbuf[64];
-			strftime(tmbuf, sizeof(tmbuf), "%Y-%m-%d %H:%M:%S", nowtm);
-			of1 << tmbuf << "\t" << "random_samples=" <<random_samples << "\tselective_samples=" << selective_samples << std::endl;
+			char tmbuf[64], buf[64];
+			//strftime(tmbuf, sizeof(tmbuf), "%Y-%m-%d %H:%M:%S", nowtm);
+			strftime(tmbuf, sizeof(tmbuf), "%H:%M:%S", nowtm);
+			snprintf(buf, sizeof(buf), "%s.%06ld", tmbuf, tv.tv_usec);
+			//of1 << buf << "\t\t" << random_samples << "\t\t" << selective_samples << std::endl;
+			of1 << "\t\t#r_samples=" << random_samples << "\t\t#s_samples=" << selective_samples << std::endl;
 			of1.close();
 #endif
 		}

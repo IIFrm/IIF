@@ -48,7 +48,9 @@ int LinearLearner::learn()
 			<< "------------------------------------------------------------------------------------\n\t(" 
 			<< YELLOW << step++ << NORMAL << ") execute programs... [" << nexe + Nexe_rand << "] ";
 #else
+#ifndef SCRIPT
 		std::cout << RED << "[" << rnd;
+#endif
 #endif
 
 init_svm:
@@ -63,7 +65,9 @@ init_svm:
 			if (gsets[NEGATIVE].traces_num() == 0) 
 				std::cout << RED << "\tZero Negative trace, execute program again.\n" << NORMAL;
 #else
+#ifndef SCRIPT
 			std::cout << "+";
+#endif
 #endif
 
 			if (++zero_times >= Nretry_init) {
@@ -82,7 +86,9 @@ init_svm:
 #ifdef __PRT
 		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") prepare training data... ";
 #else
+#ifndef SCRIPT
 		std::cout << "]" << NORMAL;
+#endif
 #endif
 
 		if (svm->makeTrainingSet(gsets, pre_psize, pre_nsize) == 0) {
@@ -108,7 +114,9 @@ init_svm:
 #endif
 			return -1;
 		}
+#ifndef SCRIPT
 		std::cout << "|-->> " << YELLOW << svm->cl << NORMAL << std::endl;
+#endif
 #ifdef __PRT
 		std::cout << "\t(" << YELLOW << step++ << NORMAL << ") checking training traces.";
 #endif
@@ -187,9 +195,11 @@ init_svm:
 		svm->cl.clear();
 		svm->cl.factor(*poly);
 		svm->cl.roundoff();
+#ifndef SCRIPT
 		std::cout << YELLOW << "  Invariant Candidate(Linear): {  ";
 		std::cout << GREEN << svm->cl.toString() << YELLOW;
 		std::cout << "  }" << NORMAL << std::endl;
+#endif
 	}
 
 	if ((pass_rate < 1) || (rnd >= max_iteration)) {

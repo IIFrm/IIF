@@ -67,6 +67,9 @@ if [ $# -ge 4 ]; then
 	if [ $4 -eq -1 ]; then
 		echo "add_definitions(-D__QAS_NEGATIVE)" >> $cmakefile
 	fi
+	if [ $4 -eq 0 ]; then
+		echo "add_definitions(-D__SELECTIVE_SAMPLING_ENABLED)" >> $cmakefile
+	fi
 fi
 cat ./cmake.in >> $cmakefile
 echo "add_executable("$prefix" "$path_cpp" \${DIR_SRCS} \${HEADER})" >> $cmakefile

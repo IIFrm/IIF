@@ -149,6 +149,20 @@ int iifContext::learn(const char* last_cnt_fname, const char* invfilename, int t
 		exit(-1);
 	alarm(timeout);
 #endif
+#ifdef __PRT_STATISTICS
+#if 0
+	std::ofstream of1("../tmp/statistics", std::ofstream::app);
+	struct timeval tv;
+	char tmbuf[64], buf[64];
+	gettimeofday(&tv, NULL);
+	//strftime(tmbuf, sizeof(tmbuf), "%Y-%m-%d %H:%M:%S", localtime(&tv.tv_sec));
+	strftime(tmbuf, sizeof(tmbuf), "%H:%M:%S", localtime(&tv.tv_sec));
+	snprintf(buf, sizeof(buf), "%s.%06ld", tmbuf, tv.tv_usec);
+	of1 << buf << "\t\t";
+	of1.close();
+#endif
+#endif
+
 	LearnerNode* p = first;
 	char filename[256]; 
 	if (p && last_cnt_fname) 

@@ -20,6 +20,5 @@ int main(int argc, char** argv)
  {
 iifContext context("../tmp/dis.var", loopFunction, "loopFunction", "../tmp/dis.ds");
 context.addLearner("poly");
-context.addLearner("conjunctive");
 return context.learn("../tmp/dis.cnt", "../tmp/dis");
 }

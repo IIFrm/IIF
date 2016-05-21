@@ -53,7 +53,7 @@ cd ..
 
 ./build_project.sh $prefix $path_cnt $path_dataset $2
 
-echo "-----------------------"$prefix"--------------------------" >> tmp/statistics
+##echo "-----------------------"$prefix"--------------------------" >> tmp/statistics
 ./gen_init.sh $prefix
 
 if [ $# -ge 3 ]; then
@@ -91,12 +91,16 @@ while [ $iteration -le 128 ]; do
 	#**********************************************************************************************
 	./verify.sh $prefix
 	if [ $? -eq 0 ]; then
+		echo ""
+		echo "=====================time========================="
 		#echo -n -e $green$bold"------------------------------------------------------------- Iteration "
 		#echo -e " Done -------------------------------------------------------------------"$normal$normal
+		echo "SUCCEED. with iteration= "$iteration >> tmp/statistics
 		exit 0
 	else
 		iteration=$(($iteration+1))
 	fi
 	#cat $dir_temp"svm.ds" > $path_dataset
 done
+echo "FAILED. iteration= "$iteration >> tmp/statistics
 exit $?

@@ -22,7 +22,5 @@ int main(int argc, char** argv)
  {
 iifContext context("../tmp/test.var", loopFunction, "loopFunction", "../tmp/test.ds");
 context.addLearner("linear");
-context.addLearner("poly");
-context.addLearner("conjunctive");
 return context.learn("../tmp/test.cnt", "../tmp/test");
 }
