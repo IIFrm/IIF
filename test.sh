@@ -1,19 +1,20 @@
 #!/bin/sh
+i=0
 if [ $# -ge 1 ]; then
+	echo "--"$1"------------------------------------------------------------------------------"
+	echo "   ||----SELECTIVE---------------------------------------------------"
 	echo "\n--"$1"------------------------------------------------------------------------------" >> tmp/statistics
 	echo -n "   ||----SELECTIVE---------------------------------------------------" >> tmp/statistics
-	echo "   ||----SELECTIVE---------------------------------------------------"
 	echo "" >> tmp/statistics
 	{ time -p timeout 600 ./run_iterative.sh $1 0 ; } 1> result/"$1".selective.out.txt 2>> tmp/statistics
-	echo "   ||----unSELECTIVE-------------------------------------------------" >> tmp/statistics
 	echo "   ||----unSELECTIVE-------------------------------------------------"
+	echo "   ||----unSELECTIVE-------------------------------------------------" >> tmp/statistics
 	{ time -p timeout 600 ./run_iterative.sh $1 ; } 1> result/"$1".unselective.out.txt 2>> tmp/statistics
 	date >> tmp/statistics
 	exit 0
 fi
 
 
-i=0
 date >> tmp/statistics
 for file in `find cfg/ -maxdepth 1 -name '*.cfg'`
 do

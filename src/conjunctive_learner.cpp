@@ -82,6 +82,9 @@ init_svm_i:
 			std::cout << "]" << NORMAL;
 		}
 #endif
+#ifdef __PRT_STATISTICS
+		std::cout << "[#r" << random_samples << ",#s" << selective_samples << "]\n    ";
+#endif
 		if (svm_i->makeTrainingSet(gsets, pre_psize, pre_nsize) == 0) {
 			if (++zero_times < Nretry_init)
 				goto init_svm_i;

@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 2.8)
-set(Nv 2)
+set(Nv 1)
+add_definitions(-D__SELECTIVE_SAMPLING_ENABLED)
 project(InvariantInferenceFramework)
 set(PRECISION 3)
 
@@ -193,6 +194,6 @@ include_directories (include)
 AUX_SOURCE_DIRECTORY(src DIR_SRCS)
 AUX_SOURCE_DIRECTORY(test DIR_TEST)
 
-add_executable(test2 test/test2.cpp ${DIR_SRCS} ${HEADER})
-target_link_libraries(test2 ${Z3_LIBRARY})
-target_link_libraries(test2 ${GSL_LIBRARIES})
+add_executable(zilu_poly1 test/zilu_poly1.cpp ${DIR_SRCS} ${HEADER})
+target_link_libraries(zilu_poly1 ${Z3_LIBRARY})
+target_link_libraries(zilu_poly1 ${GSL_LIBRARIES})
